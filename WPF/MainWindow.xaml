@@ -5,8 +5,22 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:WPF"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
-    <Grid>
+        Title="Comparison Shopping Engine" Height="450" Width="800" Icon="/2678672181578289022-128.png" Background="White">
 
-    </Grid>
+    <StackPanel  VerticalAlignment="Top" HorizontalAlignment="Stretch">
+        <Button x:Name="SearchWithLinkButton" HorizontalAlignment="Stretch" Height="20" Margin="10 10 10 10">Search with Link</Button>
+        <Grid Width="260" VerticalAlignment="Top" HorizontalAlignment="Left" >
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="2*"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            <TextBox Grid.Column="0" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="10 0 0 0"/>
+            <Button x:Name="SearchButton" Grid.Column="1"  HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="10 0 0 0">Search</Button>
+        </Grid>
+    </StackPanel>
+    
+    
+
+
 </Window>
+ 
