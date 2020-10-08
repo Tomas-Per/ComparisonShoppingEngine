@@ -78,7 +78,7 @@ namespace URLGenerator
 
                 default:
                     {
-                        return null;
+                        return driver.Url;
                     }
 
             }
