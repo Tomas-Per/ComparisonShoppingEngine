@@ -43,7 +43,9 @@ namespace ItemLibrary
 
         public List<Computer> FindSimilar(List<Computer> list)
         {
-            IEnumerable<Computer> computers = list.Where(comp => comp.ProcessorName == this.ProcessorName);
+            IEnumerable<Computer> computers = list.Where(comp => 
+                                                            comp.ProcessorName == this.ProcessorName
+                                                            || (comp.Price >= this.Price - 100 && comp.Price <= this.Price + 100));
             return computers.ToList();
         }
 
