@@ -1,4 +1,4 @@
-laptop_name,laptop_url,laptop_price,laptop_manufacturer,laptop_display_size,laptop_resolution,laptop_processor_class,laptop_processor_gen,laptop_processor_type,laptop_ram_type,laptop_ram,laptop_storage,laptop_graphic_card,laptop_grpahic_card_memory
+laptop_name,laptop_url,laptop_price,laptop_manufacturer,laptop_display_size,laptop_resolution,laptop_processor_class,laptop_processor_gen,laptop_processor_type,laptop_ram_type,laptop_ram,laptop_storage,laptop_graphic_card,laptop_graphic_card_memory
 Asus X509MA-BQ339T Silver 90NB0Q31-M06410,https://www.senukai.lt/p/asus-x509ma-bq339t-silver-90nb0q31-m06410/f571?cat=5ei&index=1,"399,00",Asus,"15.6 """,1920 x 1080,Pentium®,Gemini Lake (Intel),Intel,DDR4,4 GB,256 GB,Intel UHD Graphics 605,Dynamic
 Lenovo IdeaPad 3-15ADA 81W1005LPB,https://www.senukai.lt/p/lenovo-ideapad-3-15ada-81w1005lpb/ezz6?cat=5ei&index=2,"499,99",Lenovo,"15.6 """,1920 x 1080,AMD Ryzen 3,,,DDR4,8 GB,256 GB,,Dynamic
 HP 250 G7 Silver 6BP19EA#ABB,https://www.senukai.lt/p/hp-250-g7-silver-6bp19ea-abb/b5d4?cat=5ei&index=3,"539,99",HP,"15.6 """,1920 x 1080,Intel® Core™ i5,Whiskey Lake (Intel),,DDR4,8 GB,256 GB,Intel® UHD Graphics 620,Dynamic
