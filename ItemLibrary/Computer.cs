@@ -7,7 +7,6 @@ namespace ItemLibrary
     public class Computer : Item
     {
         public string ProcessorName { get; set; }
-        public double ProcessorFrequency { get; set; }
         public string GraphicsCardName { get; set; }
         public int GraphicsCardMemory { get; set; }
         public int RAM { get; set; }
@@ -17,25 +16,24 @@ namespace ItemLibrary
 
 
         //builder pattern??
-        public Computer(ulong Code, ulong Barcode, int price, string name, string Manufacturer,
-            string ProcName, double ProcFreq, string GPUname, int GPUmem, int ram, string RAMtype,
+        public Computer(ulong code, double price, string name, string manufacturer, string itemURL,
+            string procName, double procFreq, string gpuName, int gpuMem, int ram, string ramType,
             string resol, int storage)
         {
 
             //base class
-            ItemCode = Code;
-            ItemBarcode = Barcode;
+            ItemCode = code;
             Price = price;
             Name = name;
-            ManufacturerName = Manufacturer;
+            ManufacturerName = manufacturer;
+            ItemURL = itemURL;
 
             //derived class
-            ProcessorName = ProcName;
-            ProcessorFrequency = ProcFreq;
-            GraphicsCardName = GPUname;
-            GraphicsCardMemory = GPUmem;
+            ProcessorName = procName;
+            GraphicsCardName = gpuName;
+            GraphicsCardMemory = gpuMem;
             RAM = ram;
-            RAM_type = RAMtype;
+            RAM_type = ramType;
             Resolution = resol;
             StorageCapacity = storage;
         }
@@ -44,7 +42,7 @@ namespace ItemLibrary
         //irgi testavimui
         public override void PrintOut()
         {
-            Console.WriteLine(ItemCode + " " + ItemBarcode + " " + Price + " " + Name + " " + ManufacturerName);
+            Console.WriteLine(ItemCode + " " + " " + Price + " " + Name + " " + ManufacturerName);
             Console.WriteLine(ProcessorName + " " + ProcessorFrequency + " " + RAM + " " + RAM_type + " " + StorageCapacity);
             Console.WriteLine(GraphicsCardName + " " + GraphicsCardMemory + " " + Resolution);
         }

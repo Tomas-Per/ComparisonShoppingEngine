@@ -5,7 +5,12 @@ VisualStudioVersion = 16.0.30503.244
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WPF", "WPF\WPF.csproj", "{6E862F91-970C-473D-9F9D-52EB7F3CC3D3}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ItemLibrary", "ItemLibrary\ItemLibrary.csproj", "{45E997E0-0020-4114-9E34-F8A113064FB7}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ItemLibrary", "ItemLibrary\ItemLibrary.csproj", "{45E997E0-0020-4114-9E34-F8A113064FB7}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Data", "Data", "{25A92F1B-7513-4AC1-8298-32E5CFDE77A3}"
+	ProjectSection(SolutionItems) = preProject
+		Data\senukai.csv = Data\senukai.csv
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
