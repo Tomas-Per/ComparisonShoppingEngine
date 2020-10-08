@@ -19,7 +19,7 @@ namespace ItemLibrary
 
         //builder pattern??
         public Computer(ulong code, double price, string name, string manufacturer, string itemURL,
-            string procName, double procFreq, string gpuName, int gpuMem, int ram, string ramType,
+            string procName, string gpuName, int gpuMem, int ram, string ramType,
             string resol, int storage)
         {
 
@@ -40,21 +40,17 @@ namespace ItemLibrary
             StorageCapacity = storage;
         }
 
-
         public List<Computer> FindSimilar(List<Computer> list)
         {
-            IEnumerable<Computer> computers = list.Where(comp => 
-                                                            comp.ProcessorName == this.ProcessorName
-                                                            || (comp.Price >= this.Price - 100 && comp.Price <= this.Price + 100));
+            IEnumerable<Computer> computers = list.Where(comp => comp.ProcessorName == this.ProcessorName
+                                                                || (comp.Price >= this.Price - 100 && comp.Price <= this.Price + 100));
             return computers.ToList();
         }
-
-
 
         //irgi testavimui
         public override void PrintOut()
         {
-            Console.WriteLine(ItemCode + " " + " " + Price + " " + Name + " " + ManufacturerName);
+            Console.WriteLine(ItemCode + " " + Price + " " + Name + " " + ManufacturerName);
             Console.WriteLine(ProcessorName + " " + RAM + " " + RAM_type + " " + StorageCapacity);
             Console.WriteLine(GraphicsCardName + " " + GraphicsCardMemory + " " + Resolution);
         }
