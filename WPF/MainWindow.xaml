@@ -5,18 +5,43 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:WPF"
         mc:Ignorable="d"
-        Title="Comparison Shopping Engine" Height="450" Width="800" Icon="/2678672181578289022-128.png" Background="White">
+        Title="Comparison Shopping Engine" ResizeMode="NoResize" Height="450" Width="800" Icon="/2678672181578289022-128.png" Background="White">
 
     <StackPanel  VerticalAlignment="Top" HorizontalAlignment="Stretch">
         <Button x:Name="SearchWithLinkButton" HorizontalAlignment="Stretch" Height="20" Margin="10 10 10 10">Search with Link</Button>
-        <Grid Width="260" VerticalAlignment="Top" HorizontalAlignment="Left" >
+
+        <Grid VerticalAlignment="Top" HorizontalAlignment="Stretch" >
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="2*"/>
+                <ColumnDefinition Width="0.82*"/>
+                <ColumnDefinition Width="0.4*"/>
+                <ColumnDefinition Width="1.5*"/>
                 <ColumnDefinition Width="*"/>
+
             </Grid.ColumnDefinitions>
             <TextBox Grid.Column="0" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="10 0 0 0"/>
             <Button x:Name="SearchButton" Grid.Column="1"  HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="10 0 0 0">Search</Button>
+            <TextBlock Grid.Column="2" HorizontalAlignment="Center">Information</TextBlock>
+            <TextBlock Grid.Column="3" HorizontalAlignment="Center">Filters</TextBlock>
         </Grid>
+        <Grid Height="335" Margin="10 10 10 10">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+                
+            </Grid.ColumnDefinitions>
+            <ScrollViewer Grid.Column="0" HorizontalAlignment="Left" FlowDirection="RightToLeft" CanContentScroll="False" VerticalScrollBarVisibility="Auto">
+                <ListView x:Name="ListOfLaptops" FlowDirection="LeftToRight" Width="250" HorizontalAlignment="Left" VerticalAlignment="Stretch" VerticalContentAlignment="Top"/>
+            </ScrollViewer>
+            <TextBlock Grid.Column="1" x:Name="InformationTextBox"></TextBlock>
+            <StackPanel Grid.Column="2">
+                
+            </StackPanel>
+        </Grid>
+        
+
+        <StackPanel VerticalAlignment="Top" HorizontalAlignment="Right" Width="260"></StackPanel>
+
     </StackPanel>
     
     
