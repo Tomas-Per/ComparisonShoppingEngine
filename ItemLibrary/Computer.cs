@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Text;
 
 namespace ItemLibrary
@@ -39,11 +41,19 @@ namespace ItemLibrary
         }
 
 
+        public List<Computer> FindSimilar(List<Computer> list)
+        {
+            IEnumerable<Computer> computers = list.Where(comp => comp.ProcessorName == this.ProcessorName);
+            return computers.ToList();
+        }
+
+
+
         //irgi testavimui
         public override void PrintOut()
         {
             Console.WriteLine(ItemCode + " " + " " + Price + " " + Name + " " + ManufacturerName);
-            Console.WriteLine(ProcessorName + " " + ProcessorFrequency + " " + RAM + " " + RAM_type + " " + StorageCapacity);
+            Console.WriteLine(ProcessorName + " " + RAM + " " + RAM_type + " " + StorageCapacity);
             Console.WriteLine(GraphicsCardName + " " + GraphicsCardMemory + " " + Resolution);
         }
     }
