@@ -5,6 +5,12 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="ReadingCSV\**" />
+    <EmbeddedResource Remove="ReadingCSV\**" />
+    <None Remove="ReadingCSV\**" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="CsvHelper" Version="12.1.3" />
   </ItemGroup>
 
