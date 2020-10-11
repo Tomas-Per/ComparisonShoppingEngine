@@ -50,9 +50,9 @@ namespace ItemLibrary
         //irgi testavimui
         public override void PrintOut()
         {
-            Console.WriteLine(ItemCode + " " + Price + " " + Name + " " + ManufacturerName);
-            Console.WriteLine(ProcessorName + " " + RAM + " " + RAM_type + " " + StorageCapacity);
-            Console.WriteLine(GraphicsCardName + " " + GraphicsCardMemory + " " + Resolution);
+            Console.WriteLine($"{ItemCode} {Price} {Name} {ManufacturerName}");
+            Console.WriteLine($"{ProcessorName} {RAM} {RAM_type} {StorageCapacity}");
+            Console.WriteLine($"{GraphicsCardName} {GraphicsCardMemory} {Resolution}");
         }
     }
 }
