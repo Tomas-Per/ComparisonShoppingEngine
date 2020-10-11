@@ -9,9 +9,9 @@ using System.Linq;
 
 namespace DataContent.ReadingCSV.Services
 {
-    public class LaptopService
+    public class LaptopServiceCSV
     {
-        public List<Computer> ReadCsvFile(string path)
+        public List<Computer>ReadData(string path)
         {
             try
             {
@@ -35,6 +35,7 @@ namespace DataContent.ReadingCSV.Services
                 throw e;
             }
         }
+
     }
 }
 
