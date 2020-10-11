@@ -1,13 +1,13 @@
 ﻿using CsvHelper;
-using ItemLibrary.ReadingCSV.Mappers;
+using DataContent.ReadingCSV.Mappers;
+using ItemLibrary;
 using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.IO;
 using System.Linq;
-using System.Text;
 
-namespace ItemLibrary.ReadingCSV.Services
+namespace DataContent.ReadingCSV.Services
 {
     public class LaptopService
     {
@@ -26,7 +26,7 @@ namespace ItemLibrary.ReadingCSV.Services
                     return records;
                 }
             }
-            catch (FileNotFoundException e)
+            catch (FileNotFoundException)
             {
                 throw new Exception("File not found");
             }

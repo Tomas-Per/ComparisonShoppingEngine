@@ -4,9 +4,9 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace ItemLibrary.ReadingCSV.Mappers
+namespace DataContent.ReadingCSV.Mappers
 {
-    public sealed class LaptopMap: ClassMap<Computer>
+    public sealed class LaptopMap: ClassMap<ItemLibrary.Computer>
     {
         public LaptopMap()
         {
