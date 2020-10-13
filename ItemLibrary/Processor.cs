@@ -1,18 +1,17 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace ItemLibrary
+﻿namespace ItemLibrary
 {
-    public class Processor
+    public struct Processor
     {
-        public enum ProcessorTypes
+        public string Name { get; }
+        public string AmazonLink { get; }
+        public  string AmazonBin { get; }
+
+        public Processor(string name, string link)
         {
-            IntelCoreI5,
-            IntelCeleron,
-            IntelCoreI7,
-            IntelCoreI3,
-            AMDASeries
-        };
+            Name = name;
+            AmazonLink = link.Substring(0, link.IndexOf("&dc")) ;
+            string binStart = link.Substring(link.IndexOf("bin%") + 4);
+            AmazonBin = "%7C" + binStart.Substring(2);
+        }
     }
 }
