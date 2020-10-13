@@ -21,5 +21,13 @@ namespace DataManipulation
             _items = result;
             return result;
         }
+
+        //Filters item list by the manufacturer and sets the private field to the filtered list
+        public List<Item> FilterByManufacturer(string manufacturer)
+        {
+            List<Item> result = _items.Where(item => item.ManufacturerName == manufacturer).ToList();
+            _items = result;
+            return result;
+        }
     }
 }
