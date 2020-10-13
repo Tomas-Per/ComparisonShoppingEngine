@@ -29,5 +29,13 @@ namespace DataManipulation
             _items = result;
             return result;
         }
+
+        //Filters items by a price range, sets private field to the filtered list
+        public List<Item> FilterByPrice(double minRange, double maxRange)
+        {
+            List<Item> result = _items.Where(item => item.Price >= minRange && item.Price <= maxRange).ToList();
+            _items = result;
+            return result;
+        }
     }
 }
