@@ -8,7 +8,7 @@ namespace Comparison
 {
     class ItemComparison
     {
-        public int PriceWeight { get; set; }
+        protected int PriceWeight { get; set; }
         public double MainItemRanking {get; set;}
         public double ComparingItemRanking { get; set; }
         public int TotalWeight { get; set; }
