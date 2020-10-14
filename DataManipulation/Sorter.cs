@@ -15,25 +15,28 @@ namespace DataManipulation
             _items = items;
         }
 
+        //Sorts items by their names in an ascending order
         public List<Item> SortByNameAsc()
         {
             List<Item> result = _items.OrderBy(x => x.Name).ToList();
             return result;
         }
 
+        //Sorts items by their prices in an ascending order
         public List<Item> SortByPriceAsc()
         {
             List<Item> result = _items.OrderBy(x => x.Price).ToList();
             return result;
         }
 
-
+        //Sorts items by their names in a descending order
         public List<Item> SortByNameDesc()
         {
             List<Item> result = _items.OrderByDescending(x => x.Name).ToList();
             return result;
         }
 
+        //Sorts items by their prices in a descending order
         public List<Item> SortByPriceDesc()
         {
             List<Item> result = _items.OrderByDescending(x => x.Price).ToList();
