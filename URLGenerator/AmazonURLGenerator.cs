@@ -4,7 +4,7 @@ using System.Linq;
 
 namespace URLGenerator
 {
-    public class AmazonURLGenerator : URLGenerator
+    public class AmazonURLGenerator : IURLGenerator
     {
         private string _link = "https://www.amazon.com";
 

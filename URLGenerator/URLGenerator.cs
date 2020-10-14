@@ -4,7 +4,7 @@ using System.Collections.Generic;
 
 namespace URLGenerator
 {
-    public interface URLGenerator
+    public interface IURLGenerator
     {
         public string GenerateURL(List<Processor> filters);
     }
