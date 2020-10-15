@@ -35,7 +35,20 @@ namespace DataContent.ReadingCSV.Services
                 throw e;
             }
         }
-
+        public void WriteCSVFile(string path, List<Computer> computer)
+        {
+            using (StreamWriter sw = new StreamWriter(path))
+            using (CsvWriter cw = new CsvWriter(sw))
+            {
+                cw.WriteHeader<Computer>();
+                cw.NextRecord();
+                foreach (Computer comp in computer)
+                {
+                    cw.WriteRecord<Computer>(comp);
+                    cw.NextRecord();
+                }
+            }
+        }
     }
 }
 
