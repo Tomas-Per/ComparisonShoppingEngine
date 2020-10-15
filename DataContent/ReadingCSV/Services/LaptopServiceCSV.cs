@@ -11,7 +11,7 @@ namespace DataContent.ReadingCSV.Services
 {
     public class LaptopServiceCSV
     {
-        public List<Computer>ReadData(string path)
+        public List<Computer> ReadData(string path)
         {
             try
             {
