@@ -13,9 +13,9 @@
          TextOptions.TextRenderingMode="Auto"
          Background="{DynamicResource MaterialDesignPaper}"
          FontFamily="{DynamicResource MaterialDesignFont}"
-        Title="Libra" ResizeMode="NoResize" Height="612" Width="1308" Icon="/2678672181578289022-128.png">
+        Title="Libra" ResizeMode="NoResize" Height="612" Width="987" Icon="/2678672181578289022-128.png" Loaded="Window_Loaded">
 
-   <!-- <Window.Resources>
+    <!-- <Window.Resources>
         <Storyboard x:Key="MenuOpen">
             <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="FrameworkElement.Width" Storyboard.TargetName="FilterGrid">
                 <EasingDoubleKeyFrame KeyTime="0" Value="70"/>
@@ -38,21 +38,52 @@
         </EventTrigger>
     </Window.Triggers> -->
     <Grid >
-        <Grid Height="60" VerticalAlignment="Top" Background="#80deea">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="200"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+       
+        <Grid Height="60" Grid.Column="1" VerticalAlignment="Top" Background="#80deea">
             <TextBlock Text="LIBRA" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="28" Foreground="White" FontFamily="Candara Light" FontWeight="Bold"/>
         </Grid>
+        <Grid Margin="200,60,0,0" Grid.Row="1" Grid.ColumnSpan="2">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            <StackPanel Grid.Column="0">
+                <Grid Height="40">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="0.4*"/>
+                    </Grid.ColumnDefinitions>
+                    <TextBox x:Name="SearchedItemText" Margin="10,10,0,0" FontFamily="Candara Light" VerticalAlignment="Center" CaretBrush="#FF275D63" SelectionBrush="#FF275D63" Foreground="#FF275D63" SelectionTextBrush="#FF275D63"  />
+                    <Button Content="Search" x:Name="SearchButton" FontFamily="Candara Light"  Grid.Column="1" Margin="5,5,10,0" HorizontalAlignment="Right" Foreground="#FF80DEEA" Background="White" BorderBrush="#FF80DEEA"/>
+                </Grid>
+                <ListView x:Name="ItemsListView" Margin="10 10 10 10" FontFamily="Candara Light" FontSize="14">
+                    <ListView.ItemTemplate>
+                        <DataTemplate>
+                            <TextBlock Text="{Binding Name}"/>
+                        </DataTemplate>
+                    </ListView.ItemTemplate>
+                </ListView>
+            </StackPanel>
+            <StackPanel Grid.Column="1" >
+                <TextBlock x:Name="ProductName" Height="40" FontFamily="Candara Light" FontSize="20" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="10,10,10,10">Place for item name</TextBlock>
+                <TextBlock x:Name="ProductPrice" FontFamily="Candara Light" FontSize="14" Margin="10,0,10,0">Place for price</TextBlock>
+                <TextBlock x:Name="ProductBrand" FontFamily="Candara Light" FontSize="14" Margin="10,5,10,0">brand</TextBlock>
+                <TextBlock x:Name="ProductProcessor" FontFamily="Candara Light" FontSize="14" Margin="10,5,10,0">processor</TextBlock>
+            </StackPanel>
 
-        <Grid Name="FilterGrid" Width="200" HorizontalAlignment="Left" Background="#4bacb8" Visibility="Visible" RenderTransformOrigin="0.5,0.5">
-        
+
+        </Grid>
+
+        <Grid Name="FilterGrid" Width="200" HorizontalAlignment="Left" Background="#4bacb8" Visibility="Visible" RenderTransformOrigin="0.5,0.5" Grid.RowSpan="2">
+
             <StackPanel>
                 <Grid Height="60" Background="#009faf">
                     <TextBlock Text="Filters" FontFamily="Candara Light" Margin="10" HorizontalAlignment="Left" VerticalAlignment="Center" Foreground="White" FontSize="14" FontWeight="Bold"/>
-                    <Button x:Name="FilterMenuClose" Width="50" Height="50" Background="{x:Null}" BorderBrush="{x:Null}" VerticalAlignment="Top" HorizontalAlignment="Right" Visibility="Collapsed" >
-                        <materialDesign:PackIcon Kind="ArrowLeft" />
-                    </Button>
-                    <Button x:Name="FilterMenuOpen" Width="50" Height="50" Background="{x:Null}" BorderBrush="{x:Null}" VerticalAlignment="Top" HorizontalAlignment="Right">
-                         <materialDesign:PackIcon Kind="Filter" />
-                     </Button>
+                    <materialDesign:PackIcon Kind="Filter" VerticalAlignment="Stretch" HorizontalAlignment="Right" Margin="0,10,10,10" Foreground="White"/>
                 </Grid>
                 <StackPanel Background="#4bacb8" Height="533">
                     <TextBlock Text="Price Range" FontFamily="Candara Light" Foreground="White" VerticalAlignment="Center" Margin="10 10 10 10" HorizontalAlignment="Center" FontWeight="Bold" FontSize="14"/>
@@ -96,7 +127,7 @@
                         </StackPanel>
                     </Grid>
                     <Button Content="Apply Filters" VerticalAlignment="Bottom" HorizontalAlignment="Center" Margin="10,10,10,0" Background="#FF4BACB8" BorderBrush="White" FontFamily="Candara Light">
-                        
+
                     </Button>
                 </StackPanel>
             </StackPanel>
