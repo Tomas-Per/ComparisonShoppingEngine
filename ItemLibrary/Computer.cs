@@ -14,6 +14,12 @@ namespace ItemLibrary
         public int RAM { get; set; }
         public string RAM_type { get; set; }
         public string Resolution { get; set; }
+
+        public static explicit operator Computer(List<Item> v)
+        {
+            throw new NotImplementedException();
+        }
+
         public int StorageCapacity { get; set; }
 
 
