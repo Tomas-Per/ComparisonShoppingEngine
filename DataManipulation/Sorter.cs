@@ -42,5 +42,10 @@ namespace DataManipulation
             List<Item> result = _items.OrderByDescending(x => x.Price).ToList();
             return result;
         }
+
+        public void UpdateList(List<Item> items)
+        {
+            _items = items;
+        }
     }
 }
