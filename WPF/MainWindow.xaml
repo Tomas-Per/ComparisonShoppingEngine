@@ -5,13 +5,108 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:WPF"
         mc:Ignorable="d"
-        Title="Comparison Shopping Engine" ResizeMode="NoResize" Height="450" Width="800" Icon="/2678672181578289022-128.png" Background="White">
+        xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+        TextElement.Foreground="{DynamicResource MaterialDesignBody}"
+        TextElement.FontWeight="Regular"
+         TextElement.FontSize="13"
+         TextOptions.TextFormattingMode="Ideal"
+         TextOptions.TextRenderingMode="Auto"
+         Background="{DynamicResource MaterialDesignPaper}"
+         FontFamily="{DynamicResource MaterialDesignFont}"
+        Title="Libra" ResizeMode="NoResize" Height="612" Width="1308" Icon="/2678672181578289022-128.png">
 
-    <StackPanel  VerticalAlignment="Top" HorizontalAlignment="Stretch">
-        <Button x:Name="SearchWithLinkButton" HorizontalAlignment="Stretch" Height="20" Margin="10 10 10 10">Search with Link</Button>
+   <!-- <Window.Resources>
+        <Storyboard x:Key="MenuOpen">
+            <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="FrameworkElement.Width" Storyboard.TargetName="FilterGrid">
+                <EasingDoubleKeyFrame KeyTime="0" Value="70"/>
+                <EasingDoubleKeyFrame KeyTime="0:0:0.5" Value="200"/>
+            </DoubleAnimationUsingKeyFrames>
+        </Storyboard>
+        <Storyboard x:Key="MenuClose">
+            <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="FrameworkElement.Width" Storyboard.TargetName="FilterGrid">
+                <EasingDoubleKeyFrame KeyTime="0" Value="200"/>
+                <EasingDoubleKeyFrame KeyTime="0:0:0.5" Value="70"/>
+            </DoubleAnimationUsingKeyFrames>
+        </Storyboard>
+    </Window.Resources>
+    <Window.Triggers>
+        <EventTrigger RoutedEvent="ButtonBase.Click" SourceName="FilterMenuOpen">
+            <BeginStoryboard Storyboard="{StaticResource MenuOpen}"/>
+        </EventTrigger>
+        <EventTrigger RoutedEvent="ButtonBase.Click" SourceName="FilterMenuClose">
+            <BeginStoryboard Storyboard="{StaticResource MenuClose}"/>
+        </EventTrigger>
+    </Window.Triggers> -->
+    <Grid >
+        <Grid Height="60" VerticalAlignment="Top" Background="#80deea">
+            <TextBlock Text="LIBRA" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="28" Foreground="White" FontFamily="Candara Light" FontWeight="Bold"/>
+        </Grid>
 
-        <Grid VerticalAlignment="Top" HorizontalAlignment="Stretch" >
+        <Grid Name="FilterGrid" Width="200" HorizontalAlignment="Left" Background="#4bacb8" Visibility="Visible" RenderTransformOrigin="0.5,0.5">
+        
+            <StackPanel>
+                <Grid Height="60" Background="#009faf">
+                    <TextBlock Text="Filters" FontFamily="Candara Light" Margin="10" HorizontalAlignment="Left" VerticalAlignment="Center" Foreground="White" FontSize="14" FontWeight="Bold"/>
+                    <Button x:Name="FilterMenuClose" Width="50" Height="50" Background="{x:Null}" BorderBrush="{x:Null}" VerticalAlignment="Top" HorizontalAlignment="Right" Visibility="Collapsed" >
+                        <materialDesign:PackIcon Kind="ArrowLeft" />
+                    </Button>
+                    <Button x:Name="FilterMenuOpen" Width="50" Height="50" Background="{x:Null}" BorderBrush="{x:Null}" VerticalAlignment="Top" HorizontalAlignment="Right">
+                         <materialDesign:PackIcon Kind="Filter" />
+                     </Button>
+                </Grid>
+                <StackPanel Background="#4bacb8" Height="533">
+                    <TextBlock Text="Price Range" FontFamily="Candara Light" Foreground="White" VerticalAlignment="Center" Margin="10 10 10 10" HorizontalAlignment="Center" FontWeight="Bold" FontSize="14"/>
+
+                    <TextBox Name="txtSliderValue" BorderBrush="{x:Null}" FontFamily="Candara Light" Margin="10,0,10,10" VerticalAlignment="Top" Foreground="White"/>
+                    <Slider Height="20" Minimum="100" Maximum="4000" IsSnapToTickEnabled="True" VerticalAlignment="Bottom" Margin="15,0,15,0" TickFrequency="200" TickPlacement="BottomRight" Name="PriceSlider" ValueChanged="PriceSlider_ValueChanged" Foreground="White"/>
+
+                    <TextBlock Text="Brand" FontFamily="Candara Light" Foreground="White" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="10,10,10,10" FontWeight="Bold" FontSize="14"/>
+                    <Grid Margin="10,0,4,0">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+
+                        <StackPanel Grid.Column="0" >
+                            <CheckBox x:Name="AsusCheckBox" FontFamily="Candara Light"  Background="White" BorderBrush="White" Foreground="White" Content="Asus"/>
+                            <CheckBox x:Name="LenovoCheckBox" FontFamily="Candara Light"  Background="White" BorderBrush="White" Foreground="White" Content="Lenovo"/>
+                            <CheckBox x:Name="AppleCheckBox" FontFamily="Candara Light"  Background="White" BorderBrush="White" Foreground="White" Content="Apple"/>
+                        </StackPanel>
+                        <StackPanel Grid.Column="1">
+                            <CheckBox x:Name="HuaweiCheckBox" FontFamily="Candara Light"  Background="White" BorderBrush="White" Foreground="White" Content="Huawei"/>
+                            <CheckBox x:Name="AcerCheckBox" FontFamily="Candara Light"  Background="White" BorderBrush="White" Foreground="White" Content="Acer"/>
+                            <CheckBox x:Name="HPCheckBox" FontFamily="Candara Light"  Background="White" BorderBrush="White" Foreground="White" Content="HP"/>
+                        </StackPanel>
+                    </Grid>
+                    <TextBlock Text="Processor Type" FontFamily="Candara Light" Foreground="White" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="10,10,10,10" FontWeight="Bold" FontSize="14"/>
+
+                    <Grid Margin="10,0,10,0">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+                        <StackPanel Grid.Column="0">
+                            <CheckBox x:Name="i3CheckBox" Content="Intel Core i3"  FontFamily="Candara Light"  Background="White" BorderBrush="White" Foreground="White"/>
+                            <CheckBox x:Name="i5CheckBox" Content="Intel Core i5"  FontFamily="Candara Light"  Background="White" BorderBrush="White" Foreground="White"/>
+                            <CheckBox x:Name="i7CheckBox" Content="Intel Core i7"  FontFamily="Candara Light"  Background="White" BorderBrush="White" Foreground="White"/>
+                        </StackPanel>
+                        <StackPanel Grid.Column="1">
+                            <CheckBox x:Name="IntelCeleronCheckBox" Content="IntelCeleron"  FontFamily="Candara Light"  Background="White" BorderBrush="White" Foreground="White"/>
+                            <CheckBox x:Name="IntelAtomCheckBox" Content="Intel Atom"  FontFamily="Candara Light"  Background="White" BorderBrush="White" Foreground="White"/>
+                        </StackPanel>
+                    </Grid>
+                    <Button Content="Apply Filters" VerticalAlignment="Bottom" HorizontalAlignment="Center" Margin="10,10,10,0" Background="#FF4BACB8" BorderBrush="White" FontFamily="Candara Light">
+                        
+                    </Button>
+                </StackPanel>
+            </StackPanel>
+        </Grid>
+
+        <!-- <Button x:Name="SearchWithLinkButton" HorizontalAlignment="Stretch" Height="20" Margin="10 10 10 10">Search with Link</Button>-->
+
+        <!--<Grid VerticalAlignment="Top" HorizontalAlignment="Stretch" >
             <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="0.6*"/>
                 <ColumnDefinition Width="0.82*"/>
                 <ColumnDefinition Width="0.4*"/>
                 <ColumnDefinition Width="1.5*"/>
@@ -76,14 +171,11 @@
                 </Grid>
             </StackPanel>
         </Grid>
-        
-
-        <StackPanel VerticalAlignment="Top" HorizontalAlignment="Right" Width="260"></StackPanel>
-
-    </StackPanel>
-    
-    
 
 
+        <StackPanel VerticalAlignment="Top" HorizontalAlignment="Right" Width="260"></StackPanel>-->
+
+    </Grid>
 </Window>
+
  

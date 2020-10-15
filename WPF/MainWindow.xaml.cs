@@ -24,5 +24,23 @@ namespace WPF
         {
             InitializeComponent();
         }
+
+        private void PriceSlider_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
+        {
+            txtSliderValue.Text = "Price up to: " + PriceSlider.Value.ToString() + "$";
+        }
+
+        /*
+        private void FilterMenuClose_Click(object sender, RoutedEventArgs e)
+        {
+            FilterMenuOpen.Visibility = Visibility.Visible;
+            FilterMenuClose.Visibility = Visibility.Collapsed;
+        }
+
+        private void FilterMenuOpen_Click(object sender, RoutedEventArgs e)
+        {
+            FilterMenuClose.Visibility = Visibility.Visible;
+            FilterMenuOpen.Visibility = Visibility.Collapsed;
+        } */
     }
 }
