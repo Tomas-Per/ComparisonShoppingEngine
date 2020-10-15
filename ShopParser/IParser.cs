@@ -7,6 +7,6 @@ namespace ShopParser
 {
     public interface IParser
     {
-        public List<Item> parseShop(string url);
+        public List<Item> ParseShop(string url);
     }
 }

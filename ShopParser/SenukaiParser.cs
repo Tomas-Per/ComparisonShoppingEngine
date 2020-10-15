@@ -18,9 +18,9 @@ namespace ShopParser
             options.AddArguments("--headless");
 
             _driver = new ChromeDriver();
-            //_driver = new ChromeDriver(options);
+            //_driver = new ChromeDriver(options);S
         }
-        public List<Item> parseShop(string url)
+        public List<Item> ParseShop(string url)
         {
             List<Item> data = new List<Item>();
             _driver.Navigate().GoToUrl(url);
