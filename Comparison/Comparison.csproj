@@ -1,13 +1,12 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
+    <OutputType>Exe</OutputType>
     <TargetFramework>netcoreapp3.1</TargetFramework>
   </PropertyGroup>
 
   <ItemGroup>
-    <Compile Remove="ReadingCSV\**" />
-    <EmbeddedResource Remove="ReadingCSV\**" />
-    <None Remove="ReadingCSV\**" />
+    <ProjectReference Include="..\ItemLibrary\ItemLibrary.csproj" />
   </ItemGroup>
 
 </Project>

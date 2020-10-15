@@ -5,9 +5,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Compile Remove="ReadingCSV\**" />
-    <EmbeddedResource Remove="ReadingCSV\**" />
-    <None Remove="ReadingCSV\**" />
+    <ProjectReference Include="..\ItemLibrary\ItemLibrary.csproj" />
   </ItemGroup>
 
 </Project>

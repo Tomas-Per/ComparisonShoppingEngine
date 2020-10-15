@@ -14,7 +14,7 @@ namespace ItemLibrary
         //cia testavimui
         public virtual void PrintOut()
         {
-            Console.WriteLine(ItemCode + " "  + " " + Price + " " + Name + " " + ManufacturerName);
+            Console.WriteLine($"{ItemCode} {Price} {Name} {ManufacturerName}");
         }
 
     }

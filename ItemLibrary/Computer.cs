@@ -10,7 +10,7 @@ namespace ItemLibrary
     {
         public string ProcessorName { get; set; }
         public string GraphicsCardName { get; set; }
-        public int GraphicsCardMemory { get; set; }
+        public string GraphicsCardMemory { get; set; }
         public int RAM { get; set; }
         public string RAM_type { get; set; }
         public string Resolution { get; set; }
@@ -18,8 +18,12 @@ namespace ItemLibrary
 
 
         //builder pattern??
+        public Computer()
+        {
+
+        }
         public Computer(ulong code, double price, string name, string manufacturer, string itemURL,
-            string procName, string gpuName, int gpuMem, int ram, string ramType,
+            string procName, string gpuName, string gpuMem, int ram, string ramType,
             string resol, int storage)
         {
 
@@ -50,9 +54,9 @@ namespace ItemLibrary
         //irgi testavimui
         public override void PrintOut()
         {
-            Console.WriteLine(ItemCode + " " + Price + " " + Name + " " + ManufacturerName);
-            Console.WriteLine(ProcessorName + " " + RAM + " " + RAM_type + " " + StorageCapacity);
-            Console.WriteLine(GraphicsCardName + " " + GraphicsCardMemory + " " + Resolution);
+            Console.WriteLine($"{ItemCode} {Price} {Name} {ManufacturerName}");
+            Console.WriteLine($"{ProcessorName} {RAM} {RAM_type} {StorageCapacity}");
+            Console.WriteLine($"{GraphicsCardName} {GraphicsCardMemory} {Resolution}");
         }
     }
 }
