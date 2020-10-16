@@ -5,8 +5,9 @@ using System.Text;
 
 namespace DataContent
 { 
-    interface IReadData
+    public interface IReadData<T> where T :Item
     {
-        public List<Item> ReadData(string path);
+        public List<T> ReadData(string path);
+        public void WriteCSVFile(string path, List<T> list);
     }
 }

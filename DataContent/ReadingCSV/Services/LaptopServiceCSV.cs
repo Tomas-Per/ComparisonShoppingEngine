@@ -9,7 +9,7 @@ using System.Linq;
 
 namespace DataContent.ReadingCSV.Services
 {
-    public class LaptopServiceCSV
+    public class LaptopServiceCSV : IReadData<Computer>
     {
         public List<Computer> ReadData(string path)
         {
