@@ -14,7 +14,9 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using System.Xml.Serialization;
-
+using DataContent.ReadingCSV.Services;
+using ItemLibrary;
+using System.IO;
 
 public class Computer {
     public string Name { get; set; }
@@ -32,7 +34,7 @@ namespace WPF
             InitializeComponent();
         }
 
-        Computer test = new Computer();
+        //Computer test = new Computer();
         private void PriceSlider_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
         {
             txtSliderValue.Text = "Price up to: " + PriceSlider.Value.ToString() + "$";
@@ -40,12 +42,26 @@ namespace WPF
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
-            var computers = new List<Computer>();
+            string _filePath = System.IO.Path.GetDirectoryName(System.AppDomain.CurrentDomain.BaseDirectory);
+            for (int i = 0; i < 4; i++)
+            {
+                _filePath = Directory.GetParent(_filePath).FullName;
+            }
+            _filePath += @"\Data\senukai.csv";
+
+
+            var _laptopService = new LaptopServiceCSV();
+
+            //Here We are calling function to read CSV file
+            var resultData = _laptopService.ReadData(_filePath);
+            ItemsListView.ItemsSource = resultData;
+        
+        /*var computers = new List<Computer>();
             computers.Add(new Computer() { Name = "Apple - MacBook Air 13.3\"" });
             computers.Add(new Computer() { Name = "Asus - 14\" ZenBook Duo Touch Laptop" });
-            computers.Add(new Computer() { Name = "Lenovo - IdeaPad 15.6\" Laptop"});
+            computers.Add(new Computer() { Name = "Lenovo - IdeaPad 15.6\" Laptop"});*/
 
-            ItemsListView.ItemsSource = computers;
+            //ItemsListView.ItemsSource = computers;
         }
 
         /*

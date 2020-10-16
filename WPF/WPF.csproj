@@ -11,6 +11,11 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\DataContent\DataContent.csproj" />
+    <ProjectReference Include="..\ItemLibrary\ItemLibrary.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
     <Resource Include="2678672181578289022-128.png" />
   </ItemGroup>
 

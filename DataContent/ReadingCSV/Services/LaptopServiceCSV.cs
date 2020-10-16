@@ -56,6 +56,10 @@ namespace DataContent.ReadingCSV.Services
                 }
             }
         }
+        public static void Main()
+        {
+           
+        }
     }
 }
 
