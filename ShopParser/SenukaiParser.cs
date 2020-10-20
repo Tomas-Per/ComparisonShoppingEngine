@@ -8,7 +8,7 @@ using System.Text;
 
 namespace ShopParser
 {
-    class SenukaiParser : IParser
+    class SenukaiParser : IParser<Computer>
     {
         private IWebDriver _driver;
 
@@ -20,9 +20,9 @@ namespace ShopParser
             _driver = new ChromeDriver();
             //_driver = new ChromeDriver(options);S
         }
-        public List<Item> ParseShop(string url)
+        public List<Computer> ParseShop(string url)
         {
-            List<Item> data = new List<Item>();
+            List<Computer> data = new List<Computer>();
             _driver.Navigate().GoToUrl(url);
             //var price = _driver.FindElement(By.Id("catalog-taxons-product-price__item-price"));
 

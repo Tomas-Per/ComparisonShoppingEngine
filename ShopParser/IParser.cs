@@ -5,8 +5,9 @@ using System.Text;
 
 namespace ShopParser
 {
-    public interface IParser
+    public interface IParser<T> where T :   Item
     {
-        public List<Item> ParseShop(string url);
+        
+        public List<T> ParseShop(string url);
     }
 }
