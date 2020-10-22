@@ -1,11 +1,11 @@
 ﻿using ItemLibrary;
-using Microsoft.VisualBasic;
 using OpenQA.Selenium;
 using OpenQA.Selenium.Chrome;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Runtime.CompilerServices;
+using static DataContent.Parsing;
+
 
 namespace ShopParser
 {
@@ -19,7 +19,7 @@ namespace ShopParser
         {
             var options = new ChromeOptions();
             options.AddArguments("--headless");
-            _driver = new ChromeDriver();
+            _driver = new ChromeDriver(options);
         }
 
         public List<Computer> ParseShop()
@@ -32,11 +32,16 @@ namespace ShopParser
             var names = _driver.FindElements(By.XPath("//*[@class = 'catalog-taxons-product__name']"));
             var prices = _driver.FindElements(By.XPath("//*[@class = 'catalog-taxons-product-price__item-price']"));
 
-            var pricesList = prices.ToList();
+            List<string> pricesList = new List<string>();
+
+            foreach (var price in prices)
+            {
+                pricesList.Add(price.Text);
+            }
 
             foreach (var name in names) 
             {
-                data.Add(new Computer(name.Text, ParseDouble(pricesList.First)));
+                data.Add(new Computer(name.Text, ParseDouble(pricesList.ElementAt(0))));
                 pricesList.RemoveAt(0);
             }
 

@@ -6,9 +6,9 @@ using System.Text.RegularExpressions;
 
 namespace DataContent
 {
-    class Parsing
+    public class Parsing
     {
-        public static string ReplaceSeperator(string text)
+        private static string ReplaceSeperator(string text)
         {
             string value = Regex.Replace(text, @",", ".");
             return value;
