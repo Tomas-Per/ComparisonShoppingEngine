@@ -10,12 +10,5 @@ namespace ItemLibrary
         public string ManufacturerName { get; set; }
         public string ItemURL { get; set; }
 
-
-        //cia testavimui
-        public virtual void PrintOut()
-        {
-            Console.WriteLine($"{ItemCode} {Price} {Name} {ManufacturerName}");
-        }
-
     }
 }
