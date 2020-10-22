@@ -20,8 +20,5 @@ namespace DataContent
             string val = value.ToString();
             return Convert.ToDouble(val);
         }
-        public static void Main()
-        { 
-        }
     }
 }
