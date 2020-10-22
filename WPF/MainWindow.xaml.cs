@@ -18,9 +18,6 @@ using DataContent.ReadingCSV.Services;
 using ItemLibrary;
 using System.IO;
 
-public class Computer {
-    public string Name { get; set; }
-}
 
 namespace WPF
 {
@@ -49,19 +46,16 @@ namespace WPF
             }
             _filePath += @"\Data\senukai.csv";
 
-
             var _laptopService = new LaptopServiceCSV();
 
             //Here We are calling function to read CSV file
             var resultData = _laptopService.ReadData(_filePath);
             ItemsListView.ItemsSource = resultData;
-        
-        /*var computers = new List<Computer>();
-            computers.Add(new Computer() { Name = "Apple - MacBook Air 13.3\"" });
-            computers.Add(new Computer() { Name = "Asus - 14\" ZenBook Duo Touch Laptop" });
-            computers.Add(new Computer() { Name = "Lenovo - IdeaPad 15.6\" Laptop"});*/
+        }
 
-            //ItemsListView.ItemsSource = computers;
+        private void FilterButton_Click(object sender, RoutedEventArgs e)
+        {
+
         }
 
         /*

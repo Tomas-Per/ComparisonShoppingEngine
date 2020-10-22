@@ -42,7 +42,7 @@
             <ColumnDefinition Width="200"/>
             <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
-       
+
         <Grid Height="60" Grid.Column="1" VerticalAlignment="Top" Background="#80deea">
             <TextBlock Text="LIBRA" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="28" Foreground="White" FontFamily="Candara Light" FontWeight="Bold"/>
         </Grid>
@@ -94,16 +94,16 @@
                     <TextBlock Text="Brand" FontFamily="Candara Light" Foreground="White" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="10,10,10,10" FontWeight="Bold" FontSize="14"/>
                     <Grid Margin="10,0,4,0">
                         <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="*"/>
-                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="25*"/>
+                            <ColumnDefinition Width="68*"/>
+                            <ColumnDefinition Width="93*"/>
                         </Grid.ColumnDefinitions>
-
-                        <StackPanel Grid.Column="0" >
-                            <CheckBox x:Name="AsusCheckBox" FontFamily="Candara Light"  Background="White" BorderBrush="White" Foreground="White" Content="Asus"/>
-                            <CheckBox x:Name="LenovoCheckBox" FontFamily="Candara Light"  Background="White" BorderBrush="White" Foreground="White" Content="Lenovo"/>
-                            <CheckBox x:Name="AppleCheckBox" FontFamily="Candara Light"  Background="White" BorderBrush="White" Foreground="White" Content="Apple"/>
-                        </StackPanel>
-                        <StackPanel Grid.Column="1">
+                        <StackPanel Grid.Column="0" Grid.ColumnSpan="2" >
+                                <CheckBox x:Name="AsusCheckBox" FontFamily="Candara Light"  Background="White" BorderBrush="White" Foreground="White" Content="Asus"/>
+                                <CheckBox x:Name="LenovoCheckBox" FontFamily="Candara Light"  Background="White" BorderBrush="White" Foreground="White" Content="Lenovo"/>
+                                <CheckBox x:Name="AppleCheckBox" FontFamily="Candara Light"  Background="White" BorderBrush="White" Foreground="White" Content="Apple"/>
+                            </StackPanel>
+                        <StackPanel Grid.Column="2">
                             <CheckBox x:Name="HuaweiCheckBox" FontFamily="Candara Light"  Background="White" BorderBrush="White" Foreground="White" Content="Huawei"/>
                             <CheckBox x:Name="AcerCheckBox" FontFamily="Candara Light"  Background="White" BorderBrush="White" Foreground="White" Content="Acer"/>
                             <CheckBox x:Name="HPCheckBox" FontFamily="Candara Light"  Background="White" BorderBrush="White" Foreground="White" Content="HP"/>
@@ -126,7 +126,7 @@
                             <CheckBox x:Name="IntelAtomCheckBox" Content="Intel Atom"  FontFamily="Candara Light"  Background="White" BorderBrush="White" Foreground="White"/>
                         </StackPanel>
                     </Grid>
-                    <Button Content="Apply Filters" VerticalAlignment="Bottom" HorizontalAlignment="Center" Margin="10,10,10,0" Background="#FF4BACB8" BorderBrush="White" FontFamily="Candara Light">
+                    <Button x:Name="FilterButton" Content="Apply Filters" VerticalAlignment="Bottom" HorizontalAlignment="Center" Margin="10,10,10,0" Background="#FF4BACB8" BorderBrush="White" FontFamily="Candara Light" Click="FilterButton_Click">
 
                     </Button>
                 </StackPanel>
