@@ -22,13 +22,6 @@ namespace ShopParser
             _driver = new ChromeDriver();
         }
 
-
-        public static void Main (string[] args)
-        {
-            var test = new SenukaiParser();
-            var tet = test.ParseShop();
-        }
-
         public List<Computer> ParseShop()
         {
             List<Computer> data = new List<Computer>();
