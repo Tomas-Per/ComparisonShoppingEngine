@@ -16,9 +16,18 @@ namespace DataContent
         public static double ParseDouble(string text)
         {
             text = ReplaceSeperator(text);
-            Match value = Regex.Matches(text, @"\s+\d+(\.\d+)?")[0];
-            string val = value.ToString();
-            return Convert.ToDouble(val);
+            try
+            {
+                Match value = Regex.Matches(text, @"\s+\d+(\.\d+)?")[0];
+                text = value.ToString();
+            }
+            catch (ArgumentOutOfRangeException e)
+            {
+                Match value = Regex.Matches(text, @"\d+(\.\d+)?")[0];
+                text = value.ToString();
+            }
+
+            return Convert.ToDouble(text);
         }
     }
 }
