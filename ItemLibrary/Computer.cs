@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Text;
@@ -8,12 +9,25 @@ namespace ItemLibrary
 {
     public class Computer : Item
     {
+
+        enum Category
+        {
+            Computer  
+        };
+
+
         public string ProcessorName { get; set; }
         public string GraphicsCardName { get; set; }
         public string GraphicsCardMemory { get; set; }
         public int RAM { get; set; }
         public string RAM_type { get; set; }
         public string Resolution { get; set; }
+
+        public static explicit operator Computer(List<Item> v)
+        {
+            throw new NotImplementedException();
+        }
+
         public int StorageCapacity { get; set; }
 
 
@@ -43,6 +57,14 @@ namespace ItemLibrary
             Resolution = resol;
             StorageCapacity = storage;
         }
+
+
+        public Computer(string name, double price)
+        {
+            Name = name;
+            Price = price;
+        }
+
 
         public List<Computer> FindSimilar(List<Computer> list)
         {
