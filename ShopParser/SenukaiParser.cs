@@ -1,16 +1,11 @@
-﻿using HtmlAgilityPack;
-using ItemLibrary;
+﻿using ItemLibrary;
+using Microsoft.VisualBasic;
 using OpenQA.Selenium;
 using OpenQA.Selenium.Chrome;
-using OpenQA.Selenium.Remote;
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-using System.Net.Http;
-using System.Net.Http.Headers;
-using System.Text;
-using System.Web;
+using System.Runtime.CompilerServices;
 
 namespace ShopParser
 {
@@ -24,7 +19,14 @@ namespace ShopParser
         {
             var options = new ChromeOptions();
             options.AddArguments("--headless");
-            _driver = new ChromeDriver(options);
+            _driver = new ChromeDriver();
+        }
+
+
+        public static void Main (string[] args)
+        {
+            var test = new SenukaiParser();
+            var tet = test.ParseShop();
         }
 
         public List<Computer> ParseShop()
@@ -36,6 +38,14 @@ namespace ShopParser
             // while exists next button
             var names = _driver.FindElements(By.XPath("//*[@class = 'catalog-taxons-product__name']"));
             var prices = _driver.FindElements(By.XPath("//*[@class = 'catalog-taxons-product-price__item-price']"));
+
+            var pricesList = prices.ToList();
+
+            foreach (var name in names) 
+            {
+                data.Add(new Computer(name.Text, ParseDouble(pricesList.First)));
+                pricesList.RemoveAt(0);
+            }
 
             return data;
         }
