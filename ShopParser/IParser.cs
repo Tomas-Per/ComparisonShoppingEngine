@@ -8,6 +8,6 @@ namespace ShopParser
     public interface IParser<T> where T :   Item
     {
         
-        public List<T> ParseShop(string url);
+        public List<T> ParseShop();
     }
 }

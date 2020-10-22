@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Text;
@@ -56,6 +57,14 @@ namespace ItemLibrary
             Resolution = resol;
             StorageCapacity = storage;
         }
+
+
+        public Computer(string name, double price)
+        {
+            Name = name;
+            Price = price;
+        }
+
 
         public List<Computer> FindSimilar(List<Computer> list)
         {
