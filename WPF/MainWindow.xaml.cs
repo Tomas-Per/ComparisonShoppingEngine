@@ -29,6 +29,8 @@ namespace WPF
         public MainWindow()
         {
             InitializeComponent();
+            this.WindowStartupLocation =
+                WindowStartupLocation.CenterScreen;
         }
 
         //Computer test = new Computer();
