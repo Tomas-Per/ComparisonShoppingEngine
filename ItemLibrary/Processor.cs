@@ -2,9 +2,9 @@
 {
     public struct Processor
     {
-        public string Name { get; }
-        public string AmazonLink { get; }
-        public  string AmazonBin { get; }
+        public string Name { get; set; }
+        public string AmazonLink { get; set; }
+        public  string AmazonBin { get; set; }
 
         public Processor(string name, string link)
         {

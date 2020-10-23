@@ -6,12 +6,13 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.IO;
 using System.Linq;
+using System.Text;
 
 namespace DataContent.ReadingCSV.Services
 {
-    public class LaptopServiceCSV : IData<Computer>
+    class ProcessorServiceCSV
     {
-        public List<Computer> ReadData(string path)
+        public List<Processor> ReadData(string path)
         {
             try
             {
@@ -20,8 +21,8 @@ namespace DataContent.ReadingCSV.Services
                 {
                     csv.Configuration.CultureInfo = CultureInfo.InvariantCulture;
                     csv.Configuration.Delimiter = ",";
-                    csv.Configuration.RegisterClassMap<LaptopMap>();
-                    var records = csv.GetRecords<Computer>().ToList();
+                    csv.Configuration.RegisterClassMap<ProcessorMap>();
+                    var records = csv.GetRecords<Processor>().ToList();
 
                     return records;
                 }
@@ -35,27 +36,20 @@ namespace DataContent.ReadingCSV.Services
                 throw e;
             }
         }
-        public void WriteCSVFile(string path, List<Computer> computer)
+
+        public void WriteCSVFile(string path, List<Processor> processors)
         {
-            using (StreamWriter sw = new StreamWriter(path))
+            using (var stream = File.Open(path, FileMode.Append))
+            using (StreamWriter sw = new StreamWriter(stream))
             using (CsvWriter cw = new CsvWriter(sw))
             {
-                var headers = new List<String>{"laptop_name", "laptop_url", "laptop_price", "laptop_manufacturer",
-                    "laptop_resolution", "laptop_processor_class", "laptop_ram_type", "laptop_ram",
-                    "laptop_storage", "laptop_graphic_card", "laptop_graphic_card_memory" };
-                foreach(String head in headers)
+                foreach (Processor processor in processors)
                 {
-                    cw.WriteField(head);
-                }
-                cw.NextRecord();
-                foreach (Computer comp in computer)
-                {
-                    cw.Configuration.RegisterClassMap<LaptopMap>();
-                    cw.WriteRecord<Computer>(comp);
+                    cw.Configuration.RegisterClassMap<ProcessorMap>();
+                    cw.WriteRecord<Processor>(processor);
                     cw.NextRecord();
                 }
             }
         }
     }
 }
-
