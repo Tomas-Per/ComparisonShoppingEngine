@@ -1,4 +1,5 @@
 ﻿using ItemLibrary;
+using Newtonsoft.Json.Schema;
 using OpenQA.Selenium;
 using OpenQA.Selenium.Chrome;
 using System;
@@ -19,7 +20,21 @@ namespace ShopParser
         {
             var options = new ChromeOptions();
             options.AddArguments("--headless");
-            _driver = new ChromeDriver(options);
+            _driver = new ChromeDriver();
+        }
+
+
+        public static void Main (string[] args)
+        {
+            var test = new SenukaiParser();
+            List<Computer> testt = test.ParseShop();
+
+            foreach (var item in testt)
+            {
+                Console.WriteLine(item.Price);
+            }
+
+
         }
 
         public List<Computer> ParseShop()
@@ -41,10 +56,11 @@ namespace ShopParser
 
             foreach (var name in names) 
             {
-                data.Add(new Computer(name.Text, ParseDouble(pricesList.ElementAt(0))));
+                data.Add(new Computer { Name = name.Text, Price = ParseDouble(pricesList.ElementAt(0)) });
                 pricesList.RemoveAt(0);
             }
 
+            
             return data;
         }
 

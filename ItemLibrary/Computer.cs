@@ -58,14 +58,6 @@ namespace ItemLibrary
             StorageCapacity = storage;
         }
 
-
-        public Computer(string name, double price)
-        {
-            Name = name;
-            Price = price;
-        }
-
-
         public List<Computer> FindSimilar(List<Computer> list)
         {
             IEnumerable<Computer> computers = list.Where(comp => comp.ProcessorName == this.ProcessorName
