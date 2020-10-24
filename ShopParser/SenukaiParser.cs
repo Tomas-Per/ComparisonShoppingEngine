@@ -2,9 +2,11 @@
 using Newtonsoft.Json.Schema;
 using OpenQA.Selenium;
 using OpenQA.Selenium.Chrome;
+using OpenQA.Selenium.Support.UI;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading;
 using static DataContent.Parsing;
 
 
@@ -44,23 +46,28 @@ namespace ShopParser
             _driver.Navigate().GoToUrl(_url);
 
             // while exists next button
-            var names = _driver.FindElements(By.XPath("//*[@class = 'catalog-taxons-product__name']"));
-            var prices = _driver.FindElements(By.XPath("//*[@class = 'catalog-taxons-product-price__item-price']"));
+            var elements = _driver.FindElements(By.XPath("//*[@class = 'catalog-taxons-product__name']"));
+            //var links = _driver.FindElements(By.XPath("//*[@class = 'catalog-taxons-product catalog-taxons-product--grid-view']"));
 
-            List<string> pricesList = new List<string>();
+            List<string> links = new List<string>();
 
-            foreach (var price in prices)
+            foreach (var element in elements)
             {
-                pricesList.Add(price.Text);
+                links.Add(element.GetAttribute("href"));
             }
 
-            foreach (var name in names) 
+            foreach (var link in links)
             {
-                data.Add(new Computer { Name = name.Text, Price = ParseDouble(pricesList.ElementAt(0)) });
-                pricesList.RemoveAt(0);
+                _driver.Navigate().GoToUrl(link);
+                _driver.Navigate().Back();
+                _driver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(10);
+
+
             }
 
-            
+
+
+
             return data;
         }
 
