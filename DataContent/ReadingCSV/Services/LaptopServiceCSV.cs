@@ -30,9 +30,9 @@ namespace DataContent.ReadingCSV.Services
             {
                 throw new Exception("File not found");
             }
-            catch (Exception e)
+            catch (Exception)
             {
-                throw e;
+                throw;
             }
         }
         public void WriteCSVFile(string path, List<Computer> computer)
