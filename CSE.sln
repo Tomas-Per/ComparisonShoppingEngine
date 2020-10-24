@@ -20,7 +20,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DataManipulation", "DataMan
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Comparison", "Comparison\Comparison.csproj", "{E953965C-FB11-48E9-94E2-806D27257D04}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ShopParser", "ShopParser\ShopParser.csproj", "{F85374DE-BA6D-413B-9763-9FEA873912FF}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ShopParser", "ShopParser\ShopParser.csproj", "{F85374DE-BA6D-413B-9763-9FEA873912FF}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ExceptionsLibrary", "ExceptionsLibrary\ExceptionsLibrary.csproj", "{0265957F-8E11-4560-BAC3-82830240B0E5}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -56,6 +58,10 @@ Global
 		{F85374DE-BA6D-413B-9763-9FEA873912FF}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F85374DE-BA6D-413B-9763-9FEA873912FF}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F85374DE-BA6D-413B-9763-9FEA873912FF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0265957F-8E11-4560-BAC3-82830240B0E5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0265957F-8E11-4560-BAC3-82830240B0E5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0265957F-8E11-4560-BAC3-82830240B0E5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0265957F-8E11-4560-BAC3-82830240B0E5}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
