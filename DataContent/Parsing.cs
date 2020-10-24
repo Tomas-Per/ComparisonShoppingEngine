@@ -30,7 +30,7 @@ namespace DataContent
             }
             catch (Exception e)
             {
-                throw new DataCustomException("Error happened while trying to parse: " + e.Message, this);
+                throw new DataCustomException("Error happened while trying to parse: " + e.Message, ParseDouble(null));
             }
 
             return Convert.ToDouble(text);
