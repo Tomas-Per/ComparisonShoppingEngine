@@ -47,7 +47,6 @@ namespace ShopParser
 
             // while exists next button
             var elements = _driver.FindElements(By.XPath("//*[@class = 'catalog-taxons-product__name']"));
-            //var links = _driver.FindElements(By.XPath("//*[@class = 'catalog-taxons-product catalog-taxons-product--grid-view']"));
 
             List<string> links = new List<string>();
 
@@ -59,17 +58,28 @@ namespace ShopParser
             foreach (var link in links)
             {
                 _driver.Navigate().GoToUrl(link);
+                var test = parseWindow();
                 _driver.Navigate().Back();
-                _driver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(10);
+                break;
+                //_driver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(10);
 
 
             }
 
-
-
-
             return data;
         }
+
+
+        private Computer parseWindow ()
+        {
+
+            var name = _driver.FindElement(By.CssSelector("//div[contains ((@class, 'product-righter') and (@class 'google-rich-snippet'))]"));
+            var price = _driver.FindElement(By.ClassName("price"));
+            Console.WriteLine(name.Text);
+
+            return null;
+        }
+
 
             
     }
