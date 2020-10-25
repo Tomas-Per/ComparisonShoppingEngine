@@ -34,7 +34,6 @@ namespace WPF
                 WindowStartupLocation.CenterScreen;
         }
 
-        //Computer test = new Computer();
         private void PriceSlider_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
         {
             txtSliderValue.Text = "Price up to: " + PriceSlider.Value.ToString() + "$";
