@@ -18,7 +18,6 @@ namespace DataManipulation
         public List<Item> FilterByName(string name)
         {
             List<Item> result = _items.Where(item => item.Name == name).ToList();
-            _items = result;
             return result;
         }
 
@@ -26,7 +25,6 @@ namespace DataManipulation
         public List<Item> FilterByManufacturer(string manufacturer)
         {
             List<Item> result = _items.Where(item => item.ManufacturerName == manufacturer).ToList();
-            _items = result;
             return result;
         }
 
@@ -34,7 +32,6 @@ namespace DataManipulation
         public List<Item> FilterByPrice(double minRange, double maxRange)
         {
             List<Item> result = _items.Where(item => item.Price >= minRange && item.Price <= maxRange).ToList();
-            _items = result;
             return result;
         }
     }
