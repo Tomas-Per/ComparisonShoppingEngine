@@ -60,6 +60,18 @@ namespace WPF
 
         }
 
+        private void ListBox_SelectionChanged(object sender, SelectionChangedEventArgs args)
+        {
+            if (ItemsListBox.SelectedIndex == -1) return;
+
+            Computer item = (sender as ListBox).SelectedItem as Computer;
+            ProductName.Text = item.Name;
+            ProductPrice.Text = '€' + (item.Price).ToString();
+            ProductBrand.Text = item.ManufacturerName;
+            ProductProcessor.Text = item.ProcessorName;
+
+        }
+
         /*
         private void FilterMenuClose_Click(object sender, RoutedEventArgs e)
         {

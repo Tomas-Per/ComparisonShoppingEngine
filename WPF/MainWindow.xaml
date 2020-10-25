@@ -63,7 +63,8 @@
                 <Grid>
                     <ListBox x:Name="ItemsListBox" Margin="10 10 10 10" FontFamily="Candara Light" FontSize="14" VerticalContentAlignment="Top"  
                          ScrollViewer.VerticalScrollBarVisibility="Visible"
-                         ScrollViewer.CanContentScroll="False" Height="460">
+                         ScrollViewer.CanContentScroll="False" Height="460"
+                         SelectionChanged="ListBox_SelectionChanged">
                         <ListBox.ItemTemplate>
                             <DataTemplate>
                                 <TextBlock Text="{Binding Name}"/>
@@ -73,10 +74,10 @@
                 </Grid>
             </StackPanel>
             <StackPanel Grid.Column="1" >
-                <TextBlock x:Name="ProductName" Height="40" FontFamily="Candara Light" FontSize="20" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="10,10,10,10">Place for item name</TextBlock>
-                <TextBlock x:Name="ProductPrice" FontFamily="Candara Light" FontSize="14" Margin="10,0,10,0">Place for price</TextBlock>
-                <TextBlock x:Name="ProductBrand" FontFamily="Candara Light" FontSize="14" Margin="10,5,10,0">brand</TextBlock>
-                <TextBlock x:Name="ProductProcessor" FontFamily="Candara Light" FontSize="14" Margin="10,5,10,0">processor</TextBlock>
+                <TextBlock x:Name="ProductName" Height="40" FontFamily="Candara Light" FontSize="16" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="10,10,10,10"></TextBlock>
+                <TextBlock x:Name="ProductPrice" FontFamily="Candara Light" FontSize="14" Margin="10,0,10,0"></TextBlock>
+                <TextBlock x:Name="ProductBrand" FontFamily="Candara Light" FontSize="14" Margin="10,5,10,0"></TextBlock>
+                <TextBlock x:Name="ProductProcessor" FontFamily="Candara Light" FontSize="14" Margin="10,5,10,0"></TextBlock>
             </StackPanel>
         </Grid>
 
