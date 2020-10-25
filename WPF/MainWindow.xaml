@@ -60,13 +60,17 @@
                     <TextBox x:Name="SearchedItemText" Margin="10,10,0,0" FontFamily="Candara Light" VerticalAlignment="Center" CaretBrush="#FF275D63" SelectionBrush="#FF275D63" Foreground="#FF275D63" SelectionTextBrush="#FF275D63"  />
                     <Button Content="Search" x:Name="SearchButton" FontFamily="Candara Light"  Grid.Column="1" Margin="5,5,10,0" HorizontalAlignment="Right" Foreground="#FF80DEEA" Background="White" BorderBrush="#FF80DEEA"/>
                 </Grid>
-                <ListView x:Name="ItemsListView" Margin="10 10 10 10" FontFamily="Candara Light" FontSize="14">
-                    <ListView.ItemTemplate>
-                        <DataTemplate>
-                            <TextBlock Text="{Binding Name}"/>
-                        </DataTemplate>
-                    </ListView.ItemTemplate>
-                </ListView>
+                <Grid>
+                    <ListBox x:Name="ItemsListView" Margin="10 10 10 10" FontFamily="Candara Light" FontSize="14" VerticalContentAlignment="Top"  
+                         ScrollViewer.VerticalScrollBarVisibility="Visible"
+                         ScrollViewer.CanContentScroll="False" Height="460">
+                        <ListBox.ItemTemplate>
+                            <DataTemplate>
+                                <TextBlock Text="{Binding Name}"/>
+                            </DataTemplate>
+                        </ListBox.ItemTemplate>
+                    </ListBox>
+                </Grid>
             </StackPanel>
             <StackPanel Grid.Column="1" >
                 <TextBlock x:Name="ProductName" Height="40" FontFamily="Candara Light" FontSize="20" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="10,10,10,10">Place for item name</TextBlock>
