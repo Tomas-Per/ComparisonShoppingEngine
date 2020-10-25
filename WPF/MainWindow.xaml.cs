@@ -17,6 +17,7 @@ using System.Xml.Serialization;
 using DataContent.ReadingCSV.Services;
 using ItemLibrary;
 using System.IO;
+using DataManipulation;
 
 
 namespace WPF
@@ -57,7 +58,13 @@ namespace WPF
 
         private void FilterButton_Click(object sender, RoutedEventArgs e)
         {
-
+            Filter fil = new Filter(ItemsListBox.Items.Cast<Item>().ToList());
+            int MaxRange = (int) PriceSlider.Value;
+            
+            ItemsListBox.ItemsSource = fil.FilterByPrice(0, MaxRange);
+            /*TO DO: change filter class so it doesnt change the list 
+             * inside the instance of the class, this way we can keep filtering by price
+             */
         }
 
         private void ListBox_SelectionChanged(object sender, SelectionChangedEventArgs args)
