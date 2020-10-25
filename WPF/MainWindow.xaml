@@ -78,8 +78,6 @@
                 <TextBlock x:Name="ProductBrand" FontFamily="Candara Light" FontSize="14" Margin="10,5,10,0">brand</TextBlock>
                 <TextBlock x:Name="ProductProcessor" FontFamily="Candara Light" FontSize="14" Margin="10,5,10,0">processor</TextBlock>
             </StackPanel>
-
-
         </Grid>
 
         <Grid Name="FilterGrid" Width="200" HorizontalAlignment="Left" Background="#4bacb8" Visibility="Visible" RenderTransformOrigin="0.5,0.5" Grid.RowSpan="2">
@@ -131,7 +129,6 @@
                         </StackPanel>
                     </Grid>
                     <Button x:Name="FilterButton" Content="Apply Filters" VerticalAlignment="Bottom" HorizontalAlignment="Center" Margin="10,10,10,0" Background="#FF4BACB8" BorderBrush="White" FontFamily="Candara Light" Click="FilterButton_Click">
-
                     </Button>
                 </StackPanel>
             </StackPanel>
