@@ -61,7 +61,7 @@
                     <Button Content="Search" x:Name="SearchButton" FontFamily="Candara Light"  Grid.Column="1" Margin="5,5,10,0" HorizontalAlignment="Right" Foreground="#FF80DEEA" Background="White" BorderBrush="#FF80DEEA"/>
                 </Grid>
                 <Grid>
-                    <ListBox x:Name="ItemsListView" Margin="10 10 10 10" FontFamily="Candara Light" FontSize="14" VerticalContentAlignment="Top"  
+                    <ListBox x:Name="ItemsListBox" Margin="10 10 10 10" FontFamily="Candara Light" FontSize="14" VerticalContentAlignment="Top"  
                          ScrollViewer.VerticalScrollBarVisibility="Visible"
                          ScrollViewer.CanContentScroll="False" Height="460">
                         <ListBox.ItemTemplate>

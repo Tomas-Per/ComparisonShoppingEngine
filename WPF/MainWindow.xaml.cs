@@ -52,7 +52,7 @@ namespace WPF
 
             //Here We are calling function to read CSV file
             var resultData = _laptopService.ReadData(_filePath);
-            ItemsListView.ItemsSource = resultData;
+            ItemsListBox.ItemsSource = resultData;
         }
 
         private void FilterButton_Click(object sender, RoutedEventArgs e)
