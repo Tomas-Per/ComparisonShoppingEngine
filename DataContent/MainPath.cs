@@ -14,16 +14,12 @@ namespace DataContent.ReadingCSV
             while(!_filePath.EndsWith("ComparisonShoppingEngine"))
             {
                 _filePath = Directory.GetParent(_filePath).FullName;
-                if(_filePath.Contains("ComparisonShoppingEngine"))
+                if(!_filePath.Contains("ComparisonShoppingEngine"))
                 {
-                    throw new DataCustomException("Couldn't reach main path", this);
+                    throw new DataCustomException("Couldn't reach main path", null);
                 }
             }
             return _filePath;
-        }
-        public static void Main()
-        {
-            Console.WriteLine(GetMainPath());
         }
     }
 }
