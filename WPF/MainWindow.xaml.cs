@@ -69,6 +69,10 @@ namespace WPF
             ProductPrice.Text = '€' + (item.Price).ToString();
             ProductBrand.Text = item.ManufacturerName;
             ProductProcessor.Text = item.ProcessorName;
+            ProductRAM.Text = (item.RAM).ToString() + "GB " + item.RAM_type;
+            ProductGraphicsCard.Text = item.GraphicsCardName + ' ' + item.GraphicsCardMemory;
+            ProductResolution.Text = item.Resolution;
+            ProductStorage.Text = (item.StorageCapacity).ToString() + "GB";
 
         }
 
