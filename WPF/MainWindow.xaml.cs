@@ -41,7 +41,7 @@ namespace WPF
 
         private void PriceSlider_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
         {
-            txtSliderValue.Text = "Price up to: " + PriceSlider.Value.ToString() + "$";
+            txtSliderValue.Text = "Price up to: " + '€' + PriceSlider.Value.ToString();
         }
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
