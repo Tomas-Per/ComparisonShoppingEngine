@@ -65,16 +65,19 @@ namespace WPF
         private void FilterButton_Click(object sender, RoutedEventArgs e)
         {
             
-            
-            
-            //Filtering by price range
             int MaxRange = (int)PriceSlider.Value;
-            var List = _filter.FilterByPrice(0, MaxRange);
+            if(MaxRange != 0)
+            {
 
-            /*updating the list inside the class so we can filter out the list 
-             *which already has been filtered by price
-            */
-            _filter.UpdateList(List);
+                //Filtering by price range
+                var List = _filter.FilterByPrice(0, MaxRange);
+
+                /*updating the list inside the class so we can filter out the list 
+                 *which already has been filtered by price
+                */
+                _filter.UpdateList(List);
+
+            }
 
             List<Item> List1 = new List<Item>();
 

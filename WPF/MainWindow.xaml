@@ -96,7 +96,7 @@
                     <TextBlock Text="Price Range" FontFamily="Candara Light" Foreground="White" VerticalAlignment="Center" Margin="10 10 10 10" HorizontalAlignment="Center" FontWeight="Bold" FontSize="14"/>
 
                     <TextBox Name="txtSliderValue" BorderBrush="{x:Null}" FontFamily="Candara Light" Margin="10,0,10,10" VerticalAlignment="Top" Foreground="White"/>
-                    <Slider Height="20" Minimum="100" Maximum="4000" IsSnapToTickEnabled="True" VerticalAlignment="Bottom" Margin="15,0,15,0" TickFrequency="200" TickPlacement="BottomRight" Name="PriceSlider" ValueChanged="PriceSlider_ValueChanged" Foreground="White"/>
+                    <Slider Height="20" Minimum="0" Maximum="4000" IsSnapToTickEnabled="True" VerticalAlignment="Bottom" Margin="15,0,15,0" TickFrequency="200" TickPlacement="BottomRight" Name="PriceSlider" ValueChanged="PriceSlider_ValueChanged" Foreground="White"/>
 
                     <TextBlock Text="Brand" FontFamily="Candara Light" Foreground="White" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="10,10,10,10" FontWeight="Bold" FontSize="14"/>
                     <Grid Margin="10,0,4,0">
