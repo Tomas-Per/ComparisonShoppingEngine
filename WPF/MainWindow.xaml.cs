@@ -62,8 +62,44 @@ namespace WPF
 
         private void FilterButton_Click(object sender, RoutedEventArgs e)
         {
-            int MaxRange = (int) PriceSlider.Value;   
-            ItemsListBox.ItemsSource = _filter.FilterByPrice(0, MaxRange);  
+            //Filtering by price range
+            int MaxRange = (int)PriceSlider.Value;
+            var List = _filter.FilterByPrice(0, MaxRange);
+
+            /*updating the list inside the class so we can filter out the list 
+             *which already has been filtered by price
+            */
+            _filter.UpdateList(List);
+
+            List<Item> List1 = new List<Item>();
+
+            //Filtering by manufacturer
+            if ((bool)AsusCheckBox.IsChecked)
+            {
+                List1.AddRange(_filter.FilterByManufacturer("Asus"));
+            }
+            if ((bool)LenovoCheckBox.IsChecked)
+            {
+                List1.AddRange(_filter.FilterByManufacturer("Lenovo"));
+            }
+            if ((bool)AppleCheckBox.IsChecked)
+            {
+                List1.AddRange(_filter.FilterByManufacturer("Apple"));
+            }
+            if ((bool)HuaweiCheckBox.IsChecked)
+            {
+                List1.AddRange(_filter.FilterByManufacturer("Huawei"));
+            }
+            if ((bool)AcerCheckBox.IsChecked)
+            {
+                List1.AddRange(_filter.FilterByManufacturer("Acer"));
+            }
+            if ((bool)HPCheckBox.IsChecked)
+            {
+                List1.AddRange(_filter.FilterByManufacturer("HP"));
+            }
+
+            ItemsListBox.ItemsSource = List1;
         }
 
         private void ListBox_SelectionChanged(object sender, SelectionChangedEventArgs args)
