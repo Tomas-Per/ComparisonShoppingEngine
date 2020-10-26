@@ -16,7 +16,7 @@ using System.Windows.Shapes;
 using System.Xml.Serialization;
 using DataContent.ReadingCSV.Services;
 using ItemLibrary;
-using DataContent
+using DataContent;
 using System.IO;
 using DataManipulation;
 using DataContent.ReadingCSV;
