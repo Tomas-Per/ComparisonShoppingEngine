@@ -6,7 +6,7 @@ using ExceptionsLibrary;
 
 namespace DataContent.ReadingCSV
 {
-    class MainPath
+    public class MainPath
     {
         public static string GetMainPath()
         {

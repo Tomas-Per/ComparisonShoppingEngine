@@ -16,8 +16,10 @@ using System.Windows.Shapes;
 using System.Xml.Serialization;
 using DataContent.ReadingCSV.Services;
 using ItemLibrary;
+using DataContent
 using System.IO;
 using DataManipulation;
+using DataContent.ReadingCSV;
 
 namespace WPF
 {
@@ -44,13 +46,8 @@ namespace WPF
         }
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
-        {
-            string _filePath = System.IO.Path.GetDirectoryName(System.AppDomain.CurrentDomain.BaseDirectory);
-            for (int i = 0; i < 4; i++)
-            {
-                _filePath = Directory.GetParent(_filePath).FullName;
-            }
-            _filePath += @"\Data\senukai.csv";
+        { 
+            string _filePath = MainPath.GetMainPath() + @"\Data\senukai.csv";
 
             var _laptopService = new LaptopServiceCSV();
 
