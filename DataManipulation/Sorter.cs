@@ -6,7 +6,7 @@ using System.Text;
 
 namespace DataManipulation
 {
-    class Sorter
+    public class Sorter
     {
         private List<Item> _items { get; set; }
 

@@ -29,6 +29,7 @@ namespace WPF
     {
 
         private Filter _filter;
+        private Sorter _sorter;
 
         public MainWindow()
         {
