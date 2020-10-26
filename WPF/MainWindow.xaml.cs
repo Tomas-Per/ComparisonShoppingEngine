@@ -111,6 +111,15 @@ namespace WPF
         private void DisableFilterButton_Click(object sender, RoutedEventArgs e)
         {
             ItemsListBox.ItemsSource = OriginalList;
+
+            //Setting all checkboxes to be unchecked
+            AsusCheckBox.IsChecked = false;
+            LenovoCheckBox.IsChecked = false;
+            AppleCheckBox.IsChecked = false;
+            HuaweiCheckBox.IsChecked = false;
+            AcerCheckBox.IsChecked = false;
+            HPCheckBox.IsChecked = false;
+            
         }
 
         private void ListBox_SelectionChanged(object sender, SelectionChangedEventArgs args)
