@@ -34,5 +34,11 @@ namespace DataManipulation
             List<Item> result = _items.Where(item => item.Price >= minRange && item.Price <= maxRange).ToList();
             return result;
         }
+
+        public void UpdateList(List<Item> items)
+        {
+            _items = items;
+        }
+
     }
 }
