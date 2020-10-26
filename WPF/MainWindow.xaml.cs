@@ -27,6 +27,9 @@ namespace WPF
     /// </summary>
     public partial class MainWindow : Window
     {
+
+        private Filter _filter;
+
         public MainWindow()
         {
             InitializeComponent();
@@ -53,17 +56,13 @@ namespace WPF
             //Here We are calling function to read CSV file
             var resultData = _laptopService.ReadData(_filePath);
             ItemsListBox.ItemsSource = resultData;
+            _filter = new Filter(ItemsListBox.Items.Cast<Item>().ToList());
         }
 
         private void FilterButton_Click(object sender, RoutedEventArgs e)
         {
-            Filter fil = new Filter(ItemsListBox.Items.Cast<Item>().ToList());
-            int MaxRange = (int) PriceSlider.Value;
-            
-            ItemsListBox.ItemsSource = fil.FilterByPrice(0, MaxRange);
-            /*TO DO: change filter class so it doesnt change the list 
-             * inside the instance of the class, this way we can keep filtering by price
-             */
+            int MaxRange = (int) PriceSlider.Value;   
+            ItemsListBox.ItemsSource = _filter.FilterByPrice(0, MaxRange);  
         }
 
         private void ListBox_SelectionChanged(object sender, SelectionChangedEventArgs args)
