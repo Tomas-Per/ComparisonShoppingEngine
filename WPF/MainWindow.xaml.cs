@@ -30,6 +30,7 @@ namespace WPF
 
         private Filter _filter;
         private Sorter _sorter;
+        private List<Item> OriginalList = new List<Item>();
 
         public MainWindow()
         {
@@ -57,11 +58,16 @@ namespace WPF
             //Here We are calling function to read CSV file
             var resultData = _laptopService.ReadData(_filePath);
             ItemsListBox.ItemsSource = resultData;
+            
+            OriginalList = resultData.Cast<Item>().ToList();
             _filter = new Filter(ItemsListBox.Items.Cast<Item>().ToList());
         }
 
         private void FilterButton_Click(object sender, RoutedEventArgs e)
         {
+            
+            
+            
             //Filtering by price range
             int MaxRange = (int)PriceSlider.Value;
             var List = _filter.FilterByPrice(0, MaxRange);
@@ -98,8 +104,14 @@ namespace WPF
             {
                 List1.AddRange(_filter.FilterByManufacturer("HP"));
             }
-
+ 
             ItemsListBox.ItemsSource = List1;
+            _filter.UpdateList(OriginalList);
+        }
+
+        private void DisableFilterButton_Click(object sender, RoutedEventArgs e)
+        {
+            ItemsListBox.ItemsSource = OriginalList;
         }
 
         private void ListBox_SelectionChanged(object sender, SelectionChangedEventArgs args)

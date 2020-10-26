@@ -135,6 +135,8 @@
                     </Grid>
                     <Button x:Name="FilterButton" Content="Apply Filters" VerticalAlignment="Bottom" HorizontalAlignment="Center" Margin="10,10,10,0" Background="#FF4BACB8" BorderBrush="White" FontFamily="Candara Light" Click="FilterButton_Click">
                     </Button>
+                    <Button x:Name="DisableFilterButton" Content="Disable Filters" VerticalAlignment="Bottom" HorizontalAlignment="Center" Margin="10,10,10,0" Background="#FF4BACB8" BorderBrush="White" FontFamily="Candara Light" Click="DisableFilterButton_Click">
+                    </Button>
                 </StackPanel>
             </StackPanel>
         </Grid>
