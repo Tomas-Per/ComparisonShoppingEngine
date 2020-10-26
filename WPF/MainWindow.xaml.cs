@@ -19,7 +19,6 @@ using ItemLibrary;
 using System.IO;
 using DataManipulation;
 
-
 namespace WPF
 {
     /// <summary>
@@ -127,6 +126,27 @@ namespace WPF
             ProductGraphicsCard.Text = item.GraphicsCardName + ' ' + item.GraphicsCardMemory;
             ProductResolution.Text = item.Resolution;
             ProductStorage.Text = (item.StorageCapacity).ToString() + "GB";
+
+        }
+
+        private void SearchButton_Click(object sender, RoutedEventArgs e)
+        {
+            string SearchTerm = SearchedItemText.Text;
+            if(String.IsNullOrEmpty(SearchedItemText.Text))
+            {
+                ItemsListBox.ItemsSource = OriginalList;
+            }
+            else
+            {
+                List<Item> List = ItemsListBox.ItemsSource.Cast<Item>().ToList();
+                List<Item> result = List.Where(x => x.Name.Contains(SearchTerm)).ToList();
+                ItemsListBox.ItemsSource = result;
+            }
+            
+        }
+
+        private void SearchedItemText_TextChanged(object sender, TextChangedEventArgs e)
+        {
 
         }
 

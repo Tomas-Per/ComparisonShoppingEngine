@@ -57,8 +57,8 @@
                         <ColumnDefinition Width="*"/>
                         <ColumnDefinition Width="0.4*"/>
                     </Grid.ColumnDefinitions>
-                    <TextBox x:Name="SearchedItemText" Margin="10,10,0,0" FontFamily="Candara Light" VerticalAlignment="Center" CaretBrush="#FF275D63" SelectionBrush="#FF275D63" Foreground="#FF275D63" SelectionTextBrush="#FF275D63"  />
-                    <Button Content="Search" x:Name="SearchButton" FontFamily="Candara Light"  Grid.Column="1" Margin="5,5,10,0" HorizontalAlignment="Right" Foreground="#FF80DEEA" Background="White" BorderBrush="#FF80DEEA"/>
+                    <TextBox x:Name="SearchedItemText" Margin="10,10,0,0" FontFamily="Candara Light" VerticalAlignment="Center" CaretBrush="#FF275D63" SelectionBrush="#FF275D63" Foreground="#FF275D63" SelectionTextBrush="#FF275D63" TextChanged="SearchedItemText_TextChanged"  />
+                    <Button Content="Search" x:Name="SearchButton" FontFamily="Candara Light"  Grid.Column="1" Margin="5,5,10,0" HorizontalAlignment="Right" Foreground="#FF80DEEA" Background="White" BorderBrush="#FF80DEEA" Click="SearchButton_Click"/>
                 </Grid>
                 <Grid>
                     <ListBox x:Name="ItemsListBox" Margin="10 10 10 10" FontFamily="Candara Light" FontSize="14" VerticalContentAlignment="Top"  
