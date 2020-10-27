@@ -61,9 +61,9 @@ namespace WPF
 
         private void FilterButton_Click(object sender, RoutedEventArgs e)
         {
-            
+            List<Item> List1 = new List<Item>();
             int MaxRange = (int)PriceSlider.Value;
-            if(MaxRange != 0)
+            if (MaxRange != 0)
             {
 
                 //Filtering by price range
@@ -74,34 +74,78 @@ namespace WPF
                 */
                 _filter.UpdateList(List);
 
-            }
+                //checking if all the checkboxes are unchecked, if so we return only the filtered by price list
+                if (!((bool)AsusCheckBox.IsChecked || (bool)LenovoCheckBox.IsChecked || (bool)AppleCheckBox.IsChecked
+                                    || (bool)HuaweiCheckBox.IsChecked || (bool)AcerCheckBox.IsChecked || (bool)HPCheckBox.IsChecked))
+                {
+                    List1 = List;
+                }
+                else
+                {
+                    //Filtering by manufacturer
+                    if ((bool)AsusCheckBox.IsChecked)
+                    {
+                        List1.AddRange(_filter.FilterByManufacturer("Asus"));
+                    }
+                    if ((bool)LenovoCheckBox.IsChecked)
+                    {
+                        List1.AddRange(_filter.FilterByManufacturer("Lenovo"));
+                    }
+                    if ((bool)AppleCheckBox.IsChecked)
+                    {
+                        List1.AddRange(_filter.FilterByManufacturer("Apple"));
+                    }
+                    if ((bool)HuaweiCheckBox.IsChecked)
+                    {
+                        List1.AddRange(_filter.FilterByManufacturer("Huawei"));
+                    }
+                    if ((bool)AcerCheckBox.IsChecked)
+                    {
+                        List1.AddRange(_filter.FilterByManufacturer("Acer"));
+                    }
+                    if ((bool)HPCheckBox.IsChecked)
+                    {
+                        List1.AddRange(_filter.FilterByManufacturer("HP"));
+                    }
 
-            List<Item> List1 = new List<Item>();
-
-            //Filtering by manufacturer
-            if ((bool)AsusCheckBox.IsChecked)
-            {
-                List1.AddRange(_filter.FilterByManufacturer("Asus"));
+                }
             }
-            if ((bool)LenovoCheckBox.IsChecked)
+            else
             {
-                List1.AddRange(_filter.FilterByManufacturer("Lenovo"));
-            }
-            if ((bool)AppleCheckBox.IsChecked)
-            {
-                List1.AddRange(_filter.FilterByManufacturer("Apple"));
-            }
-            if ((bool)HuaweiCheckBox.IsChecked)
-            {
-                List1.AddRange(_filter.FilterByManufacturer("Huawei"));
-            }
-            if ((bool)AcerCheckBox.IsChecked)
-            {
-                List1.AddRange(_filter.FilterByManufacturer("Acer"));
-            }
-            if ((bool)HPCheckBox.IsChecked)
-            {
-                List1.AddRange(_filter.FilterByManufacturer("HP"));
+                //checking if all the checkboxes are unchecked, if so we return only the original list
+                if (!((bool)AsusCheckBox.IsChecked || (bool)LenovoCheckBox.IsChecked || (bool)AppleCheckBox.IsChecked
+                    || (bool)HuaweiCheckBox.IsChecked || (bool)AcerCheckBox.IsChecked || (bool)HPCheckBox.IsChecked))
+                {
+                    List1 = OriginalList;
+                }
+                else
+                {
+                    //Filtering by manufacturer
+                    if ((bool)AsusCheckBox.IsChecked)
+                    {
+                        List1.AddRange(_filter.FilterByManufacturer("Asus"));
+                    }
+                    if ((bool)LenovoCheckBox.IsChecked)
+                    {
+                        List1.AddRange(_filter.FilterByManufacturer("Lenovo"));
+                    }
+                    if ((bool)AppleCheckBox.IsChecked)
+                    {
+                        List1.AddRange(_filter.FilterByManufacturer("Apple"));
+                    }
+                    if ((bool)HuaweiCheckBox.IsChecked)
+                    {
+                        List1.AddRange(_filter.FilterByManufacturer("Huawei"));
+                    }
+                    if ((bool)AcerCheckBox.IsChecked)
+                    {
+                        List1.AddRange(_filter.FilterByManufacturer("Acer"));
+                    }
+                    if ((bool)HPCheckBox.IsChecked)
+                    {
+                        List1.AddRange(_filter.FilterByManufacturer("HP"));
+                    }
+                }
             }
  
             ItemsListBox.ItemsSource = List1;
