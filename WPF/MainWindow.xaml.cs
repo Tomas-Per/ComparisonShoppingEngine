@@ -18,6 +18,7 @@ using DataContent.ReadingCSV.Services;
 using ItemLibrary;
 using DataContent;
 using System.IO;
+using System.Diagnostics;
 using DataManipulation;
 using DataContent.ReadingCSV;
 
@@ -184,10 +185,28 @@ namespace WPF
             ProductGraphicsCard.Text = item.GraphicsCardName + ' ' + item.GraphicsCardMemory;
             ProductResolution.Text = item.Resolution;
             ProductStorage.Text = (item.StorageCapacity).ToString() + "GB";
+            BuyHere.Text = "Buy here";
+            Uri uri = new Uri(item.ItemURL);
+            BuyHereHyper.NavigateUri = uri;
 
             List<Computer> SimilarItems = item.FindSimilar(OriginalList.Cast<Computer>().ToList());
             SimilarItemsListBox.ItemsSource = SimilarItems;
 
+        }
+
+        private void Hyperlink_RequestNavigate(object sender, RequestNavigateEventArgs e)
+        {
+            Hyperlink hl = (Hyperlink)sender;
+            string navigateUri = hl.NavigateUri.ToString();
+            
+            var StartInfo = new ProcessStartInfo
+            {
+                FileName = navigateUri,
+                UseShellExecute = true
+            };
+            Process.Start(StartInfo);
+            
+            e.Handled = true;
         }
 
         private void SimilarListBox_SelectionChanged(object sender, SelectionChangedEventArgs args)
@@ -203,6 +222,10 @@ namespace WPF
             ProductGraphicsCard.Text = item.GraphicsCardName + ' ' + item.GraphicsCardMemory;
             ProductResolution.Text = item.Resolution;
             ProductStorage.Text = (item.StorageCapacity).ToString() + "GB";
+
+            BuyHere.Text = "Buy here";
+            Uri uri = new Uri(item.ItemURL);
+            BuyHereHyper.NavigateUri = uri;
         }
 
         private void SearchButton_Click(object sender, RoutedEventArgs e)
