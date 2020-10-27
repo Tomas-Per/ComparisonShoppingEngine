@@ -5,27 +5,27 @@ using System.Linq;
 
 namespace DataManipulation
 {
-    public class Filter
+    public class Filter<T> where T : Item
     {
-        protected List<Item> _items { get; set; }
+        protected List<T> _items { get; set; }
 
-        public Filter(List<Item> items)
+        public Filter(List<T> items)
         {
             _items = items;
         }
 
         //Filters item list by the manufacturer and sets the private field to the filtered list
-        public List<Item> FilterByManufacturer(string manufacturer)
+        public List<T> FilterByManufacturer(string manufacturer)
         {
-            List<Item> result = _items.Where(item => item.ManufacturerName == manufacturer).ToList();
+            List<T> result = _items.Where(item => item.ManufacturerName == manufacturer).ToList();
             _items = result;
             return result;
         }
 
         //Filters items by a price range, sets private field to the filtered list
-        public List<Item> FilterByPrice(double minRange, double maxRange)
+        public List<T> FilterByPrice(double minRange, double maxRange)
         {
-            List<Item> result = _items.Where(item => item.Price >= minRange && item.Price <= maxRange).ToList();
+            List<T> result = _items.Where(item => item.Price >= minRange && item.Price <= maxRange).ToList();
             _items = result;
             return result;
         }
