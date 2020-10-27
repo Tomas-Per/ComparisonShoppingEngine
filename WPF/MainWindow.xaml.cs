@@ -177,6 +177,8 @@ namespace WPF
             if (ItemsListBox.SelectedIndex == -1) return;
 
             Computer item = (sender as ListBox).SelectedItem as Computer;
+
+            //Setting textboxes
             ProductName.Text = item.Name;
             ProductPrice.Text = '€' + (item.Price).ToString();
             ProductBrand.Text = item.ManufacturerName;
@@ -186,6 +188,8 @@ namespace WPF
             ProductResolution.Text = item.Resolution;
             ProductStorage.Text = (item.StorageCapacity).ToString() + "GB";
             BuyHere.Text = "Buy here";
+            SimilarProducts.Text = "Similar Products";
+
             Uri uri = new Uri(item.ItemURL);
             BuyHereHyper.NavigateUri = uri;
 
@@ -213,6 +217,7 @@ namespace WPF
         {
             if (SimilarItemsListBox.SelectedIndex == -1) return;
 
+            //Setting textboxes
             Computer item = (sender as ListBox).SelectedItem as Computer;
             ProductName.Text = item.Name;
             ProductPrice.Text = '€' + (item.Price).ToString();
@@ -222,8 +227,9 @@ namespace WPF
             ProductGraphicsCard.Text = item.GraphicsCardName + ' ' + item.GraphicsCardMemory;
             ProductResolution.Text = item.Resolution;
             ProductStorage.Text = (item.StorageCapacity).ToString() + "GB";
-
             BuyHere.Text = "Buy here";
+            SimilarProducts.Text = "Similar Products";
+
             Uri uri = new Uri(item.ItemURL);
             BuyHereHyper.NavigateUri = uri;
         }

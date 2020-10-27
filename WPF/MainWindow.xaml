@@ -87,7 +87,7 @@
                         <TextBlock x:Name="BuyHere" FontFamily="Candara Light" FontSize="14" />
                     </Hyperlink>    
                 </TextBlock>
-                <TextBlock x:Name="SimilarProducts" Height="25" FontFamily="Candara Light" FontSize="16" VerticalAlignment="Bottom" HorizontalAlignment="Center" Margin="10,10,10,10">Similar Products</TextBlock>
+                <TextBlock x:Name="SimilarProducts" Height="25" FontFamily="Candara Light" FontSize="16" VerticalAlignment="Bottom" HorizontalAlignment="Center" Margin="10,10,10,10"></TextBlock>
                 
                 <ListBox x:Name="SimilarItemsListBox" Margin="10 0 10 5" FontFamily="Candara Light" FontSize="14" VerticalContentAlignment="Top"  
                          ScrollViewer.VerticalScrollBarVisibility="Visible"
