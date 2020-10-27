@@ -62,7 +62,7 @@ namespace WPF
             ItemsListBox.ItemsSource = resultData;
             
             OriginalList = resultData.Cast<Item>().ToList();
-            _filter = new Filter(ItemsListBox.Items.Cast<Item>().ToList());
+            _filter = new Filter(OriginalList);
         }
 
         private void FilterButton_Click(object sender, RoutedEventArgs e)
