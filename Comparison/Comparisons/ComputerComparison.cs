@@ -5,7 +5,7 @@ using System.Text;
 
 namespace Comparison.Comparisons
 {
-    class ComputerComparison : ItemComparison
+    class ComputerComparison : ItemComparison<Computer>
     {
         protected int StorageWeight { get; set; }
         protected int RamWeight { get; set; }
@@ -24,12 +24,12 @@ namespace Comparison.Comparisons
         {
             return SpecComparison(Convert.ToDouble(mainRAM), Convert.ToDouble(comparingRAM), RamWeight);
         }
-        //might delete this if not needed in the future:
-        public void ObjectComparison(Computer mainItem, Computer comparingItem)
+        public override (double,double) SumAllRankings(Computer mainItem, Computer comparingItem)
         {
             PriceComparison(mainItem.Price, comparingItem.Price);
             StorageComparison(mainItem.StorageCapacity, comparingItem.StorageCapacity);
             RamComparison(mainItem.RAM, comparingItem.RAM);
+            return ItemRanking;
         }
     }
 }
