@@ -19,13 +19,12 @@ namespace DataContent
             text = ReplaceSeperator(text);
             try
             {
-                Match value = Regex.Matches(text, @"\s+\d+(\.\d+)?")[0];
+                Match value = Regex.Matches(text, @"\d+(\.\d+)?")[0];
                 text = value.ToString();
             }
             catch (ArgumentOutOfRangeException e)
             {
-                Match value = Regex.Matches(text, @"\d+(\.\d+)?")[0];
-                text = value.ToString();
+                throw e; //new DataCustomException("Error happened while parsing int", null);
             }
 
             return Convert.ToDouble(text);
@@ -43,11 +42,6 @@ namespace DataContent
             }
 
             return Convert.ToInt32(text);
-        }
-        public static void Main()
-        {
-            var a = ParseInt("86arabas9");
-            Console.WriteLine(a);
         }
     }
 }
