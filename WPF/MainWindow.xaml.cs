@@ -185,6 +185,24 @@ namespace WPF
             ProductResolution.Text = item.Resolution;
             ProductStorage.Text = (item.StorageCapacity).ToString() + "GB";
 
+            List<Computer> SimilarItems = item.FindSimilar(OriginalList.Cast<Computer>().ToList());
+            SimilarItemsListBox.ItemsSource = SimilarItems;
+
+        }
+
+        private void SimilarListBox_SelectionChanged(object sender, SelectionChangedEventArgs args)
+        {
+            if (SimilarItemsListBox.SelectedIndex == -1) return;
+
+            Computer item = (sender as ListBox).SelectedItem as Computer;
+            ProductName.Text = item.Name;
+            ProductPrice.Text = '€' + (item.Price).ToString();
+            ProductBrand.Text = item.ManufacturerName;
+            ProductProcessor.Text = item.ProcessorName;
+            ProductRAM.Text = (item.RAM).ToString() + "GB " + item.RAM_type;
+            ProductGraphicsCard.Text = item.GraphicsCardName + ' ' + item.GraphicsCardMemory;
+            ProductResolution.Text = item.Resolution;
+            ProductStorage.Text = (item.StorageCapacity).ToString() + "GB";
         }
 
         private void SearchButton_Click(object sender, RoutedEventArgs e)

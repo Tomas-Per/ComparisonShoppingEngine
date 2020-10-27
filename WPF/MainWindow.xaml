@@ -82,6 +82,17 @@
                 <TextBlock x:Name="ProductGraphicsCard" FontFamily="Candara Light" FontSize="14" Margin="10,5,10,0"></TextBlock>
                 <TextBlock x:Name="ProductResolution" FontFamily="Candara Light" FontSize="14" Margin="10,5,10,0"></TextBlock>
                 <TextBlock x:Name="ProductStorage" FontFamily="Candara Light" FontSize="14" Margin="10,5,10,0"></TextBlock>
+                <TextBlock x:Name="SimilarProducts" Height="40" FontFamily="Candara Light" FontSize="16" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="10,20,10,10">Similar Products</TextBlock>
+                <ListBox x:Name="SimilarItemsListBox" Margin="10 0 10 5" FontFamily="Candara Light" FontSize="14" VerticalContentAlignment="Top"  
+                         ScrollViewer.VerticalScrollBarVisibility="Visible"
+                         ScrollViewer.CanContentScroll="False" Height="200"
+                         SelectionChanged="SimilarListBox_SelectionChanged">
+                    <ListBox.ItemTemplate>
+                        <DataTemplate>
+                            <TextBlock Text="{Binding Name}"/>
+                        </DataTemplate>
+                    </ListBox.ItemTemplate>
+                </ListBox>
             </StackPanel>
         </Grid>
 
