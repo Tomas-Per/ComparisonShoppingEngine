@@ -6,27 +6,24 @@ using System.Text;
 
 namespace Comparison
 {
-    class ItemComparison
-    {
+    class ItemComparison<T> where T : Item
+    { 
         protected int PriceWeight { get; set; }
-        public double MainItemRanking {get; set;}
-        public double ComparingItemRanking { get; set; }
-        public int TotalWeight { get; set; }
+        protected (double, double) ItemRanking {get; set;}
+        protected int TotalWeight { get; set; }
 
         public ItemComparison(int priceWeight)
         {
             PriceWeight = priceWeight;
-            MainItemRanking = 0;
-            ComparingItemRanking = 0;
+            ItemRanking = (0,0);
             TotalWeight = PriceWeight;
         }
-        public (double, double) SpecComparison(double mainSpec, double comparingSpec, int specWeight)
+        protected (double, double) SpecComparison(double mainSpec, double comparingSpec, int specWeight)
         {
             double _sum = mainSpec + comparingSpec;
             double _mainRating = ((specWeight / TotalWeight) * 100 * mainSpec) / _sum;
             double _comparingRating = ((specWeight / TotalWeight) * 100 * comparingSpec) / _sum;
-            MainItemRanking += _mainRating;
-            ComparingItemRanking += _comparingRating;
+            ItemRanking = (ItemRanking.Item1 + _mainRating, ItemRanking.Item2 + _comparingRating);
             return (_mainRating, _comparingRating);
         }
 
@@ -34,10 +31,10 @@ namespace Comparison
         {
             return SpecComparison(mainPrice, comparingPrice, PriceWeight);
         }
-        //might delete this if not needed in the future:
-        public void ObjectComparison(Item mainItem, Item comparingItem)
+        public virtual (double, double) SumAllRankings(T mainItem, T comparingItem)
         {
             PriceComparison(mainItem.Price, comparingItem.Price);
+            return ItemRanking;
         }
     }
 }
