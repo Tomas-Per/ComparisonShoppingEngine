@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace ItemLibrary
 {
@@ -11,6 +12,7 @@ namespace ItemLibrary
         public string ManufacturerName { get; set; }
         public string ItemURL { get; set; }
         public string ShopName { get; set; }
+        public abstract List<Item> FindSimilar(List<Item> list);
 
     }
 }

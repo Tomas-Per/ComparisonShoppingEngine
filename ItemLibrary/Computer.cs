@@ -34,43 +34,14 @@ namespace ItemLibrary
         //builder pattern??
         public Computer()
         {
-
+            //needed for csvHelper to work
         }
-        public Computer(ulong code, double price, string name, string manufacturer, string itemURL,
-            string procName, string gpuName, string gpuMem, int ram, string ramType,
-            string resol, int storage)
+       
+        public override List<Item> FindSimilar(List<Item> list)
         {
-
-            //base class
-            ItemCode = code;
-            Price = price;
-            Name = name;
-            ManufacturerName = manufacturer;
-            ItemURL = itemURL;
-
-            //derived class
-            ProcessorName = procName;
-            GraphicsCardName = gpuName;
-            GraphicsCardMemory = gpuMem;
-            RAM = ram;
-            RAM_type = ramType;
-            Resolution = resol;
-            StorageCapacity = storage;
-        }
-
-
-        public Computer(string name, double price)
-        {
-            Name = name;
-            Price = price;
-        }
-
-
-        public List<Computer> FindSimilar(List<Computer> list)
-        {
-            IEnumerable<Computer> computers = list.Where(comp => comp.ProcessorName == this.ProcessorName
+            IEnumerable<Computer> computers = list.Cast<Computer>().Where(comp => comp.ProcessorName == this.ProcessorName
                                                                 || (comp.Price >= this.Price - 100 && comp.Price <= this.Price + 100));
-            return computers.ToList();
+            return computers.Cast<Item>().ToList();
         }
 
     }
