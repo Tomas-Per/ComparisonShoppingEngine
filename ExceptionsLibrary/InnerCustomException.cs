@@ -4,7 +4,7 @@ using System.Text;
 
 namespace ExceptionsLibrary
 {
-    class InnerCustomException : Exception
+    public class InnerCustomException : Exception
     {
         public event EventHandler<string> InnerErrorEvent;
         public InnerCustomException(string message, Exception e) : base(message)

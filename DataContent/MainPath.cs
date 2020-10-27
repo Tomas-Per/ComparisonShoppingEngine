@@ -16,7 +16,7 @@ namespace DataContent.ReadingCSV
                 _filePath = Directory.GetParent(_filePath).FullName;
                 if(!_filePath.Contains("ComparisonShoppingEngine"))
                 {
-                    throw new DataCustomException("Couldn't reach main path", null);
+                    throw new InnerCustomException("Couldn't reach main path", null) ;
                 }
             }
             return _filePath;
