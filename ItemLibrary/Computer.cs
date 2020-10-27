@@ -40,7 +40,7 @@ namespace ItemLibrary
         public override List<Item> FindSimilar(List<Item> list)
         {
             IEnumerable<Computer> computers = list.Cast<Computer>().Where(comp => comp.ProcessorName == this.ProcessorName
-                                                                || (comp.Price >= this.Price - 100 && comp.Price <= this.Price + 100));
+                                                                || (comp.Price >= this.Price - 100 && comp.Price <= this.Price + 100) && comp.Name != this.Name);
             return computers.Cast<Item>().ToList();
         }
 
