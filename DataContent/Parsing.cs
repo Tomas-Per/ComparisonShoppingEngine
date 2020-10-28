@@ -16,13 +16,12 @@ namespace DataContent
             text = ReplaceSeperator(text);
             try
             {
-                Match value = Regex.Matches(text, @"\s+\d+(\.\d+)?")[0];
+                Match value = Regex.Matches(text, @"\d+(\.\d+)?")[0];
                 text = value.ToString();
             }
             catch (ArgumentOutOfRangeException)
             {
-                Match value = Regex.Matches(text, @"\d+(\.\d+)?")[0];
-                text = value.ToString();
+                throw; //new DataCustomException("Error happened while parsing int", null);
             }
             catch (Exception e)
             {
@@ -30,6 +29,20 @@ namespace DataContent
             }
 
             return Convert.ToDouble(text);
+        }
+        public static int ParseInt(string text)
+        {
+            try
+            {
+                Match value = Regex.Matches(text, @"\d+")[0];
+                text = value.ToString();
+            }
+            catch (ArgumentOutOfRangeException)
+            {
+                throw; //new DataCustomException("Error happened while parsing int", null);
+            }
+
+            return Convert.ToInt32(text);
         }
     }
 }
