@@ -1,4 +1,7 @@
-﻿namespace ItemLibrary
+﻿using ExceptionsLibrary;
+using System;
+
+namespace ItemLibrary
 {
     public struct Processor
     {
@@ -9,9 +12,17 @@
         public Processor(string name, string link)
         {
             Name = name;
-            AmazonLink = link.Substring(0, link.IndexOf("&dc")) ;
-            string binStart = link.Substring(link.IndexOf("bin%") + 4);
-            AmazonBin = "%7C" + binStart.Substring(2);
+            try
+            {
+                AmazonLink = link.Substring(0, link.IndexOf("&dc"));
+                string binStart = link.Substring(link.IndexOf("bin%") + 4);
+                AmazonBin = "%7C" + binStart.Substring(2);
+            }
+            catch (Exception e)
+            {
+
+                throw new InnerCustomException("Erorr occured while trying to substring the link", e);
+            }
         }
     }
 }
