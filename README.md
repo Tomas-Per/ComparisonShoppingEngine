@@ -1,3 +1,4 @@
+![Build](https://github.com/Tomas-Per/ComparisonShoppingEngine/workflows/Project/badge.svg)
 <p align="center">
   <a href="https://github.com/https://github.com/Tomas-Per/ComparisonShoppingEngine">
     <img src="Images/png/libra500.png" alt="Logo" width="300" height="300">
