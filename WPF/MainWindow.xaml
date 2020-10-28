@@ -75,7 +75,7 @@
                 </Grid>
                 <Grid Height="30">
                     <Button x:Name="AtoZSorting" Margin="5" Width="20" Height="20" HorizontalAlignment="Left" VerticalAlignment="Top" Background="White" BorderBrush="#FFB271A9" Foreground="#FFB271A9"/>
-                    
+                    <Button x:Name="ZtoASorting" Margin="30,5,5,5" Width="20" Height="20" HorizontalAlignment="Left" VerticalAlignment="Top" Background="White" BorderBrush="#FFB271A9" Foreground="#FFB271A9"/>
                 </Grid>
                 <TextBlock x:Name="ListNameTextBlock" HorizontalAlignment="Center" Text="All Computers" FontFamily="Candara Light" FontSize="14" Margin="0,0,0,5"/>
                 <Grid>
