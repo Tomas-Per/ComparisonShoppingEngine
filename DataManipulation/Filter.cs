@@ -20,7 +20,6 @@ namespace DataManipulation
         {
 
             List<T> result = _items.Where(item => item.ManufacturerName == manufacturer).ToList();
-            _items = result;
             return result;
         }
 
@@ -29,7 +28,6 @@ namespace DataManipulation
         {
 
             List<T> result = _items.Where(item => item.Price >= minRange && item.Price <= maxRange).ToList();
-            _items = result;
             return result;
         }
 
