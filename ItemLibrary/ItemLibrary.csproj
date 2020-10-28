@@ -10,4 +10,8 @@
     <None Remove="ReadingCSV\**" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\ExceptionsLibrary\ExceptionsLibrary.csproj" />
+  </ItemGroup>
+
 </Project>

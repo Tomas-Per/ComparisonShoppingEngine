@@ -1,27 +1,19 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Globalization;
 using System.Linq;
-using System.Runtime.CompilerServices;
-using System.Text;
+using static ItemLibrary.Categories;
 
 namespace ItemLibrary
 {
     public class Computer : Item
     {
-
-        enum Category
-        {
-            Computer  
-        };
-
-
         public string ProcessorName { get; set; }
         public string GraphicsCardName { get; set; }
         public string GraphicsCardMemory { get; set; }
         public int RAM { get; set; }
         public string RAM_type { get; set; }
         public string Resolution { get; set; }
+        public ComputerCategory computerCategory { get; set; }
 
         public static explicit operator Computer(List<Item> v)
         {
@@ -34,35 +26,15 @@ namespace ItemLibrary
         //builder pattern??
         public Computer()
         {
-
+            //needed for csvHelper to work
         }
-        public Computer(ulong code, double price, string name, string manufacturer, string itemURL,
-            string procName, string gpuName, string gpuMem, int ram, string ramType,
-            string resol, int storage)
+       
+        public override List<Item> FindSimilar(List<Item> list)
+
         {
-
-            //base class
-            ItemCode = code;
-            Price = price;
-            Name = name;
-            ManufacturerName = manufacturer;
-            ItemURL = itemURL;
-
-            //derived class
-            ProcessorName = procName;
-            GraphicsCardName = gpuName;
-            GraphicsCardMemory = gpuMem;
-            RAM = ram;
-            RAM_type = ramType;
-            Resolution = resol;
-            StorageCapacity = storage;
-        }
-
-        public List<Computer> FindSimilar(List<Computer> list)
-        {
-            IEnumerable<Computer> computers = list.Where(comp => comp.ProcessorName == this.ProcessorName
-                                                                || (comp.Price >= this.Price - 100 && comp.Price <= this.Price + 100));
-            return computers.ToList();
+            IEnumerable<Computer> computers = list.Cast<Computer>().Where(comp => comp.ProcessorName == this.ProcessorName
+                                                                || (comp.Price >= this.Price - 100 && comp.Price <= this.Price + 100) && comp.Name != this.Name);
+            return computers.Cast<Item>().ToList();
         }
 
     }
