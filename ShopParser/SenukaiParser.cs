@@ -16,29 +16,16 @@ namespace ShopParser
 {
     class SenukaiParser : IParser<Computer>
     {
-        private string _url = "https://www.senukai.lt/c/kompiuterine-technika-biuro-prekes/nesiojami-kompiuteriai-ir-priedai/nesiojami-kompiuteriai/5ei";
+        private string _url = "https://www.senukai.lt/c/kompiuterine-technika-biuro-prekes/nesiojami-kompiuteriai-ir-priedai/nesiojami-kompiuteriai/5ei?";
         private IWebDriver _driver;
-
+        private string currentWIndowURL;
 
         public SenukaiParser ()
         {
             var options = new ChromeOptions();
             options.AddArguments("--headless");
-            _driver = new ChromeDriver();
-        }
-
-
-        public static void Main (string[] args)
-        {
-            var test = new SenukaiParser();
-            List<Computer> testt = test.ParseShop();
-
-            foreach (var item in testt)
-            {
-                Console.WriteLine(item.Price);
-            }
-
-
+            _driver = new ChromeDriver(options);
+            currentWIndowURL = _url;
         }
 
         public List<Computer> ParseShop()
@@ -47,66 +34,110 @@ namespace ShopParser
 
             _driver.Navigate().GoToUrl(_url);
 
-            // while exists next button
-            var names = _driver.FindElements(By.XPath("//*[@class = 'catalog-taxons-product__name']"));
-            var prices = _driver.FindElements(By.XPath("//*[@class = 'catalog-taxons-product-price__item-price']"));
-            string link;
-            List<string> pricesList = new List<string>();
-
-
-            foreach (var price in prices)
+            for (int i = 0; i < 10; i++)
             {
-                pricesList.Add(price.Text);
+                var names = _driver.FindElements(By.XPath("//*[@class = 'catalog-taxons-product__name']"));
+                var prices = _driver.FindElements(By.XPath("//*[@class = 'catalog-taxons-product-price__item-price']"));
+
+                List<string> links = new List<string>();
+                List<string> pricesList = new List<string>();
+                List<string> namesList = new List<string>();
+
+                foreach (var price in prices)
+                {
+                    pricesList.Add(price.Text);
+                }
+
+                foreach (var element in names)
+                {
+                    links.Add(element.GetAttribute("href"));
+                    namesList.Add(element.Text);
+                }
+
+                foreach (var link in links)
+                {
+                    Computer computer = new Computer { Name = namesList.ElementAt(0), Price = ParseDouble(pricesList.ElementAt(0)) };
+
+                    namesList.RemoveAt(0);
+                    pricesList.RemoveAt(0);
+
+                    computer.ItemURL = link;
+
+                    _driver.Navigate().GoToUrl(link);
+
+                    data.Add(ParseWindow(computer));
+                    _driver.Navigate().Back();
+
+                    //_driver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(10);
+                }
+
+                var nextPage = _driver.FindElement(By.ClassName("next")).GetAttribute("href");
+
+                if (nextPage != currentWIndowURL)
+                {
+                    _driver.Navigate().GoToUrl(nextPage);
+                    currentWIndowURL = nextPage;
+                }
             }
-
-
-
-            foreach (var element in names)
-            {
-                Computer computer = new Computer { Name = element.Text, Price = ParseDouble(pricesList.ElementAt(0)) };
-                pricesList.RemoveAt(0);
-
-                link = element.GetAttribute("href");
-                computer.ItemURL = link;
-
-                _driver.Navigate().GoToUrl(link);
-
-                var test = parseWindow(computer);
-                _driver.Navigate().Back();
-
-                break;
-                //_driver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(10);
-
-
-            }
-
             return data;
         }
 
 
-        private Computer parseWindow (Computer computer)
+        private Computer ParseWindow(Computer computer)
         {
-            
+
             //var id = _driver.FindElement(By.ClassName("product-id"));
 
-            var generalProperties = _driver.FindElements(By.ClassName("attribute-filter-link"));
-
-            computer.ManufacturerName = generalProperties.ElementAt(1).Text;
-            computer.ProcessorName = generalProperties.ElementAt(8).Text + generalProperties.ElementAt(9).Text;
-            computer.GraphicsCardName = generalProperties.ElementAt(14).Text;
-            computer.GraphicsCardMemory = generalProperties.ElementAt(15).Text;
-            computer.RAM_type = generalProperties.ElementAt(11).Text;
+            var generalProperties = _driver.FindElements(By.TagName("td"));
 
 
-            Console.WriteLine(generalProperties.ElementAt(11).Text);
+            for (int i = 0; i < generalProperties.Count; i++)
+            {
+                if (generalProperties[i].Text.Contains("Prekės ženklas"))
+                {
+                    computer.ManufacturerName = generalProperties[i + 1].Text;
+                }
 
+                else if (generalProperties[i].Text.Contains("Ekrano raiška taškais"))
+                {
+                    computer.Resolution = generalProperties[i + 1].Text;
+                }
 
+                else if (generalProperties[i].Text.Contains("Procesoriaus klasė"))
+                {
+                    computer.ProcessorName = generalProperties[i + 1].Text;
+                }
 
+                else if (generalProperties[i].Text.Contains("Operatyviosios atmint"))
+                {
+                    if (generalProperties[i].Text.Contains("tipas"))
+                    {
+                        computer.RAM_type = generalProperties[i + 1].Text;
+                    }
 
-            Console.WriteLine("-----------------------");
+                    else if (generalProperties[i].Text.Contains("(RAM)"))
+                    {
+                        computer.RAM = ParseInt(generalProperties[i + 1].Text);
+                    }  
+                }
+                else if (generalProperties[i].Text.Contains("Vaizdo plokštės"))
+                {
+                    if (generalProperties[i].Text.Contains("modelis"))
+                    {
+                        computer.GraphicsCardName = generalProperties[i + 1].Text;
+                    }
+                    else if (generalProperties[i].Text.Contains("serija") && computer.GraphicsCardName == null)
+                    {
+                        computer.GraphicsCardName = generalProperties[i + 1].Text;
+                    }
 
-
-            return null;
+                    else if (generalProperties[i].Text.Contains("atmintis"))
+                    {
+                        computer.GraphicsCardMemory = generalProperties[i + 1].Text;
+                    }
+                }
+            }
+        return computer;
         }
 
         
