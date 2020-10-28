@@ -22,7 +22,7 @@ namespace DataContent
                 Match value = Regex.Matches(text, @"\d+(\.\d+)?")[0];
                 text = value.ToString();
             }
-            catch (ArgumentOutOfRangeException )
+            catch (ArgumentOutOfRangeException)
             {
                 throw; //new DataCustomException("Error happened while parsing int", null);
             }
