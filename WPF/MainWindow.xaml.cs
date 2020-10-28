@@ -180,15 +180,16 @@ namespace WPF
 
             //Setting textboxes
             ProductName.Text = item.Name;
-            ProductPrice.Text = '€' + (item.Price).ToString();
-            ProductBrand.Text = item.ManufacturerName;
-            ProductProcessor.Text = item.ProcessorName;
-            ProductRAM.Text = (item.RAM).ToString() + "GB " + item.RAM_type;
-            ProductGraphicsCard.Text = item.GraphicsCardName + ' ' + item.GraphicsCardMemory;
-            ProductResolution.Text = item.Resolution;
-            ProductStorage.Text = (item.StorageCapacity).ToString() + "GB";
+            ProductPrice.Text = "Price: " + '€' + (item.Price).ToString();
+            ProductBrand.Text = "Brand: " + item.ManufacturerName;
+            ProductProcessor.Text = "Processor: " + item.ProcessorName;
+            ProductRAM.Text = "RAM: " + (item.RAM).ToString() + "GB " + item.RAM_type;
+            ProductGraphicsCard.Text = "Graphics Card: " + item.GraphicsCardName + ' ' + item.GraphicsCardMemory;
+            ProductResolution.Text = "Resolution: " + item.Resolution;
+            ProductStorage.Text = "Storage Capacity: " + (item.StorageCapacity).ToString() + "GB";
             BuyHere.Text = "Buy here";
             SimilarProducts.Text = "Similar Products";
+            CompareButton.Visibility = Visibility.Visible;
 
             Uri uri = new Uri(item.ItemURL);
             BuyHereHyper.NavigateUri = uri;
@@ -259,6 +260,33 @@ namespace WPF
         {
             ItemInfoStackPanel.Visibility = Visibility.Visible;
             ComparisonStackPanel.Visibility = Visibility.Collapsed;
+        }
+
+        private void CompareButton_Click(object sender, RoutedEventArgs e)
+        {
+            ComparisonProductName1.Text = ProductName.Text;
+            ComparisonProductPrice1.Text = ProductPrice.Text;
+            ComparisonProductBrand1.Text = ProductBrand.Text;
+            ComparisonProductProcessor1.Text = ProductProcessor.Text;
+            CompasironProductRAM1.Text = ProductRAM.Text;
+            ComparisonProductGraphicsCard1.Text = ProductGraphicsCard.Text;
+            ComparisonProductResolution1.Text = ProductResolution.Text;
+            ComparisonProductStorage1.Text = ProductStorage.Text;
+
+            ComparisonStackPanel.Visibility = Visibility.Visible;
+            ItemInfoStackPanel.Visibility = Visibility.Collapsed;
+
+            /*if (SimilarItemsListBox.SelectedIndex == -1) return;
+
+            Computer item = (sender as ListBox).SelectedItem as Computer;
+            ProductName.Text = item.Name;
+            ProductPrice.Text = '€' + (item.Price).ToString();
+            ProductBrand.Text = item.ManufacturerName;
+            ProductProcessor.Text = item.ProcessorName;
+            ProductRAM.Text = (item.RAM).ToString() + "GB " + item.RAM_type;
+            ProductGraphicsCard.Text = item.GraphicsCardName + ' ' + item.GraphicsCardMemory;
+            ProductResolution.Text = item.Resolution;
+            ProductStorage.Text = (item.StorageCapacity).ToString() + "GB";*/
         }
 
 
