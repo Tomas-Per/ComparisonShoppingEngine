@@ -24,7 +24,7 @@ namespace ShopParser
         {
             var options = new ChromeOptions();
             options.AddArguments("--headless");
-            _driver = new ChromeDriver(options);
+            _driver = new ChromeDriver();
             currentWIndowURL = _url;
         }
 
@@ -88,8 +88,10 @@ namespace ShopParser
 
             //var id = _driver.FindElement(By.ClassName("product-id"));
 
-            var generalProperties = _driver.FindElements(By.TagName("td"));
+            var image = _driver.FindElements(By.ClassName("product-gallery-slider__slide__image"));
+            computer.ImageLink = image[0].GetAttribute("src");
 
+            var generalProperties = _driver.FindElements(By.TagName("td"));
 
             for (int i = 0; i < generalProperties.Count; i++)
             {
@@ -135,6 +137,11 @@ namespace ShopParser
                     {
                         computer.GraphicsCardMemory = generalProperties[i + 1].Text;
                     }
+                }
+
+                else if (generalProperties[i].Text.Contains("Bendra kompiuterio atminties talpa"))
+                {
+                    computer.StorageCapacity = ParseInt(generalProperties[i + 1].Text);
                 }
             }
         return computer;
