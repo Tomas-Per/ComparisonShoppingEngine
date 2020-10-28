@@ -305,5 +305,27 @@ namespace WPF
             ItemsListBox.ItemsSource = items;
         }
 
+        private void PriceAscSortButton_Click(object sender, RoutedEventArgs e)
+        {
+            List<Item> items = new List<Item>();
+            items = ItemsListBox.ItemsSource.Cast<Item>().ToList();
+
+            _sorter.UpdateList(items);
+            items = _sorter.SortByPriceAsc();
+
+            ItemsListBox.ItemsSource = items;
+        }
+
+        private void PriceDescSortButton_Click(object sender, RoutedEventArgs e)
+        {
+            List<Item> items = new List<Item>();
+            items = ItemsListBox.ItemsSource.Cast<Item>().ToList();
+
+            _sorter.UpdateList(items);
+            items = _sorter.SortByPriceDesc();
+
+            ItemsListBox.ItemsSource = items;
+        }
+
     }
 }
