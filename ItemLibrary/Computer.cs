@@ -9,13 +9,6 @@ namespace ItemLibrary
 {
     public class Computer : Item
     {
-
-        enum Category
-        {
-            Computer  
-        };
-
-
         public string ProcessorName { get; set; }
         public string GraphicsCardName { get; set; }
         public string GraphicsCardMemory { get; set; }

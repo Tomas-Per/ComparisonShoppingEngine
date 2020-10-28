@@ -4,7 +4,7 @@ using System.Text;
 
 namespace ItemLibrary
 {
-    class Categories
+    public class Categories
     {
         enum ItemCategory
         {
