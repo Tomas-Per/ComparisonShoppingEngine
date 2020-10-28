@@ -30,7 +30,7 @@ namespace WPF
     public partial class MainWindow : Window
     {
 
-        private Filter _filter;
+        private Filter<Item> _filter;
         private Sorter _sorter;
         private List<Item> OriginalList = new List<Item>();
 
@@ -62,7 +62,7 @@ namespace WPF
             ItemsListBox.ItemsSource = resultData;
             
             OriginalList = resultData.Cast<Item>().ToList();
-            _filter = new Filter(OriginalList);
+            _filter = new Filter<Item>(OriginalList);
         }
 
         private void FilterButton_Click(object sender, RoutedEventArgs e)
@@ -194,7 +194,7 @@ namespace WPF
             Uri uri = new Uri(item.ItemURL);
             BuyHereHyper.NavigateUri = uri;
 
-            List<Computer> SimilarItems = item.FindSimilar(OriginalList.Cast<Computer>().ToList());
+            List<Item> SimilarItems = item.FindSimilar(OriginalList);
             SimilarItemsListBox.ItemsSource = SimilarItems;
 
         }
