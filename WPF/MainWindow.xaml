@@ -13,7 +13,7 @@
          TextOptions.TextRenderingMode="Auto"
          Background="{DynamicResource MaterialDesignPaper}"
          FontFamily="{DynamicResource MaterialDesignFont}"
-        Title="Libra" ResizeMode="NoResize" Height="612" Width="987" Icon="/2678672181578289022-128.png" Loaded="Window_Loaded">
+        Title="Libra" ResizeMode="NoResize" Height="612" Width="987" Icon="/libra100.png" Loaded="Window_Loaded">
 
     <!-- <Window.Resources>
         <Storyboard x:Key="MenuOpen">
@@ -37,16 +37,23 @@
             <BeginStoryboard Storyboard="{StaticResource MenuClose}"/>
         </EventTrigger>
     </Window.Triggers> -->
+    
     <Grid >
+        <Grid.Background>
+            <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
+                <GradientStop Color="#E5A1DB" Offset="0.0" />
+                <GradientStop Color="#80DEEA" Offset="0.8" />
+            </LinearGradientBrush>
+        </Grid.Background>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="200"/>
             <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
 
-        <Grid Height="60" Grid.Column="1" VerticalAlignment="Top" Background="#80deea">
+        <Grid Height="60" Grid.Column="1" VerticalAlignment="Top">
             <TextBlock Text="LIBRA" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="28" Foreground="White" FontFamily="Candara Light" FontWeight="Bold"/>
         </Grid>
-        <Grid Margin="200,60,0,0" Grid.Row="1" Grid.ColumnSpan="2">
+        <Grid Margin="200,60,0,0" Grid.Row="1" Grid.ColumnSpan="2" Background="White">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*"/>
                 <ColumnDefinition Width="*"/>
@@ -64,7 +71,8 @@
                     <ListBox x:Name="ItemsListBox" Margin="10 10 10 10" FontFamily="Candara Light" FontSize="14" VerticalContentAlignment="Top"  
                          ScrollViewer.VerticalScrollBarVisibility="Visible"
                          ScrollViewer.CanContentScroll="False" Height="460"
-                         SelectionChanged="ListBox_SelectionChanged">
+                         SelectionChanged="ListBox_SelectionChanged" SelectionMode="Single" FontWeight="Bold">
+
                         <ListBox.ItemTemplate>
                             <DataTemplate>
                                 <TextBlock Text="{Binding Name}"/>
@@ -102,14 +110,16 @@
             </StackPanel>
         </Grid>
 
-        <Grid Name="FilterGrid" Width="200" HorizontalAlignment="Left" Background="#4bacb8" Visibility="Visible" RenderTransformOrigin="0.5,0.5" Grid.RowSpan="2">
-
+        <Grid Name="FilterGrid" Width="200" HorizontalAlignment="Left" Visibility="Visible" RenderTransformOrigin="0.5,0.5" Grid.RowSpan="2">
             <StackPanel>
-                <Grid Height="60" Background="#009faf">
+                <Grid Height="60" >
+                    <Grid.Background>
+                        <SolidColorBrush Opacity="0.2" Color="Black"/>
+                    </Grid.Background>
                     <TextBlock Text="Filters" FontFamily="Candara Light" Margin="10" HorizontalAlignment="Left" VerticalAlignment="Center" Foreground="White" FontSize="14" FontWeight="Bold"/>
                     <materialDesign:PackIcon Kind="Filter" VerticalAlignment="Stretch" HorizontalAlignment="Right" Margin="0,10,10,10" Foreground="White"/>
                 </Grid>
-                <StackPanel Background="#4bacb8" Height="533">
+                <StackPanel Height="533">
                     <TextBlock Text="Price Range" FontFamily="Candara Light" Foreground="White" VerticalAlignment="Center" Margin="10 10 10 10" HorizontalAlignment="Center" FontWeight="Bold" FontSize="14"/>
 
                     <TextBox Name="txtSliderValue" BorderBrush="{x:Null}" FontFamily="Candara Light" Margin="10,0,10,10" VerticalAlignment="Top" Foreground="White"/>
@@ -150,14 +160,14 @@
                             <CheckBox x:Name="IntelAtomCheckBox" Content="Intel Atom"  FontFamily="Candara Light"  Background="White" BorderBrush="White" Foreground="White"/>
                         </StackPanel>
                     </Grid>
-                    <Button x:Name="FilterButton" Content="Apply Filters" VerticalAlignment="Bottom" HorizontalAlignment="Center" Margin="10,10,10,0" Background="#FF4BACB8" BorderBrush="White" FontFamily="Candara Light" Click="FilterButton_Click">
+                    <Button x:Name="FilterButton" Content="Apply Filters" VerticalAlignment="Bottom" HorizontalAlignment="Center" Margin="10,10,10,0" Background="#b271a9" BorderBrush="White" FontFamily="Candara Light" Click="FilterButton_Click">
                     </Button>
-                    <Button x:Name="DisableFilterButton" Content="Disable Filters" VerticalAlignment="Bottom" HorizontalAlignment="Center" Margin="10,10,10,0" Background="#FF4BACB8" BorderBrush="White" FontFamily="Candara Light" Click="DisableFilterButton_Click">
+                    <Button x:Name="DisableFilterButton" Content="Disable Filters" VerticalAlignment="Bottom" HorizontalAlignment="Center" Margin="10,10,10,0" Background="#b271a9" BorderBrush="White" FontFamily="Candara Light" Click="DisableFilterButton_Click">
                     </Button>
                 </StackPanel>
             </StackPanel>
         </Grid>
-
+        
         <!-- <Button x:Name="SearchWithLinkButton" HorizontalAlignment="Stretch" Height="20" Margin="10 10 10 10">Search with Link</Button>-->
 
         <!--<Grid VerticalAlignment="Top" HorizontalAlignment="Stretch" >
@@ -227,9 +237,9 @@
                 </Grid>
             </StackPanel>
         </Grid>
-
-
-        <StackPanel VerticalAlignment="Top" HorizontalAlignment="Right" Width="260"></StackPanel>-->
+        
+        
+               <StackPanel VerticalAlignment="Top" HorizontalAlignment="Right" Width="260"></StackPanel>-->
 
     </Grid>
 </Window>

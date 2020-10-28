@@ -7,6 +7,10 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="libra100.png" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="MaterialDesignThemes" Version="3.2.0" />
   </ItemGroup>
 
@@ -18,6 +22,7 @@
 
   <ItemGroup>
     <Resource Include="2678672181578289022-128.png" />
+    <Resource Include="libra100.png" />
   </ItemGroup>
 
 </Project>
