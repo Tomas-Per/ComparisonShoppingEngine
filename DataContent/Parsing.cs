@@ -22,9 +22,9 @@ namespace DataContent
                 Match value = Regex.Matches(text, @"\d+(\.\d+)?")[0];
                 text = value.ToString();
             }
-            catch (ArgumentOutOfRangeException e)
+            catch (ArgumentOutOfRangeException )
             {
-                throw e; //new DataCustomException("Error happened while parsing int", null);
+                throw; //new DataCustomException("Error happened while parsing int", null);
             }
 
             return Convert.ToDouble(text);
@@ -36,9 +36,9 @@ namespace DataContent
                 Match value = Regex.Matches(text, @"\d+")[0];
                 text = value.ToString();
             }
-            catch (ArgumentOutOfRangeException e)
+            catch (ArgumentOutOfRangeException)
             {
-                throw e; //new DataCustomException("Error happened while parsing int", null);
+                throw; //new DataCustomException("Error happened while parsing int", null);
             }
 
             return Convert.ToInt32(text);
