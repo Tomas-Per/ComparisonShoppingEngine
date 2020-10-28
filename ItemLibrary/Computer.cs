@@ -13,7 +13,7 @@ namespace ItemLibrary
         public int RAM { get; set; }
         public string RAM_type { get; set; }
         public string Resolution { get; set; }
-        public ComputerCategory computerCategory { get; set; }
+        public ComputerCategory ComputerCategory { get; set; }
 
         public static explicit operator Computer(List<Item> v)
         {
