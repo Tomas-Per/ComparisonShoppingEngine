@@ -255,6 +255,13 @@ namespace WPF
 
         }
 
+        private void ComparisonOff_Click(object sender, RoutedEventArgs e)
+        {
+            ItemInfoStackPanel.Visibility = Visibility.Visible;
+            ComparisonStackPanel.Visibility = Visibility.Collapsed;
+        }
+
+
         /*
         private void FilterMenuClose_Click(object sender, RoutedEventArgs e)
         {
