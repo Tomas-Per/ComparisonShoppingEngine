@@ -10,5 +10,11 @@ namespace ItemLibrary
         {
             Computer
         };
+
+        enum ComputerCategory
+        {
+            Desktop,
+            Laptop
+        };
     }
 }
