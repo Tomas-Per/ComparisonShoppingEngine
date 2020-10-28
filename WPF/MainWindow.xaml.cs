@@ -259,7 +259,8 @@ namespace WPF
         private void ComparisonOff_Click(object sender, RoutedEventArgs e)
         {
             ItemInfoStackPanel.Visibility = Visibility.Visible;
-            ComparisonStackPanel.Visibility = Visibility.Collapsed;
+            ListStackPanel.Visibility = Visibility.Visible;
+            ComparisonGrid.Visibility = Visibility.Collapsed;
         }
 
         private void CompareButton_Click(object sender, RoutedEventArgs e)
@@ -268,39 +269,14 @@ namespace WPF
             ComparisonProductPrice1.Text = ProductPrice.Text;
             ComparisonProductBrand1.Text = ProductBrand.Text;
             ComparisonProductProcessor1.Text = ProductProcessor.Text;
-            CompasironProductRAM1.Text = ProductRAM.Text;
+            ComparisonProductRAM1.Text = ProductRAM.Text;
             ComparisonProductGraphicsCard1.Text = ProductGraphicsCard.Text;
             ComparisonProductResolution1.Text = ProductResolution.Text;
             ComparisonProductStorage1.Text = ProductStorage.Text;
 
-            ComparisonStackPanel.Visibility = Visibility.Visible;
+            ComparisonGrid.Visibility = Visibility.Visible;
             ItemInfoStackPanel.Visibility = Visibility.Collapsed;
-
-            /*if (SimilarItemsListBox.SelectedIndex == -1) return;
-
-            Computer item = (sender as ListBox).SelectedItem as Computer;
-            ProductName.Text = item.Name;
-            ProductPrice.Text = '€' + (item.Price).ToString();
-            ProductBrand.Text = item.ManufacturerName;
-            ProductProcessor.Text = item.ProcessorName;
-            ProductRAM.Text = (item.RAM).ToString() + "GB " + item.RAM_type;
-            ProductGraphicsCard.Text = item.GraphicsCardName + ' ' + item.GraphicsCardMemory;
-            ProductResolution.Text = item.Resolution;
-            ProductStorage.Text = (item.StorageCapacity).ToString() + "GB";*/
+            ListStackPanel.Visibility = Visibility.Collapsed;
         }
-
-
-        /*
-        private void FilterMenuClose_Click(object sender, RoutedEventArgs e)
-        {
-            FilterMenuOpen.Visibility = Visibility.Visible;
-            FilterMenuClose.Visibility = Visibility.Collapsed;
-        }
-
-        private void FilterMenuOpen_Click(object sender, RoutedEventArgs e)
-        {
-            FilterMenuClose.Visibility = Visibility.Visible;
-            FilterMenuOpen.Visibility = Visibility.Collapsed;
-        } */
     }
 }
