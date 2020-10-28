@@ -14,9 +14,11 @@ namespace DataManipulation
             _items = items;
         }
 
+
         //Filters item list by the manufacturer and sets the private field to the filtered list
         public List<T> FilterByManufacturer(string manufacturer)
         {
+
             List<T> result = _items.Where(item => item.ManufacturerName == manufacturer).ToList();
             _items = result;
             return result;
@@ -25,9 +27,16 @@ namespace DataManipulation
         //Filters items by a price range, sets private field to the filtered list
         public List<T> FilterByPrice(double minRange, double maxRange)
         {
+
             List<T> result = _items.Where(item => item.Price >= minRange && item.Price <= maxRange).ToList();
             _items = result;
             return result;
         }
+
+        public void UpdateList(List<T> items)
+        {
+            _items = items;
+        }
+
     }
 }
