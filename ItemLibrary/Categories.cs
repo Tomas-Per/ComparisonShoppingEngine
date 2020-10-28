@@ -6,12 +6,12 @@ namespace ItemLibrary
 {
     public class Categories
     {
-        enum ItemCategory
+        public enum ItemCategory
         {
             Computer
         };
 
-        enum ComputerCategory
+        public enum ComputerCategory
         {
             Desktop,
             Laptop
