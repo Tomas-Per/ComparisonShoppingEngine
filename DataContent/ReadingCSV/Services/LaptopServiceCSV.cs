@@ -1,6 +1,7 @@
 ﻿using CsvHelper;
 using DataContent.ReadingCSV.Mappers;
 using ItemLibrary;
+using ExceptionsLibrary;
 using System;
 using System.Collections.Generic;
 using System.Globalization;
@@ -28,32 +29,47 @@ namespace DataContent.ReadingCSV.Services
             }
             catch (FileNotFoundException)
             {
-                throw new Exception("File not found");
+                throw new DataCustomException("File not found", this);
             }
             catch (Exception e)
             {
-                throw e;
+                throw new DataCustomException("Something's wrong happened:" + e.Message, this);
             }
         }
         public void WriteCSVFile(string path, List<Computer> computer)
         {
-            using (StreamWriter sw = new StreamWriter(path))
-            using (CsvWriter cw = new CsvWriter(sw))
+            try
             {
-                var headers = new List<String>{"laptop_name", "laptop_url", "laptop_price", "laptop_manufacturer",
+                using (StreamWriter sw = new StreamWriter(path))
+                using (CsvWriter cw = new CsvWriter(sw))
+                {
+                    var headers = new List<String>{"laptop_name", "laptop_url", "laptop_price", "laptop_manufacturer",
                     "laptop_resolution", "laptop_processor_class", "laptop_ram_type", "laptop_ram",
                     "laptop_storage", "laptop_graphic_card", "laptop_graphic_card_memory" };
-                foreach(String head in headers)
-                {
-                    cw.WriteField(head);
-                }
-                cw.NextRecord();
-                foreach (Computer comp in computer)
-                {
-                    cw.Configuration.RegisterClassMap<LaptopMap>();
-                    cw.WriteRecord<Computer>(comp);
+                    foreach (String head in headers)
+                    {
+                        cw.WriteField(head);
+                    }
                     cw.NextRecord();
+                    foreach (Computer comp in computer)
+                    {
+                        cw.Configuration.RegisterClassMap<LaptopMap>();
+                        cw.WriteRecord<Computer>(comp);
+                        cw.NextRecord();
+                    }
                 }
+            }
+            catch (FileNotFoundException)
+            {
+                throw new DataCustomException("File not found", this);
+            }
+            catch (FileLoadException)
+            {
+                throw new DataCustomException("File could not be opened", this);
+            }
+            catch (Exception e)
+            {
+                throw new DataCustomException("Something's wrong happened:" + e.Message, this);
             }
         }
     }

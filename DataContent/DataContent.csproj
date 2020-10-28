@@ -10,6 +10,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\ExceptionsLibrary\ExceptionsLibrary.csproj" />
     <ProjectReference Include="..\ItemLibrary\ItemLibrary.csproj" />
   </ItemGroup>
 
