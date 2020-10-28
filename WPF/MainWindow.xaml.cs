@@ -63,6 +63,7 @@ namespace WPF
             
             OriginalList = resultData.Cast<Item>().ToList();
             _filter = new Filter<Item>(OriginalList);
+            _sorter = new Sorter(OriginalList);
         }
 
         private void FilterButton_Click(object sender, RoutedEventArgs e)
@@ -281,5 +282,28 @@ namespace WPF
             ItemInfoStackPanel.Visibility = Visibility.Collapsed;
             ListStackPanel.Visibility = Visibility.Collapsed;
         }
+
+        private void AZSortButton_Click(object sender, RoutedEventArgs e)
+        {
+            List<Item> items = new List<Item>();
+            items = ItemsListBox.ItemsSource.Cast<Item>().ToList();
+
+            _sorter.UpdateList(items);
+            items = _sorter.SortByNameAsc();
+
+            ItemsListBox.ItemsSource = items;
+        }
+
+        private void ZASortButton_Click(object sender, RoutedEventArgs e)
+        {
+            List<Item> items = new List<Item>();
+            items = ItemsListBox.ItemsSource.Cast<Item>().ToList();
+
+            _sorter.UpdateList(items);
+            items = _sorter.SortByNameDesc();
+
+            ItemsListBox.ItemsSource = items;
+        }
+
     }
 }

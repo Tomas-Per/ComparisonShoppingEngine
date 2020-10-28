@@ -74,8 +74,12 @@
                     <Button Content="Search" x:Name="SearchButton" FontFamily="Candara Light"  Grid.Column="1" Margin="5,5,10,0" HorizontalAlignment="Right" Foreground="#b271a9" Background="White" BorderBrush="#b271a9" Click="SearchButton_Click"/>
                 </Grid>
                 <Grid Height="30">
-                    <Button x:Name="AtoZSorting" Margin="5" Width="20" Height="20" HorizontalAlignment="Left" VerticalAlignment="Top" Background="White" BorderBrush="#FFB271A9" Foreground="#FFB271A9"/>
-                    <Button x:Name="ZtoASorting" Margin="30,5,5,5" Width="20" Height="20" HorizontalAlignment="Left" VerticalAlignment="Top" Background="White" BorderBrush="#FFB271A9" Foreground="#FFB271A9"/>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="116*"/>
+                        <ColumnDefinition Width="15*"/>
+                    </Grid.ColumnDefinitions>
+                    <Button x:Name="AtoZSorting" Margin="5,0,0,0" Width="20" Height="20" HorizontalAlignment="Left" VerticalAlignment="Center" Background="White" BorderBrush="#FFB271A9" Foreground="#FFB271A9" Click="AZSortButton_Click"/>
+                    <Button x:Name="ZtoASorting" Margin="30,0,0,0" Width="20" Height="20" HorizontalAlignment="Left" VerticalAlignment="Center" Background="White" BorderBrush="#FFB271A9" Foreground="#FFB271A9" Click="ZASortButton_Click"/>
                 </Grid>
                 <TextBlock x:Name="ListNameTextBlock" HorizontalAlignment="Center" Text="All Computers" FontFamily="Candara Light" FontSize="14" Margin="0,0,0,5"/>
                 <Grid>
@@ -196,7 +200,7 @@
                     <Button x:Name="ComparisonOff" Opacity="0" Width="30" HorizontalAlignment="Right" Click="ComparisonOff_Click"/>
                     <materialDesign:PackIcon Kind="ArrowBack" VerticalAlignment="Stretch" HorizontalAlignment="Right" Margin="0,10,10,10" Foreground="White"/>
                 </Grid>
-                
+
                 <StackPanel Height="473">
                     <StackPanel.Background>
                         <SolidColorBrush Color="white" Opacity="0.5"/>
@@ -220,10 +224,10 @@
                                 <TextBlock x:Name="ComparisonProductResolution1" FontFamily="Candara Light" FontSize="14" ></TextBlock>
                                 <TextBlock x:Name="ComparisonProductStorage1" FontFamily="Candara Light" FontSize="14" ></TextBlock>
                             </StackPanel>
-                            
+
                         </Grid>
-                            <Grid Height="240" VerticalAlignment="Top" HorizontalAlignment="Stretch" Grid.Column="1">
-                                <Rectangle Height="200" Width="350" Margin="20,20,10,20" Fill="White" RadiusX="13" RadiusY="13" HorizontalAlignment="Left"/>
+                        <Grid Height="240" VerticalAlignment="Top" HorizontalAlignment="Stretch" Grid.Column="1">
+                            <Rectangle Height="200" Width="350" Margin="20,20,10,20" Fill="White" RadiusX="13" RadiusY="13" HorizontalAlignment="Left"/>
                             <StackPanel Margin="25,0,15,0">
                                 <TextBlock x:Name="ComparisonProductName2" Height="40" FontFamily="Candara Light" FontSize="16" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="10,20,0,5"></TextBlock>
                                 <TextBlock x:Name="ComparisonProductPrice2" FontFamily="Candara Light" FontSize="14" ></TextBlock>
@@ -261,10 +265,10 @@
                         <TextBlock Text="RAM" Grid.Column="0" HorizontalAlignment="Right" FontFamily="Candara Light" FontSize="16" Foreground="#b271a9" VerticalAlignment="Top" Margin="0,0,15,0"/>
                         <Slider x:Name="RAMWeightSlider" Grid.Column="1" HorizontalAlignment="Left" AutoToolTipPlacement="TopLeft" AutoToolTipPrecision="0" IsSnapToTickEnabled="True" Maximum="10" Minimum="0" TickFrequency="1" Foreground="#FFB271A9" TickPlacement="Both" Width="232" Value="5"/>
                     </Grid>
-           </StackPanel>
+                </StackPanel>
             </StackPanel>
         </Grid>
-            
+
     </Grid>
 
 </Window>
