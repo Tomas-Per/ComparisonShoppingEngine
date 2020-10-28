@@ -1,9 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Globalization;
 using System.Linq;
-using System.Runtime.CompilerServices;
-using System.Text;
+using static ItemLibrary.Categories;
 
 namespace ItemLibrary
 {
@@ -15,6 +13,7 @@ namespace ItemLibrary
         public int RAM { get; set; }
         public string RAM_type { get; set; }
         public string Resolution { get; set; }
+        public ComputerCategory computerCategory { get; set; }
 
         public static explicit operator Computer(List<Item> v)
         {
