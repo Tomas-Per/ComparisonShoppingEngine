@@ -156,6 +156,8 @@ namespace WPF
  
             ItemsListBox.ItemsSource = List1;
             _filter.UpdateList(OriginalList);
+
+            ListNameTextBlock.Text = "Filtered List";
         }
 
         private void DisableFilterButton_Click(object sender, RoutedEventArgs e)
@@ -169,6 +171,7 @@ namespace WPF
             HuaweiCheckBox.IsChecked = false;
             AcerCheckBox.IsChecked = false;
             HPCheckBox.IsChecked = false;
+            ListNameTextBlock.Text = "All Computers";
             
         }
 
