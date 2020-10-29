@@ -3,7 +3,7 @@ using System;
 
 namespace Comparison.Comparisons
 {
-    class ComputerComparison : ItemComparison<Computer>
+    public class ComputerComparison : ItemComparison<Computer>
     {
         protected int StorageWeight { get; set; }
         protected int RamWeight { get; set; }
@@ -15,13 +15,13 @@ namespace Comparison.Comparisons
             TotalWeight += StorageWeight + RamWeight;
         }
 
-        //Compares storage by given interval
+        //Compares items storage by given items storage
         public (double, double) StorageComparison (int mainStorage, int comparingStorage)
         {
             return SpecComparison(Convert.ToDouble(mainStorage), Convert.ToDouble(comparingStorage), StorageWeight);
         }
 
-        //Compares RAM by given interval
+        //Compares items RAMs by given items RAMs
         public (double, double) RamComparison (int mainRAM, int comparingRAM)
         {
             return SpecComparison(Convert.ToDouble(mainRAM), Convert.ToDouble(comparingRAM), RamWeight);
