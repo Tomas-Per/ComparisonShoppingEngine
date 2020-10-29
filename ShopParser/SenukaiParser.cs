@@ -1,15 +1,9 @@
 ﻿using ItemLibrary;
-using Newtonsoft.Json.Schema;
 using OpenQA.Selenium;
 using OpenQA.Selenium.Chrome;
-using OpenQA.Selenium.Support.UI;
 using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Dynamic;
-using System.IO;
 using System.Linq;
-using System.Threading;
 using static DataContent.Parsing;
 
 
