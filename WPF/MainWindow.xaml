@@ -87,7 +87,7 @@
                 <Grid>
                     <ListBox x:Name="ItemsListBox" Margin="10,0,10,10" FontFamily="Candara Light" FontSize="14" VerticalContentAlignment="Stretch"  
                          ScrollViewer.VerticalScrollBarVisibility="Visible"
-                         ScrollViewer.CanContentScroll="False" Height="425"
+                         ScrollViewer.CanContentScroll="False" Height="420"
                          SelectionChanged="ListBox_SelectionChanged" SelectionMode="Single" FontWeight="Bold">
 
                         <ListBox.ItemTemplate>
