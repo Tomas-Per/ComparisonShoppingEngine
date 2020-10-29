@@ -7,6 +7,7 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Dynamic;
+using System.IO;
 using System.Linq;
 using System.Threading;
 using static DataContent.Parsing;
@@ -14,28 +15,40 @@ using static DataContent.Parsing;
 
 namespace ShopParser
 {
-    class SenukaiParser : IParser<Computer>
+    public class SenukaiParser : IParser<Computer>
     {
         private string _url = "https://www.senukai.lt/c/kompiuterine-technika-biuro-prekes/nesiojami-kompiuteriai-ir-priedai/nesiojami-kompiuteriai/5ei?";
         private IWebDriver _driver;
-        private string currentWIndowURL;
+        private string _currentWIndowURL;
 
-        public SenukaiParser ()
+        public SenukaiParser()
         {
             var options = new ChromeOptions();
             options.AddArguments("--headless");
             _driver = new ChromeDriver();
-            currentWIndowURL = _url;
+            _currentWIndowURL = _url;
         }
 
         public List<Computer> ParseShop()
         {
             List<Computer> data = new List<Computer>();
 
+            string nextPage;
+
             _driver.Navigate().GoToUrl(_url);
 
             for (int i = 0; i < 10; i++)
             {
+                try
+                {
+                    nextPage = _driver.FindElement(By.XPath("//a[contains(@class, 'next')]")).GetAttribute("href");
+                }
+
+                catch (Exception)
+                {
+                    nextPage = _currentWIndowURL;
+                }
+
                 var names = _driver.FindElements(By.XPath("//*[@class = 'catalog-taxons-product__name']"));
                 var prices = _driver.FindElements(By.XPath("//*[@class = 'catalog-taxons-product-price__item-price']"));
 
@@ -71,12 +84,10 @@ namespace ShopParser
                     //_driver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(10);
                 }
 
-                var nextPage = _driver.FindElement(By.ClassName("next")).GetAttribute("href");
-
-                if (nextPage != currentWIndowURL)
+                if (nextPage != _currentWIndowURL)
                 {
                     _driver.Navigate().GoToUrl(nextPage);
-                    currentWIndowURL = nextPage;
+                    _currentWIndowURL = nextPage;
                 }
             }
             return data;
@@ -89,7 +100,16 @@ namespace ShopParser
             //var id = _driver.FindElement(By.ClassName("product-id"));
 
             var image = _driver.FindElements(By.ClassName("product-gallery-slider__slide__image"));
-            computer.ImageLink = image[0].GetAttribute("src");
+
+            try
+            {
+                computer.ImageLink = image[0].GetAttribute("src");
+            }
+
+            catch (ArgumentOutOfRangeException)
+            {
+                computer.ImageLink = null;
+            }
 
             var generalProperties = _driver.FindElements(By.TagName("td"));
 
@@ -110,18 +130,17 @@ namespace ShopParser
                     computer.ProcessorName = generalProperties[i + 1].Text;
                 }
 
-                else if (generalProperties[i].Text.Contains("Operatyviosios atmint"))
+                else if (generalProperties[i].Text.Contains("Operatyvioji atmintis (RAM)"))
                 {
-                    if (generalProperties[i].Text.Contains("tipas"))
-                    {
-                        computer.RAM_type = generalProperties[i + 1].Text;
-                    }
 
-                    else if (generalProperties[i].Text.Contains("(RAM)"))
-                    {
-                        computer.RAM = ParseInt(generalProperties[i + 1].Text);
-                    }  
+                    computer.RAM = ParseInt(generalProperties[i + 1].Text);
                 }
+
+                else if (generalProperties[i].Text.Contains("Operatyviosios atminties tipas"))
+                {
+                    computer.RAM_type = generalProperties[i + 1].Text;
+                }
+
                 else if (generalProperties[i].Text.Contains("Vaizdo plokštės"))
                 {
                     if (generalProperties[i].Text.Contains("modelis"))
@@ -138,17 +157,30 @@ namespace ShopParser
                         computer.GraphicsCardMemory = generalProperties[i + 1].Text;
                     }
                 }
-
-                else if (generalProperties[i].Text.Contains("Bendra kompiuterio atminties talpa"))
+                else if (generalProperties[i].Text.Contains("MMC disko talpa"))
                 {
-                    computer.StorageCapacity = ParseInt(generalProperties[i + 1].Text);
+                    computer.StorageCapacity += ParseInt(generalProperties[i + 1].Text);
                 }
+
+                else if (generalProperties[i].Text.Contains("Kietojo disko talpa(HDD)"))
+                {
+                    try
+                    {
+                        computer.StorageCapacity += ParseInt(generalProperties[i + 1].Text);
+                    }
+
+                    catch (Exception)
+                    {
+
+                    }
+                }
+                
             }
-        return computer;
+
+            return computer;
         }
-
-        
-
     }
 }
+
+
 

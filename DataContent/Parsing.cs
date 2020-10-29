@@ -11,9 +11,17 @@ namespace DataContent
             string value = Regex.Replace(text, @",", ".");
             return value;
         }
+
+        private static string DeleteSpaces (string text)
+        {
+            string value = Regex.Replace(text, @"[\s+]", "");
+            return value;
+        }
+
         public static double ParseDouble(string text)
         {
             text = ReplaceSeperator(text);
+            text = DeleteSpaces(text);
             try
             {
                 Match value = Regex.Matches(text, @"\d+(\.\d+)?")[0];
@@ -32,6 +40,8 @@ namespace DataContent
         }
         public static int ParseInt(string text)
         {
+            text = DeleteSpaces(text);
+
             try
             {
                 Match value = Regex.Matches(text, @"\d+")[0];
