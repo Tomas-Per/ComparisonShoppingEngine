@@ -21,6 +21,7 @@ using System.IO;
 using System.Diagnostics;
 using DataManipulation;
 using DataContent.ReadingCSV;
+using DataManipulation.Filters;
 using System.Xml;
 using System.Linq.Expressions;
 
@@ -32,9 +33,9 @@ namespace WPF
     public partial class MainWindow : Window
     {
 
-        private Filter<Item> _filter;
+        private ComputerFilter _filter;
         private Sorter _sorter;
-        private List<Item> OriginalList = new List<Item>();
+        private List<Computer> OriginalList = new List<Computer>();
         private List<string> brands = new List<string>() { "Asus", "Dell", "Apple", "Lenovo", "Acer", "Huawei" };
         private List<string> processors = new List<string>() { "Intel Core i3", "Intel Core i5", "Intel Core i7", "IntelCeleron", "Intel Atom" };
         private List<CheckBox> processorsCheckBoxes = new List<CheckBox>();
@@ -68,9 +69,9 @@ namespace WPF
             var resultData = _laptopService.ReadData(_filePath);
             ItemsListBox.ItemsSource = resultData;
             
-            OriginalList = resultData.Cast<Item>().ToList();
-            _filter = new Filter<Item>(OriginalList);
-            _sorter = new Sorter(OriginalList);
+            OriginalList = resultData.Cast<Computer>().ToList();
+            _filter = new ComputerFilter(OriginalList);
+            _sorter = new Sorter(OriginalList.Cast<Item>().ToList());
         }
 
         private void dynamicProcessorCheckBox()
@@ -155,7 +156,7 @@ namespace WPF
 
         private void FilterButton_Click(object sender, RoutedEventArgs e)
         {
-            List<Item> List1 = new List<Item>();
+            List<Computer> List1 = new List<Computer>();
             int MaxRange = (int)PriceSlider.Value;
             var List = OriginalList;
             bool isThereCheckedBox = false;
@@ -171,9 +172,14 @@ namespace WPF
                 _filter.UpdateList(List);
             }
             //checking every checkbox and if is checked, we use filter
-            foreach(CheckBox checkBox in brandsCheckBoxes)
+            foreach(var checkBox in brandsCheckBoxes)
             {
                 if ((bool)checkBox.IsChecked) List1.AddRange(_filter.FilterByManufacturer(checkBox.Name));
+                isThereCheckedBox = true;
+            }
+            foreach(var checkBox in processorsCheckBoxes)
+            {
+                if ((bool)checkBox.IsChecked) List1.AddRange(_filter.FilterByProcessor(checkBox.Content.ToString()));
                 isThereCheckedBox = true;
             }
             //we check, if there wasn't any checked checkboxes
@@ -223,7 +229,7 @@ namespace WPF
             Uri uri = new Uri(item.ItemURL);
             BuyHereHyper.NavigateUri = uri;
 
-            List<Item> SimilarItems = item.FindSimilar(OriginalList);
+            List<Item> SimilarItems = item.FindSimilar(OriginalList.Cast<Item>().ToList());
             SimilarItemsListBox.ItemsSource = SimilarItems;
 
         }
