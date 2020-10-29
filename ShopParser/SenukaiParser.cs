@@ -14,7 +14,7 @@ using static DataContent.Parsing;
 
 namespace ShopParser
 {
-    class SenukaiParser : IParser<Computer>
+    public class SenukaiParser : IParser<Computer>
     {
         private string _url = "https://www.senukai.lt/c/kompiuterine-technika-biuro-prekes/nesiojami-kompiuteriai-ir-priedai/nesiojami-kompiuteriai/5ei?";
         private IWebDriver _driver;
