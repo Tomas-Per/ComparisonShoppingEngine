@@ -3,6 +3,7 @@ using System;
 
 namespace AdminService
 {
+    //Exe class which is for admins only. this class controls data updates
     public class AdminService
     {
         public static string _helpMessage = "1 - parse Laptops from Senukai" +
