@@ -29,6 +29,7 @@ namespace AdminService
                 else if (command == "1")
                 {
                     new SenukaiDataUpdater().update();
+                    Console.WriteLine("Senukai Parsed");
                 }
 
                 else if (command == "0")
