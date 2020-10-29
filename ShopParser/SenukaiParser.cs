@@ -21,7 +21,7 @@ namespace ShopParser
         private IWebDriver _driver;
         private string _currentWIndowURL;
 
-        public SenukaiParser ()
+        public SenukaiParser()
         {
             var options = new ChromeOptions();
             options.AddArguments("--headless");
@@ -48,7 +48,7 @@ namespace ShopParser
                 {
                     nextPage = _currentWIndowURL;
                 }
-               
+
                 var names = _driver.FindElements(By.XPath("//*[@class = 'catalog-taxons-product__name']"));
                 var prices = _driver.FindElements(By.XPath("//*[@class = 'catalog-taxons-product-price__item-price']"));
 
@@ -89,7 +89,6 @@ namespace ShopParser
                     _driver.Navigate().GoToUrl(nextPage);
                     _currentWIndowURL = nextPage;
                 }
-                break;
             }
             return data;
         }
@@ -158,22 +157,30 @@ namespace ShopParser
                         computer.GraphicsCardMemory = generalProperties[i + 1].Text;
                     }
                 }
+                else if (generalProperties[i].Text.Contains("MMC disko talpa"))
+                {
+                    computer.StorageCapacity += ParseInt(generalProperties[i + 1].Text);
+                }
 
                 else if (generalProperties[i].Text.Contains("Kietojo disko talpa(HDD)"))
                 {
-                    computer.StorageCapacity += ParseInt(generalProperties[i + 1].Text);
-                }
+                    try
+                    {
+                        computer.StorageCapacity += ParseInt(generalProperties[i + 1].Text);
+                    }
 
-                else if (generalProperties[i].Text.Contains("SSD / eMMC disko talpa"))
-                {
-                    computer.StorageCapacity += ParseInt(generalProperties[i + 1].Text);
+                    catch (Exception)
+                    {
+
+                    }
                 }
+                
             }
-        return computer;
+
+            return computer;
         }
-
-        
-
     }
 }
+
+
 
