@@ -8,6 +8,7 @@ namespace URLGenerator
     {
         private string _link = "https://www.amazon.com";
 
+        //generates Amazon link from given processors which were checked for a search
         public string GenerateURL(List<Processor> filters)
         {
             if(!filters.Any())
@@ -16,6 +17,7 @@ namespace URLGenerator
             }
             _link = filters.ElementAt(0).AmazonLink;
             filters.RemoveAt(0);
+
             foreach (var filter in filters)
             {
                 _link = _link + filter.AmazonBin;
