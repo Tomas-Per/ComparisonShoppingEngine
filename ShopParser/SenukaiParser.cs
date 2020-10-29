@@ -78,6 +78,8 @@ namespace ShopParser
                     _driver.Navigate().GoToUrl(nextPage);
                     currentWIndowURL = nextPage;
                 }
+
+                break;
             }
             return data;
         }
