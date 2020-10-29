@@ -1,4 +1,5 @@
 ﻿
+using DataUpdater;
 using System;
 using System.Collections.Generic;
 using System.Reflection.Metadata.Ecma335;
@@ -27,7 +28,7 @@ namespace AdminService
 
                 else if (command == "1")
                 {
-                    Console.WriteLine("Success");
+                    new SenukaiDataUpdater().update();
                 }
 
                 else if (command == "0")

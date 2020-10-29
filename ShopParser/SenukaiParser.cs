@@ -7,6 +7,7 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Dynamic;
+using System.IO;
 using System.Linq;
 using System.Threading;
 using static DataContent.Parsing;
@@ -71,13 +72,13 @@ namespace ShopParser
                     //_driver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(10);
                 }
 
-                var nextPage = _driver.FindElement(By.ClassName("next")).GetAttribute("href");
+                //var nextPage = _driver.FindElement(By.XPath("//a[contains(@class, 'next')]")).GetAttribute("href");
 
-                if (nextPage != currentWIndowURL)
-                {
-                    _driver.Navigate().GoToUrl(nextPage);
-                    currentWIndowURL = nextPage;
-                }
+                //if (nextPage != currentWIndowURL)
+                //{
+                //    _driver.Navigate().GoToUrl(nextPage);
+                //    currentWIndowURL = nextPage;
+                //}
 
                 break;
             }
@@ -91,7 +92,16 @@ namespace ShopParser
             //var id = _driver.FindElement(By.ClassName("product-id"));
 
             var image = _driver.FindElements(By.ClassName("product-gallery-slider__slide__image"));
-            computer.ImageLink = image[0].GetAttribute("src");
+
+            try
+            {
+                computer.ImageLink = image[0].GetAttribute("src");
+            }
+
+            catch (ArgumentOutOfRangeException e)
+            {
+                computer.ImageLink = null;
+            }
 
             var generalProperties = _driver.FindElements(By.TagName("td"));
 
@@ -112,18 +122,17 @@ namespace ShopParser
                     computer.ProcessorName = generalProperties[i + 1].Text;
                 }
 
-                else if (generalProperties[i].Text.Contains("Operatyviosios atmint"))
+                else if (generalProperties[i].Text.Contains("Operatyvioji atmintis (RAM)"))
                 {
-                    if (generalProperties[i].Text.Contains("tipas"))
-                    {
-                        computer.RAM_type = generalProperties[i + 1].Text;
-                    }
 
-                    else if (generalProperties[i].Text.Contains("(RAM)"))
-                    {
-                        computer.RAM = ParseInt(generalProperties[i + 1].Text);
-                    }  
+                    computer.RAM = ParseInt(generalProperties[i + 1].Text);
                 }
+
+                else if (generalProperties[i].Text.Contains("Operatyviosios atminties tipas"))
+                {
+                    computer.RAM_type = generalProperties[i + 1].Text;
+                }
+
                 else if (generalProperties[i].Text.Contains("Vaizdo plokštės"))
                 {
                     if (generalProperties[i].Text.Contains("modelis"))
