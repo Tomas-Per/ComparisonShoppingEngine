@@ -19,6 +19,9 @@ namespace ShopParser
         {
         }
 
+        //parses laptops from senukai.lt and returns results in a List<Computer>
+        //this method parses first 10 pages (48laptops in every page), because later pages are
+        //outdated and don't have items in stock for a long time
         public List<Computer> ParseShop()
         {
             var options = new ChromeOptions();
@@ -90,6 +93,7 @@ namespace ShopParser
         }
 
 
+        //parses laptop window, updates computer fields 
         private Computer ParseWindow(Computer computer)
         {
 
