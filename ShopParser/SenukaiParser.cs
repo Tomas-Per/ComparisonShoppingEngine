@@ -19,24 +19,36 @@ namespace ShopParser
     {
         private string _url = "https://www.senukai.lt/c/kompiuterine-technika-biuro-prekes/nesiojami-kompiuteriai-ir-priedai/nesiojami-kompiuteriai/5ei?";
         private IWebDriver _driver;
-        private string currentWIndowURL;
+        private string _currentWIndowURL;
 
         public SenukaiParser ()
         {
             var options = new ChromeOptions();
             options.AddArguments("--headless");
             _driver = new ChromeDriver();
-            currentWIndowURL = _url;
+            _currentWIndowURL = _url;
         }
 
         public List<Computer> ParseShop()
         {
             List<Computer> data = new List<Computer>();
 
+            string nextPage;
+
             _driver.Navigate().GoToUrl(_url);
 
             for (int i = 0; i < 10; i++)
             {
+                try
+                {
+                    nextPage = _driver.FindElement(By.XPath("//a[contains(@class, 'next')]")).GetAttribute("href");
+                }
+
+                catch (Exception)
+                {
+                    nextPage = _currentWIndowURL;
+                }
+               
                 var names = _driver.FindElements(By.XPath("//*[@class = 'catalog-taxons-product__name']"));
                 var prices = _driver.FindElements(By.XPath("//*[@class = 'catalog-taxons-product-price__item-price']"));
 
@@ -72,15 +84,11 @@ namespace ShopParser
                     //_driver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(10);
                 }
 
-                //var nextPage = _driver.FindElement(By.XPath("//a[contains(@class, 'next')]")).GetAttribute("href");
-
-                //if (nextPage != currentWIndowURL)
-                //{
-                //    _driver.Navigate().GoToUrl(nextPage);
-                //    currentWIndowURL = nextPage;
-                //}
-
-                break;
+                if (nextPage != _currentWIndowURL)
+                {
+                    _driver.Navigate().GoToUrl(nextPage);
+                    _currentWIndowURL = nextPage;
+                }
             }
             return data;
         }
@@ -98,7 +106,7 @@ namespace ShopParser
                 computer.ImageLink = image[0].GetAttribute("src");
             }
 
-            catch (ArgumentOutOfRangeException e)
+            catch (ArgumentOutOfRangeException)
             {
                 computer.ImageLink = null;
             }
