@@ -21,6 +21,9 @@ using System.IO;
 using System.Diagnostics;
 using DataManipulation;
 using DataContent.ReadingCSV;
+using DataManipulation.Filters;
+using System.Xml;
+using System.Linq.Expressions;
 
 namespace WPF
 {
@@ -30,10 +33,13 @@ namespace WPF
     public partial class MainWindow : Window
     {
 
-        private Filter<Item> _filter;
+        private ComputerFilter _filter;
         private Sorter _sorter;
-        private List<Item> OriginalList = new List<Item>();
-
+        private List<Computer> OriginalList = new List<Computer>();
+        private List<string> brands = new List<string>() { "Asus", "Dell", "Apple", "Lenovo", "Acer", "Huawei" };
+        private List<string> processors = new List<string>() { "Intel Core i3", "Intel Core i5", "Intel Core i7", "IntelCeleron", "Intel Atom" };
+        private List<CheckBox> processorsCheckBoxes = new List<CheckBox>();
+        private List<CheckBox> brandsCheckBoxes = new List<CheckBox>();
         public MainWindow()
         {
             InitializeComponent();
@@ -52,7 +58,9 @@ namespace WPF
         }
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
-        { 
+        {
+            DynamicBrandCheckBox();
+            dynamicProcessorCheckBox();
             string _filePath = MainPath.GetMainPath() + @"\Data\senukai.csv";
 
             var _laptopService = new LaptopServiceCSV();
@@ -61,63 +69,121 @@ namespace WPF
             var resultData = _laptopService.ReadData(_filePath);
             ItemsListBox.ItemsSource = resultData;
             
-            OriginalList = resultData.Cast<Item>().ToList();
-            _filter = new Filter<Item>(OriginalList);
-            _sorter = new Sorter(OriginalList);
+            OriginalList = resultData.Cast<Computer>().ToList();
+            _filter = new ComputerFilter(OriginalList);
+            _sorter = new Sorter(OriginalList.Cast<Item>().ToList());
+        }
+
+        private void dynamicProcessorCheckBox()
+        {
+            int column = 1;
+            int cycleCount = 1;
+            foreach (var processor in processors)
+            {
+                CheckBox checkbox = new CheckBox()
+                {
+                    Content = processor,
+                    Name = processor.Replace(" ", ""),
+                    FontFamily = new FontFamily("Candara Light"),
+                    Background = Brushes.White,
+                    BorderBrush = Brushes.White,
+                    Foreground = Brushes.White
+                };
+                brandsCheckBoxes.Add(checkbox);
+                switch (column)
+                {
+                    case 1:
+                        ProcessorColumn1.Children.Add(checkbox);
+                        column = 2;
+                        break;
+                    case 2:
+                        ProcessorColumn2.Children.Add(checkbox);
+                        column = 1;
+                        break;
+                    case 3:
+                        ProcessorColumn3.Children.Add(checkbox);
+                        column = 4;
+                        break;
+                    case 4:
+                        ProcessorColumn4.Children.Add(checkbox);
+                        column = 3;
+                        break;
+                }
+                cycleCount++;
+                if (cycleCount == 7) column = 3;
+            }
+        }
+
+        private void DynamicBrandCheckBox()
+        {
+            int column = 1;
+            int cycleCount = 1;
+            foreach(var brand in brands)
+            {
+                CheckBox checkbox = new CheckBox()
+                {
+                    Content = brand,
+                    Name = brand,
+                    FontFamily = new FontFamily("Candara Light"),
+                    Background = Brushes.White,
+                    BorderBrush = Brushes.White,
+                    Foreground = Brushes.White
+                };
+                brandsCheckBoxes.Add(checkbox);
+                switch(column)
+                {
+                    case 1:
+                        BrandColumn1.Children.Add(checkbox);
+                        column = 2;
+                        break;
+                    case 2:
+                        BrandColumn2.Children.Add(checkbox);
+                        column = 1;
+                        break;
+                    case 3:
+                        BrandColumn3.Children.Add(checkbox);
+                        column = 4;
+                        break;
+                    case 4:
+                        BrandColumn4.Children.Add(checkbox);
+                        column = 3;
+                        break;
+                }
+                cycleCount++;
+                if (cycleCount == 7) column = 3;
+            }
         }
 
         private void FilterButton_Click(object sender, RoutedEventArgs e)
         {
-            List<Item> List1 = new List<Item>();
+            List<Computer> List1 = new List<Computer>();
             int MaxRange = (int)PriceSlider.Value;
             var List = OriginalList;
+            bool isThereCheckedBox = false;
             if (MaxRange != 0)
             {
 
                 //Filtering by price range
                 List = _filter.FilterByPrice(0, MaxRange);
 
-                /*updating the list inside the class so we can filter out the list 
-                 *which already has been filtered by price
-                */
+                //updating the list inside the class so we can filter out the list 
+                 //*which already has been filtered by price
+                //
                 _filter.UpdateList(List);
             }
-            //checking if all the checkboxes are unchecked, if so we return only the filtered by price list
-            if (!((bool)AsusCheckBox.IsChecked || (bool)LenovoCheckBox.IsChecked || (bool)AppleCheckBox.IsChecked
-                                || (bool)HuaweiCheckBox.IsChecked || (bool)AcerCheckBox.IsChecked || (bool)HPCheckBox.IsChecked))
+            //checking every checkbox and if is checked, we use filter
+            foreach(var checkBox in brandsCheckBoxes)
             {
-                List1 = List;
+                if ((bool)checkBox.IsChecked) List1.AddRange(_filter.FilterByManufacturer(checkBox.Name));
+                isThereCheckedBox = true;
             }
-            else
+            foreach(var checkBox in processorsCheckBoxes)
             {
-                //Filtering by manufacturer
-                if ((bool)AsusCheckBox.IsChecked)
-                {
-                    List1.AddRange(_filter.FilterByManufacturer("Asus"));
-                }
-                if ((bool)LenovoCheckBox.IsChecked)
-                {
-                    List1.AddRange(_filter.FilterByManufacturer("Lenovo"));
-                }
-                if ((bool)AppleCheckBox.IsChecked)
-                {
-                    List1.AddRange(_filter.FilterByManufacturer("Apple"));
-                }
-                if ((bool)HuaweiCheckBox.IsChecked)
-                {
-                    List1.AddRange(_filter.FilterByManufacturer("Huawei"));
-                }
-                if ((bool)AcerCheckBox.IsChecked)
-                {
-                    List1.AddRange(_filter.FilterByManufacturer("Acer"));
-                }
-                if ((bool)HPCheckBox.IsChecked)
-                {
-                    List1.AddRange(_filter.FilterByManufacturer("HP"));
-                }
-
+                if ((bool)checkBox.IsChecked) List1.AddRange(_filter.FilterByProcessor(checkBox.Content.ToString()));
+                isThereCheckedBox = true;
             }
-
+            //we check, if there wasn't any checked checkboxes
+            if (isThereCheckedBox == false) List1 = List;
             ItemsListBox.ItemsSource = List1;
             _filter.UpdateList(OriginalList);
 
@@ -129,12 +195,14 @@ namespace WPF
             ItemsListBox.ItemsSource = OriginalList;
 
             //Setting all checkboxes to be unchecked
-            AsusCheckBox.IsChecked = false;
-            LenovoCheckBox.IsChecked = false;
-            AppleCheckBox.IsChecked = false;
-            HuaweiCheckBox.IsChecked = false;
-            AcerCheckBox.IsChecked = false;
-            HPCheckBox.IsChecked = false;
+            foreach(var checkbox in brandsCheckBoxes)
+            {
+                checkbox.IsChecked = false;
+            }
+            foreach(var checkbox in processorsCheckBoxes)
+            {
+                checkbox.IsChecked = false;
+            }    
             ListNameTextBlock.Text = "All Computers";
             
         }
@@ -161,7 +229,7 @@ namespace WPF
             Uri uri = new Uri(item.ItemURL);
             BuyHereHyper.NavigateUri = uri;
 
-            List<Item> SimilarItems = item.FindSimilar(OriginalList);
+            List<Item> SimilarItems = item.FindSimilar(OriginalList.Cast<Item>().ToList());
             SimilarItemsListBox.ItemsSource = SimilarItems;
 
         }

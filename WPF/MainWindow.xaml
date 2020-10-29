@@ -156,15 +156,17 @@
                                 <ColumnDefinition Width="68*"/>
                                 <ColumnDefinition Width="93*"/>
                             </Grid.ColumnDefinitions>
-                            <StackPanel Grid.Column="0" Grid.ColumnSpan="2" >
-                                <CheckBox x:Name="AsusCheckBox" FontFamily="Candara Light"  Background="White" BorderBrush="White" Foreground="White" Content="Asus"/>
-                                <CheckBox x:Name="LenovoCheckBox" FontFamily="Candara Light"  Background="White" BorderBrush="White" Foreground="White" Content="Lenovo"/>
-                                <CheckBox x:Name="AppleCheckBox" FontFamily="Candara Light"  Background="White" BorderBrush="White" Foreground="White" Content="Apple"/>
+                            <StackPanel x:Name="BrandColumn1" Grid.Column="0" Grid.ColumnSpan="2" >
+                               
                             </StackPanel>
-                            <StackPanel Grid.Column="2">
-                                <CheckBox x:Name="HuaweiCheckBox" FontFamily="Candara Light"  Background="White" BorderBrush="White" Foreground="White" Content="Huawei"/>
-                                <CheckBox x:Name="AcerCheckBox" FontFamily="Candara Light"  Background="White" BorderBrush="White" Foreground="White" Content="Acer"/>
-                                <CheckBox x:Name="HPCheckBox" FontFamily="Candara Light"  Background="White" BorderBrush="White" Foreground="White" Content="HP"/>
+                            <StackPanel x:Name="BrandColumn2" Grid.Column="2">
+                               
+                            </StackPanel>
+                            <StackPanel x:Name="BrandColumn3" Grid.Column="0"  Visibility="Hidden">
+
+                            </StackPanel>
+                            <StackPanel x:Name="BrandColumn4" Grid.Column="2"  Visibility="Hidden">
+
                             </StackPanel>
                         </Grid>
                         <TextBlock Text="Processor Type" FontFamily="Candara Light" Foreground="White" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="10,10,10,10" FontWeight="Bold" FontSize="14"/>
@@ -174,14 +176,13 @@
                                 <ColumnDefinition Width="*"/>
                                 <ColumnDefinition Width="*"/>
                             </Grid.ColumnDefinitions>
-                            <StackPanel Grid.Column="0">
-                                <CheckBox x:Name="i3CheckBox" Content="Intel Core i3"  FontFamily="Candara Light"  Background="White" BorderBrush="White" Foreground="White"/>
-                                <CheckBox x:Name="i5CheckBox" Content="Intel Core i5"  FontFamily="Candara Light"  Background="White" BorderBrush="White" Foreground="White"/>
-                                <CheckBox x:Name="i7CheckBox" Content="Intel Core i7"  FontFamily="Candara Light"  Background="White" BorderBrush="White" Foreground="White"/>
+                            <StackPanel x:Name="ProcessorColumn1" Grid.Column="0">
                             </StackPanel>
-                            <StackPanel Grid.Column="1">
-                                <CheckBox x:Name="IntelCeleronCheckBox" Content="IntelCeleron"  FontFamily="Candara Light"  Background="White" BorderBrush="White" Foreground="White"/>
-                                <CheckBox x:Name="IntelAtomCheckBox" Content="Intel Atom"  FontFamily="Candara Light"  Background="White" BorderBrush="White" Foreground="White"/>
+                            <StackPanel x:Name="ProcessorColumn2" Grid.Column="1">
+                            </StackPanel>
+                            <StackPanel x:Name="ProcessorColumn3" Grid.Column="0" Visibility="Hidden">
+                            </StackPanel>
+                            <StackPanel x:Name="ProcessorColumn4" Grid.Column="1" Visibility="Hidden">
                             </StackPanel>
                         </Grid>
                         <Button x:Name="FilterButton" Content="Apply Filters" VerticalAlignment="Bottom" HorizontalAlignment="Center" Margin="10,10,10,0" Background="#b271a9" BorderBrush="White" FontFamily="Candara Light" Click="FilterButton_Click">
@@ -272,6 +273,7 @@
         </Grid>
 
     </Grid>
+    
 
 </Window>
 
