@@ -38,7 +38,7 @@ namespace DataContent.ReadingCSV.Services
             }
         }
 
-        //writes laptop list to CSV file
+        //writes Laptop list to CSV file
         public void WriteCSVFile(string path, List<Computer> computer)
         {
             try
