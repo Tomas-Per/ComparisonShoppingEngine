@@ -17,14 +17,16 @@ namespace ShopParser
 
         public SenukaiParser()
         {
-            var options = new ChromeOptions();
-            options.AddArguments("--headless");
-            _driver = new ChromeDriver();
-            _currentWIndowURL = _url;
         }
 
         public List<Computer> ParseShop()
         {
+            var options = new ChromeOptions();
+            options.AddArguments("--headless");
+
+            _driver = new ChromeDriver(options);
+            _currentWIndowURL = _url;
+
             List<Computer> data = new List<Computer>();
 
             string nextPage;

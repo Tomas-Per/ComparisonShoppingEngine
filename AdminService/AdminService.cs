@@ -1,10 +1,5 @@
-﻿
-using DataUpdater;
+﻿using DataUpdater;
 using System;
-using System.Collections.Generic;
-using System.Reflection.Metadata.Ecma335;
-using System.Runtime.CompilerServices;
-using System.Text;
 
 namespace AdminService
 {
