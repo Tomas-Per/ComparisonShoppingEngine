@@ -213,6 +213,15 @@ namespace WPF
 
             Computer item = (sender as ListBox).SelectedItem as Computer;
 
+            DisplayItem(item);
+
+            List<Item> SimilarItems = item.FindSimilar(OriginalList.Cast<Item>().ToList());
+            SimilarItemsListBox.ItemsSource = SimilarItems;
+
+        }
+
+        private void DisplayItem(Computer item)
+        {
             //Setting textboxes
             ProductName.Text = item.Name;
             ProductPrice.Text = "Price: " + '€' + (item.Price).ToString();
@@ -228,10 +237,6 @@ namespace WPF
 
             Uri uri = new Uri(item.ItemURL);
             BuyHereHyper.NavigateUri = uri;
-
-            List<Item> SimilarItems = item.FindSimilar(OriginalList.Cast<Item>().ToList());
-            SimilarItemsListBox.ItemsSource = SimilarItems;
-
         }
 
         private void Hyperlink_RequestNavigate(object sender, RequestNavigateEventArgs e)
@@ -255,16 +260,8 @@ namespace WPF
 
             //Setting textboxes
             Computer item = (sender as ListBox).SelectedItem as Computer;
-            ProductName.Text = item.Name;
-            ProductPrice.Text = '€' + (item.Price).ToString();
-            ProductBrand.Text = item.ManufacturerName;
-            ProductProcessor.Text = item.ProcessorName;
-            ProductRAM.Text = (item.RAM).ToString() + "GB " + item.RAM_type;
-            ProductGraphicsCard.Text = item.GraphicsCardName + ' ' + item.GraphicsCardMemory;
-            ProductResolution.Text = item.Resolution;
-            ProductStorage.Text = (item.StorageCapacity).ToString() + "GB";
-            BuyHere.Text = "Buy here";
-            SimilarProducts.Text = "Similar Products";
+
+            DisplayItem(item);
 
             Uri uri = new Uri(item.ItemURL);
             BuyHereHyper.NavigateUri = uri;
