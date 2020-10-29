@@ -89,6 +89,7 @@ namespace ShopParser
                     _driver.Navigate().GoToUrl(nextPage);
                     _currentWIndowURL = nextPage;
                 }
+                break;
             }
             return data;
         }
@@ -158,9 +159,14 @@ namespace ShopParser
                     }
                 }
 
-                else if (generalProperties[i].Text.Contains("Bendra kompiuterio atminties talpa"))
+                else if (generalProperties[i].Text.Contains("Kietojo disko talpa(HDD)"))
                 {
-                    computer.StorageCapacity = ParseInt(generalProperties[i + 1].Text);
+                    computer.StorageCapacity += ParseInt(generalProperties[i + 1].Text);
+                }
+
+                else if (generalProperties[i].Text.Contains("SSD / eMMC disko talpa"))
+                {
+                    computer.StorageCapacity += ParseInt(generalProperties[i + 1].Text);
                 }
             }
         return computer;
