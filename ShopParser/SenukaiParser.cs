@@ -5,7 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using static DataContent.Parsing;
-
+using static ItemLibrary.Categories;
 
 namespace ShopParser
 {
@@ -65,7 +65,7 @@ namespace ShopParser
 
                 foreach (var link in links)
                 {
-                    Computer computer = new Computer { Name = namesList.ElementAt(0), Price = ParseDouble(pricesList.ElementAt(0)) };
+                    Computer computer = new Computer { Name = namesList.ElementAt(0), Price = ParseDouble(pricesList.ElementAt(0)), ItemCategory = ItemCategory.Computer };
 
                     namesList.RemoveAt(0);
                     pricesList.RemoveAt(0);
