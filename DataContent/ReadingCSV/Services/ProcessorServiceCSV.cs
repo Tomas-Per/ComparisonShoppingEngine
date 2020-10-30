@@ -12,10 +12,12 @@ using System.Text;
 namespace DataContent.ReadingCSV.Services
 {
     class ProcessorServiceCSV
-    {   public string Path { get; set; }
-        public ProcessorServiceCSV(string path)
+    {   private string Path { get; set; }
+        private FileMode Filemode { get; set; }
+        public ProcessorServiceCSV(string path, FileMode fileMode)
         {
             Path = path;
+            Filemode = fileMode;
         }
         //reads Processor list from CSV file
         public List<Processor> ReadData()
@@ -48,7 +50,7 @@ namespace DataContent.ReadingCSV.Services
         {
             try
             {
-                using (var stream = File.Open(Path, FileMode.Append))
+                using (var stream = File.Open(Path, Filemode))
                 using (StreamWriter sw = new StreamWriter(stream))
                 using (CsvWriter cw = new CsvWriter(sw))
                 {

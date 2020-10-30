@@ -12,12 +12,19 @@ namespace DataContent.ReadingCSV.Services
 {
     public class LaptopServiceCSV : IData<Computer>
     {
+        private string Path { get; set; }
+        private FileMode Filemode { get; set; }
+        public LaptopServiceCSV(string path, FileMode fileMode)
+        {
+            Path = path;
+            Filemode = fileMode;
+        }
         //reads Laptop list from CSV file
-        public List<Computer> ReadData(string path)
+        public List<Computer> ReadData()
         {
             try
             {
-                using (var reader = new StreamReader(path))
+                using (var reader = new StreamReader(Path))
                 using (var csv = new CsvReader(reader))
                 {
                     csv.Configuration.CultureInfo = CultureInfo.InvariantCulture;
@@ -39,11 +46,12 @@ namespace DataContent.ReadingCSV.Services
         }
 
         //writes Laptop list to CSV file
-        public void WriteCSVFile(string path, List<Computer> computer)
+        public void WriteData(List<Computer> computer)
         {
             try
             {
-                using (StreamWriter sw = new StreamWriter(path))
+                using (var stream = File.Open(Path, Filemode))
+                using (StreamWriter sw = new StreamWriter(stream))
                 using (CsvWriter cw = new CsvWriter(sw))
                 {
                     var headers = new List<String>{"laptop_name", "laptop_url", "laptop_price", "laptop_manufacturer",
