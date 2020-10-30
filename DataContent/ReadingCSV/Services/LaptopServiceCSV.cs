@@ -12,6 +12,7 @@ namespace DataContent.ReadingCSV.Services
 {
     public class LaptopServiceCSV : IData<Computer>
     {
+        //reads Laptop list from CSV file
         public List<Computer> ReadData(string path)
         {
             try
@@ -36,6 +37,8 @@ namespace DataContent.ReadingCSV.Services
                 throw new DataCustomException("Something's wrong happened:" + e.Message, this);
             }
         }
+
+        //writes Laptop list to CSV file
         public void WriteCSVFile(string path, List<Computer> computer)
         {
             try

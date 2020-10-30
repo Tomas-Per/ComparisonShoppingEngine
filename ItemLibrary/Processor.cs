@@ -14,6 +14,8 @@ namespace ItemLibrary
             Name = name;
             try
             {
+                //constructor parses elements which is needed to generate AmazonURL in URLGenerator project
+
                 AmazonLink = link.Substring(0, link.IndexOf("&dc"));
                 string binStart = link.Substring(link.IndexOf("bin%") + 4);
                 AmazonBin = "%7C" + binStart.Substring(2);

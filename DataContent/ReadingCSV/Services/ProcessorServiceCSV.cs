@@ -13,6 +13,7 @@ namespace DataContent.ReadingCSV.Services
 {
     class ProcessorServiceCSV
     {
+        //reads Processor list from CSV file
         public List<Processor> ReadData(string path)
         {
             try
@@ -38,6 +39,7 @@ namespace DataContent.ReadingCSV.Services
             }
         }
 
+        //writes Processor list to CSV file
         public void WriteCSVFile(string path, List<Processor> processors)
         {
             try

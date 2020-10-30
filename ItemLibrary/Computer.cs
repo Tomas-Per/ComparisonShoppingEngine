@@ -29,6 +29,7 @@ namespace ItemLibrary
             //needed for csvHelper to work
         }
        
+        //find similar elements in a list
         public override List<Item> FindSimilar(List<Item> list)
 
         {

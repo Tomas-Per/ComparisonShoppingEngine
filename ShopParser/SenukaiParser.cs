@@ -1,17 +1,11 @@
 ﻿using ItemLibrary;
-using Newtonsoft.Json.Schema;
 using OpenQA.Selenium;
 using OpenQA.Selenium.Chrome;
-using OpenQA.Selenium.Support.UI;
 using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Dynamic;
-using System.IO;
 using System.Linq;
-using System.Threading;
 using static DataContent.Parsing;
-
+using static ItemLibrary.Categories;
 
 namespace ShopParser
 {
@@ -23,14 +17,19 @@ namespace ShopParser
 
         public SenukaiParser()
         {
-            var options = new ChromeOptions();
-            options.AddArguments("--headless");
-            _driver = new ChromeDriver();
-            _currentWIndowURL = _url;
         }
 
+        //parses laptops from senukai.lt and returns results in a List<Computer>
+        //this method parses first 10 pages (48laptops in every page), because later pages are
+        //outdated and don't have items in stock for a long time
         public List<Computer> ParseShop()
         {
+            var options = new ChromeOptions();
+            options.AddArguments("--headless");
+
+            _driver = new ChromeDriver(options);
+            _currentWIndowURL = _url;
+
             List<Computer> data = new List<Computer>();
 
             string nextPage;
@@ -69,7 +68,7 @@ namespace ShopParser
 
                 foreach (var link in links)
                 {
-                    Computer computer = new Computer { Name = namesList.ElementAt(0), Price = ParseDouble(pricesList.ElementAt(0)) };
+                    Computer computer = new Computer { Name = namesList.ElementAt(0), Price = ParseDouble(pricesList.ElementAt(0)), ItemCategory = ItemCategory.Computer };
 
                     namesList.RemoveAt(0);
                     pricesList.RemoveAt(0);
@@ -94,6 +93,7 @@ namespace ShopParser
         }
 
 
+        //parses laptop window, updates computer fields 
         private Computer ParseWindow(Computer computer)
         {
 
