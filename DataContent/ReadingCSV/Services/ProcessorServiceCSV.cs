@@ -12,13 +12,17 @@ using System.Text;
 namespace DataContent.ReadingCSV.Services
 {
     class ProcessorServiceCSV
-    {
+    {   public string Path { get; set; }
+        public ProcessorServiceCSV(string path)
+        {
+            Path = path;
+        }
         //reads Processor list from CSV file
-        public List<Processor> ReadData(string path)
+        public List<Processor> ReadData()
         {
             try
             {
-                using (var reader = new StreamReader(path))
+                using (var reader = new StreamReader(Path))
                 using (var csv = new CsvReader(reader))
                 {
                     csv.Configuration.CultureInfo = CultureInfo.InvariantCulture;
@@ -40,11 +44,11 @@ namespace DataContent.ReadingCSV.Services
         }
 
         //writes Processor list to CSV file
-        public void WriteCSVFile(string path, List<Processor> processors)
+        public void WriteData(List<Processor> processors)
         {
             try
             {
-                using (var stream = File.Open(path, FileMode.Append))
+                using (var stream = File.Open(Path, FileMode.Append))
                 using (StreamWriter sw = new StreamWriter(stream))
                 using (CsvWriter cw = new CsvWriter(sw))
                 {
