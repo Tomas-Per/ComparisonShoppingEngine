@@ -175,13 +175,19 @@ namespace WPF
             //checking every checkbox and if is checked, we use filter
             foreach(var checkBox in brandsCheckBoxes)
             {
-                if ((bool)checkBox.IsChecked) List1.AddRange(_filter.FilterByManufacturer(checkBox.Name));
-                isThereCheckedBox = true;
+                if ((bool)checkBox.IsChecked)
+                { 
+                    List1.AddRange(_filter.FilterByManufacturer(checkBox.Name));
+                    isThereCheckedBox = true;
+                }    
             }
             foreach(var checkBox in processorsCheckBoxes)
             {
-                if ((bool)checkBox.IsChecked) List1.AddRange(_filter.FilterByProcessor(checkBox.Content.ToString()));
-                isThereCheckedBox = true;
+                if ((bool)checkBox.IsChecked)
+                {
+                    List1.AddRange(_filter.FilterByProcessor(checkBox.Content.ToString()));
+                    isThereCheckedBox = true;
+                }
             }
             //we check, if there wasn't any checked checkboxes
             if (isThereCheckedBox == false) List1 = List;
