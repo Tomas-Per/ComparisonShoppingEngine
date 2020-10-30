@@ -16,7 +16,6 @@ namespace DataManipulation.Filters
         public List<Computer> FilterByProcessor(string processor)
         {
             List<Computer> result = _items.Where(item => item.ProcessorName == processor).ToList();
-            _items = result;
             return result;
         }
     }

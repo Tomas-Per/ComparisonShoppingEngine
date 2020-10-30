@@ -7,7 +7,7 @@ namespace DataManipulation
 {
     public class Filter<T> where T : Item
     {
-        protected List<T> _items { get; set; }
+        protected List<T> _items { get; private set; }
 
         public Filter(List<T> items)
         {
