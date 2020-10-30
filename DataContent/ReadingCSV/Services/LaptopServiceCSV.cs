@@ -10,9 +10,9 @@ using System.Linq;
 
 namespace DataContent.ReadingCSV.Services
 {
-    public class LaptopServiceCSV : IData<Computer>
+    public class LaptopServiceCSV : IData<IEnumerable<Computer>>
     {
-        private string Path { get; set; }
+        public string Path { get; set; }
         private FileMode Filemode { get; set; }
         public LaptopServiceCSV(string path, FileMode fileMode)
         {
@@ -20,7 +20,7 @@ namespace DataContent.ReadingCSV.Services
             Filemode = fileMode;
         }
         //reads Laptop list from CSV file
-        public List<Computer> ReadData()
+        public IEnumerable<Computer> ReadData()
         {
             try
             {
@@ -30,9 +30,9 @@ namespace DataContent.ReadingCSV.Services
                     csv.Configuration.CultureInfo = CultureInfo.InvariantCulture;
                     csv.Configuration.Delimiter = ",";
                     csv.Configuration.RegisterClassMap<LaptopMap>();
-                    var records = csv.GetRecords<Computer>().ToList();
+                    var records = csv.GetRecords<Computer>();
 
-                    return records;
+                    return records.ToList();
                 }
             }
             catch (FileNotFoundException)
@@ -46,7 +46,7 @@ namespace DataContent.ReadingCSV.Services
         }
 
         //writes Laptop list to CSV file
-        public void WriteData(List<Computer> computer)
+        public void WriteData(IEnumerable<Computer> computer)
         {
             try
             {
