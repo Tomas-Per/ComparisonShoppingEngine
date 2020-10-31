@@ -62,9 +62,8 @@ namespace WPF
         {
             DynamicBrandCheckBox();
             dynamicProcessorCheckBox();
-            string _filePath = MainPath.GetMainPath() + @"\Data\senukai.csv";
 
-            var _laptopService = new LaptopServiceCSV(_filePath, FileMode.Append);
+            var _laptopService = new LaptopServiceCSV(MainPath.GetComputerPath(), FileMode.Append);
 
             //Here We are calling function to read CSV file
             var resultData = _laptopService.ReadData();
