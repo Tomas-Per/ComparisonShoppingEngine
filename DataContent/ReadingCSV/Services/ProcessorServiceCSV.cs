@@ -11,7 +11,7 @@ using System.Text;
 
 namespace DataContent.ReadingCSV.Services
 {
-    class ProcessorServiceCSV
+    public class ProcessorServiceCSV : IData<IEnumerable<object>>
     {   private string Path { get; set; }
         private FileMode Filemode { get; set; }
         public ProcessorServiceCSV(string path, FileMode fileMode)
@@ -20,7 +20,7 @@ namespace DataContent.ReadingCSV.Services
             Filemode = fileMode;
         }
         //reads Processor list from CSV file
-        public List<Processor> ReadData()
+        public IEnumerable<object> ReadData()
         {
             try
             {
@@ -32,7 +32,7 @@ namespace DataContent.ReadingCSV.Services
                     csv.Configuration.RegisterClassMap<ProcessorMap>();
                     var records = csv.GetRecords<Processor>().ToList();
 
-                    return records;
+                    return records.Cast<object>().ToList();
                 }
             }
             catch (FileNotFoundException)
@@ -46,7 +46,7 @@ namespace DataContent.ReadingCSV.Services
         }
 
         //writes Processor list to CSV file
-        public void WriteData(List<Processor> processors)
+        public void WriteData(IEnumerable<object> processors)
         {
             try
             {

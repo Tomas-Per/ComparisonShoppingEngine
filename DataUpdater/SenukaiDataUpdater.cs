@@ -17,7 +17,7 @@ namespace DataUpdater
 
             var path = MainPath.GetMainPath() + @"\Data\SenukaiData.csv";
 
-            new LaptopServiceCSV().WriteCSVFile(path, data);
+            new LaptopServiceCSV(path, System.IO.FileMode.Create).WriteData( data);
         }
     }
 }
