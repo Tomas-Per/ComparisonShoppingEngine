@@ -252,14 +252,32 @@ namespace WPF
 
         private void CompareButton_Click(object sender, RoutedEventArgs e)
         {
-            ComparisonProductName1.Text = ProductName.Text;
-            ComparisonProductPrice1.Text = ProductPrice.Text;
-            ComparisonProductBrand1.Text = ProductBrand.Text;
-            ComparisonProductProcessor1.Text = ProductProcessor.Text;
-            ComparisonProductRAM1.Text = ProductRAM.Text;
-            ComparisonProductGraphicsCard1.Text = ProductGraphicsCard.Text;
-            ComparisonProductResolution1.Text = ProductResolution.Text;
-            ComparisonProductStorage1.Text = ProductStorage.Text;
+            if(String.IsNullOrEmpty(ComparisonProductName1.Text))
+            {
+
+                ComparisonProductName1.Text = ProductName.Text;
+                ComparisonProductPrice1.Text = ProductPrice.Text;
+                ComparisonProductBrand1.Text = ProductBrand.Text;
+                ComparisonProductProcessor1.Text = ProductProcessor.Text;
+                ComparisonProductRAM1.Text = ProductRAM.Text;
+                ComparisonProductGraphicsCard1.Text = ProductGraphicsCard.Text;
+                ComparisonProductResolution1.Text = ProductResolution.Text;
+                ComparisonProductStorage1.Text = ProductStorage.Text;
+
+            }
+            else 
+            {
+
+                ComparisonProductName2.Text = ProductName.Text;
+                ComparisonProductPrice2.Text = ProductPrice.Text;
+                ComparisonProductBrand2.Text = ProductBrand.Text;
+                ComparisonProductProcessor2.Text = ProductProcessor.Text;
+                ComparisonProductRAM2.Text = ProductRAM.Text;
+                ComparisonProductGraphicsCard2.Text = ProductGraphicsCard.Text;
+                ComparisonProductResolution2.Text = ProductResolution.Text;
+                ComparisonProductStorage2.Text = ProductStorage.Text;
+
+            }
 
             ComparisonGrid.Visibility = Visibility.Visible;
             ItemInfoStackPanel.Visibility = Visibility.Collapsed;
