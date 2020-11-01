@@ -37,10 +37,10 @@ namespace WPF
         private Sorter _sorter;
         private List<Computer> OriginalList = new List<Computer>();
         //these two lists are temporary
-        private List<string> brands = new List<string>() { "Asus", "Dell", "Apple", "Lenovo", "Acer", "Huawei" };
-        private List<string> processors = new List<string>() { "Intel Core i3", "Intel Core i5", "Intel Core i7", "IntelCeleron", "Intel Atom" };
-        private List<CheckBox> processorsCheckBoxes = new List<CheckBox>();
-        private List<CheckBox> brandsCheckBoxes = new List<CheckBox>();
+        private List<string> Brands = new List<string>() { "Asus", "Dell", "Apple", "Lenovo", "Acer", "Huawei" };
+        private List<string> Processors = new List<string>() { "Intel Core i3", "Intel Core i5", "Intel Core i7", "IntelCeleron", "Intel Atom" };
+        private List<CheckBox> ProcessorsCheckBoxes = new List<CheckBox>();
+        private List<CheckBox> BrandsCheckBoxes = new List<CheckBox>();
         public MainWindow()
         {
             InitializeComponent();
@@ -61,7 +61,7 @@ namespace WPF
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
             DynamicBrandCheckBox();
-            dynamicProcessorCheckBox();
+            DynamicProcessorCheckBox();
             string _filePath = MainPath.GetMainPath() + @"\Data\senukai.csv";
 
             var _laptopService = new LaptopServiceCSV();
@@ -75,11 +75,11 @@ namespace WPF
             _sorter = new Sorter(OriginalList.Cast<Item>().ToList());
         }
 
-        private void dynamicProcessorCheckBox()
+        private void DynamicProcessorCheckBox()
         {
             int column = 1;
             int cycleCount = 1;
-            foreach (var processor in processors)
+            foreach (var processor in Processors)
             {
                 CheckBox checkbox = new CheckBox()
                 {
@@ -90,7 +90,7 @@ namespace WPF
                     BorderBrush = Brushes.White,
                     Foreground = Brushes.White
                 };
-                brandsCheckBoxes.Add(checkbox);
+                BrandsCheckBoxes.Add(checkbox);
                 switch (column)
                 {
                     case 1:
@@ -119,7 +119,7 @@ namespace WPF
         {
             int column = 1;
             int cycleCount = 1;
-            foreach(var brand in brands)
+            foreach(var brand in Brands)
             {
                 CheckBox checkbox = new CheckBox()
                 {
@@ -130,7 +130,7 @@ namespace WPF
                     BorderBrush = Brushes.White,
                     Foreground = Brushes.White
                 };
-                brandsCheckBoxes.Add(checkbox);
+                BrandsCheckBoxes.Add(checkbox);
                 switch(column)
                 {
                     case 1:
@@ -173,7 +173,7 @@ namespace WPF
                 _filter.UpdateList(List);
             }
             //checking every checkbox and if is checked, we use filter
-            foreach(var checkBox in brandsCheckBoxes)
+            foreach(var checkBox in BrandsCheckBoxes)
             {
                 if ((bool)checkBox.IsChecked)
                 { 
@@ -181,7 +181,7 @@ namespace WPF
                     isThereCheckedBox = true;
                 }    
             }
-            foreach(var checkBox in processorsCheckBoxes)
+            foreach(var checkBox in ProcessorsCheckBoxes)
             {
                 if ((bool)checkBox.IsChecked)
                 {
@@ -202,11 +202,11 @@ namespace WPF
             ItemsListBox.ItemsSource = OriginalList;
 
             //Setting all checkboxes to be unchecked
-            foreach(var checkbox in brandsCheckBoxes)
+            foreach(var checkbox in BrandsCheckBoxes)
             {
                 checkbox.IsChecked = false;
             }
-            foreach(var checkbox in processorsCheckBoxes)
+            foreach(var checkbox in ProcessorsCheckBoxes)
             {
                 checkbox.IsChecked = false;
             }    
