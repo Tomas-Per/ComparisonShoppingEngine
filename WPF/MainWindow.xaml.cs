@@ -250,6 +250,30 @@ namespace WPF
             ComparisonGrid.Visibility = Visibility.Collapsed;
         }
 
+        private void RemoveButton1_Click(object sender, RoutedEventArgs e)
+        {
+            ComparisonProductName1.Text = null;
+            ComparisonProductPrice1.Text = null;
+            ComparisonProductBrand1.Text = null;
+            ComparisonProductProcessor1.Text = null;
+            ComparisonProductRAM1.Text = null;
+            ComparisonProductGraphicsCard1.Text = null;
+            ComparisonProductResolution1.Text = null;
+            ComparisonProductStorage1.Text = null;
+        }
+
+        private void RemoveButton2_Click(object sender, RoutedEventArgs e)
+        {
+            ComparisonProductName2.Text = null;
+            ComparisonProductPrice2.Text = null;
+            ComparisonProductBrand2.Text = null;
+            ComparisonProductProcessor2.Text = null;
+            ComparisonProductRAM2.Text = null;
+            ComparisonProductGraphicsCard2.Text = null;
+            ComparisonProductResolution2.Text = null;
+            ComparisonProductStorage2.Text = null;
+        }
+
         private void CompareButton_Click(object sender, RoutedEventArgs e)
         {
             if(String.IsNullOrEmpty(ComparisonProductName1.Text))

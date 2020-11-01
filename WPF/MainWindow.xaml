@@ -226,6 +226,7 @@
                                 <TextBlock x:Name="ComparisonProductGraphicsCard1" FontFamily="Candara Light" FontSize="14" ></TextBlock>
                                 <TextBlock x:Name="ComparisonProductResolution1" FontFamily="Candara Light" FontSize="14" ></TextBlock>
                                 <TextBlock x:Name="ComparisonProductStorage1" FontFamily="Candara Light" FontSize="14" ></TextBlock>
+                                <Button Content="Remove" x:Name="RemoveButton1" FontFamily="Candara Light"  Grid.Column="1" Margin="5,5,10,0" HorizontalAlignment="Right" Foreground="#b271a9" Background="White" BorderBrush="#b271a9" Click="RemoveButton1_Click"/>
                             </StackPanel>
 
                         </Grid>
@@ -240,6 +241,7 @@
                                 <TextBlock x:Name="ComparisonProductGraphicsCard2" FontFamily="Candara Light" FontSize="14" ></TextBlock>
                                 <TextBlock x:Name="ComparisonProductResolution2" FontFamily="Candara Light" FontSize="14" ></TextBlock>
                                 <TextBlock x:Name="ComparisonProductStorage2" FontFamily="Candara Light" FontSize="14" ></TextBlock>
+                                <Button Content="Remove" x:Name="RemoveButton2" FontFamily="Candara Light"  Grid.Column="1" Margin="5,5,10,0" HorizontalAlignment="Right" Foreground="#b271a9" Background="White" BorderBrush="#b271a9" Click="RemoveButton2_Click"/>
                             </StackPanel>
                         </Grid>
                     </Grid>
