@@ -1,41 +1,53 @@
 ﻿using ItemLibrary;
-using Newtonsoft.Json.Schema;
 using OpenQA.Selenium;
 using OpenQA.Selenium.Chrome;
-using OpenQA.Selenium.Support.UI;
 using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Dynamic;
 using System.Linq;
-using System.Threading;
 using static DataContent.Parsing;
-
+using static ItemLibrary.Categories;
 
 namespace ShopParser
 {
-    class SenukaiParser : IParser<Computer>
+    public class SenukaiParser : IParser<Computer>
     {
         private string _url = "https://www.senukai.lt/c/kompiuterine-technika-biuro-prekes/nesiojami-kompiuteriai-ir-priedai/nesiojami-kompiuteriai/5ei?";
         private IWebDriver _driver;
-        private string currentWIndowURL;
+        private string _currentWIndowURL;
 
-        public SenukaiParser ()
+        public SenukaiParser()
+        {
+        }
+
+        //parses laptops from senukai.lt and returns results in a List<Computer>
+        //this method parses first 10 pages (48laptops in every page), because later pages are
+        //outdated and don't have items in stock for a long time
+        public List<Computer> ParseShop()
         {
             var options = new ChromeOptions();
             options.AddArguments("--headless");
-            _driver = new ChromeDriver(options);
-            currentWIndowURL = _url;
-        }
 
-        public List<Computer> ParseShop()
-        {
+            _driver = new ChromeDriver(options);
+            _currentWIndowURL = _url;
+
             List<Computer> data = new List<Computer>();
+
+            string nextPage;
 
             _driver.Navigate().GoToUrl(_url);
 
             for (int i = 0; i < 10; i++)
             {
+                try
+                {
+                    nextPage = _driver.FindElement(By.XPath("//a[contains(@class, 'next')]")).GetAttribute("href");
+                }
+
+                catch (Exception)
+                {
+                    nextPage = _currentWIndowURL;
+                }
+
                 var names = _driver.FindElements(By.XPath("//*[@class = 'catalog-taxons-product__name']"));
                 var prices = _driver.FindElements(By.XPath("//*[@class = 'catalog-taxons-product-price__item-price']"));
 
@@ -56,7 +68,7 @@ namespace ShopParser
 
                 foreach (var link in links)
                 {
-                    Computer computer = new Computer { Name = namesList.ElementAt(0), Price = ParseDouble(pricesList.ElementAt(0)) };
+                    Computer computer = new Computer { Name = namesList.ElementAt(0), Price = ParseDouble(pricesList.ElementAt(0)), ItemCategory = ItemCategory.Computer };
 
                     namesList.RemoveAt(0);
                     pricesList.RemoveAt(0);
@@ -71,25 +83,35 @@ namespace ShopParser
                     //_driver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(10);
                 }
 
-                var nextPage = _driver.FindElement(By.ClassName("next")).GetAttribute("href");
-
-                if (nextPage != currentWIndowURL)
+                if (nextPage != _currentWIndowURL)
                 {
                     _driver.Navigate().GoToUrl(nextPage);
-                    currentWIndowURL = nextPage;
+                    _currentWIndowURL = nextPage;
                 }
             }
             return data;
         }
 
 
+        //parses laptop window, updates computer fields 
         private Computer ParseWindow(Computer computer)
         {
 
             //var id = _driver.FindElement(By.ClassName("product-id"));
 
-            var generalProperties = _driver.FindElements(By.TagName("td"));
+            var image = _driver.FindElements(By.ClassName("product-gallery-slider__slide__image"));
 
+            try
+            {
+                computer.ImageLink = image[0].GetAttribute("src");
+            }
+
+            catch (ArgumentOutOfRangeException)
+            {
+                computer.ImageLink = null;
+            }
+
+            var generalProperties = _driver.FindElements(By.TagName("td"));
 
             for (int i = 0; i < generalProperties.Count; i++)
             {
@@ -108,18 +130,17 @@ namespace ShopParser
                     computer.ProcessorName = generalProperties[i + 1].Text;
                 }
 
-                else if (generalProperties[i].Text.Contains("Operatyviosios atmint"))
+                else if (generalProperties[i].Text.Contains("Operatyvioji atmintis (RAM)"))
                 {
-                    if (generalProperties[i].Text.Contains("tipas"))
-                    {
-                        computer.RAM_type = generalProperties[i + 1].Text;
-                    }
 
-                    else if (generalProperties[i].Text.Contains("(RAM)"))
-                    {
-                        computer.RAM = ParseInt(generalProperties[i + 1].Text);
-                    }  
+                    computer.RAM = ParseInt(generalProperties[i + 1].Text);
                 }
+
+                else if (generalProperties[i].Text.Contains("Operatyviosios atminties tipas"))
+                {
+                    computer.RAM_type = generalProperties[i + 1].Text;
+                }
+
                 else if (generalProperties[i].Text.Contains("Vaizdo plokštės"))
                 {
                     if (generalProperties[i].Text.Contains("modelis"))
@@ -136,12 +157,30 @@ namespace ShopParser
                         computer.GraphicsCardMemory = generalProperties[i + 1].Text;
                     }
                 }
+                else if (generalProperties[i].Text.Contains("MMC disko talpa"))
+                {
+                    computer.StorageCapacity += ParseInt(generalProperties[i + 1].Text);
+                }
+
+                else if (generalProperties[i].Text.Contains("Kietojo disko talpa(HDD)"))
+                {
+                    try
+                    {
+                        computer.StorageCapacity += ParseInt(generalProperties[i + 1].Text);
+                    }
+
+                    catch (Exception)
+                    {
+
+                    }
+                }
+                
             }
-        return computer;
+
+            return computer;
         }
-
-        
-
     }
 }
+
+
 

@@ -36,6 +36,7 @@ namespace WPF
         private ComputerFilter _filter;
         private Sorter _sorter;
         private List<Computer> OriginalList = new List<Computer>();
+        //these two lists are temporary
         private List<string> brands = new List<string>() { "Asus", "Dell", "Apple", "Lenovo", "Acer", "Huawei" };
         private List<string> processors = new List<string>() { "Intel Core i3", "Intel Core i5", "Intel Core i7", "IntelCeleron", "Intel Atom" };
         private List<CheckBox> processorsCheckBoxes = new List<CheckBox>();
@@ -113,7 +114,7 @@ namespace WPF
                 if (cycleCount == 7) column = 3;
             }
         }
-
+        //Will create a new method to not repeat the code again like here
         private void DynamicBrandCheckBox()
         {
             int column = 1;
@@ -174,13 +175,19 @@ namespace WPF
             //checking every checkbox and if is checked, we use filter
             foreach(var checkBox in brandsCheckBoxes)
             {
-                if ((bool)checkBox.IsChecked) List1.AddRange(_filter.FilterByManufacturer(checkBox.Name));
-                isThereCheckedBox = true;
+                if ((bool)checkBox.IsChecked)
+                { 
+                    List1.AddRange(_filter.FilterByManufacturer(checkBox.Name));
+                    isThereCheckedBox = true;
+                }    
             }
             foreach(var checkBox in processorsCheckBoxes)
             {
-                if ((bool)checkBox.IsChecked) List1.AddRange(_filter.FilterByProcessor(checkBox.Content.ToString()));
-                isThereCheckedBox = true;
+                if ((bool)checkBox.IsChecked)
+                {
+                    List1.AddRange(_filter.FilterByProcessor(checkBox.Content.ToString()));
+                    isThereCheckedBox = true;
+                }
             }
             //we check, if there wasn't any checked checkboxes
             if (isThereCheckedBox == false) List1 = List;

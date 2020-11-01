@@ -1,4 +1,5 @@
 ![Build](https://github.com/Tomas-Per/ComparisonShoppingEngine/workflows/Build/badge.svg)
+<img alt="GitHub commit activity" src="https://img.shields.io/github/commit-activity/m/Tomas-Per/ComparisonShoppingEngine">
 <p align="center">
   <a href="https://github.com/https://github.com/Tomas-Per/ComparisonShoppingEngine">
     <img src="Images/png/libra500.png" alt="Logo" width="300" height="300">
@@ -12,7 +13,7 @@
 
 ## Features
 - [x] Clean and easy to use UI
-- [ ] Product search and filtering
+- [x] Product search and filtering
 - [ ] Product comparison
 - [ ] Provides alternative products
 - [ ] Cross-platform
