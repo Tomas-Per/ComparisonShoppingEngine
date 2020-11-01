@@ -1,4 +1,5 @@
-﻿using ItemLibrary;
+﻿using DataManipulation.Filters;
+using ItemLibrary;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -9,6 +10,8 @@ namespace WPF
 {
     public partial class MainWindow
     {
+
+        private ComputerFilter _filter;
         //these two lists are temporary
         private List<string> Brands = new List<string>() { "Asus", "Dell", "Apple", "Lenovo", "Acer", "Huawei" };
         private List<string> Processors = new List<string>() { "Intel Core i3", "Intel Core i5", "Intel Core i7", "IntelCeleron", "Intel Atom" };

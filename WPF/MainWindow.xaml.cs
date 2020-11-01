@@ -33,8 +33,6 @@ namespace WPF
     public partial class MainWindow : Window
     {
 
-        private ComputerFilter _filter;
-        private Sorter _sorter;
         private List<Computer> OriginalList = new List<Computer>();
 
         private List<CheckBox> ProcessorsCheckBoxes = new List<CheckBox>();
@@ -270,46 +268,22 @@ namespace WPF
 
         private void AZSortButton_Click(object sender, RoutedEventArgs e)
         {
-            List<Item> items = new List<Item>();
-            items = ItemsListBox.ItemsSource.Cast<Item>().ToList();
-
-            _sorter.UpdateList(items);
-            items = _sorter.SortByNameAsc();
-
-            ItemsListBox.ItemsSource = items;
+            AZSort();
         }
 
         private void ZASortButton_Click(object sender, RoutedEventArgs e)
         {
-            List<Item> items = new List<Item>();
-            items = ItemsListBox.ItemsSource.Cast<Item>().ToList();
-
-            _sorter.UpdateList(items);
-            items = _sorter.SortByNameDesc();
-
-            ItemsListBox.ItemsSource = items;
+            ZASort();
         }
 
         private void PriceAscSortButton_Click(object sender, RoutedEventArgs e)
         {
-            List<Item> items = new List<Item>();
-            items = ItemsListBox.ItemsSource.Cast<Item>().ToList();
-
-            _sorter.UpdateList(items);
-            items = _sorter.SortByPriceAsc();
-
-            ItemsListBox.ItemsSource = items;
+            PriceAscSort();
         }
 
         private void PriceDescSortButton_Click(object sender, RoutedEventArgs e)
         {
-            List<Item> items = new List<Item>();
-            items = ItemsListBox.ItemsSource.Cast<Item>().ToList();
-
-            _sorter.UpdateList(items);
-            items = _sorter.SortByPriceDesc();
-
-            ItemsListBox.ItemsSource = items;
+            PriceDescSort();
         }
 
     }
