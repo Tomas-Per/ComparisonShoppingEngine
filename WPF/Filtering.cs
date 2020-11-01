@@ -12,10 +12,9 @@ namespace WPF
         //these two lists are temporary
         private List<string> Brands = new List<string>() { "Asus", "Dell", "Apple", "Lenovo", "Acer", "Huawei" };
         private List<string> Processors = new List<string>() { "Intel Core i3", "Intel Core i5", "Intel Core i7", "IntelCeleron", "Intel Atom" };
-        private List<CheckBox> ProcessorsCheckBoxes = new List<CheckBox>();
-        private List<CheckBox> BrandsCheckBoxes = new List<CheckBox>();
 
-        private void FilterButton_Click(object sender, RoutedEventArgs e)
+
+        private void FilterList()
         {
             List<Computer> List1 = new List<Computer>();
             int MaxRange = (int)PriceSlider.Value;
@@ -57,7 +56,7 @@ namespace WPF
             ListNameTextBlock.Text = "Filtered List";
         }
 
-        private void DisableFilterButton_Click(object sender, RoutedEventArgs e)
+        private void DisableFilters()
         {
             ItemsListBox.ItemsSource = OriginalList;
 

@@ -37,6 +37,9 @@ namespace WPF
         private Sorter _sorter;
         private List<Computer> OriginalList = new List<Computer>();
 
+        private List<CheckBox> ProcessorsCheckBoxes = new List<CheckBox>();
+        private List<CheckBox> BrandsCheckBoxes = new List<CheckBox>();
+
         public MainWindow()
         {
             InitializeComponent();
@@ -149,6 +152,16 @@ namespace WPF
                 cycleCount++;
                 if (cycleCount == 7) column = 3;
             }
+        }
+
+        private void FilterButton_Click(object sender, RoutedEventArgs e)
+        {
+            FilterList();
+        }
+
+        private void DisableFilterButton_Click(object sender, RoutedEventArgs e)
+        {
+            DisableFilters();
         }
 
         private void ListBox_SelectionChanged(object sender, SelectionChangedEventArgs args)
