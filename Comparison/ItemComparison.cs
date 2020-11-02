@@ -3,8 +3,8 @@
 namespace Comparison
 {
     public class ItemComparison<T> where T : Item
-    { 
-        protected int PriceWeight { get; set; }
+    {
+        public int PriceWeight { get; set; }
         protected (double, double) ItemRanking {get; set;}
         protected int TotalWeight { get; set; }
 

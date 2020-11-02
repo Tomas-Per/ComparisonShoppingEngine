@@ -5,8 +5,8 @@ namespace Comparison.Comparisons
 {
     public class ComputerComparison : ItemComparison<Computer>
     {
-        protected int StorageWeight { get; set; }
-        protected int RamWeight { get; set; }
+        public int StorageWeight { get; set; }
+        public int RamWeight { get; set; }
         public ComputerComparison(int priceWeight, int storageWeight, int ramWeight)
                                     : base(priceWeight)
         {

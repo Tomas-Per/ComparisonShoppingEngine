@@ -70,6 +70,7 @@ namespace WPF
             OriginalList = resultData.Cast<Computer>().ToList();
             _filter = new ComputerFilter(OriginalList);
             _sorter = new Sorter(OriginalList.Cast<Item>().ToList());
+
         }
 
         private void DynamicProcessorCheckBox()
@@ -172,6 +173,7 @@ namespace WPF
 
             List<Item> SimilarItems = item.FindSimilar(OriginalList.Cast<Item>().ToList());
             SimilarItemsListBox.ItemsSource = SimilarItems;
+            
 
         }
 
@@ -260,6 +262,8 @@ namespace WPF
             ComparisonProductGraphicsCard1.Text = null;
             ComparisonProductResolution1.Text = null;
             ComparisonProductStorage1.Text = null;
+
+            ComparingItem1 = null;
         }
 
         private void RemoveButton2_Click(object sender, RoutedEventArgs e)
@@ -272,6 +276,8 @@ namespace WPF
             ComparisonProductGraphicsCard2.Text = null;
             ComparisonProductResolution2.Text = null;
             ComparisonProductStorage2.Text = null;
+
+            ComparingItem2 = null;
         }
 
         private void CompareButton_Click(object sender, RoutedEventArgs e)
@@ -288,6 +294,8 @@ namespace WPF
                 ComparisonProductResolution1.Text = ProductResolution.Text;
                 ComparisonProductStorage1.Text = ProductStorage.Text;
 
+                ComparingItem1 = (Computer)ItemsListBox.SelectedItem;
+
             }
             else 
             {
@@ -300,6 +308,8 @@ namespace WPF
                 ComparisonProductGraphicsCard2.Text = ProductGraphicsCard.Text;
                 ComparisonProductResolution2.Text = ProductResolution.Text;
                 ComparisonProductStorage2.Text = ProductStorage.Text;
+                
+                ComparingItem2 = (Computer)ItemsListBox.SelectedItem;
 
             }
 
