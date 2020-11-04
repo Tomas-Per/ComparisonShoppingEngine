@@ -27,7 +27,7 @@ namespace DataUpdater
         //updates CSV file with new data
         public void UpdateItemListFile(List<Computer> data)
         {
-            new LaptopServiceCSV(MainPath.GetComputerPath(), FileMode.Append).WriteData(GetItemListFromWeb());
+            new LaptopServiceCSV(MainPath.GetComputerPath(), FileMode.Append).WriteData(data);
         }
     }
 }
