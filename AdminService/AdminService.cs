@@ -1,4 +1,5 @@
 ﻿using DataUpdater;
+using ShopParser;
 using System;
 
 namespace AdminService
@@ -24,8 +25,9 @@ namespace AdminService
                         break;
 
                     case "1":
-                        
-                        new ComputerDataUpdater().update();
+
+                        var updater = new ComputerDataUpdater(new SenukaiParser());
+                        updater.UpdateItemListFile(updater.GetItemListFromWeb());
                         Console.WriteLine("Senukai Parsed");
                         break;
                         
