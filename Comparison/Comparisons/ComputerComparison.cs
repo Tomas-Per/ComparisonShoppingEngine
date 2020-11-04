@@ -14,16 +14,14 @@ namespace Comparison.Comparisons
         {
             UpdateWeights(priceWeight, storageWeight, ramWeight);
         }
-
-        public void StorageComparison (int mainStorage, int comparingStorage)
         //Compares items storage by given items storage
+        public void StorageComparison (int mainStorage, int comparingStorage)
         {
             StorageRanking = SpecComparison(Convert.ToDouble(mainStorage), Convert.ToDouble(comparingStorage), StorageWeight);
             ItemRanking = (ItemRanking.Item1 + StorageRanking.Item1, ItemRanking.Item2 + StorageRanking.Item2);
         }
-
-        public void RamComparison(int mainRAM, int comparingRAM)
         //Compares items RAMs by given items RAMs
+        public void RamComparison(int mainRAM, int comparingRAM)
         {
             RamRanking = SpecComparison(Convert.ToDouble(mainRAM), Convert.ToDouble(comparingRAM), RamWeight);
             ItemRanking = (ItemRanking.Item1 + StorageRanking.Item1, ItemRanking.Item2 + StorageRanking.Item2);
@@ -36,6 +34,7 @@ namespace Comparison.Comparisons
             StorageComparison(mainItem.StorageCapacity, comparingItem.StorageCapacity);
             RamComparison(mainItem.RAM, comparingItem.RAM);
         }
+        //Updates weights if new were given
         public void UpdateWeights(int priceWeight, int storageWeight, int ramWeight)
         {
             UpdateWeights(priceWeight);
