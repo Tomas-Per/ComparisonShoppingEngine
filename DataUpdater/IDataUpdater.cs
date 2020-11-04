@@ -1,11 +1,11 @@
-﻿using System;
+﻿using ItemLibrary;
 using System.Collections.Generic;
-using System.Text;
 
 namespace DataUpdater
 {
-    public interface IDataUpdater
+    public interface IDataUpdater<T> where T : Item
     {
-        public void update();
+        public List<T> GetItemListFromWeb();
+        public void UpdateItemListFile(List<T> data);
     }
 }

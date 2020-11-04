@@ -19,5 +19,9 @@ namespace DataContent.ReadingCSV
             }
             return _filePath;
         }
+        public static string GetComputerPath()
+        {
+            return GetMainPath() + @"\Data\senukai.csv";
+        }
     }
 }

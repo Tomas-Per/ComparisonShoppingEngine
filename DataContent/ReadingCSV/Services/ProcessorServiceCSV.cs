@@ -11,14 +11,20 @@ using System.Text;
 
 namespace DataContent.ReadingCSV.Services
 {
-    class ProcessorServiceCSV
-    {
+    public class ProcessorServiceCSV : IData<IEnumerable<object>>
+    {   private string Path { get; set; }
+        private FileMode Filemode { get; set; }
+        public ProcessorServiceCSV(string path)
+        {
+            Path = path;
+            Filemode = FileMode.Append;
+        }
         //reads Processor list from CSV file
-        public List<Processor> ReadData(string path)
+        public IEnumerable<object> ReadData()
         {
             try
             {
-                using (var reader = new StreamReader(path))
+                using (var reader = new StreamReader(Path))
                 using (var csv = new CsvReader(reader))
                 {
                     csv.Configuration.CultureInfo = CultureInfo.InvariantCulture;
@@ -26,7 +32,7 @@ namespace DataContent.ReadingCSV.Services
                     csv.Configuration.RegisterClassMap<ProcessorMap>();
                     var records = csv.GetRecords<Processor>().ToList();
 
-                    return records;
+                    return records.Cast<object>().ToList();
                 }
             }
             catch (FileNotFoundException)
@@ -40,11 +46,11 @@ namespace DataContent.ReadingCSV.Services
         }
 
         //writes Processor list to CSV file
-        public void WriteCSVFile(string path, List<Processor> processors)
+        public void WriteData(IEnumerable<object> processors)
         {
             try
             {
-                using (var stream = File.Open(path, FileMode.Append))
+                using (var stream = File.Open(Path, Filemode))
                 using (StreamWriter sw = new StreamWriter(stream))
                 using (CsvWriter cw = new CsvWriter(sw))
                 {
