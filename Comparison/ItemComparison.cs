@@ -5,31 +5,44 @@ namespace Comparison
     class ItemComparison<T> where T : Item
     { 
         protected int PriceWeight { get; set; }
+        protected (double, double) PriceRanking { get; set; }
         protected (double, double) ItemRanking {get; set;}
         protected int TotalWeight { get; set; }
 
         public ItemComparison(int priceWeight)
         {
-            PriceWeight = priceWeight;
+            UpdateWeights(priceWeight);
             ItemRanking = (0,0);
-            TotalWeight = PriceWeight;
         }
         protected (double, double) SpecComparison(double mainSpec, double comparingSpec, int specWeight)
         {
             double _sum = mainSpec + comparingSpec;
             double _mainRating = ((specWeight / TotalWeight) * 100 * mainSpec) / _sum;
             double _comparingRating = ((specWeight / TotalWeight) * 100 * comparingSpec) / _sum;
-            ItemRanking = (ItemRanking.Item1 + _mainRating, ItemRanking.Item2 + _comparingRating);
             return (_mainRating, _comparingRating);
         }
 
-        public (double, double) PriceComparison(double mainPrice, double comparingPrice)
+        protected void PriceComparison(double mainPrice, double comparingPrice)
         {
-            return SpecComparison(mainPrice, comparingPrice, PriceWeight);
+            PriceRanking = SpecComparison(mainPrice, comparingPrice, PriceWeight);
+            ItemRanking = (ItemRanking.Item1 + PriceRanking.Item1, ItemRanking.Item2 + PriceRanking.Item2);
         }
-        public virtual (double, double) SumAllRankings(T mainItem, T comparingItem)
+        public virtual void UpdateRatings(T mainItem, T comparingItem)
         {
+            ItemRanking = (0,0);
             PriceComparison(mainItem.Price, comparingItem.Price);
+        }
+        public void UpdateWeights(int priceWeight)
+        {
+            PriceWeight = priceWeight;
+            TotalWeight = priceWeight;
+        }
+        public (double, double) GetPriceRatings()
+        {
+            return PriceRanking;
+        }
+        public (double, double) GetItemRatings()
+        {
             return ItemRanking;
         }
     }
