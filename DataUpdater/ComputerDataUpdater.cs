@@ -9,7 +9,7 @@ namespace DataUpdater
 {
     public class ComputerDataUpdater : IDataUpdater<Computer>
     {
-        private IParser<Computer> _parser;
+        private IParser<Computer> _parser { get; set; }
 
         public ComputerDataUpdater (IParser<Computer> parser)
         {
