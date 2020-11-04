@@ -102,6 +102,7 @@
 
                 <StackPanel x:Name="ItemInfoStackPanel" Visibility="Visible" Background="White" Height="535" >
                     <TextBlock x:Name="ProductName" Height="40" FontFamily="Candara Light" FontSize="16" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="10,10,10,10"></TextBlock>
+                    <Image x:Name="image1" MaxHeight="100" ></Image>
                     <TextBlock x:Name="ProductPrice" FontFamily="Candara Light" FontSize="14" Margin="10,0,10,0"></TextBlock>
                     <TextBlock x:Name="ProductBrand" FontFamily="Candara Light" FontSize="14" Margin="10,5,10,0"></TextBlock>
                     <TextBlock x:Name="ProductProcessor" FontFamily="Candara Light" FontSize="14" Margin="10,5,10,0"></TextBlock>
@@ -110,17 +111,16 @@
                     <TextBlock x:Name="ProductResolution" FontFamily="Candara Light" FontSize="14" Margin="10,5,10,0"></TextBlock>
                     <TextBlock x:Name="ProductStorage" FontFamily="Candara Light" FontSize="14" Margin="10,5,10,0"></TextBlock>
                     <TextBlock x:Name="HyperLinkBuy" Margin="10,5,10,0"> 
-                    <Hyperlink x:Name="BuyHereHyper" NavigateUri="{Binding Path=Url}" RequestNavigate="Hyperlink_RequestNavigate">
-                        <TextBlock x:Name="BuyHere" FontFamily="Candara Light" FontSize="14" Foreground="#FFB271A9"/>
-                    </Hyperlink>    
-                </TextBlock>
-
+                        <Hyperlink x:Name="BuyHereHyper" NavigateUri="{Binding Path=Url}" RequestNavigate="Hyperlink_RequestNavigate">
+                            <TextBlock x:Name="BuyHere" FontFamily="Candara Light" FontSize="14" Foreground="#FFB271A9"/>
+                        </Hyperlink>    
+                    </TextBlock>
                     <Button x:Name="CompareButton" Content="Compare with..." Visibility="Collapsed" Margin="30 0 20 0" Foreground="#b271a9" Background="white" BorderBrush="#b271a9" FontFamily="Candara Light" Click="CompareButton_Click"/>
-
+                    
                     <TextBlock x:Name="SimilarProducts" Height="25" FontFamily="Candara Light" FontSize="16" VerticalAlignment="Bottom" HorizontalAlignment="Center" Margin="10,10,10,10"></TextBlock>
                     <ListBox x:Name="SimilarItemsListBox" Margin="10 0 10 5" FontFamily="Candara Light" FontSize="14" VerticalContentAlignment="Top"  
                          ScrollViewer.VerticalScrollBarVisibility="Visible"
-                         ScrollViewer.CanContentScroll="False" Height="200"
+                         ScrollViewer.CanContentScroll="False" Height="100"
                          SelectionChanged="SimilarListBox_SelectionChanged">
                         <ListBox.ItemTemplate>
                             <DataTemplate>
