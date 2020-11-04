@@ -25,7 +25,7 @@ namespace AdminService
 
                     case "1":
                         
-                        new SenukaiDataUpdater().update();
+                        new ComputerDataUpdater().update();
                         Console.WriteLine("Senukai Parsed");
                         break;
                         
