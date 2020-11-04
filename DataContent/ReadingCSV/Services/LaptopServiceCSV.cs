@@ -14,10 +14,10 @@ namespace DataContent.ReadingCSV.Services
     {
         public string Path { get; set; }
         private FileMode Filemode { get; set; }
-        public LaptopServiceCSV(string path, FileMode fileMode)
+        public LaptopServiceCSV(string path)
         {
             Path = path;
-            Filemode = fileMode;
+            Filemode = FileMode.Append;
         }
         //reads Laptop list from CSV file
         public IEnumerable<Computer> ReadData()

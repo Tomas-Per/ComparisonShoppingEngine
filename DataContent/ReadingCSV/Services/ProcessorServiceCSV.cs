@@ -14,10 +14,10 @@ namespace DataContent.ReadingCSV.Services
     public class ProcessorServiceCSV : IData<IEnumerable<object>>
     {   private string Path { get; set; }
         private FileMode Filemode { get; set; }
-        public ProcessorServiceCSV(string path, FileMode fileMode)
+        public ProcessorServiceCSV(string path)
         {
             Path = path;
-            Filemode = fileMode;
+            Filemode = FileMode.Append;
         }
         //reads Processor list from CSV file
         public IEnumerable<object> ReadData()
