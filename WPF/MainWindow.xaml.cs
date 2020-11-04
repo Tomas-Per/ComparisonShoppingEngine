@@ -312,7 +312,7 @@ namespace WPF
                 ComparingItem2 = (Computer)ItemsListBox.SelectedItem;
 
             }
-
+            UpdateComparison();
             ComparisonGrid.Visibility = Visibility.Visible;
             ItemInfoStackPanel.Visibility = Visibility.Collapsed;
             ListStackPanel.Visibility = Visibility.Collapsed;
