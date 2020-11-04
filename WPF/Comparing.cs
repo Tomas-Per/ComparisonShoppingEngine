@@ -22,8 +22,18 @@ namespace WPF
         {
             _Comparison.UpdateRatings(ComparingItem1, ComparingItem2);
             ItemRating = _Comparison.GetItemRankings();
-            ComparisonProductRating1.Text = (ItemRating.first).ToString("F2");
-            ComparisonProductRating2.Text = (ItemRating.second).ToString("F2");
+            
+            if(Double.IsNaN(ItemRating.first) || Double.IsNaN(ItemRating.second))
+            {
+                ComparisonProductRating1.Text = "No preferences selected";
+                ComparisonProductRating2.Text = "No preferences selected";
+            }
+            else
+            {
+                ComparisonProductRating1.Text = (ItemRating.first).ToString("F2");
+                ComparisonProductRating2.Text = (ItemRating.second).ToString("F2");
+            }
+            
         }
         private void UpdateComparison()
         {
