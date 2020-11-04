@@ -25,21 +25,19 @@ namespace Comparison
         }
 
 
-        protected void PriceComparison(double mainPrice, double comparingPrice)
-
         //Compares price by given items prices
+        protected void PriceComparison(double mainPrice, double comparingPrice)
         {
             PriceRanking = SpecComparison(mainPrice, comparingPrice, PriceWeight);
             ItemRanking = (ItemRanking.Item1 + PriceRanking.Item1, ItemRanking.Item2 + PriceRanking.Item2);
         }
-
-        public virtual void UpdateRatings(T mainItem, T comparingItem)
-
         //Compares 2 given items
+        public virtual void UpdateRatings(T mainItem, T comparingItem)
         {
             ItemRanking = (0,0);
             PriceComparison(mainItem.Price, comparingItem.Price);
         }
+        //Updates weights if new were given
         public void UpdateWeights(int priceWeight)
         {
             PriceWeight = priceWeight;
