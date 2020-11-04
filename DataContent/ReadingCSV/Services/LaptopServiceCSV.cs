@@ -56,7 +56,7 @@ namespace DataContent.ReadingCSV.Services
                 {
                     var headers = new List<String>{"laptop_name", "laptop_url", "laptop_price", "laptop_manufacturer",
                     "laptop_resolution", "laptop_processor_class", "laptop_ram_type", "laptop_ram",
-                    "laptop_storage", "laptop_graphic_card", "laptop_graphic_card_memory" };
+                    "laptop_storage", "laptop_graphic_card", "laptop_graphic_card_memory", "laptop_image_link" };
                     foreach (String head in headers)
                     {
                         cw.WriteField(head);
