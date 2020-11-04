@@ -37,11 +37,11 @@ namespace Comparison
             PriceWeight = priceWeight;
             TotalWeight = priceWeight;
         }
-        public (double, double) GetPriceRatings()
+        public (double, double) GetPriceRankings()
         {
             return PriceRanking;
         }
-        public (double, double) GetItemRatings()
+        public (double, double) GetItemRankings()
         {
             return ItemRanking;
         }
