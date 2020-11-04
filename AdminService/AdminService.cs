@@ -28,7 +28,7 @@ namespace AdminService
 
                         var updater = new ComputerDataUpdater(new SenukaiParser());
                         updater.UpdateItemListFile(updater.GetItemListFromWeb());
-                        Console.WriteLine("Senukai Parsed");
+                        Console.WriteLine("Shop Parsed");
                         break;
                         
                     default:
