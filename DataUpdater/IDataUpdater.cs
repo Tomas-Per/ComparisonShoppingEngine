@@ -5,7 +5,7 @@ namespace DataUpdater
 {
     public interface IDataUpdater<T> where T : Item
     {
-        public List<T> GetComputerListFromWeb();
-        public void UpdateComputerListFile(List<T> data);
+        public List<T> GetItemListFromWeb();
+        public void UpdateItemListFile(List<T> data);
     }
 }

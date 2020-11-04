@@ -16,15 +16,18 @@ namespace DataUpdater
             _parser = parser;
         }
 
-        public List<Computer> GetComputerListFromWeb()
+
+        //calls shop parser and returns parsed item list
+        public List<Computer> GetItemListFromWeb()
         {
             List<Computer> data = _parser.ParseShop();
             return data;
         }
 
-        public void UpdateComputerListFile(List<Computer> data)
+        //updates CSV file with new data
+        public void UpdateItemListFile(List<Computer> data)
         {
-            new LaptopServiceCSV(MainPath.GetComputerPath(), FileMode.Append).WriteData(GetComputerListFromWeb());
+            new LaptopServiceCSV(MainPath.GetComputerPath(), FileMode.Append).WriteData(GetItemListFromWeb());
         }
     }
 }
