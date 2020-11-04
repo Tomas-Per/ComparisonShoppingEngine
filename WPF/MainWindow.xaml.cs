@@ -262,6 +262,7 @@ namespace WPF
             ComparisonProductGraphicsCard1.Text = null;
             ComparisonProductResolution1.Text = null;
             ComparisonProductStorage1.Text = null;
+            ComparisonProductRating1.Text = null;
 
             ComparingItem1 = null;
         }
@@ -276,6 +277,7 @@ namespace WPF
             ComparisonProductGraphicsCard2.Text = null;
             ComparisonProductResolution2.Text = null;
             ComparisonProductStorage2.Text = null;
+            ComparisonProductRating2.Text = null;
 
             ComparingItem2 = null;
         }
