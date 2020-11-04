@@ -1,11 +1,9 @@
 ﻿using ItemLibrary;
 using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace Comparison.Comparisons
 {
-    class ComputerComparison : ItemComparison<Computer>
+    public class ComputerComparison : ItemComparison<Computer>
     {
         protected int StorageWeight { get; set; }
         protected int RamWeight { get; set; }
@@ -16,17 +14,22 @@ namespace Comparison.Comparisons
         {
             UpdateWeights(priceWeight, storageWeight, ramWeight);
         }
+
         public void StorageComparison (int mainStorage, int comparingStorage)
+        //Compares items storage by given items storage
         {
             StorageRanking = SpecComparison(Convert.ToDouble(mainStorage), Convert.ToDouble(comparingStorage), StorageWeight);
             ItemRanking = (ItemRanking.Item1 + StorageRanking.Item1, ItemRanking.Item2 + StorageRanking.Item2);
         }
+
         public void RamComparison(int mainRAM, int comparingRAM)
+        //Compares items RAMs by given items RAMs
         {
             RamRanking = SpecComparison(Convert.ToDouble(mainRAM), Convert.ToDouble(comparingRAM), RamWeight);
             ItemRanking = (ItemRanking.Item1 + StorageRanking.Item1, ItemRanking.Item2 + StorageRanking.Item2);
         }
         public override void UpdateRatings(Computer mainItem, Computer comparingItem)
+        //Compares two given computers by preferences
         {
             ItemRanking = (0, 0);
             PriceComparison(mainItem.Price, comparingItem.Price);

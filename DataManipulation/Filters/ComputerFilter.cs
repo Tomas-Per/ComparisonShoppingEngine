@@ -6,7 +6,7 @@ using System.Text;
 
 namespace DataManipulation.Filters
 {
-    class ComputerFilter : Filter<Computer>
+    public class ComputerFilter : Filter<Computer>
     {
         public ComputerFilter(List<Computer> items) : base(items)
         {
@@ -16,7 +16,6 @@ namespace DataManipulation.Filters
         public List<Computer> FilterByProcessor(string processor)
         {
             List<Computer> result = _items.Where(item => item.ProcessorName == processor).ToList();
-            _items = result;
             return result;
         }
     }

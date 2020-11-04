@@ -3,8 +3,9 @@ using ExceptionsLibrary;
 
 namespace DataContent.ReadingCSV
 {
-    class MainPath
+    public class MainPath
     {
+        //returns project's main path
         public static string GetMainPath()
         {
             string _filePath = Path.GetDirectoryName(System.AppDomain.CurrentDomain.BaseDirectory);

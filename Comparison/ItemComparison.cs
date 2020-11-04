@@ -2,7 +2,7 @@
 
 namespace Comparison
 {
-    class ItemComparison<T> where T : Item
+    public class ItemComparison<T> where T : Item
     { 
         protected int PriceWeight { get; set; }
         protected (double, double) PriceRanking { get; set; }
@@ -14,6 +14,8 @@ namespace Comparison
             UpdateWeights(priceWeight);
             ItemRanking = (0,0);
         }
+
+        //Compares items by given weights and returns proportion
         protected (double, double) SpecComparison(double mainSpec, double comparingSpec, int specWeight)
         {
             double _sum = mainSpec + comparingSpec;
@@ -22,12 +24,18 @@ namespace Comparison
             return (_mainRating, _comparingRating);
         }
 
+
         protected void PriceComparison(double mainPrice, double comparingPrice)
+
+        //Compares price by given items prices
         {
             PriceRanking = SpecComparison(mainPrice, comparingPrice, PriceWeight);
             ItemRanking = (ItemRanking.Item1 + PriceRanking.Item1, ItemRanking.Item2 + PriceRanking.Item2);
         }
+
         public virtual void UpdateRatings(T mainItem, T comparingItem)
+
+        //Compares 2 given items
         {
             ItemRanking = (0,0);
             PriceComparison(mainItem.Price, comparingItem.Price);

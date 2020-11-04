@@ -1,12 +1,10 @@
 ﻿using ItemLibrary;
-using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 
 namespace DataManipulation
 {
-    class Sorter
+    public class Sorter
     {
         private List<Item> _items { get; set; }
 
