@@ -79,39 +79,39 @@ namespace WPF
         }
         private void CreateFilterCheckbox()
         {
-            DynamicFilterCheckBox(Brands, BrandColumn1, BrandColumn2, BrandColumn3, BrandColumn4);
-            DynamicFilterCheckBox(Processors, ProcessorColumn1, ProcessorColumn2, ProcessorColumn3, ProcessorColumn4);
+            DynamicFilterCheckBox(Brands, BrandsCheckBoxes, BrandColumn1, BrandColumn2, BrandColumn3, BrandColumn4);
+            DynamicFilterCheckBox(Processors, ProcessorsCheckBoxes, ProcessorColumn1, ProcessorColumn2, ProcessorColumn3, ProcessorColumn4);
         }
-        private void DynamicFilterCheckBox(List<String> filterSpecs, StackPanel column1, StackPanel column2,
-                                                        StackPanel column3, StackPanel column4)
+        private void DynamicFilterCheckBox(List<String> filterSpecs,List<CheckBox> checkBoxes,
+                                            StackPanel column1, StackPanel column2, StackPanel column3, StackPanel column4)
         {
             int _column = 1;
             int _cycleCount = 1;
             foreach (var filterSpec in filterSpecs)
             {
-                CheckBox checkbox = new CheckBox()
+                CheckBox _checkbox = new CheckBox()
                 {
                     Content = filterSpec,
                     Name = filterSpec.Replace(" ", ""),
                     Style =this.Resources["FilterCheckbox"] as Style
                 };
-                BrandsCheckBoxes.Add(checkbox);
+                checkBoxes.Add(_checkbox);
                 switch (_column)
                 {
                     case 1:
-                        column1.Children.Add(checkbox);
+                        column1.Children.Add(_checkbox);
                         _column = 2;
                         break;
                     case 2:
-                        column2.Children.Add(checkbox);
+                        column2.Children.Add(_checkbox);
                         _column = 1;
                         break;
                     case 3:
-                        column3.Children.Add(checkbox);
+                        column3.Children.Add(_checkbox);
                         _column = 4;
                         break;
                     case 4:
-                        column4.Children.Add(checkbox);
+                        column4.Children.Add(_checkbox);
                         _column = 3;
                         break;
                 }
