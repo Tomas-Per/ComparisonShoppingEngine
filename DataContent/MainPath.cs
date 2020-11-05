@@ -1,5 +1,5 @@
-﻿using System.IO;
-using ExceptionsLibrary;
+﻿using System;
+using System.IO;
 
 namespace DataContent.ReadingCSV
 {
@@ -14,7 +14,7 @@ namespace DataContent.ReadingCSV
                 _filePath = Directory.GetParent(_filePath).FullName;
                 if(!_filePath.Contains("ComparisonShoppingEngine"))
                 {
-                    throw new InnerCustomException("Couldn't reach main path", null) ;
+                    throw new Exception("Couldn't reach main path") ;
                 }
             }
             return _filePath;
