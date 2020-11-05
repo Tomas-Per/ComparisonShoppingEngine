@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Text;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Media;
 
 namespace WPF
 {
@@ -74,6 +75,51 @@ namespace WPF
             }
             ListNameTextBlock.Text = "All Computers";
 
+        }
+        private void CreateFilterCheckbox()
+        {
+            DynamicFilterCheckBox(Brands, BrandColumn1, BrandColumn2, BrandColumn3, BrandColumn4);
+            DynamicFilterCheckBox(Processors, ProcessorColumn1, ProcessorColumn2, ProcessorColumn3, ProcessorColumn4);
+        }
+        private void DynamicFilterCheckBox(List<String> filterSpecs, StackPanel column1, StackPanel column2,
+                                                        StackPanel column3, StackPanel column4)
+        {
+            int _column = 1;
+            int _cycleCount = 1;
+            foreach (var filterSpec in filterSpecs)
+            {
+                CheckBox checkbox = new CheckBox()
+                {
+                    Content = filterSpec,
+                    Name = filterSpec.Replace(" ", ""),
+                    FontFamily = new FontFamily("Candara Light"),
+                    Background = Brushes.White,
+                    BorderBrush = Brushes.White,
+                    Foreground = Brushes.White
+                };
+                BrandsCheckBoxes.Add(checkbox);
+                switch (_column)
+                {
+                    case 1:
+                        column1.Children.Add(checkbox);
+                        _column = 2;
+                        break;
+                    case 2:
+                        column2.Children.Add(checkbox);
+                        _column = 1;
+                        break;
+                    case 3:
+                        column3.Children.Add(checkbox);
+                        _column = 4;
+                        break;
+                    case 4:
+                        column4.Children.Add(checkbox);
+                        _column = 3;
+                        break;
+                }
+                _cycleCount++;
+                if (_cycleCount == 7) _column = 3;
+            }
         }
     }
 }

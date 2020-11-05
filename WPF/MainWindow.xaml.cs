@@ -37,6 +37,7 @@ namespace WPF
 
         private List<CheckBox> ProcessorsCheckBoxes = new List<CheckBox>();
         private List<CheckBox> BrandsCheckBoxes = new List<CheckBox>();
+        private IData<IEnumerable<Computer>> _DataService;
 
         public MainWindow()
         {
@@ -57,100 +58,16 @@ namespace WPF
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
-            DynamicBrandCheckBox();
-            DynamicProcessorCheckBox();
-            string _filePath = MainPath.GetMainPath() + @"\Data\senukai.csv";
+            CreateFilterCheckbox();
 
-            var _laptopService = new LaptopServiceCSV(MainPath.GetComputerPath());
+            _DataService = new LaptopServiceCSV(MainPath.GetComputerPath());
+            ItemsListBox.ItemsSource = _DataService.ReadData();
+         
+            OriginalList = ItemsListBox.ItemsSource.Cast<Computer>().ToList();
 
-            //Here We are calling function to read CSV file
-            var resultData = _laptopService.ReadData();
-            ItemsListBox.ItemsSource = resultData;
-            
-            OriginalList = resultData.Cast<Computer>().ToList();
             _filter = new ComputerFilter(OriginalList);
             _sorter = new Sorter(OriginalList.Cast<Item>().ToList());
 
-        }
-
-        private void DynamicProcessorCheckBox()
-        {
-            int column = 1;
-            int cycleCount = 1;
-            foreach (var processor in Processors)
-            {
-                CheckBox checkbox = new CheckBox()
-                {
-                    Content = processor,
-                    Name = processor.Replace(" ", ""),
-                    FontFamily = new FontFamily("Candara Light"),
-                    Background = Brushes.White,
-                    BorderBrush = Brushes.White,
-                    Foreground = Brushes.White
-                };
-                BrandsCheckBoxes.Add(checkbox);
-                switch (column)
-                {
-                    case 1:
-                        ProcessorColumn1.Children.Add(checkbox);
-                        column = 2;
-                        break;
-                    case 2:
-                        ProcessorColumn2.Children.Add(checkbox);
-                        column = 1;
-                        break;
-                    case 3:
-                        ProcessorColumn3.Children.Add(checkbox);
-                        column = 4;
-                        break;
-                    case 4:
-                        ProcessorColumn4.Children.Add(checkbox);
-                        column = 3;
-                        break;
-                }
-                cycleCount++;
-                if (cycleCount == 7) column = 3;
-            }
-        }
-        //Will create a new method to not repeat the code again like here
-        private void DynamicBrandCheckBox()
-        {
-            int column = 1;
-            int cycleCount = 1;
-            foreach(var brand in Brands)
-            {
-                CheckBox checkbox = new CheckBox()
-                {
-                    Content = brand,
-                    Name = brand,
-                    FontFamily = new FontFamily("Candara Light"),
-                    Background = Brushes.White,
-                    BorderBrush = Brushes.White,
-                    Foreground = Brushes.White
-                };
-                BrandsCheckBoxes.Add(checkbox);
-                switch(column)
-                {
-                    case 1:
-                        BrandColumn1.Children.Add(checkbox);
-                        column = 2;
-                        break;
-                    case 2:
-                        BrandColumn2.Children.Add(checkbox);
-                        column = 1;
-                        break;
-                    case 3:
-                        BrandColumn3.Children.Add(checkbox);
-                        column = 4;
-                        break;
-                    case 4:
-                        BrandColumn4.Children.Add(checkbox);
-                        column = 3;
-                        break;
-                }
-                cycleCount++;
-                if (cycleCount == 7) column = 3;
-            }
         }
 
         private void FilterButton_Click(object sender, RoutedEventArgs e)
