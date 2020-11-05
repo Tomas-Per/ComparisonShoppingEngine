@@ -208,6 +208,9 @@
                     <Button x:Name="FilterOpenButton" Height="60" Width="60" HorizontalAlignment="Right" Foreground="White" Background="{x:Null}" BorderBrush="{x:Null}" Click="FilterOpenButton_Click"/>
                     <materialDesign:PackIcon Kind="Filter" Height="20" Width="20" VerticalAlignment="Stretch" HorizontalAlignment="Right" Margin="20" Foreground="White"/>
                 </Grid>
+                <Button x:Name="OpenComparisonWindowButton" FontSize="14"  Height="50" FontWeight="Bold" FontFamily="Candara Light" Click="CompareButton_Click" Content="Comparison Tab" Margin="20" Background="{x:Null}" BorderBrush="#FFB271A9" />
+                <Button x:Name="FavoritesButton" FontSize="14"  Height="50" FontWeight="Bold" FontFamily="Candara Light" Content="Favorites" Margin="20" Background="{x:Null}" BorderBrush="#FFB271A9" />
+
             </StackPanel>
         </Grid>
         <Grid Margin="0,60,0,0" Grid.Column="1" Visibility="Collapsed" x:Name="ComparisonGrid">
