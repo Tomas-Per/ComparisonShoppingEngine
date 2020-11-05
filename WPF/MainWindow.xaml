@@ -78,10 +78,14 @@
                         <ColumnDefinition Width="116*"/>
                         <ColumnDefinition Width="15*"/>
                     </Grid.ColumnDefinitions>
-                    <Button x:Name="AtoZSorting" Margin="5,0,0,0" Width="20" Height="20" HorizontalAlignment="Left" VerticalAlignment="Center" Background="White" BorderBrush="#FFB271A9" Foreground="#FFB271A9" Click="AZSortButton_Click"/>
-                    <Button x:Name="ZtoASorting" Margin="30,0,0,0" Width="20" Height="20" HorizontalAlignment="Left" VerticalAlignment="Center" Background="White" BorderBrush="#FFB271A9" Foreground="#FFB271A9" Click="ZASortButton_Click"/>
-                    <Button x:Name="PriceAscSorting" Margin="55,0,0,0" Width="20" Height="20" HorizontalAlignment="Left" VerticalAlignment="Center" Background="White" BorderBrush="#FFB271A9" Foreground="#FFB271A9" Click="PriceAscSortButton_Click"/>
-                    <Button x:Name="PriceDescSorting" Margin="80,0,0,0" Width="20" Height="20" HorizontalAlignment="Left" VerticalAlignment="Center" Background="White" BorderBrush="#FFB271A9" Foreground="#FFB271A9" Click="PriceDescSortButton_Click"/>
+                    <Button x:Name="AtoZSorting" Margin="10,0,0,0" Width="20" Height="20" HorizontalAlignment="Left" VerticalAlignment="Center" Background="White" BorderBrush="#FFB271A9" Foreground="#FFB271A9" Click="AZSortButton_Click"/>
+                    <materialDesign:PackIcon Kind="SortAlphabeticalDescending"  Margin="10,0,0,0" Width="20" Height="20" HorizontalAlignment="Left" VerticalAlignment="Center" Foreground="#FFB271A9"/>
+                    <Button x:Name="ZtoASorting" Margin="40,0,0,0" Width="20" Height="20" HorizontalAlignment="Left" VerticalAlignment="Center" Background="White" BorderBrush="#FFB271A9" Foreground="#FFB271A9" Click="ZASortButton_Click"/>
+                    <materialDesign:PackIcon Kind="SortAlphabeticalAscending"  Margin="40,0,0,0" Width="20" Height="20" HorizontalAlignment="Left" VerticalAlignment="Center" Foreground="#FFB271A9"/>
+                    <Button x:Name="PriceAscSorting" Margin="70,0,0,0" Width="20" Height="20" HorizontalAlignment="Left" VerticalAlignment="Center" Background="White" BorderBrush="#FFB271A9" Foreground="#FFB271A9" Click="PriceAscSortButton_Click"/>
+                    <materialDesign:PackIcon Kind="SortNumericAscending" Margin="70,0,0,0" Width="20" Height="20" HorizontalAlignment="Left" VerticalAlignment="Center" Foreground="#FFB271A9"/>
+                    <Button x:Name="PriceDescSorting" Margin="100,0,0,0" Width="20" Height="20" HorizontalAlignment="Left" VerticalAlignment="Center" Background="White" BorderBrush="#FFB271A9" Foreground="#FFB271A9" Click="PriceDescSortButton_Click"/>
+                    <materialDesign:PackIcon Kind="SortNumericDescending" Margin="100,0,0,0" Width="20" Height="20" HorizontalAlignment="Left" VerticalAlignment="Center" Foreground="#FFB271A9"/>
                 </Grid>
                 <TextBlock x:Name="ListNameTextBlock" HorizontalAlignment="Center" Text="All Computers" FontFamily="Candara Light" FontSize="14" Margin="0,0,0,5"/>
                 <Grid>
