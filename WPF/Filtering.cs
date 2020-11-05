@@ -84,10 +84,12 @@ namespace WPF
         }
         private void CreateFilterCheckbox()
         {
+            //reades filter specs from data and add to checkboxes
             var _filterService = new FiltersServiceCSV(MainPath.GetBrandPath());
             Brands = _filterService.ReadData().ToList();
             _filterService = new FiltersServiceCSV(MainPath.GetProcessorPath());
             Processors = _filterService.ReadData().ToList();
+            //adds checkboxes
             DynamicFilterCheckBox(Brands, BrandsCheckBoxes, BrandColumn1, BrandColumn2, BrandColumn3, BrandColumn4);
             DynamicFilterCheckBox(Processors, ProcessorsCheckBoxes, ProcessorColumn1, ProcessorColumn2, ProcessorColumn3, ProcessorColumn4);
         }
@@ -96,6 +98,7 @@ namespace WPF
         {
             int _column = 1;
             int _cycleCount = 1;
+            //creates checkbox for every filter
             foreach (var filterSpec in filterSpecs)
             {
                 CheckBox _checkbox = new CheckBox()
@@ -124,6 +127,7 @@ namespace WPF
                         break;
                 }
                 _cycleCount++;
+                //add items to invisible columns
                 if (_cycleCount == 7) _column = 3;
             }
         }
