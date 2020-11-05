@@ -7,6 +7,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\DataUpdater\DataUpdater.csproj" />
+    <ProjectReference Include="..\ExceptionsLogging\ExceptionsLogging.csproj" />
   </ItemGroup>
 
 </Project>

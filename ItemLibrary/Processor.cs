@@ -1,5 +1,4 @@
-﻿using ExceptionsLibrary;
-using System;
+﻿using System;
 
 namespace ItemLibrary
 {
@@ -20,10 +19,10 @@ namespace ItemLibrary
                 string binStart = link.Substring(link.IndexOf("bin%") + 4);
                 AmazonBin = "%7C" + binStart.Substring(2);
             }
-            catch (Exception e)
+            catch (Exception)
             {
 
-                throw new InnerCustomException("Erorr occured while trying to substring the link", e);
+                throw;
             }
         }
     }

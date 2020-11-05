@@ -1,5 +1,4 @@
-﻿using ExceptionsLibrary;
-using System;
+﻿using System;
 using System.Text.RegularExpressions;
 
 namespace DataContent
@@ -34,11 +33,11 @@ namespace DataContent
             }
             catch (ArgumentOutOfRangeException)
             {
-                throw; //new DataCustomException("Error happened while parsing int", null);
+                throw;
             }
             catch (Exception e)
             {
-                throw new DataCustomException("Error happened while trying to parse: " + e.Message, ParseDouble(null));
+                throw new Exception("Error happened while trying to parse: " + e.Message);
             }
 
             return Convert.ToDouble(text);
@@ -56,7 +55,7 @@ namespace DataContent
             }
             catch (ArgumentOutOfRangeException)
             {
-                throw; //new DataCustomException("Error happened while parsing int", null);
+                throw;
             }
 
             return Convert.ToInt32(text);

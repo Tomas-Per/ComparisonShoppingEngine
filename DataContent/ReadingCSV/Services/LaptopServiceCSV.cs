@@ -1,7 +1,7 @@
 ﻿using CsvHelper;
 using DataContent.ReadingCSV.Mappers;
+using ExceptionsLogging;
 using ItemLibrary;
-using ExceptionsLibrary;
 using System;
 using System.Collections.Generic;
 using System.Globalization;
@@ -35,13 +35,15 @@ namespace DataContent.ReadingCSV.Services
                     return records.ToList();
                 }
             }
-            catch (FileNotFoundException)
+            catch (FileNotFoundException e)
             {
-                throw new DataCustomException("File not found", this);
+                ExceptionLogger.Log(e);
+                throw;
             }
             catch (Exception e)
             {
-                throw new DataCustomException("Something's wrong happened:" + e.Message, this);
+                ExceptionLogger.Log(e);
+                throw new Exception ("Something's wrong happened:" + e.Message);
             }
         }
 
@@ -56,7 +58,7 @@ namespace DataContent.ReadingCSV.Services
                 {
                     var headers = new List<String>{"laptop_name", "laptop_url", "laptop_price", "laptop_manufacturer",
                     "laptop_resolution", "laptop_processor_class", "laptop_ram_type", "laptop_ram",
-                    "laptop_storage", "laptop_graphic_card", "laptop_graphic_card_memory" };
+                    "laptop_storage", "laptop_graphic_card", "laptop_graphic_card_memory", "laptop_image_link" };
                     foreach (String head in headers)
                     {
                         cw.WriteField(head);
@@ -70,17 +72,20 @@ namespace DataContent.ReadingCSV.Services
                     }
                 }
             }
-            catch (FileNotFoundException)
+            catch (FileNotFoundException e)
             {
-                throw new DataCustomException("File not found", this);
+                ExceptionLogger.Log(e);
+                throw;
             }
-            catch (FileLoadException)
+            catch (FileLoadException e)
             {
-                throw new DataCustomException("File could not be opened", this);
+                ExceptionLogger.Log(e);
+                throw;
             }
             catch (Exception e)
             {
-                throw new DataCustomException("Something's wrong happened:" + e.Message, this);
+                ExceptionLogger.Log(e);
+                throw new Exception("Something's wrong happened:" + e.Message);
             }
         }
     }
