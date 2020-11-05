@@ -8,14 +8,14 @@ namespace DataContent
 
         //replaces "," with "."
         //some data uses comma, some dot so this method allows to parse both variants of data
-        private static string ReplaceSeperator(string text)
+        private static string replaceSeperator(string text)
         {
             string value = Regex.Replace(text, @",", ".");
             return value;
         }
 
         //deletes spaces from a string
-        private static string DeleteSpaces (string text)
+        private static string deleteSpaces (string text)
         {
             string value = Regex.Replace(text, @"[\s+]", "");
             return value;
@@ -24,8 +24,8 @@ namespace DataContent
         //returns double value from a given string
         public static double ParseDouble(string text)
         {
-            text = ReplaceSeperator(text);
-            text = DeleteSpaces(text);
+            text = replaceSeperator(text);
+            text = deleteSpaces(text);
             try
             {
                 Match value = Regex.Matches(text, @"\d+(\.\d+)?")[0];
@@ -46,7 +46,7 @@ namespace DataContent
         //returns int value from a given string
         public static int ParseInt(string text)
         {
-            text = DeleteSpaces(text);
+            text = deleteSpaces(text);
 
             try
             {
