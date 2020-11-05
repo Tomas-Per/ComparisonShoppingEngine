@@ -274,5 +274,10 @@ namespace WPF
             MenuGrid.Visibility = Visibility.Collapsed;
             FilterGrid.Visibility = Visibility.Visible;
         }
+
+        private void FavoritesButton_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
     }
 }
