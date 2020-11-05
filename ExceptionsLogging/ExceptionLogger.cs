@@ -10,6 +10,7 @@ namespace ExceptionsLogging
     {
         private readonly static string _filePath = MainPath.GetMainPath() + @"\ExceptionsLogging\Log.txt";
 
+        //Logs Exception to a file
         public static void Log (Exception ex)
         {
             using (StreamWriter streamWriter = new StreamWriter(_filePath, true))
@@ -21,6 +22,8 @@ namespace ExceptionsLogging
             }
         }
 
+
+        //returns Exception's full stack trace as string
         private static string GetFullStackTrace(Exception x)
         {
             var st = new StackTrace(x, true);
