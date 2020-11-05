@@ -105,8 +105,8 @@ namespace WPF
             ProductGraphicsCard.Text = item.GraphicsCardName + ' ' + item.GraphicsCardMemory;
             ProductResolution.Text = item.Resolution;
             ProductStorage.Text = (item.StorageCapacity).ToString() + "GB";
-            BuyHere.Text = "Buy here";
             SimilarProducts.Text = "Similar Products";
+            BuyHereButton.Visibility = Visibility.Visible;
             CompareButton.Visibility = Visibility.Visible;
             InfoStackPanelSecond.Visibility = Visibility.Visible;
             InfoStackPanelFirst.Visibility = Visibility.Visible;
@@ -134,6 +134,22 @@ namespace WPF
             
             e.Handled = true;
         }
+
+        private void Hyperlink_RequestNavigate(object sender, RoutedEventArgs e)
+        {
+            Hyperlink hl = BuyHereHyper;
+            string navigateUri = hl.NavigateUri.ToString();
+
+            var StartInfo = new ProcessStartInfo
+            {
+                FileName = navigateUri,
+                UseShellExecute = true
+            };
+            Process.Start(StartInfo);
+
+            e.Handled = true;
+        }
+
 
         private void SimilarListBox_SelectionChanged(object sender, SelectionChangedEventArgs args)
         {
