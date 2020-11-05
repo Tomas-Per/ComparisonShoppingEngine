@@ -98,16 +98,17 @@ namespace WPF
         {
             //Setting textboxes
             ProductName.Text = item.Name;
-            ProductPrice.Text = "Price: " + '€' + (item.Price).ToString();
-            ProductBrand.Text = "Brand: " + item.ManufacturerName;
-            ProductProcessor.Text = "Processor: " + item.ProcessorName;
-            ProductRAM.Text = "RAM: " + (item.RAM).ToString() + "GB " + item.RAM_type;
-            ProductGraphicsCard.Text = "Graphics Card: " + item.GraphicsCardName + ' ' + item.GraphicsCardMemory;
-            ProductResolution.Text = "Resolution: " + item.Resolution;
-            ProductStorage.Text = "Storage Capacity: " + (item.StorageCapacity).ToString() + "GB";
+            ProductPrice.Text = '€' + (item.Price).ToString();
+            ProductBrand.Text = item.ManufacturerName;
+            ProductProcessor.Text = item.ProcessorName;
+            ProductRAM.Text = (item.RAM).ToString() + "GB " + item.RAM_type;
+            ProductGraphicsCard.Text = item.GraphicsCardName + ' ' + item.GraphicsCardMemory;
+            ProductResolution.Text = item.Resolution;
+            ProductStorage.Text = (item.StorageCapacity).ToString() + "GB";
             BuyHere.Text = "Buy here";
             SimilarProducts.Text = "Similar Products";
             CompareButton.Visibility = Visibility.Visible;
+            InfoStackPanel.Visibility = Visibility.Visible; 
 
             var bi = new BitmapImage();
             bi.BeginInit();
@@ -267,12 +268,21 @@ namespace WPF
         {
             MenuGrid.Visibility = Visibility.Visible;
             FilterGrid.Visibility = Visibility.Collapsed;
+            FilterButtonGrid.Visibility = Visibility.Visible;
+            MenuButtonGrid.Visibility = Visibility.Collapsed;
         }
 
         private void FilterOpenButton_Click(object sender, RoutedEventArgs e)
         {
             MenuGrid.Visibility = Visibility.Collapsed;
             FilterGrid.Visibility = Visibility.Visible;
+            MenuButtonGrid.Visibility = Visibility.Visible;
+            FilterButtonGrid.Visibility = Visibility.Collapsed;
+        }
+
+        private void FavoritesButton_Click(object sender, RoutedEventArgs e)
+        {
+
         }
     }
 }
