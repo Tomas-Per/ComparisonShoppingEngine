@@ -1,0 +1,6 @@
+Error:   Could not find file 'C:\Users\Ugnius\Source\Repos\ComparisonShoppingEngine\Data\processorFilters.csv'.
+Occured At:    File: C:\Users\Ugnius\source\repos\ComparisonShoppingEngine\DataContent\ReadingCSV\Services\FiltersServiceCSV.cs, Method:ReadData, LineNumber: 28  -->  
+Time:    11/5/2020 10:24:55 PM
+Error:   Could not find file 'C:\Users\Ugnius\Source\Repos\ComparisonShoppingEngine\Data\processorFilters.csv'.
+Occured At:    File: C:\Users\Ugnius\source\repos\ComparisonShoppingEngine\DataContent\ReadingCSV\Services\FiltersServiceCSV.cs, Method:ReadData, LineNumber: 28  -->  
+Time:    11/5/2020 10:31:12 PM

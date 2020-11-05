@@ -1,7 +1,10 @@
-﻿using DataManipulation.Filters;
+﻿using DataContent.ReadingCSV.Services;
+using DataManipulation.Filters;
 using ItemLibrary;
+using PathLibrary;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 using System.Windows;
 using System.Windows.Controls;
@@ -14,8 +17,8 @@ namespace WPF
 
         private ComputerFilter _filter;
         //these two lists are temporary
-        private List<string> Brands = new List<string>() { "Asus", "Dell", "Apple", "Lenovo", "Acer", "Huawei" };
-        private List<string> Processors = new List<string>() { "Intel Core i3", "Intel Core i5", "Intel Core i7", "IntelCeleron", "Intel Atom" };
+        private List<FilterSpec> Brands;
+        private List<FilterSpec> Processors;
         private List<CheckBox> ProcessorsCheckBoxes = new List<CheckBox>();
         private List<CheckBox> BrandsCheckBoxes = new List<CheckBox>();
 
@@ -79,10 +82,14 @@ namespace WPF
         }
         private void CreateFilterCheckbox()
         {
+            var _filterService = new FiltersServiceCSV(MainPath.GetBrandPath());
+            Brands = _filterService.ReadData().ToList();
+            //_filterService = new FiltersServiceCSV(MainPath.GetProcessorPath());
+            Processors = _filterService.ReadData().ToList();
             DynamicFilterCheckBox(Brands, BrandsCheckBoxes, BrandColumn1, BrandColumn2, BrandColumn3, BrandColumn4);
             DynamicFilterCheckBox(Processors, ProcessorsCheckBoxes, ProcessorColumn1, ProcessorColumn2, ProcessorColumn3, ProcessorColumn4);
         }
-        private void DynamicFilterCheckBox(List<String> filterSpecs,List<CheckBox> checkBoxes,
+        private void DynamicFilterCheckBox(List<FilterSpec> filterSpecs,List<CheckBox> checkBoxes,
                                             StackPanel column1, StackPanel column2, StackPanel column3, StackPanel column4)
         {
             int _column = 1;
@@ -91,8 +98,8 @@ namespace WPF
             {
                 CheckBox _checkbox = new CheckBox()
                 {
-                    Content = filterSpec,
-                    Name = filterSpec.Replace(" ", ""),
+                    Content = filterSpec.Name,
+                    Name = filterSpec.Name.Replace(" ", ""),
                     Style =this.Resources["FilterCheckbox"] as Style
                 };
                 checkBoxes.Add(_checkbox);
