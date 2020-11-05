@@ -37,11 +37,11 @@ namespace DataContent.ReadingCSV.Services
             }
             catch (FileNotFoundException)
             {
-                throw new DataCustomException("File not found", this);
+                throw;
             }
             catch (Exception e)
             {
-                throw new DataCustomException("Something's wrong happened:" + e.Message, this);
+                throw new Exception("Something's wrong happened:" + e.Message);
             }
         }
 
@@ -64,15 +64,15 @@ namespace DataContent.ReadingCSV.Services
             }
             catch (FileNotFoundException)
             {
-                throw new DataCustomException("File not found", this);
+                throw;
             }
             catch (FileLoadException)
             {
-                throw new DataCustomException("File could not be opened", this);
+                throw;
             }
             catch (Exception e)
             {
-                throw new DataCustomException("Something's wrong happened:" + e.Message, this);
+                throw new Exception("Something's wrong happened:" + e.Message);
             }
         }
     }
