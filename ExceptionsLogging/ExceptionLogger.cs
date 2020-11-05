@@ -16,7 +16,7 @@ namespace ExceptionsLogging
             using (StreamWriter streamWriter = new StreamWriter(_filePath, true))
             {
                 streamWriter.WriteLine("Error:   " + ex.Message);
-                streamWriter.WriteLine("Occured At:    " + getFullStackTrace(ex));
+                streamWriter.WriteLine("Occured At:    " + GetFullStackTrace(ex));
                 streamWriter.WriteLine("Time:    " + DateTime.Now);
                 streamWriter.Close();
             }
@@ -24,7 +24,7 @@ namespace ExceptionsLogging
 
 
         //returns Exception's full stack trace as string
-        private static string getFullStackTrace(Exception x)
+        private static string GetFullStackTrace(Exception x)
         {
             var st = new StackTrace(x, true);
             var frames = st.GetFrames();

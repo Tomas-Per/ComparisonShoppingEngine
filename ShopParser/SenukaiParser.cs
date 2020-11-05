@@ -77,7 +77,7 @@ namespace ShopParser
 
                     _driver.Navigate().GoToUrl(link);
 
-                    data.Add(parseWindow(computer));
+                    data.Add(ParseWindow(computer));
                     _driver.Navigate().Back();
 
                     //_driver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(10);
@@ -96,7 +96,7 @@ namespace ShopParser
 
 
         //parses laptop window, updates computer fields 
-        private Computer parseWindow(Computer computer)
+        private Computer ParseWindow(Computer computer)
         {
 
             //var id = _driver.FindElement(By.ClassName("product-id"));
