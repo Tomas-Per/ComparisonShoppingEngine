@@ -27,7 +27,7 @@ namespace ShopParser
             var options = new ChromeOptions();
             options.AddArguments("--headless");
 
-            _driver = new ChromeDriver(options);
+            _driver = new ChromeDriver();
             _currentWIndowURL = _url;
 
             List<Computer> data = new List<Computer>();
@@ -36,7 +36,7 @@ namespace ShopParser
 
             _driver.Navigate().GoToUrl(_url);
 
-            for (int i = 0; i < 10; i++)
+            for (int i = 0; i < 1; i++)
             {
                 try
                 {
@@ -89,6 +89,8 @@ namespace ShopParser
                     _currentWIndowURL = nextPage;
                 }
             }
+
+            _driver.Close();
             return data;
         }
 
@@ -108,7 +110,7 @@ namespace ShopParser
 
             catch (ArgumentOutOfRangeException)
             {
-                computer.ImageLink = null;
+                computer.ImageLink = "https://ksd-images.lt/display/aikido/store/1e3628060337b388dd4ffbce4f20f608.jpg?h=742&w=816";
             }
 
             var generalProperties = _driver.FindElements(By.TagName("td"));

@@ -10,6 +10,7 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Data", "Data", "{25A92F1B-7513-4AC1-8298-32E5CFDE77A3}"
 	ProjectSection(SolutionItems) = preProject
 		Data\senukai.csv = Data\senukai.csv
+		Data\senukaiOld.csv = Data\senukaiOld.csv
 	EndProjectSection
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "URLGenerator", "URLGenerator\URLGenerator.csproj", "{F447565B-0063-49D6-A9EE-A829A11ADF9B}"
@@ -24,9 +25,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ShopParser", "ShopParser\Sh
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ExceptionsLibrary", "ExceptionsLibrary\ExceptionsLibrary.csproj", "{0265957F-8E11-4560-BAC3-82830240B0E5}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AdminService", "AdminService\AdminService.csproj", "{29B9C771-07F5-451B-A6F6-0FD8B1BE7AFA}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AdminService", "AdminService\AdminService.csproj", "{29B9C771-07F5-451B-A6F6-0FD8B1BE7AFA}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DataUpdater", "DataUpdater\DataUpdater.csproj", "{8CEC3C77-81D8-4D86-BCC1-C4E5E81D33A0}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DataUpdater", "DataUpdater\DataUpdater.csproj", "{8CEC3C77-81D8-4D86-BCC1-C4E5E81D33A0}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
