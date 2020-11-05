@@ -27,7 +27,7 @@ namespace ShopParser
             var options = new ChromeOptions();
             options.AddArguments("--headless");
 
-            _driver = new ChromeDriver();
+            _driver = new ChromeDriver(options);
             _currentWIndowURL = _url;
 
             List<Computer> data = new List<Computer>();
@@ -36,7 +36,7 @@ namespace ShopParser
 
             _driver.Navigate().GoToUrl(_url);
 
-            for (int i = 0; i < 1; i++)
+            for (int i = 0; i < 10; i++)
             {
                 try
                 {
