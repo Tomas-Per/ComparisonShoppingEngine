@@ -22,7 +22,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Resource Include="libra100.png" />
+    <Resource Include="ImagesSource\libra100.png" />
   </ItemGroup>
 
 </Project>

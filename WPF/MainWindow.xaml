@@ -13,7 +13,7 @@
          TextOptions.TextRenderingMode="Auto"
          Background="{DynamicResource MaterialDesignPaper}"
          FontFamily="{DynamicResource MaterialDesignFont}"
-        Title="Libra" ResizeMode="NoResize" Height="612" Width="987" Icon="/libra100.png" Loaded="Window_Loaded">
+        Title="Libra" ResizeMode="NoResize" Height="612" Width="987" Icon="/ImagesSource/libra100.png" Loaded="Window_Loaded">
 
     <!-- <Window.Resources>
         <Storyboard x:Key="MenuOpen">
@@ -54,7 +54,7 @@
             <TextBlock Text="LIBRA" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="28" Foreground="White" FontFamily="Candara Light" FontWeight="Bold"/>
             <Image HorizontalAlignment="Right" VerticalAlignment="Stretch" Height="60" Width="60">
                 <Image.Source>
-                    <BitmapImage UriSource="/libra100.png"/>
+                    <BitmapImage UriSource="/ImagesSource/libra100.png"/>
                 </Image.Source>
             </Image>
         </Grid>
