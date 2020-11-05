@@ -13,8 +13,11 @@
          TextOptions.TextRenderingMode="Auto"
          Background="{DynamicResource MaterialDesignPaper}"
          FontFamily="{DynamicResource MaterialDesignFont}"
-        Title="Libra" ResizeMode="NoResize" Height="612" Width="987" Icon="/libra100.png" Loaded="Window_Loaded">
+        Title="Libra" ResizeMode="NoResize" Height="612" Width="987" Icon="/ImagesSource/libra100.png" Loaded="Window_Loaded">
 
+    <Window.Resources>
+        <ResourceDictionary Source="Styles/FilterCheckBox.xaml"/>
+    </Window.Resources>
     <!-- <Window.Resources>
         <Storyboard x:Key="MenuOpen">
             <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="FrameworkElement.Width" Storyboard.TargetName="FilterGrid">
@@ -54,9 +57,26 @@
             <TextBlock Text="LIBRA" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="28" Foreground="White" FontFamily="Candara Light" FontWeight="Bold"/>
             <Image HorizontalAlignment="Right" VerticalAlignment="Stretch" Height="60" Width="60">
                 <Image.Source>
-                    <BitmapImage UriSource="/libra100.png"/>
+                    <ImageSource>/libra100sharpedges.png</ImageSource>
                 </Image.Source>
             </Image>
+            <Grid Height="60" Width="60" HorizontalAlignment="left" Visibility="Collapsed" Name="MenuButtonGrid">
+                <Button x:Name="MenuOpenButton" Height="60" Width="60" HorizontalAlignment="Left" Foreground="White" Background="{x:Null}" BorderBrush="{x:Null}" Click="MenuOpenButton_Click">
+                    <TextBlock Text="Menu" FontFamily="Candara Light" FontSize="10" VerticalAlignment="Top" Height="10" Margin="0,0,0,30"/>
+
+                </Button>
+                <materialDesign:PackIcon Kind="Menu" Height="20" Width="20" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="20,30,20,0" Foreground="White"/>
+
+            </Grid>
+            <Grid Height="60" Width="60" HorizontalAlignment="left" Visibility="Visible" Name="FilterButtonGrid">
+                <Button x:Name="FilterOpenButton" Height="60" Width="60" HorizontalAlignment="Left" Foreground="White" Background="{x:Null}" BorderBrush="{x:Null}" Click="FilterOpenButton_Click">
+                    <TextBlock Text="Filter" FontFamily="Candara Light" FontSize="10" VerticalAlignment="Top" Height="10" Margin="0,0,0,30"/>
+
+                </Button>
+                <materialDesign:PackIcon Kind="Filter" Height="20" Width="20" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="20,30,20,0" Foreground="White"/>
+
+            </Grid>
+
         </Grid>
         <Grid Margin="200,60,0,0" Grid.Row="1" Grid.ColumnSpan="2">
             <Grid.ColumnDefinitions>
@@ -78,10 +98,14 @@
                         <ColumnDefinition Width="116*"/>
                         <ColumnDefinition Width="15*"/>
                     </Grid.ColumnDefinitions>
-                    <Button x:Name="AtoZSorting" Margin="5,0,0,0" Width="20" Height="20" HorizontalAlignment="Left" VerticalAlignment="Center" Background="White" BorderBrush="#FFB271A9" Foreground="#FFB271A9" Click="AZSortButton_Click"/>
-                    <Button x:Name="ZtoASorting" Margin="30,0,0,0" Width="20" Height="20" HorizontalAlignment="Left" VerticalAlignment="Center" Background="White" BorderBrush="#FFB271A9" Foreground="#FFB271A9" Click="ZASortButton_Click"/>
-                    <Button x:Name="PriceAscSorting" Margin="55,0,0,0" Width="20" Height="20" HorizontalAlignment="Left" VerticalAlignment="Center" Background="White" BorderBrush="#FFB271A9" Foreground="#FFB271A9" Click="PriceAscSortButton_Click"/>
-                    <Button x:Name="PriceDescSorting" Margin="80,0,0,0" Width="20" Height="20" HorizontalAlignment="Left" VerticalAlignment="Center" Background="White" BorderBrush="#FFB271A9" Foreground="#FFB271A9" Click="PriceDescSortButton_Click"/>
+                    <Button x:Name="AtoZSorting" Margin="10,0,0,0" Width="20" Height="20" HorizontalAlignment="Left" VerticalAlignment="Center" Background="White" BorderBrush="#FFB271A9" Foreground="#FFB271A9" Click="AZSortButton_Click"/>
+                    <materialDesign:PackIcon Kind="SortAlphabeticalAscending"  Margin="10,0,0,0" Width="20" Height="20" HorizontalAlignment="Left" VerticalAlignment="Center" Foreground="#FFB271A9"/>
+                    <Button x:Name="ZtoASorting" Margin="40,0,0,0" Width="20" Height="20" HorizontalAlignment="Left" VerticalAlignment="Center" Background="White" BorderBrush="#FFB271A9" Foreground="#FFB271A9" Click="ZASortButton_Click"/>
+                    <materialDesign:PackIcon Kind="SortAlphabeticalDescending"  Margin="40,0,0,0" Width="20" Height="20" HorizontalAlignment="Left" VerticalAlignment="Center" Foreground="#FFB271A9"/>
+                    <Button x:Name="PriceAscSorting" Margin="70,0,0,0" Width="20" Height="20" HorizontalAlignment="Left" VerticalAlignment="Center" Background="White" BorderBrush="#FFB271A9" Foreground="#FFB271A9" Click="PriceAscSortButton_Click"/>
+                    <materialDesign:PackIcon Kind="SortNumericAscending" Margin="70,0,0,0" Width="20" Height="20" HorizontalAlignment="Left" VerticalAlignment="Center" Foreground="#FFB271A9"/>
+                    <Button x:Name="PriceDescSorting" Margin="100,0,0,0" Width="20" Height="20" HorizontalAlignment="Left" VerticalAlignment="Center" Background="White" BorderBrush="#FFB271A9" Foreground="#FFB271A9" Click="PriceDescSortButton_Click"/>
+                    <materialDesign:PackIcon Kind="SortNumericDescending" Margin="100,0,0,0" Width="20" Height="20" HorizontalAlignment="Left" VerticalAlignment="Center" Foreground="#FFB271A9"/>
                 </Grid>
                 <TextBlock x:Name="ListNameTextBlock" HorizontalAlignment="Center" Text="All Computers" FontFamily="Candara Light" FontSize="14" Margin="0,0,0,5"/>
                 <Grid>
@@ -101,26 +125,64 @@
             <StackPanel Grid.Column="1" >
 
                 <StackPanel x:Name="ItemInfoStackPanel" Visibility="Visible" Background="White" Height="535" >
-                    <TextBlock x:Name="ProductName" Height="40" FontFamily="Candara Light" FontSize="16" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="10,10,10,10"></TextBlock>
-                    <TextBlock x:Name="ProductPrice" FontFamily="Candara Light" FontSize="14" Margin="10,0,10,0"></TextBlock>
-                    <TextBlock x:Name="ProductBrand" FontFamily="Candara Light" FontSize="14" Margin="10,5,10,0"></TextBlock>
-                    <TextBlock x:Name="ProductProcessor" FontFamily="Candara Light" FontSize="14" Margin="10,5,10,0"></TextBlock>
-                    <TextBlock x:Name="ProductRAM" FontFamily="Candara Light" FontSize="14" Margin="10,5,10,0"></TextBlock>
-                    <TextBlock x:Name="ProductGraphicsCard" FontFamily="Candara Light" FontSize="14" Margin="10,5,10,0"></TextBlock>
-                    <TextBlock x:Name="ProductResolution" FontFamily="Candara Light" FontSize="14" Margin="10,5,10,0"></TextBlock>
-                    <TextBlock x:Name="ProductStorage" FontFamily="Candara Light" FontSize="14" Margin="10,5,10,0"></TextBlock>
-                    <TextBlock x:Name="HyperLinkBuy" Margin="10,5,10,0"> 
-                    <Hyperlink x:Name="BuyHereHyper" NavigateUri="{Binding Path=Url}" RequestNavigate="Hyperlink_RequestNavigate">
-                        <TextBlock x:Name="BuyHere" FontFamily="Candara Light" FontSize="14" Foreground="#FFB271A9"/>
-                    </Hyperlink>    
-                </TextBlock>
+                    <TextBlock x:Name="ProductName" TextWrapping="Wrap" Height="40" FontFamily="Candara Light" FontSize="16" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="10,10,10,3"></TextBlock>
 
-                    <Button x:Name="CompareButton" Content="Compare with..." Visibility="Collapsed" Margin="30 0 20 0" Foreground="#b271a9" Background="white" BorderBrush="#b271a9" FontFamily="Candara Light" Click="CompareButton_Click"/>
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="92*"/>
+                            <ColumnDefinition Width="39*"/>
+                        </Grid.ColumnDefinitions>
+
+                        <StackPanel x:Name="InfoStackPanelFirst" Visibility="Collapsed" Grid.Column="0"  VerticalAlignment="Bottom" Margin="10,30,0,0">
+                            <Grid VerticalAlignment="Bottom">
+                                <TextBlock Text="Price:" FontFamily="Candara Light" FontSize="14" Margin="10,0,10,0" HorizontalAlignment="Left"/>
+                                <TextBlock x:Name="ProductPrice" FontFamily="Candara Light" FontSize="14" Margin="100,0,10,0" HorizontalAlignment="Left"/>
+                            </Grid>
+                            <Grid VerticalAlignment="Bottom">
+                                <TextBlock Text="Brand:" FontFamily="Candara Light" FontSize="14" Margin="10,0,10,0" HorizontalAlignment="Left"/>
+                                <TextBlock x:Name="ProductBrand" FontFamily="Candara Light" FontSize="14" Margin="100,0,10,0" HorizontalAlignment="Left"/>
+                            </Grid>
+
+                            <Grid VerticalAlignment="Bottom">
+                                <TextBlock Text="Processor:" FontFamily="Candara Light" FontSize="14" Margin="10,0,10,0" HorizontalAlignment="Left"/>
+                                <TextBlock x:Name="ProductProcessor" FontFamily="Candara Light" FontSize="14" Margin="100,0,10,0" HorizontalAlignment="Left"/>
+                            </Grid>
+                            <Grid VerticalAlignment="Bottom">
+                                <TextBlock Text="RAM:" FontFamily="Candara Light" FontSize="14" Margin="10,0,10,0" HorizontalAlignment="Left"/>
+                                <TextBlock x:Name="ProductRAM" FontFamily="Candara Light" FontSize="14" Margin="100,0,10,0" HorizontalAlignment="Left"/>
+                            </Grid>
+                        </StackPanel>
+                        <StackPanel Grid.Column="1">
+                            <Image x:Name="image1" MaxHeight="85"  HorizontalAlignment="Left"  />
+                        </StackPanel>
+                    </Grid>
+                    <StackPanel x:Name="InfoStackPanelSecond" Visibility="Collapsed" Margin="10,0,0,0">
+                       
+                        <Grid >
+                            <TextBlock Text="Graphics Card:" FontFamily="Candara Light" FontSize="14" Margin="10,0,10,0" HorizontalAlignment="Left"/>
+                            <TextBlock x:Name="ProductGraphicsCard" FontFamily="Candara Light" FontSize="14" Margin="100,0,10,0" HorizontalAlignment="Left"/>
+                        </Grid>
+                        <Grid >
+                            <TextBlock Text="Resolution:" FontFamily="Candara Light" FontSize="14" Margin="10,0,10,0" HorizontalAlignment="Left"/>
+                            <TextBlock x:Name="ProductResolution" FontFamily="Candara Light" FontSize="14" Margin="100,0,10,0" HorizontalAlignment="Left"/>
+                        </Grid>
+                        <Grid >
+                            <TextBlock Text="Storage:" FontFamily="Candara Light" FontSize="14" Margin="10,0,10,0" HorizontalAlignment="Left"/>
+                            <TextBlock x:Name="ProductStorage" FontFamily="Candara Light" FontSize="14" Margin="100,0,10,0" HorizontalAlignment="Left"/>
+                        </Grid>
+                    </StackPanel>
+                    <Button x:Name="BuyHereButton" Visibility="Collapsed" Margin="30,5,20,0" Foreground="#b271a9" Background="white" BorderBrush="#b271a9" FontFamily="Candara Light" Click="Hyperlink_RequestNavigate">
+                        <Hyperlink x:Name="BuyHereHyper" NavigateUri="{Binding Path=Url}" TextDecorations=""
+                                      RequestNavigate="Hyperlink_RequestNavigate" >
+                            <Label Content="Buy here" Foreground="#b271a9" FontFamily="Candara Light"/>
+                        </Hyperlink>
+                    </Button>
+                    <Button x:Name="CompareButton" Content="Compare with..." Visibility="Collapsed" Margin="30,5,20,0" Foreground="#b271a9" Background="white" BorderBrush="#b271a9" FontFamily="Candara Light" Click="CompareButton_Click"/>
 
                     <TextBlock x:Name="SimilarProducts" Height="25" FontFamily="Candara Light" FontSize="16" VerticalAlignment="Bottom" HorizontalAlignment="Center" Margin="10,10,10,10"></TextBlock>
                     <ListBox x:Name="SimilarItemsListBox" Margin="10 0 10 5" FontFamily="Candara Light" FontSize="14" VerticalContentAlignment="Top"  
                          ScrollViewer.VerticalScrollBarVisibility="Visible"
-                         ScrollViewer.CanContentScroll="False" Height="200"
+                         ScrollViewer.CanContentScroll="False" Height="180"
                          SelectionChanged="SimilarListBox_SelectionChanged">
                         <ListBox.ItemTemplate>
                             <DataTemplate>
@@ -132,7 +194,7 @@
             </StackPanel>
         </Grid>
 
-        <Grid Name="FilterGrid" Width="200" HorizontalAlignment="Left" Visibility="Visible" RenderTransformOrigin="0.5,0.5" Grid.RowSpan="2">
+        <Grid Name="FilterGrid" Width="200" HorizontalAlignment="Left" Visibility="Collapsed" RenderTransformOrigin="0.5,0.5" Grid.RowSpan="2">
             <Grid Visibility="visible">
 
                 <StackPanel>
@@ -141,7 +203,6 @@
                             <SolidColorBrush Opacity="0.2" Color="Black"/>
                         </Grid.Background>
                         <TextBlock Text="Filters" FontFamily="Candara Light" Margin="10" HorizontalAlignment="Left" VerticalAlignment="Center" Foreground="White" FontSize="14" FontWeight="Bold"/>
-                        <materialDesign:PackIcon Kind="Filter" VerticalAlignment="Stretch" HorizontalAlignment="Right" Margin="0,10,10,10" Foreground="White"/>
                     </Grid>
                     <StackPanel Height="533">
                         <TextBlock Text="Price Range" FontFamily="Candara Light" Foreground="White" VerticalAlignment="Center" Margin="10 10 10 10" HorizontalAlignment="Center" FontWeight="Bold" FontSize="14"/>
@@ -150,17 +211,17 @@
                         <Slider Height="20" Minimum="0" Maximum="4000" IsSnapToTickEnabled="True" VerticalAlignment="Bottom" Margin="15,0,15,0" TickFrequency="200" TickPlacement="BottomRight" Name="PriceSlider" ValueChanged="PriceSlider_ValueChanged" Foreground="White"/>
 
                         <TextBlock Text="Brand" FontFamily="Candara Light" Foreground="White" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="10,10,10,10" FontWeight="Bold" FontSize="14"/>
-                        <Grid Margin="10,0,4,0">
+                        <Grid Margin="7,0,4,0">
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="25*"/>
                                 <ColumnDefinition Width="68*"/>
                                 <ColumnDefinition Width="93*"/>
                             </Grid.ColumnDefinitions>
                             <StackPanel x:Name="BrandColumn1" Grid.Column="0" Grid.ColumnSpan="2" >
-                               
+
                             </StackPanel>
                             <StackPanel x:Name="BrandColumn2" Grid.Column="2">
-                               
+
                             </StackPanel>
                             <StackPanel x:Name="BrandColumn3" Grid.Column="0"  Visibility="Hidden">
 
@@ -171,7 +232,7 @@
                         </Grid>
                         <TextBlock Text="Processor Type" FontFamily="Candara Light" Foreground="White" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="10,10,10,10" FontWeight="Bold" FontSize="14"/>
 
-                        <Grid Margin="10,0,10,0">
+                        <Grid Margin="7,0,10,0">
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="*"/>
                                 <ColumnDefinition Width="*"/>
@@ -193,15 +254,42 @@
                 </StackPanel>
             </Grid>
         </Grid>
+        <Grid x:Name="MenuGrid" Visibility="Visible">
+            <StackPanel>
+                <Grid Height="60" >
+                    <Grid.Background>
+                        <SolidColorBrush Opacity="0.2" Color="Black"/>
+                    </Grid.Background>
+                    <TextBlock Text="Menu Tab" FontFamily="Candara Light" Margin="10" HorizontalAlignment="Left" VerticalAlignment="Center" Foreground="White" FontSize="14" FontWeight="Bold"/>
+
+                </Grid>
+                <Grid Margin="0,20,0, 0" Height="50">
+                    <Grid.Background>
+                        <SolidColorBrush Opacity="0.1" Color="Black"/>
+                    </Grid.Background>
+                    <Button x:Name="OpenComparisonWindowButton" FontSize="14"  Height="50" FontWeight="Bold" FontFamily="Candara Light" Click="CompareButton_Click" Content="Comparison Tab" HorizontalAlignment="Stretch" Background="{x:Null}" BorderBrush="{x:Null}" />
+                    <materialDesign:PackIcon Kind="Compare" Foreground="white" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="0,0,25,0"/>
+                </Grid>
+                <!--
+                <Grid Margin="0,20,0,0" Height="50">
+                    <Grid.Background>
+                        <SolidColorBrush Opacity="0.1" Color="Black"/>
+                    </Grid.Background>
+                    <Button  x:Name="FavoritesButton" FontSize="14"  Height="50" FontWeight="Bold" FontFamily="Candara Light" Click="FavoritesButton_Click" Content="Favorites" HorizontalAlignment="Stretch" Background="{x:Null}" BorderBrush="{x:Null}"/>
+                    <materialDesign:PackIcon Kind="Star" Foreground="white" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="0,0,25,0"/>
+                </Grid>  -->
+
+            </StackPanel>
+        </Grid>
         <Grid Margin="0,60,0,0" Grid.Column="1" Visibility="Collapsed" x:Name="ComparisonGrid">
             <StackPanel Visibility="Visible" Height="534">
                 <Grid Height="60" >
                     <Grid.Background>
                         <SolidColorBrush Opacity="0.2" Color="Black"/>
                     </Grid.Background>
-                    <TextBlock Text="Comparison" FontFamily="Candara Light" Margin="10" HorizontalAlignment="Left" VerticalAlignment="Center" Foreground="White" FontSize="14" FontWeight="Bold"/>
-                    <Button x:Name="ComparisonOff" Opacity="0" Width="30" HorizontalAlignment="Right" Click="ComparisonOff_Click"/>
-                    <materialDesign:PackIcon Kind="ArrowBack" VerticalAlignment="Stretch" HorizontalAlignment="Right" Margin="0,10,10,10" Foreground="White"/>
+                    <TextBlock Text="Comparison" FontFamily="Candara Light" Margin="10" HorizontalAlignment="Center" VerticalAlignment="Center" Foreground="White" FontSize="14" FontWeight="Bold"/>
+                    <Button x:Name="ComparisonOff" Opacity="0" Width="60" Height="60" HorizontalAlignment="Left" Click="ComparisonOff_Click"/>
+                    <materialDesign:PackIcon Kind="ArrowBack" VerticalAlignment="Stretch" HorizontalAlignment="Left" Margin="20,10,10,10" Foreground="White"/>
                 </Grid>
 
                 <StackPanel Height="473">
@@ -212,27 +300,45 @@
                     <Grid Height="239">
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="0.4*"/>
                             <ColumnDefinition Width="*"/>
                         </Grid.ColumnDefinitions>
-                        <Grid Height="240" VerticalAlignment="Top" HorizontalAlignment="Stretch" Grid.Column="0">
-                            <Rectangle Height="200" Width="350" Margin="20,20,10,20" Fill="White" RadiusX="13" RadiusY="13" HorizontalAlignment="Left"/>
+                        <Grid Grid.Column="1">
+                            <Rectangle Height="200" Width="107" Margin="10,20,10,20" Fill="White" RadiusX="13" RadiusY="13" HorizontalAlignment="Left"/>
+                            <StackPanel Margin="0,20,0,0"  >
+                                <TextBlock Text="Name" HorizontalAlignment="Center" FontFamily="Candara Light" FontSize="14" Height="30" VerticalAlignment="Center" Foreground="#b271a9" Margin="0,5,0,7" />
+                                <TextBlock Text="Price" HorizontalAlignment="Center" FontFamily="Candara Light" FontSize="14" Foreground="#b271a9" />
+                                <TextBlock Text="Brand" HorizontalAlignment="Center" FontFamily="Candara Light" FontSize="14" Foreground="#b271a9" />
+                                <TextBlock Text="Processor" HorizontalAlignment="Center" FontFamily="Candara Light" FontSize="14" Foreground="#b271a9" />
+                                <TextBlock Text="RAM" HorizontalAlignment="Center" FontFamily="Candara Light" FontSize="14" Foreground="#b271a9" />
+                                <TextBlock Text="Graphics Card" HorizontalAlignment="Center" FontFamily="Candara Light" FontSize="14" Foreground="#b271a9" />
+                                <TextBlock Text="Resolution" HorizontalAlignment="Center" FontFamily="Candara Light" FontSize="14" Foreground="#b271a9" />
+                                <TextBlock Text="Storage" HorizontalAlignment="Center" FontFamily="Candara Light" FontSize="14" Foreground="#b271a9" />
+                                <TextBlock Text="Rating" HorizontalAlignment="Center" FontFamily="Candara Light" FontSize="14" Foreground="#b271a9" />
+                            </StackPanel>
+                        </Grid>
 
-                            <StackPanel Margin="25,0,15,0">
-                                <TextBlock x:Name="ComparisonProductName1" Height="40" FontFamily="Candara Light" FontSize="16" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="10,20,0,5"></TextBlock>
-                                <TextBlock x:Name="ComparisonProductPrice1" FontFamily="Candara Light" FontSize="14" ></TextBlock>
-                                <TextBlock x:Name="ComparisonProductBrand1" FontFamily="Candara Light" FontSize="14"></TextBlock>
-                                <TextBlock x:Name="ComparisonProductProcessor1" FontFamily="Candara Light" FontSize="14"></TextBlock>
+                        <Grid Height="240" VerticalAlignment="Top" HorizontalAlignment="Stretch" Grid.Column="0">
+                            <Rectangle Height="200" Width="290" Margin="20,20,10,20" Fill="White" RadiusX="13" RadiusY="13" HorizontalAlignment="Left"/>
+
+                            <StackPanel Margin="30,0,25,0" >
+                                <TextBlock x:Name="ComparisonProductName1" TextWrapping="Wrap"  Height="40" FontFamily="Candara Light" FontSize="16" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="0,20,0,5"></TextBlock>
+                                <TextBlock x:Name="ComparisonProductPrice1"  FontFamily="Candara Light" FontSize="14" ></TextBlock>
+                                <TextBlock x:Name="ComparisonProductBrand1"  FontFamily="Candara Light" FontSize="14"></TextBlock>
+                                <TextBlock x:Name="ComparisonProductProcessor1"  FontFamily="Candara Light" FontSize="14"></TextBlock>
                                 <TextBlock x:Name="ComparisonProductRAM1" FontFamily="Candara Light" FontSize="14" ></TextBlock>
-                                <TextBlock x:Name="ComparisonProductGraphicsCard1" FontFamily="Candara Light" FontSize="14" ></TextBlock>
+                                <TextBlock x:Name="ComparisonProductGraphicsCard1"  FontFamily="Candara Light" FontSize="14" ></TextBlock>
                                 <TextBlock x:Name="ComparisonProductResolution1" FontFamily="Candara Light" FontSize="14" ></TextBlock>
-                                <TextBlock x:Name="ComparisonProductStorage1" FontFamily="Candara Light" FontSize="14" ></TextBlock>
+                                <TextBlock x:Name="ComparisonProductStorage1"  FontFamily="Candara Light" FontSize="14" ></TextBlock>
+                                <TextBlock x:Name="ComparisonProductRating1"  FontFamily="Candara Light" FontSize="14" ></TextBlock>
+                                <Button Content="Remove" x:Name="RemoveButton1" FontFamily="Candara Light"  Grid.Column="1" Margin="5,5,10,0" HorizontalAlignment="Right" Foreground="#b271a9" Background="White" BorderBrush="#b271a9" Click="RemoveButton1_Click"/>
                             </StackPanel>
 
                         </Grid>
-                        <Grid Height="240" VerticalAlignment="Top" HorizontalAlignment="Stretch" Grid.Column="1">
-                            <Rectangle Height="200" Width="350" Margin="20,20,10,20" Fill="White" RadiusX="13" RadiusY="13" HorizontalAlignment="Left"/>
+                        <Grid Height="240" VerticalAlignment="Top" HorizontalAlignment="Stretch" Grid.Column="2">
+                            <Rectangle Height="200" Width="290" Margin="10,20,10,20" Fill="White" RadiusX="13" RadiusY="13" HorizontalAlignment="Left"/>
                             <StackPanel Margin="25,0,15,0">
-                                <TextBlock x:Name="ComparisonProductName2" Height="40" FontFamily="Candara Light" FontSize="16" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="10,20,0,5"></TextBlock>
+                                <TextBlock x:Name="ComparisonProductName2" TextWrapping="Wrap" Height="40" FontFamily="Candara Light" FontSize="16" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="0,20,0,5"></TextBlock>
                                 <TextBlock x:Name="ComparisonProductPrice2" FontFamily="Candara Light" FontSize="14" ></TextBlock>
                                 <TextBlock x:Name="ComparisonProductBrand2" FontFamily="Candara Light" FontSize="14"></TextBlock>
                                 <TextBlock x:Name="ComparisonProductProcessor2" FontFamily="Candara Light" FontSize="14"></TextBlock>
@@ -240,40 +346,42 @@
                                 <TextBlock x:Name="ComparisonProductGraphicsCard2" FontFamily="Candara Light" FontSize="14" ></TextBlock>
                                 <TextBlock x:Name="ComparisonProductResolution2" FontFamily="Candara Light" FontSize="14" ></TextBlock>
                                 <TextBlock x:Name="ComparisonProductStorage2" FontFamily="Candara Light" FontSize="14" ></TextBlock>
+                                <TextBlock x:Name="ComparisonProductRating2" FontFamily="Candara Light" FontSize="14" ></TextBlock>
+                                <Button Content="Remove" x:Name="RemoveButton2" FontFamily="Candara Light"  Grid.Column="1" Margin="5,5,10,0" HorizontalAlignment="Right" Foreground="#b271a9" Background="White" BorderBrush="#b271a9" Click="RemoveButton2_Click"/>
                             </StackPanel>
                         </Grid>
                     </Grid>
                     <TextBlock Text="Preferences" FontFamily="Candara Light" FontSize="20" Foreground="#b271a9" HorizontalAlignment="Center" VerticalAlignment="Top" FontWeight="Bold" Margin="0,0,0,8"/>
                     <Grid Margin="0,0,0,15" >
                         <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="0.70*"/>
+                            <ColumnDefinition Width="0.55*"/>
                             <ColumnDefinition Width="*"/>
                         </Grid.ColumnDefinitions>
                         <TextBlock Text="Price" Grid.Column="0" HorizontalAlignment="Right" FontFamily="Candara Light" FontSize="16" Foreground="#b271a9" VerticalAlignment="Top" Margin="0,0,15,0"/>
-                        <Slider x:Name="PriceWeightSlider" Grid.Column="1" HorizontalAlignment="Left" AutoToolTipPlacement="TopLeft" AutoToolTipPrecision="0" IsSnapToTickEnabled="True" Maximum="10" Minimum="0" TickFrequency="1" Foreground="#FFB271A9" TickPlacement="Both" Width="232" Value="5"/>
+                        <Slider x:Name="PriceWeightSlider" Grid.Column="1" HorizontalAlignment="Left" AutoToolTipPlacement="TopLeft" AutoToolTipPrecision="0" IsSnapToTickEnabled="True" Maximum="10" Minimum="0" TickFrequency="1" Foreground="#FFB271A9" TickPlacement="Both" Width="232" Value="5" ValueChanged="PriceWeightSlider_ValueChanged"/>
                     </Grid>
                     <Grid Margin="0,0,0,15" >
                         <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="0.70*"/>
+                            <ColumnDefinition Width="0.55*"/>
                             <ColumnDefinition Width="*"/>
                         </Grid.ColumnDefinitions>
                         <TextBlock Text="Storage" Grid.Column="0" HorizontalAlignment="Right" FontFamily="Candara Light" FontSize="16" Foreground="#b271a9" VerticalAlignment="Top" Margin="0,0,15,0"/>
-                        <Slider x:Name="StorageWeightSlider" Grid.Column="1" HorizontalAlignment="Left" AutoToolTipPlacement="TopLeft" AutoToolTipPrecision="0" IsSnapToTickEnabled="True" Maximum="10" Minimum="0" TickFrequency="1" Foreground="#FFB271A9" TickPlacement="Both" Width="232" Value="5"/>
+                        <Slider x:Name="StorageWeightSlider" Grid.Column="1" HorizontalAlignment="Left" AutoToolTipPlacement="TopLeft" AutoToolTipPrecision="0" IsSnapToTickEnabled="True" Maximum="10" Minimum="0" TickFrequency="1" Foreground="#FFB271A9" TickPlacement="Both" Width="232" Value="5" ValueChanged="StorageWeightSlider_ValueChanged"/>
                     </Grid>
                     <Grid>
                         <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="0.70*"/>
+                            <ColumnDefinition Width="0.55*"/>
                             <ColumnDefinition Width="*"/>
                         </Grid.ColumnDefinitions>
                         <TextBlock Text="RAM" Grid.Column="0" HorizontalAlignment="Right" FontFamily="Candara Light" FontSize="16" Foreground="#b271a9" VerticalAlignment="Top" Margin="0,0,15,0"/>
-                        <Slider x:Name="RAMWeightSlider" Grid.Column="1" HorizontalAlignment="Left" AutoToolTipPlacement="TopLeft" AutoToolTipPrecision="0" IsSnapToTickEnabled="True" Maximum="10" Minimum="0" TickFrequency="1" Foreground="#FFB271A9" TickPlacement="Both" Width="232" Value="5"/>
+                        <Slider x:Name="RAMWeightSlider" Grid.Column="1" HorizontalAlignment="Left" AutoToolTipPlacement="TopLeft" AutoToolTipPrecision="0" IsSnapToTickEnabled="True" Maximum="10" Minimum="0" TickFrequency="1" Foreground="#FFB271A9" TickPlacement="Both" Width="232" Value="5" ValueChanged="RAMWeightSlider_ValueChanged"/>
                     </Grid>
                 </StackPanel>
             </StackPanel>
         </Grid>
 
     </Grid>
-    
+
 
 </Window>
 

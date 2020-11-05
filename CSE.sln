@@ -9,6 +9,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ItemLibrary", "ItemLibrary\
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Data", "Data", "{25A92F1B-7513-4AC1-8298-32E5CFDE77A3}"
 	ProjectSection(SolutionItems) = preProject
+		Data\brands.csv = Data\brands.csv
 		Data\senukai.csv = Data\senukai.csv
 		Data\senukaiOld.csv = Data\senukaiOld.csv
 	EndProjectSection
@@ -27,9 +28,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AdminService", "AdminServic
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DataUpdater", "DataUpdater\DataUpdater.csproj", "{8CEC3C77-81D8-4D86-BCC1-C4E5E81D33A0}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ExceptionsLogging", "ExceptionsLogging\ExceptionsLogging.csproj", "{71A4D954-8F67-46C6-B08F-229915C87782}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ExceptionsLogging", "ExceptionsLogging\ExceptionsLogging.csproj", "{71A4D954-8F67-46C6-B08F-229915C87782}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PathLibrary", "PathLibrary\PathLibrary.csproj", "{0BE975ED-DF55-4B95-B906-FC7123FC5FB9}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PathLibrary", "PathLibrary\PathLibrary.csproj", "{0BE975ED-DF55-4B95-B906-FC7123FC5FB9}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

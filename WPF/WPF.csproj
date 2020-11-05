@@ -8,6 +8,7 @@
 
   <ItemGroup>
     <None Remove="libra100.png" />
+    <None Remove="libra100sharpedges.png" />
   </ItemGroup>
 
   <ItemGroup>
@@ -15,13 +16,16 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\Comparison\Comparison.csproj" />
     <ProjectReference Include="..\DataContent\DataContent.csproj" />
     <ProjectReference Include="..\ItemLibrary\ItemLibrary.csproj" />
     <ProjectReference Include="..\DataManipulation\DataManipulation.csproj" />
+    <ProjectReference Include="..\ShopParser\ShopParser.csproj" />
   </ItemGroup>
 
   <ItemGroup>
-    <Resource Include="libra100.png" />
+    <Resource Include="ImagesSource\libra100.png" />
+    <Resource Include="libra100sharpedges.png" />
   </ItemGroup>
 
 </Project>

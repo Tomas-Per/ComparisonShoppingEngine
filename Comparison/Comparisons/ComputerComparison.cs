@@ -5,8 +5,8 @@ namespace Comparison.Comparisons
 {
     public class ComputerComparison : ItemComparison<Computer>
     {
-        protected int StorageWeight { get; set; }
-        protected int RamWeight { get; set; }
+        public int StorageWeight { get; protected set; }
+        public int RamWeight { get; protected set; }
         protected (double, double) StorageRanking { get; set; }
         protected (double, double) RamRanking { get; set; }
         public ComputerComparison(int priceWeight, int storageWeight, int ramWeight)
@@ -24,7 +24,7 @@ namespace Comparison.Comparisons
         public void RamComparison(int mainRAM, int comparingRAM)
         {
             RamRanking = SpecComparison(Convert.ToDouble(mainRAM), Convert.ToDouble(comparingRAM), RamWeight);
-            ItemRanking = (ItemRanking.Item1 + StorageRanking.Item1, ItemRanking.Item2 + StorageRanking.Item2);
+            ItemRanking = (ItemRanking.Item1 + RamRanking.Item1, ItemRanking.Item2 + RamRanking.Item2);
         }
         public override void UpdateRatings(Computer mainItem, Computer comparingItem)
         //Compares two given computers by preferences

@@ -34,14 +34,11 @@ namespace WPF
     public partial class MainWindow : Window
     {
 
-        private ComputerFilter _filter;
-        private Sorter _sorter;
         private List<Computer> OriginalList = new List<Computer>();
-        //these two lists are temporary
-        private List<string> brands = new List<string>() { "Asus", "Dell", "Apple", "Lenovo", "Acer", "Huawei" };
-        private List<string> processors = new List<string>() { "Intel Core i3", "Intel Core i5", "Intel Core i7", "IntelCeleron", "Intel Atom" };
-        private List<CheckBox> processorsCheckBoxes = new List<CheckBox>();
-        private List<CheckBox> brandsCheckBoxes = new List<CheckBox>();
+
+ 
+        private IData<IEnumerable<Computer>> _DataService;
+
         public MainWindow()
         {
             InitializeComponent();
@@ -61,157 +58,26 @@ namespace WPF
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
-            DynamicBrandCheckBox();
-            dynamicProcessorCheckBox();
+            CreateFilterCheckbox();
 
-            var _laptopService = new LaptopServiceCSV(MainPath.GetComputerPath());
+            _DataService = new LaptopServiceCSV(MainPath.GetComputerPath());
+            ItemsListBox.ItemsSource = _DataService.ReadData();
+         
+            OriginalList = ItemsListBox.ItemsSource.Cast<Computer>().ToList();
 
-            //Here We are calling function to read CSV file
-            var resultData = _laptopService.ReadData();
-            ItemsListBox.ItemsSource = resultData;
-            
-            OriginalList = resultData.ToList();
             _filter = new ComputerFilter(OriginalList);
             _sorter = new Sorter(OriginalList.Cast<Item>().ToList());
-        }
 
-        private void dynamicProcessorCheckBox()
-        {
-            int column = 1;
-            int cycleCount = 1;
-            foreach (var processor in processors)
-            {
-                CheckBox checkbox = new CheckBox()
-                {
-                    Content = processor,
-                    Name = processor.Replace(" ", ""),
-                    FontFamily = new FontFamily("Candara Light"),
-                    Background = Brushes.White,
-                    BorderBrush = Brushes.White,
-                    Foreground = Brushes.White
-                };
-                brandsCheckBoxes.Add(checkbox);
-                switch (column)
-                {
-                    case 1:
-                        ProcessorColumn1.Children.Add(checkbox);
-                        column = 2;
-                        break;
-                    case 2:
-                        ProcessorColumn2.Children.Add(checkbox);
-                        column = 1;
-                        break;
-                    case 3:
-                        ProcessorColumn3.Children.Add(checkbox);
-                        column = 4;
-                        break;
-                    case 4:
-                        ProcessorColumn4.Children.Add(checkbox);
-                        column = 3;
-                        break;
-                }
-                cycleCount++;
-                if (cycleCount == 7) column = 3;
-            }
-        }
-        //Will create a new method to not repeat the code again like here
-        private void DynamicBrandCheckBox()
-        {
-            int column = 1;
-            int cycleCount = 1;
-            foreach(var brand in brands)
-            {
-                CheckBox checkbox = new CheckBox()
-                {
-                    Content = brand,
-                    Name = brand,
-                    FontFamily = new FontFamily("Candara Light"),
-                    Background = Brushes.White,
-                    BorderBrush = Brushes.White,
-                    Foreground = Brushes.White
-                };
-                brandsCheckBoxes.Add(checkbox);
-                switch(column)
-                {
-                    case 1:
-                        BrandColumn1.Children.Add(checkbox);
-                        column = 2;
-                        break;
-                    case 2:
-                        BrandColumn2.Children.Add(checkbox);
-                        column = 1;
-                        break;
-                    case 3:
-                        BrandColumn3.Children.Add(checkbox);
-                        column = 4;
-                        break;
-                    case 4:
-                        BrandColumn4.Children.Add(checkbox);
-                        column = 3;
-                        break;
-                }
-                cycleCount++;
-                if (cycleCount == 7) column = 3;
-            }
         }
 
         private void FilterButton_Click(object sender, RoutedEventArgs e)
         {
-            List<Computer> List1 = new List<Computer>();
-            int MaxRange = (int)PriceSlider.Value;
-            var List = OriginalList;
-            bool isThereCheckedBox = false;
-            if (MaxRange != 0)
-            {
-
-                //Filtering by price range
-                List = _filter.FilterByPrice(0, MaxRange);
-
-                //updating the list inside the class so we can filter out the list 
-                 //*which already has been filtered by price
-                //
-                _filter.UpdateList(List);
-            }
-            //checking every checkbox and if is checked, we use filter
-            foreach(var checkBox in brandsCheckBoxes)
-            {
-                if ((bool)checkBox.IsChecked)
-                { 
-                    List1.AddRange(_filter.FilterByManufacturer(checkBox.Name));
-                    isThereCheckedBox = true;
-                }    
-            }
-            foreach(var checkBox in processorsCheckBoxes)
-            {
-                if ((bool)checkBox.IsChecked)
-                {
-                    List1.AddRange(_filter.FilterByProcessor(checkBox.Content.ToString()));
-                    isThereCheckedBox = true;
-                }
-            }
-            //we check, if there wasn't any checked checkboxes
-            if (isThereCheckedBox == false) List1 = List;
-            ItemsListBox.ItemsSource = List1;
-            _filter.UpdateList(OriginalList);
-
-            ListNameTextBlock.Text = "Filtered List";
+            FilterList();
         }
 
         private void DisableFilterButton_Click(object sender, RoutedEventArgs e)
         {
-            ItemsListBox.ItemsSource = OriginalList;
-
-            //Setting all checkboxes to be unchecked
-            foreach(var checkbox in brandsCheckBoxes)
-            {
-                checkbox.IsChecked = false;
-            }
-            foreach(var checkbox in processorsCheckBoxes)
-            {
-                checkbox.IsChecked = false;
-            }    
-            ListNameTextBlock.Text = "All Computers";
-            
+            DisableFilters();
         }
 
         private void ListBox_SelectionChanged(object sender, SelectionChangedEventArgs args)
@@ -220,25 +86,38 @@ namespace WPF
 
             Computer item = (sender as ListBox).SelectedItem as Computer;
 
-            //Setting textboxes
-            ProductName.Text = item.Name;
-            ProductPrice.Text = "Price: " + '€' + (item.Price).ToString();
-            ProductBrand.Text = "Brand: " + item.ManufacturerName;
-            ProductProcessor.Text = "Processor: " + item.ProcessorName;
-            ProductRAM.Text = "RAM: " + (item.RAM).ToString() + "GB " + item.RAM_type;
-            ProductGraphicsCard.Text = "Graphics Card: " + item.GraphicsCardName + ' ' + item.GraphicsCardMemory;
-            ProductResolution.Text = "Resolution: " + item.Resolution;
-            ProductStorage.Text = "Storage Capacity: " + (item.StorageCapacity).ToString() + "GB";
-            BuyHere.Text = "Buy here";
-            SimilarProducts.Text = "Similar Products";
-            CompareButton.Visibility = Visibility.Visible;
-
-            Uri uri = new Uri(item.ItemURL);
-            BuyHereHyper.NavigateUri = uri;
+            DisplayItem(item);
 
             List<Item> SimilarItems = item.FindSimilar(OriginalList.Cast<Item>().ToList());
             SimilarItemsListBox.ItemsSource = SimilarItems;
+            
 
+        }
+
+        private void DisplayItem(Computer item)
+        {
+            //Setting textboxes
+            ProductName.Text = item.Name;
+            ProductPrice.Text = '€' + (item.Price).ToString();
+            ProductBrand.Text = item.ManufacturerName;
+            ProductProcessor.Text = item.ProcessorName;
+            ProductRAM.Text = (item.RAM).ToString() + "GB " + item.RAM_type;
+            ProductGraphicsCard.Text = item.GraphicsCardName + ' ' + item.GraphicsCardMemory;
+            ProductResolution.Text = item.Resolution;
+            ProductStorage.Text = (item.StorageCapacity).ToString() + "GB";
+            SimilarProducts.Text = "Similar Products";
+            BuyHereButton.Visibility = Visibility.Visible;
+            CompareButton.Visibility = Visibility.Visible;
+            InfoStackPanelSecond.Visibility = Visibility.Visible;
+            InfoStackPanelFirst.Visibility = Visibility.Visible;
+            var bi = new BitmapImage();
+            bi.BeginInit();
+            bi.UriSource = new Uri(item.ImageLink);
+            bi.EndInit();
+            image1.Source = bi;
+
+            Uri uri = new Uri(item.ItemURL);
+            BuyHereHyper.NavigateUri = uri;
         }
 
         private void Hyperlink_RequestNavigate(object sender, RequestNavigateEventArgs e)
@@ -256,22 +135,30 @@ namespace WPF
             e.Handled = true;
         }
 
+        private void Hyperlink_RequestNavigate(object sender, RoutedEventArgs e)
+        {
+            Hyperlink hl = BuyHereHyper;
+            string navigateUri = hl.NavigateUri.ToString();
+
+            var StartInfo = new ProcessStartInfo
+            {
+                FileName = navigateUri,
+                UseShellExecute = true
+            };
+            Process.Start(StartInfo);
+
+            e.Handled = true;
+        }
+
+
         private void SimilarListBox_SelectionChanged(object sender, SelectionChangedEventArgs args)
         {
             if (SimilarItemsListBox.SelectedIndex == -1) return;
 
             //Setting textboxes
             Computer item = (sender as ListBox).SelectedItem as Computer;
-            ProductName.Text = item.Name;
-            ProductPrice.Text = '€' + (item.Price).ToString();
-            ProductBrand.Text = item.ManufacturerName;
-            ProductProcessor.Text = item.ProcessorName;
-            ProductRAM.Text = (item.RAM).ToString() + "GB " + item.RAM_type;
-            ProductGraphicsCard.Text = item.GraphicsCardName + ' ' + item.GraphicsCardMemory;
-            ProductResolution.Text = item.Resolution;
-            ProductStorage.Text = (item.StorageCapacity).ToString() + "GB";
-            BuyHere.Text = "Buy here";
-            SimilarProducts.Text = "Similar Products";
+
+            DisplayItem(item);
 
             Uri uri = new Uri(item.ItemURL);
             BuyHereHyper.NavigateUri = uri;
@@ -305,17 +192,69 @@ namespace WPF
             ComparisonGrid.Visibility = Visibility.Collapsed;
         }
 
+        private void RemoveButton1_Click(object sender, RoutedEventArgs e)
+        {
+            ComparisonProductName1.Text = null;
+            ComparisonProductPrice1.Text = null;
+            ComparisonProductBrand1.Text = null;
+            ComparisonProductProcessor1.Text = null;
+            ComparisonProductRAM1.Text = null;
+            ComparisonProductGraphicsCard1.Text = null;
+            ComparisonProductResolution1.Text = null;
+            ComparisonProductStorage1.Text = null;
+            ComparisonProductRating1.Text = null;
+
+            _comparingItem1 = null;
+        }
+
+        private void RemoveButton2_Click(object sender, RoutedEventArgs e)
+        {
+            ComparisonProductName2.Text = null;
+            ComparisonProductPrice2.Text = null;
+            ComparisonProductBrand2.Text = null;
+            ComparisonProductProcessor2.Text = null;
+            ComparisonProductRAM2.Text = null;
+            ComparisonProductGraphicsCard2.Text = null;
+            ComparisonProductResolution2.Text = null;
+            ComparisonProductStorage2.Text = null;
+            ComparisonProductRating2.Text = null;
+
+            _comparingItem2 = null;
+        }
+
         private void CompareButton_Click(object sender, RoutedEventArgs e)
         {
-            ComparisonProductName1.Text = ProductName.Text;
-            ComparisonProductPrice1.Text = ProductPrice.Text;
-            ComparisonProductBrand1.Text = ProductBrand.Text;
-            ComparisonProductProcessor1.Text = ProductProcessor.Text;
-            ComparisonProductRAM1.Text = ProductRAM.Text;
-            ComparisonProductGraphicsCard1.Text = ProductGraphicsCard.Text;
-            ComparisonProductResolution1.Text = ProductResolution.Text;
-            ComparisonProductStorage1.Text = ProductStorage.Text;
+            if(String.IsNullOrEmpty(ComparisonProductName1.Text))
+            {
 
+                ComparisonProductName1.Text = ProductName.Text;
+                ComparisonProductPrice1.Text = ProductPrice.Text;
+                ComparisonProductBrand1.Text = ProductBrand.Text;
+                ComparisonProductProcessor1.Text = ProductProcessor.Text;
+                ComparisonProductRAM1.Text = ProductRAM.Text;
+                ComparisonProductGraphicsCard1.Text = ProductGraphicsCard.Text;
+                ComparisonProductResolution1.Text = ProductResolution.Text;
+                ComparisonProductStorage1.Text = ProductStorage.Text;
+
+                _comparingItem1 = (Computer)ItemsListBox.SelectedItem;
+
+            }
+            else 
+            {
+
+                ComparisonProductName2.Text = ProductName.Text;
+                ComparisonProductPrice2.Text = ProductPrice.Text;
+                ComparisonProductBrand2.Text = ProductBrand.Text;
+                ComparisonProductProcessor2.Text = ProductProcessor.Text;
+                ComparisonProductRAM2.Text = ProductRAM.Text;
+                ComparisonProductGraphicsCard2.Text = ProductGraphicsCard.Text;
+                ComparisonProductResolution2.Text = ProductResolution.Text;
+                ComparisonProductStorage2.Text = ProductStorage.Text;
+
+                _comparingItem2 = (Computer)ItemsListBox.SelectedItem;
+
+            }
+            UpdateComparison();
             ComparisonGrid.Visibility = Visibility.Visible;
             ItemInfoStackPanel.Visibility = Visibility.Collapsed;
             ListStackPanel.Visibility = Visibility.Collapsed;
@@ -323,47 +262,43 @@ namespace WPF
 
         private void AZSortButton_Click(object sender, RoutedEventArgs e)
         {
-            List<Item> items = new List<Item>();
-            items = ItemsListBox.ItemsSource.Cast<Item>().ToList();
-
-            _sorter.UpdateList(items);
-            items = _sorter.SortByNameAsc();
-
-            ItemsListBox.ItemsSource = items;
+            AZSort();
         }
 
         private void ZASortButton_Click(object sender, RoutedEventArgs e)
         {
-            List<Item> items = new List<Item>();
-            items = ItemsListBox.ItemsSource.Cast<Item>().ToList();
-
-            _sorter.UpdateList(items);
-            items = _sorter.SortByNameDesc();
-
-            ItemsListBox.ItemsSource = items;
+            ZASort();
         }
 
         private void PriceAscSortButton_Click(object sender, RoutedEventArgs e)
         {
-            List<Item> items = new List<Item>();
-            items = ItemsListBox.ItemsSource.Cast<Item>().ToList();
-
-            _sorter.UpdateList(items);
-            items = _sorter.SortByPriceAsc();
-
-            ItemsListBox.ItemsSource = items;
+            PriceAscSort();
         }
 
         private void PriceDescSortButton_Click(object sender, RoutedEventArgs e)
         {
-            List<Item> items = new List<Item>();
-            items = ItemsListBox.ItemsSource.Cast<Item>().ToList();
-
-            _sorter.UpdateList(items);
-            items = _sorter.SortByPriceDesc();
-
-            ItemsListBox.ItemsSource = items;
+            PriceDescSort();
         }
 
+        private void MenuOpenButton_Click(object sender, RoutedEventArgs e)
+        {
+            MenuGrid.Visibility = Visibility.Visible;
+            FilterGrid.Visibility = Visibility.Collapsed;
+            FilterButtonGrid.Visibility = Visibility.Visible;
+            MenuButtonGrid.Visibility = Visibility.Collapsed;
+        }
+
+        private void FilterOpenButton_Click(object sender, RoutedEventArgs e)
+        {
+            MenuGrid.Visibility = Visibility.Collapsed;
+            FilterGrid.Visibility = Visibility.Visible;
+            MenuButtonGrid.Visibility = Visibility.Visible;
+            FilterButtonGrid.Visibility = Visibility.Collapsed;
+        }
+
+        private void FavoritesButton_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
     }
 }
