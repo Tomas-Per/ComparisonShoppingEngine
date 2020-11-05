@@ -23,5 +23,13 @@ namespace PathLibrary
         {
             return GetMainPath() + @"\Data\senukai.csv";
         }
+        public static string GetBrandPath()
+        {
+            return GetMainPath() + @"\Data\brands.csv";
+        }
+        public static string GetProcessorPath()
+        {
+            return GetMainPath() + @"\Data\processorFilters.csv";
+        }
     }
 }
