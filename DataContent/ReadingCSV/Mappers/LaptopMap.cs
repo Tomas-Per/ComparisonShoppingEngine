@@ -1,6 +1,5 @@
 ﻿using CsvHelper.Configuration;
 using CsvHelper.TypeConversion;
-using System.Security.Cryptography.X509Certificates;
 
 namespace DataContent.ReadingCSV.Mappers
 {
