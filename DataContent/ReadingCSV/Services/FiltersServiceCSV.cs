@@ -2,24 +2,26 @@
 using DataContent.ReadingCSV.Mappers;
 using ExceptionsLogging;
 using ItemLibrary;
+using PathLibrary;
 using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.IO;
 using System.Linq;
+using System.Text;
 
 namespace DataContent.ReadingCSV.Services
 {
-    public class ProcessorServiceCSV : IData<IEnumerable<object>>
-    {   private string Path { get; set; }
+    public class FiltersServiceCSV : IData<IEnumerable<FilterSpec>>
+    {
+        public string Path { get; set; }
         private FileMode Filemode { get; set; }
-        public ProcessorServiceCSV(string path)
+        public FiltersServiceCSV(string path)
         {
             Path = path;
             Filemode = FileMode.Append;
         }
-        //reads Processor list from CSV file
-        public IEnumerable<object> ReadData()
+        public IEnumerable<FilterSpec> ReadData()
         {
             try
             {
@@ -28,10 +30,10 @@ namespace DataContent.ReadingCSV.Services
                 {
                     csv.Configuration.CultureInfo = CultureInfo.InvariantCulture;
                     csv.Configuration.Delimiter = ",";
-                    csv.Configuration.RegisterClassMap<ProcessorMap>();
-                    var records = csv.GetRecords<Processor>().ToList();
+                    csv.Configuration.RegisterClassMap<FilterMap>();
+                    var records = csv.GetRecords<FilterSpec>();
 
-                    return records.Cast<object>().ToList();
+                    return records.ToList();
                 }
             }
             catch (FileNotFoundException e)
@@ -45,9 +47,7 @@ namespace DataContent.ReadingCSV.Services
                 throw new Exception("Something's wrong happened:" + e.Message);
             }
         }
-
-        //writes Processor list to CSV file
-        public void WriteData(IEnumerable<object> processors)
+        public void WriteData(IEnumerable<FilterSpec> names)
         {
             try
             {
@@ -55,10 +55,10 @@ namespace DataContent.ReadingCSV.Services
                 using (StreamWriter sw = new StreamWriter(stream))
                 using (CsvWriter cw = new CsvWriter(sw))
                 {
-                    foreach (Processor processor in processors)
+                    foreach (FilterSpec name in names)
                     {
-                        cw.Configuration.RegisterClassMap<ProcessorMap>();
-                        cw.WriteRecord<Processor>(processor);
+                        cw.Configuration.RegisterClassMap<FilterMap>();
+                        cw.WriteField(name);
                         cw.NextRecord();
                     }
                 }

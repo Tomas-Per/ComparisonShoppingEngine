@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <OutputType>Library</OutputType>
@@ -10,8 +10,9 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\ExceptionsLibrary\ExceptionsLibrary.csproj" />
+    <ProjectReference Include="..\ExceptionsLogging\ExceptionsLogging.csproj" />
     <ProjectReference Include="..\ItemLibrary\ItemLibrary.csproj" />
+    <ProjectReference Include="..\PathLibrary\PathLibrary.csproj" />
   </ItemGroup>
 
 </Project>

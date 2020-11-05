@@ -6,10 +6,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\DataContent\DataContent.csproj" />
-    <ProjectReference Include="..\ItemLibrary\ItemLibrary.csproj" />
     <ProjectReference Include="..\PathLibrary\PathLibrary.csproj" />
-    <ProjectReference Include="..\ShopParser\ShopParser.csproj" />
   </ItemGroup>
 
 </Project>

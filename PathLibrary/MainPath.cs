@@ -1,7 +1,7 @@
-﻿using System.IO;
-using ExceptionsLibrary;
+﻿using System;
+using System.IO;
 
-namespace DataContent.ReadingCSV
+namespace PathLibrary
 {
     public class MainPath
     {
@@ -14,7 +14,7 @@ namespace DataContent.ReadingCSV
                 _filePath = Directory.GetParent(_filePath).FullName;
                 if(!_filePath.Contains("ComparisonShoppingEngine"))
                 {
-                    throw new InnerCustomException("Couldn't reach main path", null) ;
+                    throw new Exception("Couldn't reach main path") ;
                 }
             }
             return _filePath;
@@ -22,6 +22,14 @@ namespace DataContent.ReadingCSV
         public static string GetComputerPath()
         {
             return GetMainPath() + @"\Data\senukai.csv";
+        }
+        public static string GetBrandPath()
+        {
+            return GetMainPath() + @"\Data\brands.csv";
+        }
+        public static string GetProcessorPath()
+        {
+            return GetMainPath() + @"\Data\processorFilters.csv";
         }
     }
 }

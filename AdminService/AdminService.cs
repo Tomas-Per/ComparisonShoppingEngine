@@ -1,6 +1,9 @@
 ﻿using DataUpdater;
+using ExceptionsLogging;
 using ShopParser;
 using System;
+using System.Collections.Generic;
+using System.IO;
 
 namespace AdminService
 {
@@ -24,8 +27,10 @@ namespace AdminService
                         Console.WriteLine(_helpMessage);
                         break;
 
-                    case "1":
+                    case "0":
+                        break;
 
+                    case "1":
                         var updater = new ComputerDataUpdater(new SenukaiParser());
                         updater.UpdateItemListFile(updater.GetItemListFromWeb());
                         Console.WriteLine("Shop Parsed");

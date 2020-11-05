@@ -18,6 +18,7 @@ namespace DataContent.ReadingCSV.Mappers
             Map(x => x.StorageCapacity).Index(8).Name("laptop_storage").TypeConverter<Int32Converter>();
             Map(x => x.GraphicsCardName).Index(9).Name("laptop_graphic_card");
             Map(x => x.GraphicsCardMemory).Index(10).Name("laptop_graphic_card_memory");
+            Map(x => x.ImageLink).Index(11).Name("laptop_image_link");
 
         }
     }

@@ -24,6 +24,7 @@ using DataContent.ReadingCSV;
 using DataManipulation.Filters;
 using System.Xml;
 using System.Linq.Expressions;
+using PathLibrary;
 
 namespace WPF
 {

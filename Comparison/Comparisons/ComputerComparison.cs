@@ -42,11 +42,11 @@ namespace Comparison.Comparisons
             RamWeight = ramWeight;
             TotalWeight += StorageWeight + RamWeight;
         }
-        public (double, double) getStorageRankings()
+        public (double, double) GetStorageRankings()
         {
             return StorageRanking;
         }
-        public (double, double) getRamRankings()
+        public (double, double) GetRamRankings()
         {
             return RamRanking;
         }
