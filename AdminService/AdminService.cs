@@ -17,24 +17,6 @@ namespace AdminService
         {
             string command;
 
-
-            ExceptionLogger.Log(new Exception("Test"));
-            ExceptionLogger.Log(new FileNotFoundException());
-            ExceptionLogger.Log(new Exception("Prasau"));
-            ExceptionLogger.Log(new Exception("Veik"));
-
-
-            try
-            {
-                var a = new List<int>();
-                var i = a[3];
-            }
-            catch (ArgumentOutOfRangeException ex)
-            {
-                ExceptionLogger.Log(ex);
-            }
-
-
             do
             {
                 command = Console.ReadLine();
