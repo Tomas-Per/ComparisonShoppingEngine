@@ -211,20 +211,21 @@
                     <Button x:Name="FilterOpenButton" Height="60" Width="60" HorizontalAlignment="Right" Foreground="White" Background="{x:Null}" BorderBrush="{x:Null}" Click="FilterOpenButton_Click"/>
                     <materialDesign:PackIcon Kind="Filter" Height="20" Width="20" VerticalAlignment="Stretch" HorizontalAlignment="Right" Margin="20" Foreground="White"/>
                 </Grid>
-                <Grid Margin="0,30,0,0" Height="50">
+                <Grid Margin="0,20,0,0" Height="50">
                     <Grid.Background>
-                        <SolidColorBrush Opacity="0.2" Color="Black"/>
+                        <SolidColorBrush Opacity="0.1" Color="Black"/>
                     </Grid.Background>
                     <Button x:Name="OpenComparisonWindowButton" FontSize="14"  Height="50" FontWeight="Bold" FontFamily="Candara Light" Click="CompareButton_Click" Content="Comparison Tab" HorizontalAlignment="Stretch" Background="{x:Null}" BorderBrush="{x:Null}" />
                     <materialDesign:PackIcon Kind="Compare" Foreground="white" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="0,0,25,0"/>
                 </Grid>
-                <Grid Margin="0,30,0,0" Height="50">
+                <!--
+                <Grid Margin="0,20,0,0" Height="50">
                     <Grid.Background>
-                        <SolidColorBrush Opacity="0.2" Color="Black"/>
+                        <SolidColorBrush Opacity="0.1" Color="Black"/>
                     </Grid.Background>
                     <Button  x:Name="FavoritesButton" FontSize="14"  Height="50" FontWeight="Bold" FontFamily="Candara Light" Click="FavoritesButton_Click" Content="Favorites" HorizontalAlignment="Stretch" Background="{x:Null}" BorderBrush="{x:Null}"/>
                     <materialDesign:PackIcon Kind="Star" Foreground="white" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="0,0,25,0"/>
-                </Grid>
+                </Grid>  -->
 
             </StackPanel>
         </Grid>
