@@ -11,42 +11,42 @@ namespace WPF
 {
     public partial class MainWindow
     {
-        (double first, double second) ItemRating;
+        private (double first, double second) _itemRating;
 
-        private Computer ComparingItem1;
-        private Computer ComparingItem2;
+        private Computer _comparingItem1;
+        private Computer _comparingItem2;
 
-        private ComputerComparison _Comparison = new ComputerComparison(5,5,5);
+        private ComputerComparison _comparison = new ComputerComparison(5,5,5);
 
         private void DisplayRatings()
         {
-            _Comparison.UpdateRatings(ComparingItem1, ComparingItem2);
-            ItemRating = _Comparison.GetItemRankings();
+            _comparison.UpdateRatings(_comparingItem1, _comparingItem2);
+            _itemRating = _comparison.GetItemRankings();
             
-            if(Double.IsNaN(ItemRating.first) || Double.IsNaN(ItemRating.second))
+            if(Double.IsNaN(_itemRating.first) || Double.IsNaN(_itemRating.second))
             {
                 ComparisonProductRating1.Text = "No preferences selected";
                 ComparisonProductRating2.Text = "No preferences selected";
             }
             else
             {
-                ComparisonProductRating1.Text = (ItemRating.first).ToString("F2");
-                ComparisonProductRating2.Text = (ItemRating.second).ToString("F2");
+                ComparisonProductRating1.Text = (_itemRating.first).ToString("F2");
+                ComparisonProductRating2.Text = (_itemRating.second).ToString("F2");
             }
             
         }
         private void UpdateComparison()
         {
-            if(ComparingItem1 != null && ComparingItem2 != null)
+            if(_comparingItem1 != null && _comparingItem2 != null)
             {
                 DisplayRatings();
             }
         }
         private void PriceWeightSlider_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
         {
-            if(ComparingItem1 != null && ComparingItem2 != null)
+            if(_comparingItem1 != null && _comparingItem2 != null)
             {
-                _Comparison.UpdateWeights((int)PriceWeightSlider.Value, _Comparison.StorageWeight, _Comparison.RamWeight);
+                _comparison.UpdateWeights((int)PriceWeightSlider.Value, _comparison.StorageWeight, _comparison.RamWeight);
                 DisplayRatings();
             }
      
@@ -54,9 +54,9 @@ namespace WPF
 
         private void StorageWeightSlider_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
         {
-            if (ComparingItem1 != null && ComparingItem2 != null)
+            if (_comparingItem1 != null && _comparingItem2 != null)
             {
-                _Comparison.UpdateWeights(_Comparison.PriceWeight, (int)StorageWeightSlider.Value, _Comparison.RamWeight);
+                _comparison.UpdateWeights(_comparison.PriceWeight, (int)StorageWeightSlider.Value, _comparison.RamWeight);
                 DisplayRatings();
             }
 
@@ -64,9 +64,9 @@ namespace WPF
 
         private void RAMWeightSlider_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
         {
-            if (ComparingItem1 != null && ComparingItem2 != null)
+            if (_comparingItem1 != null && _comparingItem2 != null)
             {
-                _Comparison.UpdateWeights(_Comparison.PriceWeight, _Comparison.StorageWeight, (int)RAMWeightSlider.Value);
+                _comparison.UpdateWeights(_comparison.PriceWeight, _comparison.StorageWeight, (int)RAMWeightSlider.Value);
                 DisplayRatings();
             }
 

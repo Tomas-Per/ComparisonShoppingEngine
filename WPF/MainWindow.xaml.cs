@@ -204,7 +204,7 @@ namespace WPF
             ComparisonProductStorage1.Text = null;
             ComparisonProductRating1.Text = null;
 
-            ComparingItem1 = null;
+            _comparingItem1 = null;
         }
 
         private void RemoveButton2_Click(object sender, RoutedEventArgs e)
@@ -219,7 +219,7 @@ namespace WPF
             ComparisonProductStorage2.Text = null;
             ComparisonProductRating2.Text = null;
 
-            ComparingItem2 = null;
+            _comparingItem2 = null;
         }
 
         private void CompareButton_Click(object sender, RoutedEventArgs e)
@@ -236,7 +236,7 @@ namespace WPF
                 ComparisonProductResolution1.Text = ProductResolution.Text;
                 ComparisonProductStorage1.Text = ProductStorage.Text;
 
-                ComparingItem1 = (Computer)ItemsListBox.SelectedItem;
+                _comparingItem1 = (Computer)ItemsListBox.SelectedItem;
 
             }
             else 
@@ -250,8 +250,8 @@ namespace WPF
                 ComparisonProductGraphicsCard2.Text = ProductGraphicsCard.Text;
                 ComparisonProductResolution2.Text = ProductResolution.Text;
                 ComparisonProductStorage2.Text = ProductStorage.Text;
-                
-                ComparingItem2 = (Computer)ItemsListBox.SelectedItem;
+
+                _comparingItem2 = (Computer)ItemsListBox.SelectedItem;
 
             }
             UpdateComparison();

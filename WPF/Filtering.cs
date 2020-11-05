@@ -19,10 +19,10 @@ namespace WPF
 
         private ComputerFilter _filter;
         //these two lists are temporary
-        private List<FilterSpec> Brands;
-        private List<FilterSpec> Processors;
-        private List<CheckBox> ProcessorsCheckBoxes = new List<CheckBox>();
-        private List<CheckBox> BrandsCheckBoxes = new List<CheckBox>();
+        private List<FilterSpec> _brands;
+        private List<FilterSpec> _processors;
+        private List<CheckBox> _processorsCheckBoxes = new List<CheckBox>();
+        private List<CheckBox> _brandsCheckBoxes = new List<CheckBox>();
 
         private void FilterList()
         {
@@ -42,7 +42,7 @@ namespace WPF
                 _filter.UpdateList(List);
             }
             //checking every checkbox and if is checked, we use filter
-            foreach (var checkBox in BrandsCheckBoxes)
+            foreach (var checkBox in _brandsCheckBoxes)
             {
                 if ((bool)checkBox.IsChecked)
                 {
@@ -50,7 +50,7 @@ namespace WPF
                     isThereCheckedBox = true;
                 }
             }
-            foreach (var checkBox in ProcessorsCheckBoxes)
+            foreach (var checkBox in _processorsCheckBoxes)
             {
                 if ((bool)checkBox.IsChecked)
                 {
@@ -71,11 +71,11 @@ namespace WPF
             ItemsListBox.ItemsSource = OriginalList;
 
             //Setting all checkboxes to be unchecked
-            foreach (var checkbox in BrandsCheckBoxes)
+            foreach (var checkbox in _brandsCheckBoxes)
             {
                 checkbox.IsChecked = false;
             }
-            foreach (var checkbox in ProcessorsCheckBoxes)
+            foreach (var checkbox in _processorsCheckBoxes)
             {
                 checkbox.IsChecked = false;
             }
@@ -86,12 +86,12 @@ namespace WPF
         {
             //reades filter specs from data and add to checkboxes
             var _filterService = new FiltersServiceCSV(MainPath.GetBrandPath());
-            Brands = _filterService.ReadData().ToList();
+            _brands = _filterService.ReadData().ToList();
             _filterService = new FiltersServiceCSV(MainPath.GetProcessorPath());
-            Processors = _filterService.ReadData().ToList();
+            _processors = _filterService.ReadData().ToList();
             //adds checkboxes
-            DynamicFilterCheckBox(Brands, BrandsCheckBoxes, BrandColumn1, BrandColumn2, BrandColumn3, BrandColumn4);
-            DynamicFilterCheckBox(Processors, ProcessorsCheckBoxes, ProcessorColumn1, ProcessorColumn2, ProcessorColumn3, ProcessorColumn4);
+            DynamicFilterCheckBox(_brands, _brandsCheckBoxes, BrandColumn1, BrandColumn2, BrandColumn3, BrandColumn4);
+            DynamicFilterCheckBox(_processors, _processorsCheckBoxes, ProcessorColumn1, ProcessorColumn2, ProcessorColumn3, ProcessorColumn4);
         }
         private void DynamicFilterCheckBox(List<FilterSpec> filterSpecs,List<CheckBox> checkBoxes,
                                             StackPanel column1, StackPanel column2, StackPanel column3, StackPanel column4)
