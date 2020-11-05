@@ -57,7 +57,7 @@
             <TextBlock Text="LIBRA" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="28" Foreground="White" FontFamily="Candara Light" FontWeight="Bold"/>
             <Image HorizontalAlignment="Right" VerticalAlignment="Stretch" Height="60" Width="60">
                 <Image.Source>
-                    <BitmapImage UriSource="/ImagesSource/libra100.png"/>
+                    <ImageSource>/libra100sharpedges.png</ImageSource>
                 </Image.Source>
             </Image>
             <Grid Height="60" Width="60" HorizontalAlignment="left" Visibility="Collapsed" Name="MenuButtonGrid">

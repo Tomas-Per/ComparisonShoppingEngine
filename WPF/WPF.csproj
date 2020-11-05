@@ -8,6 +8,7 @@
 
   <ItemGroup>
     <None Remove="libra100.png" />
+    <None Remove="libra100sharpedges.png" />
   </ItemGroup>
 
   <ItemGroup>
@@ -23,6 +24,7 @@
 
   <ItemGroup>
     <Resource Include="ImagesSource\libra100.png" />
+    <Resource Include="libra100sharpedges.png" />
   </ItemGroup>
 
 </Project>
