@@ -16,7 +16,8 @@ namespace WPF
         //these two lists are temporary
         private List<string> Brands = new List<string>() { "Asus", "Dell", "Apple", "Lenovo", "Acer", "Huawei" };
         private List<string> Processors = new List<string>() { "Intel Core i3", "Intel Core i5", "Intel Core i7", "IntelCeleron", "Intel Atom" };
-
+        private List<CheckBox> ProcessorsCheckBoxes = new List<CheckBox>();
+        private List<CheckBox> BrandsCheckBoxes = new List<CheckBox>();
 
         private void FilterList()
         {
