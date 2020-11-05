@@ -20,7 +20,11 @@ namespace DataContent
             string value = Regex.Replace(text, @"[\s+]", "");
             return value;
         }
-
+        public static string DeleteSpecialChars(string text)
+        {
+            string value = Regex.Replace(text, @"[^a-zA-Z] ", " ");
+            return value;
+        }
         //returns double value from a given string
         public static double ParseDouble(string text)
         {

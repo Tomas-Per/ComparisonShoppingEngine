@@ -9,6 +9,8 @@ using System.Text;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
+using ShopParser;
+using DataContent;
 
 namespace WPF
 {
@@ -44,7 +46,7 @@ namespace WPF
             {
                 if ((bool)checkBox.IsChecked)
                 {
-                    List1.AddRange(_filter.FilterByManufacturer(checkBox.Name));
+                    List1.AddRange(_filter.FilterByManufacturer(checkBox.Content.ToString()));
                     isThereCheckedBox = true;
                 }
             }
@@ -84,7 +86,7 @@ namespace WPF
         {
             var _filterService = new FiltersServiceCSV(MainPath.GetBrandPath());
             Brands = _filterService.ReadData().ToList();
-            //_filterService = new FiltersServiceCSV(MainPath.GetProcessorPath());
+            _filterService = new FiltersServiceCSV(MainPath.GetProcessorPath());
             Processors = _filterService.ReadData().ToList();
             DynamicFilterCheckBox(Brands, BrandsCheckBoxes, BrandColumn1, BrandColumn2, BrandColumn3, BrandColumn4);
             DynamicFilterCheckBox(Processors, ProcessorsCheckBoxes, ProcessorColumn1, ProcessorColumn2, ProcessorColumn3, ProcessorColumn4);
@@ -98,8 +100,7 @@ namespace WPF
             {
                 CheckBox _checkbox = new CheckBox()
                 {
-                    Content = filterSpec.Name,
-                    Name = filterSpec.Name.Replace(" ", ""),
+                    Content = Parsing.DeleteSpecialChars(filterSpec.Name.ToString()),
                     Style =this.Resources["FilterCheckbox"] as Style
                 };
                 checkBoxes.Add(_checkbox);

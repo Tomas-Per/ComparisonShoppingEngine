@@ -20,6 +20,7 @@
     <ProjectReference Include="..\DataContent\DataContent.csproj" />
     <ProjectReference Include="..\ItemLibrary\ItemLibrary.csproj" />
     <ProjectReference Include="..\DataManipulation\DataManipulation.csproj" />
+    <ProjectReference Include="..\ShopParser\ShopParser.csproj" />
   </ItemGroup>
 
   <ItemGroup>
