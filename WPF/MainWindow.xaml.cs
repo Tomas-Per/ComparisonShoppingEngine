@@ -35,8 +35,7 @@ namespace WPF
 
         private List<Computer> OriginalList = new List<Computer>();
 
-        private List<CheckBox> ProcessorsCheckBoxes = new List<CheckBox>();
-        private List<CheckBox> BrandsCheckBoxes = new List<CheckBox>();
+ 
         private IData<IEnumerable<Computer>> _DataService;
 
         public MainWindow()
