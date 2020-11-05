@@ -92,10 +92,7 @@ namespace WPF
                 {
                     Content = filterSpec,
                     Name = filterSpec.Replace(" ", ""),
-                    FontFamily = new FontFamily("Candara Light"),
-                    Background = Brushes.White,
-                    BorderBrush = Brushes.White,
-                    Foreground = Brushes.White
+                    Style =this.Resources["FilterCheckbox"] as Style
                 };
                 BrandsCheckBoxes.Add(checkbox);
                 switch (_column)
