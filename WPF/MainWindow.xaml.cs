@@ -108,8 +108,8 @@ namespace WPF
             BuyHere.Text = "Buy here";
             SimilarProducts.Text = "Similar Products";
             CompareButton.Visibility = Visibility.Visible;
-            InfoStackPanel.Visibility = Visibility.Visible; 
-
+            InfoStackPanelSecond.Visibility = Visibility.Visible;
+            InfoStackPanelFirst.Visibility = Visibility.Visible;
             var bi = new BitmapImage();
             bi.BeginInit();
             bi.UriSource = new Uri("https://ksd-images.lt/display/aikido/store/1e3628060337b388dd4ffbce4f20f608.jpg?h=2000&w=2000");
