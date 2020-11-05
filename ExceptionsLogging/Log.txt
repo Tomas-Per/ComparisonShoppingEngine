@@ -1,0 +1,30 @@
+Error:   Test
+Occured At:    
+Time:    11/5/2020 4:50:11 PM
+Error:   Unable to find the specified file.
+Occured At:    
+Time:    11/5/2020 4:50:11 PM
+Error:   Prasau
+Occured At:    
+Time:    11/5/2020 4:50:11 PM
+Error:   Veik
+Occured At:    
+Time:    11/5/2020 4:50:11 PM
+Error:   Index was out of range. Must be non-negative and less than the size of the collection. (Parameter 'index')
+Occured At:    File: C:\Users\Juste\Source\Repos\Tomas-Per\ComparisonShoppingEngine\AdminService\AdminService.cs, Method:Main, LineNumber: 30  -->  
+Time:    11/5/2020 4:50:11 PM
+Error:   Test
+Occured At:    
+Time:    11/5/2020 5:04:29 PM
+Error:   Unable to find the specified file.
+Occured At:    
+Time:    11/5/2020 5:04:29 PM
+Error:   Prasau
+Occured At:    
+Time:    11/5/2020 5:04:29 PM
+Error:   Veik
+Occured At:    
+Time:    11/5/2020 5:04:29 PM
+Error:   Index was out of range. Must be non-negative and less than the size of the collection. (Parameter 'index')
+Occured At:    File: C:\Users\Juste\Source\Repos\Tomas-Per\ComparisonShoppingEngine\AdminService\AdminService.cs, Method:Main, LineNumber: 30  -->  
+Time:    11/5/2020 5:04:30 PM

@@ -1,5 +1,6 @@
 ﻿using CsvHelper;
 using DataContent.ReadingCSV.Mappers;
+using ExceptionsLogging;
 using ItemLibrary;
 using System;
 using System.Collections.Generic;
@@ -34,12 +35,14 @@ namespace DataContent.ReadingCSV.Services
                     return records.ToList();
                 }
             }
-            catch (FileNotFoundException)
+            catch (FileNotFoundException e)
             {
+                ExceptionLogger.Log(e);
                 throw;
             }
             catch (Exception e)
             {
+                ExceptionLogger.Log(e);
                 throw new Exception ("Something's wrong happened:" + e.Message);
             }
         }
@@ -69,16 +72,19 @@ namespace DataContent.ReadingCSV.Services
                     }
                 }
             }
-            catch (FileNotFoundException)
+            catch (FileNotFoundException e)
             {
+                ExceptionLogger.Log(e);
                 throw;
             }
-            catch (FileLoadException)
+            catch (FileLoadException e)
             {
+                ExceptionLogger.Log(e);
                 throw;
             }
             catch (Exception e)
             {
+                ExceptionLogger.Log(e);
                 throw new Exception("Something's wrong happened:" + e.Message);
             }
         }

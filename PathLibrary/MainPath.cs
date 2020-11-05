@@ -1,7 +1,7 @@
 ﻿using System;
 using System.IO;
 
-namespace DataContent.ReadingCSV
+namespace PathLibrary
 {
     public class MainPath
     {

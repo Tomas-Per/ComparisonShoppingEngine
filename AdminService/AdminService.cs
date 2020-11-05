@@ -1,6 +1,9 @@
 ﻿using DataUpdater;
+using ExceptionsLogging;
 using ShopParser;
 using System;
+using System.Collections.Generic;
+using System.IO;
 
 namespace AdminService
 {
@@ -13,6 +16,24 @@ namespace AdminService
         public static void Main(string[] args)
         {
             string command;
+
+
+            ExceptionLogger.Log(new Exception("Test"));
+            ExceptionLogger.Log(new FileNotFoundException());
+            ExceptionLogger.Log(new Exception("Prasau"));
+            ExceptionLogger.Log(new Exception("Veik"));
+
+
+            try
+            {
+                var a = new List<int>();
+                var i = a[3];
+            }
+            catch (ArgumentOutOfRangeException ex)
+            {
+                ExceptionLogger.Log(ex);
+            }
+
 
             do
             {
