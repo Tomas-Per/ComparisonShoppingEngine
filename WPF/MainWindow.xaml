@@ -308,14 +308,14 @@
 
                             <StackPanel Margin="30,0,25,0" >
                                 <TextBlock x:Name="ComparisonProductName1" TextWrapping="Wrap"  Height="40" FontFamily="Candara Light" FontSize="16" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="0,20,0,5"></TextBlock>
-                                <TextBlock x:Name="ComparisonProductPrice1" HorizontalAlignment="Right" FontFamily="Candara Light" FontSize="14" ></TextBlock>
-                                <TextBlock x:Name="ComparisonProductBrand1" HorizontalAlignment="Right" FontFamily="Candara Light" FontSize="14"></TextBlock>
-                                <TextBlock x:Name="ComparisonProductProcessor1" HorizontalAlignment="Right" FontFamily="Candara Light" FontSize="14"></TextBlock>
-                                <TextBlock x:Name="ComparisonProductRAM1" HorizontalAlignment="Right" FontFamily="Candara Light" FontSize="14" ></TextBlock>
-                                <TextBlock x:Name="ComparisonProductGraphicsCard1" HorizontalAlignment="Right" FontFamily="Candara Light" FontSize="14" ></TextBlock>
-                                <TextBlock x:Name="ComparisonProductResolution1" HorizontalAlignment="Right" FontFamily="Candara Light" FontSize="14" ></TextBlock>
-                                <TextBlock x:Name="ComparisonProductStorage1" HorizontalAlignment="Right" FontFamily="Candara Light" FontSize="14" ></TextBlock>
-                                <TextBlock x:Name="ComparisonProductRating1" HorizontalAlignment="Right" FontFamily="Candara Light" FontSize="14" ></TextBlock>
+                                <TextBlock x:Name="ComparisonProductPrice1"  FontFamily="Candara Light" FontSize="14" ></TextBlock>
+                                <TextBlock x:Name="ComparisonProductBrand1"  FontFamily="Candara Light" FontSize="14"></TextBlock>
+                                <TextBlock x:Name="ComparisonProductProcessor1"  FontFamily="Candara Light" FontSize="14"></TextBlock>
+                                <TextBlock x:Name="ComparisonProductRAM1" FontFamily="Candara Light" FontSize="14" ></TextBlock>
+                                <TextBlock x:Name="ComparisonProductGraphicsCard1"  FontFamily="Candara Light" FontSize="14" ></TextBlock>
+                                <TextBlock x:Name="ComparisonProductResolution1" FontFamily="Candara Light" FontSize="14" ></TextBlock>
+                                <TextBlock x:Name="ComparisonProductStorage1"  FontFamily="Candara Light" FontSize="14" ></TextBlock>
+                                <TextBlock x:Name="ComparisonProductRating1"  FontFamily="Candara Light" FontSize="14" ></TextBlock>
                                 <Button Content="Remove" x:Name="RemoveButton1" FontFamily="Candara Light"  Grid.Column="1" Margin="5,5,10,0" HorizontalAlignment="Right" Foreground="#b271a9" Background="White" BorderBrush="#b271a9" Click="RemoveButton1_Click"/>
                             </StackPanel>
 
