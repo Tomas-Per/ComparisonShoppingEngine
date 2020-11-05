@@ -172,9 +172,9 @@
                         </Grid>
                     </StackPanel>
                     <Button x:Name="BuyHereButton" Visibility="Collapsed" Margin="30,5,20,0" Foreground="#b271a9" Background="white" BorderBrush="#b271a9" FontFamily="Candara Light" Click="Hyperlink_RequestNavigate">
-                        <Hyperlink x:Name="BuyHereHyper" NavigateUri="{Binding Path=Url}"
+                        <Hyperlink x:Name="BuyHereHyper" NavigateUri="{Binding Path=Url}" TextDecorations=""
                                       RequestNavigate="Hyperlink_RequestNavigate" >
-                            Buy here
+                            <Label Content="Buy here" Foreground="#b271a9" FontFamily="Candara Light"/>
                         </Hyperlink>
                     </Button>
                     <Button x:Name="CompareButton" Content="Compare with..." Visibility="Collapsed" Margin="30,5,20,0" Foreground="#b271a9" Background="white" BorderBrush="#b271a9" FontFamily="Candara Light" Click="CompareButton_Click"/>
@@ -211,7 +211,7 @@
                         <Slider Height="20" Minimum="0" Maximum="4000" IsSnapToTickEnabled="True" VerticalAlignment="Bottom" Margin="15,0,15,0" TickFrequency="200" TickPlacement="BottomRight" Name="PriceSlider" ValueChanged="PriceSlider_ValueChanged" Foreground="White"/>
 
                         <TextBlock Text="Brand" FontFamily="Candara Light" Foreground="White" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="10,10,10,10" FontWeight="Bold" FontSize="14"/>
-                        <Grid Margin="5,0,4,0">
+                        <Grid Margin="7,0,4,0">
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="25*"/>
                                 <ColumnDefinition Width="68*"/>
@@ -232,7 +232,7 @@
                         </Grid>
                         <TextBlock Text="Processor Type" FontFamily="Candara Light" Foreground="White" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="10,10,10,10" FontWeight="Bold" FontSize="14"/>
 
-                        <Grid Margin="5,0,10,0">
+                        <Grid Margin="7,0,10,0">
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="*"/>
                                 <ColumnDefinition Width="*"/>
@@ -354,7 +354,7 @@
                     <TextBlock Text="Preferences" FontFamily="Candara Light" FontSize="20" Foreground="#b271a9" HorizontalAlignment="Center" VerticalAlignment="Top" FontWeight="Bold" Margin="0,0,0,8"/>
                     <Grid Margin="0,0,0,15" >
                         <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="0.70*"/>
+                            <ColumnDefinition Width="0.55*"/>
                             <ColumnDefinition Width="*"/>
                         </Grid.ColumnDefinitions>
                         <TextBlock Text="Price" Grid.Column="0" HorizontalAlignment="Right" FontFamily="Candara Light" FontSize="16" Foreground="#b271a9" VerticalAlignment="Top" Margin="0,0,15,0"/>
@@ -362,7 +362,7 @@
                     </Grid>
                     <Grid Margin="0,0,0,15" >
                         <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="0.70*"/>
+                            <ColumnDefinition Width="0.55*"/>
                             <ColumnDefinition Width="*"/>
                         </Grid.ColumnDefinitions>
                         <TextBlock Text="Storage" Grid.Column="0" HorizontalAlignment="Right" FontFamily="Candara Light" FontSize="16" Foreground="#b271a9" VerticalAlignment="Top" Margin="0,0,15,0"/>
@@ -370,7 +370,7 @@
                     </Grid>
                     <Grid>
                         <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="0.70*"/>
+                            <ColumnDefinition Width="0.55*"/>
                             <ColumnDefinition Width="*"/>
                         </Grid.ColumnDefinitions>
                         <TextBlock Text="RAM" Grid.Column="0" HorizontalAlignment="Right" FontFamily="Candara Light" FontSize="16" Foreground="#b271a9" VerticalAlignment="Top" Margin="0,0,15,0"/>
