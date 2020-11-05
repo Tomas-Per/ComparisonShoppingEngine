@@ -106,7 +106,7 @@
 
                 <StackPanel x:Name="ItemInfoStackPanel" Visibility="Visible" Background="White" Height="535" >
                     <TextBlock x:Name="ProductName" Height="40" FontFamily="Candara Light" FontSize="16" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="10,10,10,10"></TextBlock>
-                    <Image x:Name="image1" MaxHeight="100" ></Image>
+                    <Image x:Name="image1" MaxHeight="100"  ></Image>
                     <TextBlock x:Name="ProductPrice" FontFamily="Candara Light" FontSize="14" Margin="10,0,10,0"></TextBlock>
                     <TextBlock x:Name="ProductBrand" FontFamily="Candara Light" FontSize="14" Margin="10,5,10,0"></TextBlock>
                     <TextBlock x:Name="ProductProcessor" FontFamily="Candara Light" FontSize="14" Margin="10,5,10,0"></TextBlock>
@@ -136,7 +136,7 @@
             </StackPanel>
         </Grid>
 
-        <Grid Name="FilterGrid" Width="200" HorizontalAlignment="Left" Visibility="Visible" RenderTransformOrigin="0.5,0.5" Grid.RowSpan="2">
+        <Grid Name="FilterGrid" Width="200" HorizontalAlignment="Left" Visibility="Collapsed" RenderTransformOrigin="0.5,0.5" Grid.RowSpan="2">
             <Grid Visibility="visible">
 
                 <StackPanel>
@@ -145,7 +145,8 @@
                             <SolidColorBrush Opacity="0.2" Color="Black"/>
                         </Grid.Background>
                         <TextBlock Text="Filters" FontFamily="Candara Light" Margin="10" HorizontalAlignment="Left" VerticalAlignment="Center" Foreground="White" FontSize="14" FontWeight="Bold"/>
-                        <materialDesign:PackIcon Kind="Filter" VerticalAlignment="Stretch" HorizontalAlignment="Right" Margin="0,10,10,10" Foreground="White"/>
+                        <Button x:Name="MenuOpenButton" Width="60" Height="60" HorizontalAlignment="Right" Background="{x:Null}" BorderBrush="{x:Null}" Click="MenuOpenButton_Click"/>
+                        <materialDesign:PackIcon Kind="Menu" Height="20" Width="20" HorizontalAlignment="Right" Margin="20" Foreground="White"/>
                     </Grid>
                     <StackPanel Height="533">
                         <TextBlock Text="Price Range" FontFamily="Candara Light" Foreground="White" VerticalAlignment="Center" Margin="10 10 10 10" HorizontalAlignment="Center" FontWeight="Bold" FontSize="14"/>
@@ -196,6 +197,18 @@
                     </StackPanel>
                 </StackPanel>
             </Grid>
+        </Grid>
+        <Grid x:Name="MenuGrid" Visibility="Visible">
+            <StackPanel>
+                <Grid Height="60" >
+                    <Grid.Background>
+                        <SolidColorBrush Opacity="0.2" Color="Black"/>
+                    </Grid.Background>
+                    <TextBlock Text="Menu Tab" FontFamily="Candara Light" Margin="10" HorizontalAlignment="Left" VerticalAlignment="Center" Foreground="White" FontSize="14" FontWeight="Bold"/>
+                    <Button x:Name="FilterOpenButton" Height="60" Width="60" HorizontalAlignment="Right" Foreground="White" Background="{x:Null}" BorderBrush="{x:Null}" Click="FilterOpenButton_Click"/>
+                    <materialDesign:PackIcon Kind="Filter" Height="20" Width="20" VerticalAlignment="Stretch" HorizontalAlignment="Right" Margin="20" Foreground="White"/>
+                </Grid>
+            </StackPanel>
         </Grid>
         <Grid Margin="0,60,0,0" Grid.Column="1" Visibility="Collapsed" x:Name="ComparisonGrid">
             <StackPanel Visibility="Visible" Height="534">

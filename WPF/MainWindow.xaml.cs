@@ -263,5 +263,16 @@ namespace WPF
             PriceDescSort();
         }
 
+        private void MenuOpenButton_Click(object sender, RoutedEventArgs e)
+        {
+            MenuGrid.Visibility = Visibility.Visible;
+            FilterGrid.Visibility = Visibility.Collapsed;
+        }
+
+        private void FilterOpenButton_Click(object sender, RoutedEventArgs e)
+        {
+            MenuGrid.Visibility = Visibility.Collapsed;
+            FilterGrid.Visibility = Visibility.Visible;
+        }
     }
 }
