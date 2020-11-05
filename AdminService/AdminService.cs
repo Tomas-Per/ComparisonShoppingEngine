@@ -1,7 +1,6 @@
 ﻿using DataUpdater;
 using ShopParser;
 using System;
-using System.IO;
 
 namespace AdminService
 {
