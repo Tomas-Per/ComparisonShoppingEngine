@@ -14,6 +14,6 @@
 ## Features
 - [x] Clean and easy to use UI
 - [x] Product search and filtering
-- [ ] Product comparison
-- [ ] Provides alternative products
+- [x] Product comparison
+- [x] Provides alternative products
 - [ ] Cross-platform
