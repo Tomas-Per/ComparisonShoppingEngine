@@ -13,6 +13,12 @@ namespace ExceptionsLogging
         //Logs Exception to a file
         public static void Log (Exception ex)
         {
+            if (!File.Exists(_filePath))
+            {
+                File.Create(_filePath).Close();
+
+            }
+
             using (StreamWriter streamWriter = new StreamWriter(_filePath, true))
             {
                 streamWriter.WriteLine("Error:   " + ex.Message);
