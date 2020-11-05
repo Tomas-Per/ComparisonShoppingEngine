@@ -24,6 +24,9 @@ namespace AdminService
                         Console.WriteLine(_helpMessage);
                         break;
 
+                    case "0":
+                        break;
+
                     case "1":
                         var updater = new ComputerDataUpdater(new SenukaiParser());
                         updater.UpdateItemListFile(updater.GetItemListFromWeb());
