@@ -112,7 +112,7 @@ namespace WPF
             InfoStackPanelFirst.Visibility = Visibility.Visible;
             var bi = new BitmapImage();
             bi.BeginInit();
-            bi.UriSource = new Uri("https://ksd-images.lt/display/aikido/store/1e3628060337b388dd4ffbce4f20f608.jpg?h=2000&w=2000");
+            bi.UriSource = new Uri(item.ImageLink);
             bi.EndInit();
             image1.Source = bi;
 
