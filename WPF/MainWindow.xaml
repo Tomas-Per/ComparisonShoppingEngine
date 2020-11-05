@@ -60,6 +60,23 @@
                     <BitmapImage UriSource="/ImagesSource/libra100.png"/>
                 </Image.Source>
             </Image>
+            <Grid Height="60" Width="60" HorizontalAlignment="left" Visibility="Collapsed" Name="MenuButtonGrid">
+                 <Button x:Name="MenuOpenButton" Height="60" Width="60" HorizontalAlignment="Left" Foreground="White" Background="{x:Null}" BorderBrush="{x:Null}" Click="MenuOpenButton_Click">
+                     <TextBlock Text="Menu" FontFamily="Candara Light" FontSize="10" VerticalAlignment="Top" Height="10" Margin="0,0,0,30"/>
+                     
+                 </Button>
+                 <materialDesign:PackIcon Kind="Menu" Height="20" Width="20" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="20,30,20,0" Foreground="White"/>
+
+            </Grid>
+            <Grid Height="60" Width="60" HorizontalAlignment="left" Visibility="Visible" Name="FilterButtonGrid">
+                <Button x:Name="FilterOpenButton" Height="60" Width="60" HorizontalAlignment="Left" Foreground="White" Background="{x:Null}" BorderBrush="{x:Null}" Click="FilterOpenButton_Click">
+                    <TextBlock Text="Filter" FontFamily="Candara Light" FontSize="10" VerticalAlignment="Top" Height="10" Margin="0,0,0,30"/>
+
+                </Button>
+                <materialDesign:PackIcon Kind="Filter" Height="20" Width="20" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="20,30,20,0" Foreground="White"/>
+
+            </Grid>
+
         </Grid>
         <Grid Margin="200,60,0,0" Grid.Row="1" Grid.ColumnSpan="2">
             <Grid.ColumnDefinitions>
@@ -148,8 +165,6 @@
                             <SolidColorBrush Opacity="0.2" Color="Black"/>
                         </Grid.Background>
                         <TextBlock Text="Filters" FontFamily="Candara Light" Margin="10" HorizontalAlignment="Left" VerticalAlignment="Center" Foreground="White" FontSize="14" FontWeight="Bold"/>
-                        <Button x:Name="MenuOpenButton" Width="60" Height="60" HorizontalAlignment="Right" Background="{x:Null}" BorderBrush="{x:Null}" Click="MenuOpenButton_Click"/>
-                        <materialDesign:PackIcon Kind="Menu" Height="20" Width="20" HorizontalAlignment="Right" Margin="20" Foreground="White"/>
                     </Grid>
                     <StackPanel Height="533">
                         <TextBlock Text="Price Range" FontFamily="Candara Light" Foreground="White" VerticalAlignment="Center" Margin="10 10 10 10" HorizontalAlignment="Center" FontWeight="Bold" FontSize="14"/>
@@ -208,8 +223,7 @@
                         <SolidColorBrush Opacity="0.2" Color="Black"/>
                     </Grid.Background>
                     <TextBlock Text="Menu Tab" FontFamily="Candara Light" Margin="10" HorizontalAlignment="Left" VerticalAlignment="Center" Foreground="White" FontSize="14" FontWeight="Bold"/>
-                    <Button x:Name="FilterOpenButton" Height="60" Width="60" HorizontalAlignment="Right" Foreground="White" Background="{x:Null}" BorderBrush="{x:Null}" Click="FilterOpenButton_Click"/>
-                    <materialDesign:PackIcon Kind="Filter" Height="20" Width="20" VerticalAlignment="Stretch" HorizontalAlignment="Right" Margin="20" Foreground="White"/>
+                    
                 </Grid>
                 <Grid Margin="0,20,0,0" Height="50">
                     <Grid.Background>

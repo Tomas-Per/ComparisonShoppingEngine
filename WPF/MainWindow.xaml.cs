@@ -267,12 +267,16 @@ namespace WPF
         {
             MenuGrid.Visibility = Visibility.Visible;
             FilterGrid.Visibility = Visibility.Collapsed;
+            FilterButtonGrid.Visibility = Visibility.Visible;
+            MenuButtonGrid.Visibility = Visibility.Collapsed;
         }
 
         private void FilterOpenButton_Click(object sender, RoutedEventArgs e)
         {
             MenuGrid.Visibility = Visibility.Collapsed;
             FilterGrid.Visibility = Visibility.Visible;
+            MenuButtonGrid.Visibility = Visibility.Visible;
+            FilterButtonGrid.Visibility = Visibility.Collapsed;
         }
 
         private void FavoritesButton_Click(object sender, RoutedEventArgs e)
