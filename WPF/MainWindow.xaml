@@ -15,6 +15,9 @@
          FontFamily="{DynamicResource MaterialDesignFont}"
         Title="Libra" ResizeMode="NoResize" Height="612" Width="987" Icon="/ImagesSource/libra100.png" Loaded="Window_Loaded">
 
+    <Window.Resources>
+        <ResourceDictionary Source="Styles/FilterCheckBox.xaml"/>
+    </Window.Resources>
     <!-- <Window.Resources>
         <Storyboard x:Key="MenuOpen">
             <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="FrameworkElement.Width" Storyboard.TargetName="FilterGrid">
