@@ -1,8 +1,9 @@
 ﻿using System;
+using System.Diagnostics.CodeAnalysis;
 
 namespace ItemLibrary
 {
-    public struct Processor
+    public struct Processor : IComparable<Processor>, IEquatable<Processor>
     {
         public string Name { get; set; }
         public string AmazonLink { get; set; }
@@ -24,6 +25,20 @@ namespace ItemLibrary
 
                 throw;
             }
+        }
+
+        public int CompareTo([AllowNull] Processor other)
+        {
+            if (this.Name.Length < other.Name.Length) return -1;
+            else if (this.Name.Length == other.Name.Length) return 0;
+            else return 1;
+
+        }
+
+        public bool Equals([AllowNull] Processor other)
+        {
+            if (this.Name == other.Name) return true;
+            else return false;
         }
     }
 }
