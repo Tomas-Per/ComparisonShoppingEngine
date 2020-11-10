@@ -68,7 +68,7 @@ namespace ShopParser
 
                 foreach (var link in links)
                 {
-                    Computer computer = new Computer { Name = namesList.ElementAt(0), Price = ParseDouble(pricesList.ElementAt(0)), ItemCategory = ItemCategory.Computer };
+                    Computer computer = new Computer { Name = namesList.ElementAt(0), Price = ParseDouble(pricesList.ElementAt(0)), ItemCategory = ItemCategory.Computer, ComputerCategory = ComputerCategory.Laptop };
 
                     namesList.RemoveAt(0);
                     pricesList.RemoveAt(0);
