@@ -17,6 +17,10 @@ namespace AdminService
         {
             string command;
 
+            var test = new AvitelaParser().ParseShop();
+
+
+
             do
             {
                 command = Console.ReadLine();

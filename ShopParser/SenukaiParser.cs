@@ -11,7 +11,7 @@ namespace ShopParser
 {
     public class SenukaiParser : IParser<Computer>
     {
-        private string _url = "https://www.senukai.lt/c/kompiuterine-technika-biuro-prekes/nesiojami-kompiuteriai-ir-priedai/nesiojami-kompiuteriai/5ei?";
+        private readonly string _url = "https://www.senukai.lt/c/kompiuterine-technika-biuro-prekes/nesiojami-kompiuteriai-ir-priedai/nesiojami-kompiuteriai/5ei?";
         private IWebDriver _driver;
         private string _currentWIndowURL;
 
@@ -68,7 +68,7 @@ namespace ShopParser
 
                 foreach (var link in links)
                 {
-                    Computer computer = new Computer { Name = namesList.ElementAt(0), Price = ParseDouble(pricesList.ElementAt(0)), ItemCategory = ItemCategory.Computer, ComputerCategory = ComputerCategory.Laptop };
+                    Computer computer = new Computer { Name = namesList.ElementAt(0), Price = ParseDouble(pricesList.ElementAt(0)), ItemCategory = ItemCategory.Computer, ComputerCategory = ComputerCategory.Laptop, ShopName = "Senukai" };
 
                     namesList.RemoveAt(0);
                     pricesList.RemoveAt(0);
