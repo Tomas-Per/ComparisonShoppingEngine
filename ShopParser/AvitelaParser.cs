@@ -21,7 +21,7 @@ namespace ShopParser
             var options = new ChromeOptions();
             options.AddArguments("--headless");
 
-            _driver = new ChromeDriver();
+            _driver = new ChromeDriver(options);
 
             List<Computer> data = new List<Computer>();
 
@@ -70,6 +70,7 @@ namespace ShopParser
         private Computer ParseWindow(Computer computer)
         {
             computer.Name = _driver.FindElement(By.Id("pname")).Text;
+
             computer.Price = ParseDouble(_driver.FindElement(By.Id("price-old")).Text);
 
             try
