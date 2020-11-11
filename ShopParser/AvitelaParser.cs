@@ -14,9 +14,8 @@ namespace ShopParser
         private readonly string _url = "https://avitela.lt/kompiuterine-technika/nesiojamieji-kompiuteriai/nesiojami-kompiuteriai?page=1";
         private IWebDriver _driver;
 
-
-
-
+        //parses laptops from avitela.lt and returns results in a List<Computer>
+        //this method parses first 5 pages (18 laptops in every page), because later pages are outdated 
         public List<Computer> ParseShop()
         {
             var options = new ChromeOptions();
@@ -32,8 +31,11 @@ namespace ShopParser
 
             _driver.Navigate().GoToUrl(_url);
 
-            for (int i = 1; i < 8; i++)
+            for (int i = 1; i <= 5; i++)
             {
+                nextPage = _url.Remove(_url.Length - 1, 1) + i;
+                _driver.Navigate().GoToUrl(nextPage);
+
                 var names = _driver.FindElements(By.CssSelector("div.right > div.name > a"));
 
                 foreach (var name in names)
@@ -48,31 +50,37 @@ namespace ShopParser
                 {
                     _driver.Navigate().GoToUrl(link);
 
-                    var test = ParseWindow(new Computer {ItemURL = link, ItemCategory = ItemCategory.Computer, ComputerCategory = ComputerCategory.Laptop, ShopName = "Avitela" });
+                    Computer computer =ParseWindow(new Computer {ItemURL = link, ItemCategory = ItemCategory.Computer, ComputerCategory = ComputerCategory.Laptop, ShopName = "Avitela" });
 
-
+                    if (computer.Resolution != null)
+                    {
+                        data.Add(computer);
+                    }
                     _driver.Navigate().Back();
                 }
-                nextPage = _url.Remove(_url.Length - 1, 1) + i;
-                //_driver.Navigate().GoToUrl(nextPage);
-                break;
-
-
+                
             }
 
-   
-            //_driver.Close();
+            _driver.Close();
             return data;
         }
 
 
+        //parses laptop window, updates computer fields
         private Computer ParseWindow(Computer computer)
         {
             computer.Name = _driver.FindElement(By.Id("pname")).Text;
             computer.Price = ParseDouble(_driver.FindElement(By.Id("price-old")).Text);
 
-            computer.ImageLink = _driver.FindElement(By.CssSelector("div.product-image-right.product-photo")).
-                FindElement(By.CssSelector("a")).GetAttribute("href");
+            try
+            {
+                computer.ImageLink = _driver.FindElement(By.CssSelector("div.product-image-right.product-photo")).
+                    FindElement(By.CssSelector("a")).GetAttribute("href");
+            }
+            catch (Exception)
+            {
+                computer.ImageLink = "https://ksd-images.lt/display/aikido/store/1e3628060337b388dd4ffbce4f20f608.jpg?h=742&w=816";
+            }
 
             var table = _driver.FindElements(By.TagName("td"));
 
@@ -103,6 +111,16 @@ namespace ShopParser
                     computer.Resolution = table[i + 1].Text;
                 }
                 else if (table[i].Text.Contains("Procesoriaus tipas"))
+                {
+                    computer.ProcessorName = table[i + 1].Text;
+                }
+
+                else if (computer.GraphicsCardName == null && table[i].Text.Contains("Vaizdo plokštės tipas"))
+                {
+                    computer.GraphicsCardName = table[i + 1].Text;
+                }
+
+                else if (computer.ProcessorName == null && table[i].Text.Contains("Procesoriaus modelis"))
                 {
                     computer.ProcessorName = table[i + 1].Text;
                 }

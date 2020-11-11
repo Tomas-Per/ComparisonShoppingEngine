@@ -1,9 +1,11 @@
-﻿using DataUpdater;
+﻿using DataContent.ReadingCSV.Services;
+using DataUpdater;
 using ExceptionsLogging;
 using ShopParser;
 using System;
 using System.Collections.Generic;
 using System.IO;
+using PathLibrary;
 
 namespace AdminService
 {
@@ -16,10 +18,6 @@ namespace AdminService
         public static void Main(string[] args)
         {
             string command;
-
-            var test = new AvitelaParser().ParseShop();
-
-
 
             do
             {
