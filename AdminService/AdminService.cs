@@ -19,6 +19,8 @@ namespace AdminService
         {
             string command;
 
+            new VarleParser().ParseShop();
+
             do
             {
                 command = Console.ReadLine();
