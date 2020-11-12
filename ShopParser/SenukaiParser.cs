@@ -96,7 +96,7 @@ namespace ShopParser
 
 
         //parses laptop window, updates computer fields 
-        private Computer ParseWindow(Computer computer)
+        public Computer ParseWindow(Computer computer)
         {
 
             //var id = _driver.FindElement(By.ClassName("product-id"));

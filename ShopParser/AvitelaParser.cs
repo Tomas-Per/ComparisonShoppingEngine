@@ -67,7 +67,7 @@ namespace ShopParser
 
 
         //parses laptop window, updates computer fields
-        private Computer ParseWindow(Computer computer)
+        public Computer ParseWindow(Computer computer)
         {
             computer.Name = _driver.FindElement(By.Id("pname")).Text;
 
