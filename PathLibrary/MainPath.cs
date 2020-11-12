@@ -19,7 +19,7 @@ namespace PathLibrary
             }
             return _filePath;
         }
-        public static string GetComputerPath()
+        public static string GetComputerPath()              // should be added and avitela path
         {
             return GetMainPath() + @"\Data\senukai.csv";
         }
