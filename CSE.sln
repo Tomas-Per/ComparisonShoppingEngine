@@ -4,6 +4,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 VisualStudioVersion = 16.0.30503.244
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WPF", "WPF\WPF.csproj", "{6E862F91-970C-473D-9F9D-52EB7F3CC3D3}"
+	ProjectSection(ProjectDependencies) = postProject
+		{0C84F054-D535-4BE9-8AC8-CB22FA7D6E34} = {0C84F054-D535-4BE9-8AC8-CB22FA7D6E34}
+	EndProjectSection
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ItemLibrary", "ItemLibrary\ItemLibrary.csproj", "{45E997E0-0020-4114-9E34-F8A113064FB7}"
 EndProject
@@ -31,6 +34,8 @@ EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ExceptionsLogging", "ExceptionsLogging\ExceptionsLogging.csproj", "{71A4D954-8F67-46C6-B08F-229915C87782}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PathLibrary", "PathLibrary\PathLibrary.csproj", "{0BE975ED-DF55-4B95-B906-FC7123FC5FB9}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Extensions", "Extensions\Extensions.csproj", "{0C84F054-D535-4BE9-8AC8-CB22FA7D6E34}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -82,6 +87,10 @@ Global
 		{0BE975ED-DF55-4B95-B906-FC7123FC5FB9}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{0BE975ED-DF55-4B95-B906-FC7123FC5FB9}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{0BE975ED-DF55-4B95-B906-FC7123FC5FB9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0C84F054-D535-4BE9-8AC8-CB22FA7D6E34}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0C84F054-D535-4BE9-8AC8-CB22FA7D6E34}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0C84F054-D535-4BE9-8AC8-CB22FA7D6E34}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0C84F054-D535-4BE9-8AC8-CB22FA7D6E34}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -9,8 +9,7 @@ using System.Text;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
-using ShopParser;
-using DataContent;
+using Parsing;
 
 namespace WPF
 {
@@ -103,7 +102,7 @@ namespace WPF
             {
                 CheckBox _checkbox = new CheckBox()
                 {
-                    Content = Parsing.DeleteSpecialChars(filterSpec.Name.ToString()),
+                    Content = filterSpec.Name.ToString().DeleteSpecialChars(),
                     Style =this.Resources["FilterCheckbox"] as Style
                 };
                 checkBoxes.Add(_checkbox);

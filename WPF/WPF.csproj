@@ -18,6 +18,7 @@
   <ItemGroup>
     <ProjectReference Include="..\Comparison\Comparison.csproj" />
     <ProjectReference Include="..\DataContent\DataContent.csproj" />
+    <ProjectReference Include="..\Extensions\Extensions.csproj" />
     <ProjectReference Include="..\ItemLibrary\ItemLibrary.csproj" />
     <ProjectReference Include="..\DataManipulation\DataManipulation.csproj" />
     <ProjectReference Include="..\ShopParser\ShopParser.csproj" />
