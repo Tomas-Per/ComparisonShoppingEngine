@@ -1,10 +1,10 @@
 ﻿using ItemLibrary;
 using OpenQA.Selenium;
 using OpenQA.Selenium.Chrome;
+using Parsing;
 using System;
 using System.Collections.Generic;
 using System.Text;
-using static DataContent.Parsing;
 using static ItemLibrary.Categories;
 
 namespace ShopParser
@@ -66,11 +66,67 @@ namespace ShopParser
 
         public Computer ParseWindow(Computer computer)
         {
-            Console.WriteLine(_driver.FindElement(By.ClassName("title")).Text);
+            computer.Name = _driver.FindElement(By.ClassName("title")).Text;
+            computer.Price = _driver.FindElement(By.XPath("//meta[@itemprop='price']")).GetAttribute("content").ParseDouble();
 
-            Console.WriteLine(_driver.FindElement(By.XPath("//meta[@itemprop='price']")).GetAttribute("content"));  //parse double price
+            var table = _driver.FindElements(By.ClassName("spec-line"));
 
+            Console.WriteLine("-------------------------");
 
+            foreach (var item in table)
+            {
+                var title = item.FindElement(By.ClassName("title")).Text;
+                var text = item.FindElement(By.ClassName("text")).Text;
+
+                if (title.Contains("Gamintojas"))
+                {
+                    computer.ManufacturerName = text;
+                    Console.WriteLine("Manufacturer");
+                    Console.WriteLine(computer.ManufacturerName);
+                }
+
+                else if (title.Contains("Ekrano raiška"))
+                {
+                    computer.Resolution = text;
+                    Console.WriteLine("resoliution");
+                    Console.WriteLine(computer.Resolution);
+                }
+
+                else if (title.Contains("Procesoriaus šeima"))
+                {
+                    computer.ProcessorName = text;
+                    Console.WriteLine("procesor");
+                    Console.WriteLine(computer.ProcessorName);
+                }
+
+                //else if (title.Contains("Operatyvioji atmintis	"))
+                //{
+                //    computer.RAM_type = text;
+                //    Console.WriteLine("ram type");
+                //    Console.WriteLine(computer.RAM_type);
+                //}
+
+                //else if (table[i].Text.Contains("Maksimali vidinė atmintis"))
+                //{
+                //    computer.RAM = table[i + 1].Text.ParseInt();
+                //    Console.WriteLine("ram");
+                //    Console.WriteLine(computer.RAM);
+                //}
+
+                else if (title.Contains("Bendra saugyklos talpa"))
+                {
+                    computer.StorageCapacity = text.ParseInt();
+                    Console.WriteLine("storage");
+                    Console.WriteLine(computer.StorageCapacity);
+                }
+
+                else if (title.Contains("Vaizdo plokštė"))
+                {
+                    computer.GraphicsCardName = text;
+                    Console.WriteLine("card name ");
+                    Console.WriteLine(computer.GraphicsCardName);
+                }
+            }
             return computer;
         }
     }
