@@ -19,6 +19,8 @@ namespace AdminService
         {
             string command;
 
+            new PiguParser().ParseShop();
+
             do
             {
                 command = Console.ReadLine();
