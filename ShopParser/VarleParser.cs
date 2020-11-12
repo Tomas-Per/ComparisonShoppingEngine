@@ -66,8 +66,9 @@ namespace ShopParser
 
         public Computer ParseWindow(Computer computer)
         {
+            Console.WriteLine(_driver.FindElement(By.ClassName("title")).Text);
 
-            Console.WriteLine(_driver.FindElement(By.XPath("//meta[@itemprop='price']")).GetAttribute("content"));
+            Console.WriteLine(_driver.FindElement(By.XPath("//meta[@itemprop='price']")).GetAttribute("content"));  //parse double price
 
 
             return computer;
