@@ -56,10 +56,11 @@ namespace Parsing
             {
                 Match value = Regex.Matches(text, @"\d+")[0];
                 text = value.ToString();
+
             }
             catch (ArgumentOutOfRangeException)
             {
-                throw;
+                return 0;
             }
 
             return Convert.ToInt32(text);

@@ -26,26 +26,29 @@ namespace ShopParser
             _driver = new ChromeDriver();
 
             for (int i = 1; i <= 3; i++)
-
-            _driver.Navigate().GoToUrl(_url);
-
-            var elements = _driver.FindElements(By.ClassName("cover-link"));
-
-            foreach (var item in elements)
             {
-                links.Add(item.GetAttribute("href"));
+
+                var nextPage = _url.Remove(_url.Length - 1, 1) + i;
+
+                _driver.Navigate().GoToUrl(nextPage);
+
+                var elements = _driver.FindElements(By.ClassName("cover-link"));
+
+                foreach (var item in elements)
+                {
+                    links.Add(item.GetAttribute("href"));
+                }
+
+                foreach (var link in links)
+                {
+                    _driver.Navigate().GoToUrl(link);
+
+                    Computer computer = new Computer { ItemURL = link, ShopName = "Pigu", ItemCategory = ItemCategory.Computer, ComputerCategory = ComputerCategory.Laptop };
+                    data.Add(ParseWindow(computer));
+
+                    _driver.Navigate().Back();
+                }
             }
-
-            foreach (var link in links)
-            {
-                _driver.Navigate().GoToUrl(link);
-
-                Computer computer = new Computer { ItemURL = link, ShopName = "Pigu", ItemCategory = ItemCategory.Computer, ComputerCategory = ComputerCategory.Laptop };
-                data.Add(ParseWindow(computer));
-
-                _driver.Navigate().Back();
-            }
-
 
             return data;
         }
@@ -88,8 +91,7 @@ namespace ShopParser
 
                 else if (table[i].Text.Contains("Kietasis diskas SSD") || table[i].Text.Contains("Kietasis diskas HDD"))
                 {
-                    //this line of code will work when we will update ParseInt
-                    //computer.StorageCapacity += table[i + 1].Text.ParseInt(); 
+                    computer.StorageCapacity += table[i + 1].Text.ParseInt();
                 }
 
             }
