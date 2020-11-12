@@ -21,7 +21,7 @@ namespace PathLibrary
         }
         public static string GetComputerPath()              // should be added and avitela path
         {
-            return GetMainPath() + @"\Data\senukai.csv";
+            return GetMainPath() + @"\Data\skytech.csv";
         }
         public static string GetBrandPath()
         {

@@ -19,6 +19,10 @@ namespace AdminService
         {
             string command;
 
+            var data = new SkytechParser().ParseShop();
+            new LaptopServiceCSV(MainPath.GetComputerPath()).WriteData(data);
+
+
             do
             {
                 command = Console.ReadLine();
