@@ -4,8 +4,6 @@ using OpenQA.Selenium.Chrome;
 using Parsing;
 using System;
 using System.Collections.Generic;
-using System.Net.Http.Headers;
-using System.Text;
 using static ItemLibrary.Categories;
 
 namespace ShopParser
@@ -15,6 +13,8 @@ namespace ShopParser
         private readonly string _url = "https://pigu.lt/lt/kompiuteriai/nesiojami-kompiuteriai?page=1";
         private IWebDriver _driver;
 
+
+        //parses laptops from avitela.lt and returns results in a List<Computer>
         public List<Computer> ParseShop()
         {
             List<Computer> data = new List<Computer>();
@@ -53,6 +53,7 @@ namespace ShopParser
             return data;
         }
 
+        //parses laptop window, updates computer fields
         public Computer ParseWindow(Computer computer)
         {
             computer.Name = _driver.FindElement(By.TagName("h1")).Text;
@@ -95,14 +96,6 @@ namespace ShopParser
                 }
 
             }
-
-            
-
-
-
-
-
-
 
             return computer;
         }
