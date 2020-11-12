@@ -3,33 +3,33 @@ using System.Text.RegularExpressions;
 
 namespace DataContent
 {
-    public class Parsing
+    public static class Parsing
     {
 
         //replaces "," with "."
         //some data uses comma, some dot so this method allows to parse both variants of data
-        private static string ReplaceSeperator(string text)
+        private static string ReplaceSeperator(this string text)
         {
             string value = Regex.Replace(text, @",", ".");
             return value;
         }
 
         //deletes spaces from a string
-        private static string DeleteSpaces (string text)
+        private static string DeleteSpaces (this string text)
         {
             string value = Regex.Replace(text, @"[\s+]", "");
             return value;
         }
-        public static string DeleteSpecialChars(string text)
+        public static string DeleteSpecialChars(this string text)
         {
             string value = Regex.Replace(text, @"[^a-zA-Z] ", " ");
             return value;
         }
         //returns double value from a given string
-        public static double ParseDouble(string text)
+        public static double ParseDouble(this string text)
         {
-            text = ReplaceSeperator(text);
-            text = DeleteSpaces(text);
+            text = text.ReplaceSeperator();
+            text = text.DeleteSpaces();
             try
             {
                 Match value = Regex.Matches(text, @"\d+(\.\d+)?")[0];
@@ -48,9 +48,9 @@ namespace DataContent
         }
 
         //returns int value from a given string
-        public static int ParseInt(string text)
+        public static int ParseInt(this string text)
         {
-            text = DeleteSpaces(text);
+            text = text.DeleteSpaces();
 
             try
             {
