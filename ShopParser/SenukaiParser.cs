@@ -4,7 +4,7 @@ using OpenQA.Selenium.Chrome;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using static DataContent.Parsing;
+using Parsing;
 using static ItemLibrary.Categories;
 
 namespace ShopParser
@@ -68,7 +68,7 @@ namespace ShopParser
 
                 foreach (var link in links)
                 {
-                    Computer computer = new Computer { Name = namesList.ElementAt(0), Price = ParseDouble(pricesList.ElementAt(0)), ItemCategory = ItemCategory.Computer, ComputerCategory = ComputerCategory.Laptop, ShopName = "Senukai" };
+                    Computer computer = new Computer { Name = namesList.ElementAt(0), Price = pricesList.ElementAt(0).ParseDouble(), ItemCategory = ItemCategory.Computer, ComputerCategory = ComputerCategory.Laptop, ShopName = "Senukai" };
 
                     namesList.RemoveAt(0);
                     pricesList.RemoveAt(0);
@@ -135,7 +135,7 @@ namespace ShopParser
                 else if (generalProperties[i].Text.Contains("Operatyvioji atmintis (RAM)"))
                 {
 
-                    computer.RAM = ParseInt(generalProperties[i + 1].Text);
+                    computer.RAM = generalProperties[i + 1].Text.ParseInt();
                 }
 
                 else if (generalProperties[i].Text.Contains("Operatyviosios atminties tipas"))
@@ -161,14 +161,14 @@ namespace ShopParser
                 }
                 else if (generalProperties[i].Text.Contains("MMC disko talpa"))
                 {
-                    computer.StorageCapacity += ParseInt(generalProperties[i + 1].Text);
+                    computer.StorageCapacity += generalProperties[i + 1].Text.ParseInt();
                 }
 
                 else if (generalProperties[i].Text.Contains("Kietojo disko talpa(HDD)"))
                 {
                     try
                     {
-                        computer.StorageCapacity += ParseInt(generalProperties[i + 1].Text);
+                        computer.StorageCapacity += generalProperties[i + 1].Text.ParseInt();
                     }
 
                     catch (Exception)

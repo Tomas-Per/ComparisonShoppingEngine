@@ -4,7 +4,7 @@ using OpenQA.Selenium.Chrome;
 using System;
 using System.Collections.Generic;
 using System.Runtime.InteropServices.ComTypes;
-using static DataContent.Parsing;
+using Parsing;
 using static ItemLibrary.Categories;
 
 namespace ShopParser
@@ -71,7 +71,7 @@ namespace ShopParser
         {
             computer.Name = _driver.FindElement(By.Id("pname")).Text;
 
-            computer.Price = ParseDouble(_driver.FindElement(By.Id("price-old")).Text);
+            computer.Price = _driver.FindElement(By.Id("price-old")).Text.ParseDouble();
 
             try
             {
@@ -99,12 +99,12 @@ namespace ShopParser
 
                 else if (table[i].Text.Contains("Operatyvioji atmintis"))
                 {
-                    computer.RAM = ParseInt(table[i + 1].Text);
+                    computer.RAM = table[i + 1].Text.ParseInt();
                 }
 
                 else if (table[i].Text.Contains("Vidinė atmintis"))
                 {
-                    computer.StorageCapacity = ParseInt(table[i + 1].Text);
+                    computer.StorageCapacity = table[i + 1].Text.ParseInt();
                 }
 
                 else if (table[i].Text.Contains("Ekrano raiška"))
