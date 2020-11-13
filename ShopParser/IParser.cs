@@ -7,5 +7,6 @@ namespace ShopParser
     { 
         public List<T> ParseShop();
 
+        public T ParseWindow(T item);
     }
 }
