@@ -14,6 +14,8 @@ namespace ItemLibrary
         public string ShopName { get; set; }  
         public string ImageLink { get; set; }
         public ItemCategory ItemCategory { get; set; }
+
+        //will remove this method in near future
         public abstract List<Item> FindSimilar(List<Item> list);
 
     }
