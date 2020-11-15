@@ -6,8 +6,8 @@ namespace ItemLibrary
 {
     public class Smartphone : Item
     {
-        public string FrontCamera { get; set; }
-        public string EndCamera { get; set; }
+        public List<int> FrontCamera { get; set; }
+        public List<int> EndCamera { get; set; }
         public double ScreenDiagonal { get; set; }
         public int Storage { get; set; }
         public int RAM { get; set; }
