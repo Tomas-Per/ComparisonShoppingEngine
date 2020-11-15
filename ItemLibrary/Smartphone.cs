@@ -13,6 +13,7 @@ namespace ItemLibrary
         public int RAM { get; set; }
         public string Processor { get; set; }
         public string DisplaySize { get; set; }
+        public int BatteryStorage { get; set; }
 
 
         public Smartphone ()
