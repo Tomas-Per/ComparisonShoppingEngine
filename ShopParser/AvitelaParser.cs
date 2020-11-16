@@ -113,7 +113,7 @@ namespace ShopParser
                 }
                 else if (table[i].Text.Contains("Procesoriaus tipas"))
                 {
-                    computer.ProcessorName = table[i + 1].Text;
+                    computer.Processor.Name = table[i + 1].Text;
                 }
 
                 else if (computer.GraphicsCardName == null && table[i].Text.Contains("Vaizdo plokštės tipas"))
@@ -121,9 +121,9 @@ namespace ShopParser
                     computer.GraphicsCardName = table[i + 1].Text;
                 }
 
-                else if (computer.ProcessorName == null && table[i].Text.Contains("Procesoriaus modelis"))
+                else if (computer.Processor.Name == null && table[i].Text.Contains("Procesoriaus modelis"))
                 {
-                    computer.ProcessorName = table[i + 1].Text;
+                    computer.Processor.Name = table[i + 1].Text;
                 }
 
             }

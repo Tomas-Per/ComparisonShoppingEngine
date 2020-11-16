@@ -12,7 +12,7 @@ namespace DataContent.ReadingCSV.Mappers
             Map(x => x.Price).Index(2).Name("laptop_price").TypeConverter<DoubleConverter>();
             Map(x => x.ManufacturerName).Index(3).Name("laptop_manufacturer");
             Map(x => x.Resolution).Index(4).Name("laptop_resolution");
-            Map(x => x.ProcessorName).Index(5).Name("laptop_processor_class");
+            Map(x => x.Processor.Name).Index(5).Name("laptop_processor_class");
             Map(x => x.RAM_type).Index(6).Name("laptop_ram_type");
             Map(x => x.RAM).Index(7).Name("laptop_ram").TypeConverter<Int32Converter>();
             Map(x => x.StorageCapacity).Index(8).Name("laptop_storage").TypeConverter<Int32Converter>();
