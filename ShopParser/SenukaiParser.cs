@@ -129,7 +129,7 @@ namespace ShopParser
 
                 else if (generalProperties[i].Text.Contains("Procesoriaus klasė"))
                 {
-                    computer.Processor.Name = generalProperties[i + 1].Text;
+                    computer.Processor = new Processor { Name = generalProperties[i + 1].Text };
                 }
 
                 else if (generalProperties[i].Text.Contains("Operatyvioji atmintis (RAM)"))

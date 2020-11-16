@@ -67,7 +67,7 @@ namespace ShopParser
             {
                 if (table[i].Text.Contains("Procesoriaus tipas"))
                 {
-                    computer.Processor.Name = table[i + 1].Text;
+                    computer.Processor = new Processor{Name = table[i + 1].Text};
                 }
 
                 else if (table[i].Text.Contains("Atminties dydis (RAM)"))
