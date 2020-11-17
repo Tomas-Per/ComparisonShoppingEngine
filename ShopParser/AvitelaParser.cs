@@ -132,6 +132,7 @@ namespace ShopParser
                 }
 
             }
+            _driver.Value.Close();
             return computer;
         }
 

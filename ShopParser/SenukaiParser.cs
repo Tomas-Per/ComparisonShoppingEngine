@@ -12,11 +12,17 @@ namespace ShopParser
     public class SenukaiParser : IParser<Computer>
     {
         private readonly string _url = "https://www.senukai.lt/c/kompiuterine-technika-biuro-prekes/nesiojami-kompiuteriai-ir-priedai/nesiojami-kompiuteriai/5ei?";
-        private IWebDriver _driver;
+        private Lazy<ChromeDriver> _driver;
         private string _currentWIndowURL;
+
+        
 
         public SenukaiParser()
         {
+            var options = new ChromeOptions();
+            options.AddArguments("--headless");
+            _driver = new Lazy<ChromeDriver>(() => new ChromeDriver(options));
+            _currentWIndowURL = _url;
         }
 
         //parses laptops from senukai.lt and returns results in a List<Computer>
@@ -24,23 +30,18 @@ namespace ShopParser
         //outdated and don't have items in stock for a long time
         public List<Computer> ParseShop()
         {
-            var options = new ChromeOptions();
-            options.AddArguments("--headless");
-
-            _driver = new ChromeDriver(options);
-            _currentWIndowURL = _url;
-
             List<Computer> data = new List<Computer>();
+            List<string> links = new List<string>();
 
             string nextPage;
 
-            _driver.Navigate().GoToUrl(_url);
+            _driver.Value.Navigate().GoToUrl(_url);
 
             for (int i = 0; i < 5; i++)
             {
                 try
                 {
-                    nextPage = _driver.FindElement(By.XPath("//a[contains(@class, 'next')]")).GetAttribute("href");
+                    nextPage = _driver.Value.FindElement(By.XPath("//a[contains(@class, 'next')]")).GetAttribute("href");
                 }
 
                 catch (Exception)
@@ -48,11 +49,20 @@ namespace ShopParser
                     nextPage = _currentWIndowURL;
                 }
 
-                List<string> links = new List<string>();
+                var elements = _driver.Value.FindElements(By.XPath("//*[@class = 'catalog-taxons-product__name']"));
+                foreach (var element in elements)
+                {
+                    links.Add(element.GetAttribute("href"));
+                }
 
                 foreach (var link in links)
                 {
+                    ((IJavaScriptExecutor)_driver.Value).ExecuteScript("window.open();");
+                    _driver.Value.SwitchTo().Window(_driver.Value.WindowHandles.Last());
+
                     var computer = ParseWindow(link);
+
+                    _driver.Value.SwitchTo().Window(_driver.Value.WindowHandles.First());
 
                     computer.ItemCategory = ItemCategory.Computer;
                     computer.ComputerCategory = ComputerCategory.Laptop;
@@ -64,7 +74,7 @@ namespace ShopParser
 
                 if (nextPage != _currentWIndowURL)
                 {
-                    _driver.Navigate().GoToUrl(nextPage);
+                    _driver.Value.Navigate().GoToUrl(nextPage);
                     _currentWIndowURL = nextPage;
                 }
                 else
@@ -72,7 +82,7 @@ namespace ShopParser
                     break;
                 }
             }
-            _driver.Close();
+            _driver.Value.Close();
             return data;
         }
 
@@ -80,16 +90,16 @@ namespace ShopParser
         //parses laptop window, updates computer fields 
         public Computer ParseWindow(string url)
         {
-            _driver.Navigate().GoToUrl(url);
+            _driver.Value.Navigate().GoToUrl(url);
 
             Computer computer = new Computer();
 
-            computer.Name = _driver.FindElement(By.TagName("h1")).Text;
-            computer.Price = _driver.FindElement(By.XPath("//span[@class = 'price']")).Text.ParseDouble();
+            computer.Name = _driver.Value.FindElement(By.TagName("h1")).Text;
+            computer.Price = _driver.Value.FindElement(By.XPath("//span[@class = 'price']")).Text.ParseDouble();
             computer.ItemURL = url;
             computer.ShopName = "Senukai.lt";
 
-            var image = _driver.FindElements(By.ClassName("product-gallery-slider__slide__image"));
+            var image = _driver.Value.FindElements(By.ClassName("product-gallery-slider__slide__image"));
 
             try
             {
@@ -101,7 +111,7 @@ namespace ShopParser
                 computer.ImageLink = "https://ksd-images.lt/display/aikido/store/1e3628060337b388dd4ffbce4f20f608.jpg?h=742&w=816";
             }
 
-            var table = _driver.FindElements(By.TagName("td"));
+            var table = _driver.Value.FindElements(By.TagName("td"));
 
             for (int i = 0; i < table.Count; i++)
             {
@@ -154,19 +164,11 @@ namespace ShopParser
 
                 else if (table[i].Text.Contains("Kietojo disko talpa(HDD)"))
                 {
-                    try
-                    {
+
                         computer.StorageCapacity += table[i + 1].Text.ParseInt();
-                    }
-
-                    catch (Exception)
-                    {
-
-                    }
-                }
-                
+                }   
             }
-
+            _driver.Value.Close();
             return computer;
         }
     }
