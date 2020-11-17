@@ -57,7 +57,7 @@ namespace ShopParser
         //parses laptop window, updates computer fields
         public Computer ParseWindow(string url)
         {
-            _driver.Navigate().GoToUrl(link);
+            _driver.Navigate().GoToUrl(url);
 
             Computer computer = new Computer();
 
