@@ -4,6 +4,7 @@ using OpenQA.Selenium.Chrome;
 using Parsing;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using static ItemLibrary.Categories;
 
 namespace ShopParser
@@ -18,7 +19,6 @@ namespace ShopParser
             var options = new ChromeOptions();
             options.AddArguments("--headless");
             _driver = new Lazy<ChromeDriver>(() => new ChromeDriver(options));
-
         }
 
         //parses laptops from avitela.lt and returns results in a List<Computer>
@@ -43,9 +43,18 @@ namespace ShopParser
 
                 foreach (var link in links)
                 {
+                    ((IJavaScriptExecutor)_driver.Value).ExecuteScript("window.open();");
+                    _driver.Value.SwitchTo().Window(_driver.Value.WindowHandles.Last());
+
                     var computer = ParseWindow(link);
+
+                    _driver.Value.SwitchTo().Window(_driver.Value.WindowHandles.First());
+
                     computer.ItemCategory = ItemCategory.Computer;
                     computer.ComputerCategory = ComputerCategory.Laptop;
+
+                    Console.WriteLine(computer.Name);
+                    Console.WriteLine(computer.Price);
 
                     data.Add(computer);
                 }
@@ -102,7 +111,7 @@ namespace ShopParser
                 }
 
             }
-
+            _driver.Value.Close();
             return computer;
         }
     }

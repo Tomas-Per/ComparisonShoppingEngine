@@ -19,7 +19,7 @@ namespace AdminService
         {
             string command;
 
-            new PiguParser();
+            new PiguParser().ParseShop();
 
             do
             {
