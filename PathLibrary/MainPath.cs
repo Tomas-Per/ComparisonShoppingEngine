@@ -31,5 +31,9 @@ namespace PathLibrary
         {
             return GetMainPath() + @"\Data\processorFilters.csv";
         }
+        public static string GetShopParserPath()
+        {
+            return GetMainPath() + @"\ShopParser\bin\Debug\net5.0\chromedriver.exe";
+        }
     }
 }
