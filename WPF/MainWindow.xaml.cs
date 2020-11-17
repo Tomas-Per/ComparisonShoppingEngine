@@ -100,7 +100,7 @@ namespace WPF
             ProductName.Text = item.Name;
             ProductPrice.Text = '€' + (item.Price).ToString();
             ProductBrand.Text = item.ManufacturerName;
-            ProductProcessor.Text = item.ProcessorName;
+            ProductProcessor.Text = item.Processor.Name;
             ProductRAM.Text = (item.RAM).ToString() + "GB " + item.RAM_type;
             ProductGraphicsCard.Text = item.GraphicsCardName + ' ' + item.GraphicsCardMemory;
             ProductResolution.Text = item.Resolution;

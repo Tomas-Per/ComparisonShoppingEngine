@@ -7,6 +7,7 @@ namespace ItemLibrary
     {
         //not needed at the moment
         //public ulong ItemCode { get; set; }
+        public int Id { get; set; }
         public double Price { get; set; }
         public string Name { get; set; }
         public string ManufacturerName { get; set; }

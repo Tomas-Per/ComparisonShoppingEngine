@@ -7,7 +7,7 @@ namespace ItemLibrary
 {
     public class Computer : Item
     {
-        public string ProcessorName { get; set; }
+        public Processor Processor { get; set; }
         public string GraphicsCardName { get; set; }
         public string GraphicsCardMemory { get; set; }
         public int RAM { get; set; }
@@ -37,7 +37,7 @@ namespace ItemLibrary
 
         {
             IEnumerable<Computer> computers = list.Cast<Computer>().Where(comp => (comp != this && comp.RAM_type == this.RAM_type && comp.RAM == this.RAM) && 
-                                                                (comp.ProcessorName == this.ProcessorName  
+                                                                (comp.Processor.Name == this.Processor.Name  
                                                                     || (comp.Price >= this.Price - 100 && comp.Price <= this.Price + 100) 
                                                                     || comp.StorageCapacity == this.StorageCapacity));
             return computers.Cast<Item>().ToList();
