@@ -33,7 +33,7 @@ namespace PathLibrary
         }
         public static string GetShopParserPath()
         {
-            return GetMainPath() + @"\ShopParser\bin\Debug\net5.0\chromedriver.exe";
+            return GetMainPath() + @"\ShopParser\bin\Debug\net5.0";
         }
     }
 }
