@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Parsing;
 using static ItemLibrary.Categories;
+using PathLibrary;
 
 namespace ShopParser
 {
@@ -18,7 +19,7 @@ namespace ShopParser
         {
             var options = new ChromeOptions();
             options.AddArguments("--headless");
-            _driver = new Lazy<ChromeDriver>(() => new ChromeDriver(options));
+            _driver = new Lazy<ChromeDriver>(() => new ChromeDriver(MainPath.GetShopParserPath(), options));
         }
 
         //parses laptops from senukai.lt and returns results in a List<Computer>

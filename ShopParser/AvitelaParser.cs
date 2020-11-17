@@ -7,6 +7,7 @@ using System.Runtime.InteropServices.ComTypes;
 using Parsing;
 using static ItemLibrary.Categories;
 using System.Linq;
+using PathLibrary;
 
 namespace ShopParser
 {
@@ -19,7 +20,7 @@ namespace ShopParser
         {
             var options = new ChromeOptions();
             options.AddArguments("--headless");
-            _driver = new Lazy<ChromeDriver>(() => new ChromeDriver(options));
+            _driver = new Lazy<ChromeDriver>(() => new ChromeDriver(MainPath.GetShopParserPath(), options));
         }
 
         //parses laptops from avitela.lt and returns results in a List<Computer>
