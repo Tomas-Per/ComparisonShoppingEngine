@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using static ItemLibrary.Categories;
 
@@ -8,10 +9,20 @@ namespace ItemLibrary
     public class Computer : Item
     {
         public Processor Processor { get; set; }
+
+        [MaxLength(64)]
         public string GraphicsCardName { get; set; }
+
+        [MaxLength(16)]
         public string GraphicsCardMemory { get; set; }
+
+        [Required]
         public int RAM { get; set; }
+
+        [MaxLength(16)]
         public string RAM_type { get; set; }
+
+        [MaxLength(16)]
         public string Resolution { get; set; }
         public ComputerCategory ComputerCategory { get; set; }
 
