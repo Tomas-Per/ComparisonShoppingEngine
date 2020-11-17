@@ -50,7 +50,10 @@ namespace ShopParser
                 {
                     _driver.Navigate().GoToUrl(link);
 
-                    Computer computer =ParseWindow(new Computer {ItemURL = link, ItemCategory = ItemCategory.Computer, ComputerCategory = ComputerCategory.Laptop, ShopName = "Avitela" });
+                    Computer computer =ParseWindow(link);
+
+                    computer.ItemCategory = ItemCategory.Computer;
+                    computer.ComputerCategory = ComputerCategory.Laptop;
 
                     if (computer.Resolution != null)
                     {
@@ -67,11 +70,14 @@ namespace ShopParser
 
 
         //parses laptop window, updates computer fields
-        public Computer ParseWindow(Computer computer)
+        public Computer ParseWindow(string url)
         {
-            computer.Name = _driver.FindElement(By.Id("pname")).Text;
 
+            Computer computer = new Computer();
+            computer.Name = _driver.FindElement(By.Id("pname")).Text;
             computer.Price = _driver.FindElement(By.Id("price-old")).Text.ParseDouble();
+            computer.ItemURL = url;
+            computer.ShopName = "Avitela";
 
             try
             {
