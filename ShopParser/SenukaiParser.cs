@@ -11,18 +11,14 @@ namespace ShopParser
 {
     public class SenukaiParser : IParser<Computer>
     {
-        private readonly string _url = "https://www.senukai.lt/c/kompiuterine-technika-biuro-prekes/nesiojami-kompiuteriai-ir-priedai/nesiojami-kompiuteriai/5ei?";
-        private Lazy<ChromeDriver> _driver;
-        private string _currentWIndowURL;
-
-        
+        private readonly string _url = "https://www.senukai.lt/c/kompiuterine-technika-biuro-prekes/nesiojami-kompiuteriai-ir-priedai/nesiojami-kompiuteriai/5ei?page=1";
+        private Lazy<ChromeDriver> _driver;   
 
         public SenukaiParser()
         {
             var options = new ChromeOptions();
             options.AddArguments("--headless");
             _driver = new Lazy<ChromeDriver>(() => new ChromeDriver(options));
-            _currentWIndowURL = _url;
         }
 
         //parses laptops from senukai.lt and returns results in a List<Computer>
@@ -33,21 +29,11 @@ namespace ShopParser
             List<Computer> data = new List<Computer>();
             List<string> links = new List<string>();
 
-            string nextPage;
-
-            _driver.Value.Navigate().GoToUrl(_url);
-
-            for (int i = 0; i < 5; i++)
+            for (int i = 1; i <= 5; i++)
             {
-                try
-                {
-                    nextPage = _driver.Value.FindElement(By.XPath("//a[contains(@class, 'next')]")).GetAttribute("href");
-                }
+                var nextPage = _url.Remove(_url.Length - 1, 1) + i;
 
-                catch (Exception)
-                {
-                    nextPage = _currentWIndowURL;
-                }
+                _driver.Value.Navigate().GoToUrl(nextPage);
 
                 var elements = _driver.Value.FindElements(By.XPath("//*[@class = 'catalog-taxons-product__name']"));
                 foreach (var element in elements)
@@ -67,19 +53,6 @@ namespace ShopParser
                     computer.ItemCategory = ItemCategory.Computer;
                     computer.ComputerCategory = ComputerCategory.Laptop;
                     data.Add(computer);
-
-                    //_driver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(10);
-
-                }
-
-                if (nextPage != _currentWIndowURL)
-                {
-                    _driver.Value.Navigate().GoToUrl(nextPage);
-                    _currentWIndowURL = nextPage;
-                }
-                else
-                {
-                    break;
                 }
             }
             _driver.Value.Close();
