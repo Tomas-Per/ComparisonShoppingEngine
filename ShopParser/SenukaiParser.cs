@@ -20,7 +20,7 @@ namespace ShopParser
         }
 
         //parses laptops from senukai.lt and returns results in a List<Computer>
-        //this method parses first 10 pages (48laptops in every page), because later pages are
+        //this method parses first 5 pages (48laptops in every page), because later pages are
         //outdated and don't have items in stock for a long time
         public List<Computer> ParseShop()
         {
@@ -36,7 +36,7 @@ namespace ShopParser
 
             _driver.Navigate().GoToUrl(_url);
 
-            for (int i = 0; i < 10; i++)
+            for (int i = 0; i < 5; i++)
             {
                 try
                 {
@@ -48,39 +48,18 @@ namespace ShopParser
                     nextPage = _currentWIndowURL;
                 }
 
-                var names = _driver.FindElements(By.XPath("//*[@class = 'catalog-taxons-product__name']"));
-                var prices = _driver.FindElements(By.XPath("//*[@class = 'catalog-taxons-product-price__item-price']"));
-
                 List<string> links = new List<string>();
-                List<string> pricesList = new List<string>();
-                List<string> namesList = new List<string>();
-
-                foreach (var price in prices)
-                {
-                    pricesList.Add(price.Text);
-                }
-
-                foreach (var element in names)
-                {
-                    links.Add(element.GetAttribute("href"));
-                    namesList.Add(element.Text);
-                }
 
                 foreach (var link in links)
                 {
-                    Computer computer = new Computer { Name = namesList.ElementAt(0), Price = pricesList.ElementAt(0).ParseDouble(), ItemCategory = ItemCategory.Computer, ComputerCategory = ComputerCategory.Laptop, ShopName = "Senukai" };
+                    var computer = ParseWindow(link);
 
-                    namesList.RemoveAt(0);
-                    pricesList.RemoveAt(0);
-
-                    computer.ItemURL = link;
-
-                    _driver.Navigate().GoToUrl(link);
-
-                    data.Add(ParseWindow(computer));
-                    _driver.Navigate().Back();
+                    computer.ItemCategory = ItemCategory.Computer;
+                    computer.ComputerCategory = ComputerCategory.Laptop;
+                    data.Add(computer);
 
                     //_driver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(10);
+
                 }
 
                 if (nextPage != _currentWIndowURL)
@@ -88,18 +67,27 @@ namespace ShopParser
                     _driver.Navigate().GoToUrl(nextPage);
                     _currentWIndowURL = nextPage;
                 }
+                else
+                {
+                    break;
+                }
             }
-
             _driver.Close();
             return data;
         }
 
 
         //parses laptop window, updates computer fields 
-        public Computer ParseWindow(Computer computer)
+        public Computer ParseWindow(string url)
         {
+            _driver.Navigate().GoToUrl(url);
 
-            //var id = _driver.FindElement(By.ClassName("product-id"));
+            Computer computer = new Computer();
+
+            computer.Name = _driver.FindElement(By.TagName("h1")).Text;
+            computer.Price = _driver.FindElement(By.XPath("//span[@class = 'price']")).Text.ParseDouble();
+            computer.ItemURL = url;
+            computer.ShopName = "Senukai.lt";
 
             var image = _driver.FindElements(By.ClassName("product-gallery-slider__slide__image"));
 
@@ -113,62 +101,62 @@ namespace ShopParser
                 computer.ImageLink = "https://ksd-images.lt/display/aikido/store/1e3628060337b388dd4ffbce4f20f608.jpg?h=742&w=816";
             }
 
-            var generalProperties = _driver.FindElements(By.TagName("td"));
+            var table = _driver.FindElements(By.TagName("td"));
 
-            for (int i = 0; i < generalProperties.Count; i++)
+            for (int i = 0; i < table.Count; i++)
             {
-                if (generalProperties[i].Text.Contains("Prekės ženklas"))
+                if (table[i].Text.Contains("Prekės ženklas"))
                 {
-                    computer.ManufacturerName = generalProperties[i + 1].Text;
+                    computer.ManufacturerName = table[i + 1].Text;
                 }
 
-                else if (generalProperties[i].Text.Contains("Ekrano raiška taškais"))
+                else if (table[i].Text.Contains("Ekrano raiška taškais"))
                 {
-                    computer.Resolution = generalProperties[i + 1].Text;
+                    computer.Resolution = table[i + 1].Text;
                 }
 
-                else if (generalProperties[i].Text.Contains("Procesoriaus klasė"))
+                else if (table[i].Text.Contains("Procesoriaus klasė"))
                 {
-                    computer.Processor = new Processor { Name = generalProperties[i + 1].Text };
+                    computer.Processor = new Processor { Name = table[i + 1].Text };
                 }
 
-                else if (generalProperties[i].Text.Contains("Operatyvioji atmintis (RAM)"))
+                else if (table[i].Text.Contains("Operatyvioji atmintis (RAM)"))
                 {
 
-                    computer.RAM = generalProperties[i + 1].Text.ParseInt();
+                    computer.RAM = table[i + 1].Text.ParseInt();
                 }
 
-                else if (generalProperties[i].Text.Contains("Operatyviosios atminties tipas"))
+                else if (table[i].Text.Contains("Operatyviosios atminties tipas"))
                 {
-                    computer.RAM_type = generalProperties[i + 1].Text;
+                    computer.RAM_type = table[i + 1].Text;
                 }
 
-                else if (generalProperties[i].Text.Contains("Vaizdo plokštės"))
+                else if (table[i].Text.Contains("Vaizdo plokštės"))
                 {
-                    if (generalProperties[i].Text.Contains("modelis"))
+                    if (table[i].Text.Contains("modelis"))
                     {
-                        computer.GraphicsCardName = generalProperties[i + 1].Text;
+                        computer.GraphicsCardName = table[i + 1].Text;
                     }
-                    else if (generalProperties[i].Text.Contains("serija") && computer.GraphicsCardName == null)
+                    else if (table[i].Text.Contains("serija") && computer.GraphicsCardName == null)
                     {
-                        computer.GraphicsCardName = generalProperties[i + 1].Text;
+                        computer.GraphicsCardName = table[i + 1].Text;
                     }
 
-                    else if (generalProperties[i].Text.Contains("atmintis"))
+                    else if (table[i].Text.Contains("atmintis"))
                     {
-                        computer.GraphicsCardMemory = generalProperties[i + 1].Text;
+                        computer.GraphicsCardMemory = table[i + 1].Text;
                     }
                 }
-                else if (generalProperties[i].Text.Contains("MMC disko talpa"))
+                else if (table[i].Text.Contains("MMC disko talpa"))
                 {
-                    computer.StorageCapacity += generalProperties[i + 1].Text.ParseInt();
+                    computer.StorageCapacity += table[i + 1].Text.ParseInt();
                 }
 
-                else if (generalProperties[i].Text.Contains("Kietojo disko talpa(HDD)"))
+                else if (table[i].Text.Contains("Kietojo disko talpa(HDD)"))
                 {
                     try
                     {
-                        computer.StorageCapacity += generalProperties[i + 1].Text.ParseInt();
+                        computer.StorageCapacity += table[i + 1].Text.ParseInt();
                     }
 
                     catch (Exception)
