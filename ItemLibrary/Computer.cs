@@ -31,6 +31,7 @@ namespace ItemLibrary
             throw new NotImplementedException();
         }
 
+        [Required]
         public int StorageCapacity { get; set; }
 
 
