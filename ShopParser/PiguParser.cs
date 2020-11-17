@@ -53,9 +53,6 @@ namespace ShopParser
                     computer.ItemCategory = ItemCategory.Computer;
                     computer.ComputerCategory = ComputerCategory.Laptop;
 
-                    Console.WriteLine(computer.Name);
-                    Console.WriteLine(computer.Price);
-
                     data.Add(computer);
                 }
             }
