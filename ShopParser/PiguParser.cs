@@ -11,8 +11,15 @@ namespace ShopParser
     public class PiguParser : IParser<Computer>
     {
         private readonly string _url = "https://pigu.lt/lt/kompiuteriai/nesiojami-kompiuteriai?page=1";
-        private IWebDriver _driver;
+        private Lazy<ChromeDriver> _driver;
 
+        public PiguParser ()
+        {
+            var options = new ChromeOptions();
+            options.AddArguments("--headless");
+            _driver = new Lazy<ChromeDriver>(() => new ChromeDriver(options));
+
+        }
 
         //parses laptops from avitela.lt and returns results in a List<Computer>
         public List<Computer> ParseShop()
@@ -20,19 +27,14 @@ namespace ShopParser
             List<Computer> data = new List<Computer>();
             List<String> links = new List<String>();
 
-            var options = new ChromeOptions();
-            options.AddArguments("--headless");
-
-            _driver = new ChromeDriver();
-
             for (int i = 1; i <= 3; i++)
             {
 
                 var nextPage = _url.Remove(_url.Length - 1, 1) + i;
 
-                _driver.Navigate().GoToUrl(nextPage);
+                _driver.Value.Navigate().GoToUrl(nextPage);
 
-                var elements = _driver.FindElements(By.ClassName("cover-link"));
+                var elements = _driver.Value.FindElements(By.ClassName("cover-link"));
 
                 foreach (var item in elements)
                 {
@@ -46,8 +48,6 @@ namespace ShopParser
                     computer.ComputerCategory = ComputerCategory.Laptop;
 
                     data.Add(computer);
-
-                    _driver.Navigate().Back();
                 }
             }
 
@@ -57,17 +57,17 @@ namespace ShopParser
         //parses laptop window, updates computer fields
         public Computer ParseWindow(string url)
         {
-            _driver.Navigate().GoToUrl(url);
+            _driver.Value.Navigate().GoToUrl(url);
 
             Computer computer = new Computer();
 
-            computer.Name = _driver.FindElement(By.TagName("h1")).Text;
-            computer.Price = _driver.FindElement(By.XPath("//meta[@itemprop='price']")).GetAttribute("content").ParseDouble();
-            computer.ImageLink = _driver.FindElement(By.ClassName("media-items-wrap")).FindElement(By.TagName("img")).GetAttribute("src");
+            computer.Name = _driver.Value.FindElement(By.TagName("h1")).Text;
+            computer.Price = _driver.Value.FindElement(By.XPath("//meta[@itemprop='price']")).GetAttribute("content").ParseDouble();
+            computer.ImageLink = _driver.Value.FindElement(By.ClassName("media-items-wrap")).FindElement(By.TagName("img")).GetAttribute("src");
             computer.ItemURL = url;
             computer.ShopName = "Pigu";
 
-            var table = _driver.FindElements(By.TagName("td"));
+            var table = _driver.Value.FindElements(By.TagName("td"));
 
             for (int i = 0; i < table.Count; i++)
             {
