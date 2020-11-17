@@ -41,10 +41,11 @@ namespace ShopParser
 
                 foreach (var link in links)
                 {
-                    _driver.Navigate().GoToUrl(link);
+                    var computer = ParseWindow(link);
+                    computer.ItemCategory = ItemCategory.Computer;
+                    computer.ComputerCategory = ComputerCategory.Laptop;
 
-                    Computer computer = new Computer { ItemURL = link, ShopName = "Pigu", ItemCategory = ItemCategory.Computer, ComputerCategory = ComputerCategory.Laptop };
-                    data.Add(ParseWindow(computer));
+                    data.Add(computer);
 
                     _driver.Navigate().Back();
                 }
@@ -54,12 +55,17 @@ namespace ShopParser
         }
 
         //parses laptop window, updates computer fields
-        public Computer ParseWindow(Computer computer)
+        public Computer ParseWindow(string url)
         {
+            _driver.Navigate().GoToUrl(link);
+
+            Computer computer = new Computer();
+
             computer.Name = _driver.FindElement(By.TagName("h1")).Text;
             computer.Price = _driver.FindElement(By.XPath("//meta[@itemprop='price']")).GetAttribute("content").ParseDouble();
             computer.ImageLink = _driver.FindElement(By.ClassName("media-items-wrap")).FindElement(By.TagName("img")).GetAttribute("src");
-
+            computer.ItemURL = url;
+            computer.ShopName = "Pigu";
 
             var table = _driver.FindElements(By.TagName("td"));
 
