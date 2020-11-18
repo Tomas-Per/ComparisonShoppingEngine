@@ -15,24 +15,28 @@ namespace DataManipulation.Filters
 
         }
 
+        //Filters item list by the processor
         public List<Smartphone> FilterByProcessor(string processor)
         {
             List<Smartphone> result = _items.Where(item => (item.Processor).DeleteSpecialChars() == processor).ToList();
             return result;
         }
 
+        //Filters item list by the screen diagonal
         public List<Smartphone> FilterByScreenDiagonal(double diagonal)
         {
             List<Smartphone> result = _items.Where(item => item.ScreenDiagonal == diagonal).ToList();
             return result;
         }
 
+        //Filters item list by RAM amount
         public List<Smartphone> FilterByRAM(int RAM)
         {
             List<Smartphone> result = _items.Where(item => item.RAM == RAM).ToList();
             return result;
         }
 
+        //Filters item list by storage amount
         public List<Smartphone> FilterByStorage(int storage)
         {
             List<Smartphone> result = _items.Where(item => item.Storage == storage).ToList();
