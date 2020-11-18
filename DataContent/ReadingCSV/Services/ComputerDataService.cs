@@ -12,7 +12,9 @@ namespace DataContent.ReadingCSV.Services
         private DbContext _db { get; set; }
         static void Main()
         {
-            var a = new Computer() { Name = "Apple", Price = 16.28, ItemURL = "www.b.com", RAM = 16 };
+            var a = new Computer() { Name = "Apple1", Price = 16.28, ItemURL = "www.b.com", RAM = 16, ManufacturerName = "Apple",
+                                    Processor = new Processor { Name = "Intel" }, StorageCapacity = 256, Resolution = "1980x720" };
+         
             List<Computer> _list = new List<Computer>();
             _list.Add(a);
             var serv = new ComputerDataService();

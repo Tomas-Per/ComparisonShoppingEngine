@@ -62,7 +62,7 @@ namespace ItemLibrary
                 Computer comp = (Computer)obj;
                 if (comp.ManufacturerName != this.ManufacturerName)
                 {
-                    if ((!comp.Name.Contains(this.ManufacturerName)) || (!this.Name.Contains(comp.ManufacturerName))) return false;
+                    if ((!comp.Name.Contains(this.ManufacturerName)) && (!this.Name.Contains(comp.ManufacturerName))) return false;
                 }
                 if (comp.Processor.Name == this.Processor.Name &&
                     comp.StorageCapacity == this.StorageCapacity &&
