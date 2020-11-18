@@ -42,5 +42,19 @@ namespace DataManipulation.Filters
             List<Smartphone> result = _items.Where(item => item.Storage == storage).ToList();
             return result;
         }
+
+        //Filters item list by camera type (quad, triple, dual, single)
+        public List<Smartphone> FilterByCameraType(int cameraAmount)
+        {
+            List<Smartphone> result = _items.Where(item => item.BackCameraMP.Count == cameraAmount).ToList();
+            return result;
+        }
+
+        //Filters item list by the megapixels if the phone has a single camera
+        public List<Smartphone> FilterByCameraMP(int megapixels)
+        {
+            List<Smartphone> result = _items.Where(item => item.BackCameraMP.Count == 1 && item.BackCameraMP.First() == megapixels).ToList();
+            return result;
+        }
     }
 }
