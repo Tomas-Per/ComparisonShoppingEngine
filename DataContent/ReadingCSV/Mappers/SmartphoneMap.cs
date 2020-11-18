@@ -19,7 +19,7 @@ namespace DataContent.ReadingCSV.Mappers
             Map(x => x.Processor).Index(5);
             Map(x => x.RAM).Index(7).TypeConverter<Int32Converter>();
             Map(x => x.Storage).Index(8).TypeConverter<Int32Converter>();
-            Map(x => x.DisplaySize).Index(9);
+            Map(x => x.Resolution).Index(9);
             Map(x => x.BatteryStorage).Index(10).TypeConverter<Int32Converter>();
             Map(x => x.ImageLink).Index(11);
             Map(x => x.BackCameraMP).Index(12);

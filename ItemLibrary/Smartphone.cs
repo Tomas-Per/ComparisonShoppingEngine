@@ -12,7 +12,7 @@ namespace ItemLibrary
         public int Storage { get; set; }
         public int RAM { get; set; }
         public string Processor { get; set; }
-        public string DisplaySize { get; set; }
+        public string Resolution { get; set; }
         public int BatteryStorage { get; set; }
 
 
