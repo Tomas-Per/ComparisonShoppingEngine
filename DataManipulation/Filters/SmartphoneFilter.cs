@@ -26,5 +26,11 @@ namespace DataManipulation.Filters
             List<Smartphone> result = _items.Where(item => item.ScreenDiagonal == diagonal).ToList();
             return result;
         }
+
+        public List<Smartphone> FilterByRAM(int RAM)
+        {
+            List<Smartphone> result = _items.Where(item => item.RAM == RAM).ToList();
+            return result;
+        }
     }
 }
