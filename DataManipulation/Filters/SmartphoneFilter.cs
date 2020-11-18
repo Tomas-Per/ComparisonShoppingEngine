@@ -32,5 +32,11 @@ namespace DataManipulation.Filters
             List<Smartphone> result = _items.Where(item => item.RAM == RAM).ToList();
             return result;
         }
+
+        public List<Smartphone> FilterByStorage(int storage)
+        {
+            List<Smartphone> result = _items.Where(item => item.Storage == storage).ToList();
+            return result;
+        }
     }
 }
