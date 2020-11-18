@@ -54,6 +54,27 @@ namespace ItemLibrary
                                                                     || comp.StorageCapacity == this.StorageCapacity));
             return computers.Cast<Item>().ToList();
         }
+        public override bool Equals(object obj)
+        {
+            if (obj == null || !this.GetType().Equals(obj.GetType())) return false;
+            else
+            {
+                Computer comp = (Computer)obj;
+                if (comp.ManufacturerName != this.ManufacturerName)
+                {
+                    if ((!comp.Name.Contains(this.ManufacturerName)) || (!this.Name.Contains(comp.ManufacturerName))) return false;
+                }
+                if (comp.Processor.Name == this.Processor.Name &&
+                    comp.StorageCapacity == this.StorageCapacity &&
+                     comp.RAM == this.RAM &&
+                      comp.Resolution == comp.Resolution) return true;
 
+                else return false;
+            }
+        }
+        public override int GetHashCode()
+        {
+            return base.GetHashCode();
+        }
     }
 }
