@@ -1,7 +1,7 @@
 ﻿using DataContent.ReadingCSV.Services;
 using DataUpdater;
 using ExceptionsLogging;
-using ShopParser;
+using WebParser.ShopParser;
 using System;
 using System.Collections.Generic;
 using System.IO;

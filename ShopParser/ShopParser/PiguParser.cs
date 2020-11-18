@@ -8,7 +8,7 @@ using System.Collections.Generic;
 using System.Linq;
 using static ItemLibrary.Categories;
 
-namespace ShopParser
+namespace WebParser.ShopParser
 {
     public class PiguParser : IParser<Computer>
     {

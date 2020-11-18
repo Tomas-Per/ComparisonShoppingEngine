@@ -8,7 +8,8 @@ using Parsing;
 using static ItemLibrary.Categories;
 using PathLibrary;
 
-namespace ShopParser
+
+namespace WebParser.ShopParser
 {
     public class SenukaiParser : IParser<Computer>
     {

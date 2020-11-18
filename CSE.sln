@@ -23,7 +23,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DataManipulation", "DataMan
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Comparison", "Comparison\Comparison.csproj", "{E953965C-FB11-48E9-94E2-806D27257D04}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ShopParser", "ShopParser\ShopParser.csproj", "{F85374DE-BA6D-413B-9763-9FEA873912FF}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WebParser", "ShopParser\WebParser.csproj", "{F85374DE-BA6D-413B-9763-9FEA873912FF}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AdminService", "AdminService\AdminService.csproj", "{29B9C771-07F5-451B-A6F6-0FD8B1BE7AFA}"
 EndProject

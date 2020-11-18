@@ -3,13 +3,12 @@ using OpenQA.Selenium;
 using OpenQA.Selenium.Chrome;
 using System;
 using System.Collections.Generic;
-using System.Runtime.InteropServices.ComTypes;
 using Parsing;
 using static ItemLibrary.Categories;
 using System.Linq;
 using PathLibrary;
 
-namespace ShopParser
+namespace WebParser.ShopParser
 {
     public class AvitelaParser : IParser<Computer>
     {
