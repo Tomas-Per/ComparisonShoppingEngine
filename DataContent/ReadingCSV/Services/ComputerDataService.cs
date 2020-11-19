@@ -3,39 +3,48 @@ using ItemLibrary.DataContexts;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 
 namespace DataContent.ReadingCSV.Services
 {
     class ComputerDataService :IData<IEnumerable<Computer>>
     {
-        private DbContext _db { get; set; }
+        private ComputerContext _db { get; set; }
         static void Main()
         {
-            var a = new Computer() { Name = "Apple1", Price = 16.28, ItemURL = "www.b.com", RAM = 16, ManufacturerName = "Apple",
-                                    Processor = new Processor { Name = "Intel" }, StorageCapacity = 256, Resolution = "1980x720" };
-         
+            var p = new Processor { Name = "Intel Core i5", Model = "Intel Core i5-10400F", Cache = 12, MinCores = 6 };
+            var a = new Computer() { Name = "Apple1", Price = 162.28, ItemURL = "www.b.com", RAM = 16, ManufacturerName = "Apple",
+                                    Processor = p, StorageCapacity = 256, Resolution = "1980x720" };
             List<Computer> _list = new List<Computer>();
             _list.Add(a);
             var serv = new ComputerDataService();
             serv.WriteData(_list);
 
         }
-        public ComputerDataService()
-        {
-           // _db = new ComputerContext();
-        }
-
         public IEnumerable<Computer> ReadData()
         {
-            throw new NotImplementedException();
+            using (_db = new ComputerContext())
+            {
+                var computers = _db.Computers.Include(x => x.Processor).ToList();
+                return computers;
+            }
         }
 
         public void WriteData(IEnumerable<Computer> list)
         {
             using (_db = new ComputerContext())
             {
-                _db.AddRange(list);
+                foreach(Computer computer in list)
+                {
+                    var sameComputer = _db.Computers
+                                            .Where(x => x.Name == computer.Name)
+                                            .Where(x => x.ShopName == computer.ShopName)
+                                            .FirstOrDefault();
+                    if (sameComputer != null) sameComputer.Price = computer.Price;
+                    else _db.Add(computer);
+                    
+                }
                 _db.SaveChanges();
             }
         }
