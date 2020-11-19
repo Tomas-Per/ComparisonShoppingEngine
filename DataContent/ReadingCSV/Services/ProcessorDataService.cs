@@ -34,31 +34,27 @@ namespace DataContent.ReadingCSV.Services
         public Processor GetProcessor(string processorModel)
         {
             processorModel.DeleteSpecialChars();
-            if (processorModel.Length > 3)
+            using(_db = new ComputerContext())
             {
-                using (_db = new ComputerContext())
+                var processor = _db.Processors
+                                .Where(x => x.Model.Contains(processorModel)
+                                || processorModel.Contains(x.Model)).FirstOrDefault();
+                if(processor!= null) return processor;
+                else
                 {
-                    var processor = _db.Processors
-                                    .Where(x => x.Model.Contains(processorModel)
-                                    || processorModel.Contains(x.Model)).FirstOrDefault();
-                    if (processor != null) return processor;
-                    else
+                    try
                     {
-                        try
-                        {
-                            processor = new ProcessorParser().ParseProcessor(processorModel);
-                        }
-                        catch (ProcessorNotFoundException)
-                        {
-                            processor = new Processor { Model = processorModel };
-                            processor.SetName(processorModel);
-                            ExceptionLogger.LogProcessorParsingException(processor);
-                        }
-                        return processor;
+                        processor = new ProcessorParser().ParseProcessor(processorModel);
                     }
+                    catch(ProcessorNotFoundException)
+                    {
+                        processor = new Processor { Model = processorModel };
+                        processor.SetName(processorModel);
+                        ExceptionLogger.LogProcessorParsingException(processor);
+                    }
+                    return processor;
                 }
             }
-            else return null;
         }
     }
 }
