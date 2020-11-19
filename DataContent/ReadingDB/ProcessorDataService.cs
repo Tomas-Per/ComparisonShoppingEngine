@@ -9,7 +9,7 @@ using System.Text;
 using System.Threading.Tasks;
 using WebParser.ComponentsParser;
 
-namespace DataContent.ReadingCSV.Services
+namespace DataContent.ReadingDB.Services
 {
     public class ProcessorDataService : IData<IEnumerable<Processor>>
     {

@@ -7,7 +7,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace DataContent.ReadingCSV.Services
+namespace DataContent.ReadingDB.Services
 {
     class ComputerDataService :IData<IEnumerable<Computer>>
     {
