@@ -17,11 +17,11 @@ namespace ItemLibrary
         public int MinCores { get; set; }
 
         //sets Processor type/name according to it's model
-        public void SetName()
+        public void SetName(string processorModel)
         {
             string name;
-            if (Model.Contains("-")) name = Model.Substring(0, Model.IndexOf("-"));
-            else name = Model.Substring(0, Model.IndexOf(Model.Split().Last()));
+            if (processorModel.Contains("-")) name = processorModel.Substring(0, processorModel.IndexOf("-"));
+            else name = processorModel.Substring(0, processorModel.IndexOf(processorModel.Split().Last()));
             Name = name;
         }
         
