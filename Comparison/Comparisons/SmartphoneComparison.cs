@@ -63,5 +63,19 @@ namespace Comparison.Comparisons
             TotalWeight += RamWeight + StorageWeight + CameraWeight;
         }
 
+        public (double, double) GetStorageRankings()
+        {
+            return StorageRanking;
+        }
+
+        public (double, double) GetRamRankings()
+        {
+            return RamRanking;
+        }
+
+        public (double, double) GetCameraRankings()
+        {
+            return CameraRanking;
+        }
     }
 }
