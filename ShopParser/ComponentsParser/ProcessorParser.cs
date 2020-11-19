@@ -42,11 +42,17 @@ namespace WebParser.ComponentsParser
 
             var button = _driver.Value.FindElements(By.CssSelector("a.btn.btn-default"));
 
-             var link = button[0].GetAttribute("href");
+            try
+            {
+                var link = button[0].GetAttribute("href");
+                _driver.Value.Navigate().GoToUrl(link);
+            }
+            catch (Exception)
+            {
+                throw new ProcessorNotFoundException("Processor could not be parsed");
+            }
 
-            _driver.Value.Navigate().GoToUrl(link);
-
-     
+           
             var table = _driver.Value.FindElements(By.TagName("td"));
 
             Processor processor = new Processor ();
