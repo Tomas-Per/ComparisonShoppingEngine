@@ -6,6 +6,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\DataContent\DataContent.csproj" />
     <ProjectReference Include="..\DataUpdater\DataUpdater.csproj" />
     <ProjectReference Include="..\ExceptionsLogging\ExceptionsLogging.csproj" />
   </ItemGroup>
