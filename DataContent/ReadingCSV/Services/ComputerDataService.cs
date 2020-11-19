@@ -1,4 +1,5 @@
-﻿using ItemLibrary;
+﻿using DataManipulation.DataFillers;
+using ItemLibrary;
 using ItemLibrary.DataContexts;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -11,17 +12,7 @@ namespace DataContent.ReadingCSV.Services
     class ComputerDataService :IData<IEnumerable<Computer>>
     {
         private ComputerContext _db { get; set; }
-        static void Main()
-        {
-            var p = new Processor { Name = "Intel Core i5", Model = "Intel Core i5-10400F", Cache = 12, MinCores = 6 };
-            var a = new Computer() { Name = "Apple1", Price = 162.28, ItemURL = "www.b.com", RAM = 16, ManufacturerName = "Apple",
-                                    Processor = p, StorageCapacity = 256, Resolution = "1980x720" };
-            List<Computer> _list = new List<Computer>();
-            _list.Add(a);
-            var serv = new ComputerDataService();
-            serv.WriteData(_list);
-
-        }
+       
         public IEnumerable<Computer> ReadData()
         {
             using (_db = new ComputerContext())
@@ -44,17 +35,20 @@ namespace DataContent.ReadingCSV.Services
                     if (sameComputer != null) sameComputer.Price = computer.Price;
                     else
                     {
-                        var sameComputers = _db.Computers
+                        var similarComputers = _db.Computers
                                             .Where(x => x.RAM == computer.RAM
                                             && x.StorageCapacity == computer.StorageCapacity
                                             && x.Resolution.Contains(computer.Resolution)
                                             && computer.Resolution.Contains(x.Resolution))
                                             .ToList();
-                        foreach(var sameComp in sameComputers)
+                        similarComputers.Add(computer);
+                        var sameComputers = new List<Computer>();
+                        foreach(var similarComputer in similarComputers)
                         {
-                            if (!sameComp.Equals(computer)) sameComputers.Remove(sameComp);
+                            if (similarComputer.Equals(computer)) sameComputers.Add(similarComputer);
                         }
-                        _db.Add(computer);
+                        sameComputers = new ComputerFiller().FillComputers(sameComputers);
+                        _db.AddRange(sameComputers);
                     }
                 }
                 _db.SaveChanges();

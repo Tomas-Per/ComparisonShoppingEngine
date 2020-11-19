@@ -62,10 +62,11 @@ namespace ItemLibrary
                 Computer comp = (Computer)obj;
                 if (comp.ManufacturerName != this.ManufacturerName)
                 {
-                    if ((!comp.Name.Contains(this.ManufacturerName)) && (!this.Name.Contains(comp.ManufacturerName))) return false;
+                    if (((this.ManufacturerName != null && !comp.Name.Contains(this.ManufacturerName)))
+                       && ((comp.Name != null && !this.Name.Contains(comp.ManufacturerName)))) return false;
                 }
                 if (comp.Processor.Name.Equals(this.Processor.Name) &&
-                    comp.StorageCapacity ==StorageCapacity &&
+                    comp.StorageCapacity ==this.StorageCapacity &&
                      comp.RAM == this.RAM &&
                       (comp.Resolution.Contains(this.Resolution) || this.Resolution.Contains(comp.Resolution))) return true;
 

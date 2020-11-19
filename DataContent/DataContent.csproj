@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <OutputType>Exe</OutputType>
+    <OutputType>Library</OutputType>
     <TargetFramework>net5.0</TargetFramework>
   </PropertyGroup>
 
@@ -14,6 +14,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\DataManipulation\DataManipulation.csproj" />
     <ProjectReference Include="..\ExceptionsLogging\ExceptionsLogging.csproj" />
     <ProjectReference Include="..\Extensions\Extensions.csproj" />
     <ProjectReference Include="..\ItemLibrary\ItemLibrary.csproj" />
