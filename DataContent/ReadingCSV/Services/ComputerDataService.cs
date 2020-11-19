@@ -35,15 +35,27 @@ namespace DataContent.ReadingCSV.Services
         {
             using (_db = new ComputerContext())
             {
-                foreach(Computer computer in list)
+                foreach (Computer computer in list)
                 {
                     var sameComputer = _db.Computers
-                                            .Where(x => x.Name == computer.Name)
-                                            .Where(x => x.ShopName == computer.ShopName)
+                                            .Where(x => x.Name == computer.Name
+                                            && x.ShopName == computer.ShopName)
                                             .FirstOrDefault();
                     if (sameComputer != null) sameComputer.Price = computer.Price;
-                    else _db.Add(computer);
-                    
+                    else
+                    {
+                        var sameComputers = _db.Computers
+                                            .Where(x => x.RAM == computer.RAM
+                                            && x.StorageCapacity == computer.StorageCapacity
+                                            && x.Resolution.Contains(computer.Resolution)
+                                            && computer.Resolution.Contains(x.Resolution))
+                                            .ToList();
+                        foreach(var sameComp in sameComputers)
+                        {
+                            if (!sameComp.Equals(computer)) sameComputers.Remove(sameComp);
+                        }
+                        _db.Add(computer);
+                    }
                 }
                 _db.SaveChanges();
             }

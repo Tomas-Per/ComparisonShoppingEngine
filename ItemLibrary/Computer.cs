@@ -64,10 +64,10 @@ namespace ItemLibrary
                 {
                     if ((!comp.Name.Contains(this.ManufacturerName)) && (!this.Name.Contains(comp.ManufacturerName))) return false;
                 }
-                if (comp.Processor.Name == this.Processor.Name &&
-                    comp.StorageCapacity == this.StorageCapacity &&
+                if (comp.Processor.Name.Equals(this.Processor.Name) &&
+                    comp.StorageCapacity ==StorageCapacity &&
                      comp.RAM == this.RAM &&
-                      comp.Resolution == comp.Resolution) return true;
+                      (comp.Resolution.Contains(this.Resolution) || this.Resolution.Contains(comp.Resolution))) return true;
 
                 else return false;
             }
