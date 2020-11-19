@@ -99,7 +99,7 @@ namespace ShopParser
                     computer.Resolution = table[i + 1].Text;
                 }
 
-                else if (table[i].Text.Contains("Procesoriaus klasė"))
+                else if (table[i].Text.Contains("Procesoriaus modelis"))
                 {
                     computer.Processor = new Processor { Name = table[i + 1].Text };
                 }
