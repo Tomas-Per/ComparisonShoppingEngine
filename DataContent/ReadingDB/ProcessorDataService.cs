@@ -31,6 +31,23 @@ namespace DataContent.ReadingDB.Services
                 _db.SaveChanges();
             }
         }
+        public Processor GetProccesorByID(int id)
+        {
+            using (_db = new ComputerContext())
+            {
+                var processorInDB = _db.Processors.Where(x => x.Id == id).FirstOrDefault();
+                return processorInDB;
+            }
+        }
+        public void UpdateProcessor(Processor processor)
+        {
+            using(_db = new ComputerContext())
+            {
+                var processorInDB = _db.Processors.Where(x => x.Id == processor.Id).FirstOrDefault();
+                if (processorInDB != null) processorInDB = processor;
+                _db.SaveChanges();
+            }
+        }
         public Processor GetProcessor(string processorModel)
         {
             processorModel.DeleteSpecialChars();

@@ -38,6 +38,9 @@ namespace AdminService
                         updater.UpdateItemListFile(updater.GetItemListFromWeb());
                         Console.WriteLine("Shop Parsed");
                         break;
+                    case "5":
+                        var processor = 
+
                         
                     default:
                         Console.WriteLine("Wrong input, use !help to learn about commands");
