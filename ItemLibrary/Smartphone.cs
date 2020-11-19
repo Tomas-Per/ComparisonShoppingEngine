@@ -28,7 +28,8 @@ namespace ItemLibrary
             IEnumerable<Smartphone> phones = list.Cast<Smartphone>().Where(phone => phone != this && phone.RAM == this.RAM &&
                                                                                     phone.Price >= this.Price - 100 && phone.Price <= this.Price + 100 &&
                                                                                     phone.Storage == this.Storage &&
-                                                                                    phone.BackCameraMP.Count == this.BackCameraMP.Count);
+                                                                                    (phone.BackCameraMP.Count == this.BackCameraMP.Count + 1 ||
+                                                                                    phone.BackCameraMP.Count == this.BackCameraMP.Count - 1));
             return phones.Cast<Item>().ToList();
         }
     }
