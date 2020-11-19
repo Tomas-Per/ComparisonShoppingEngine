@@ -101,7 +101,14 @@ namespace ShopParser
 
                 else if (table[i].Text.Contains("Procesoriaus modelis"))
                 {
-                    computer.Processor = new Processor { Name = table[i + 1].Text };
+                    if (table[i + 1].Text.Contains("("))
+                    {
+                        computer.Processor = new Processor { Name = table[i + 1].Text.Substring(0, table[i + 1].Text.IndexOf("(")) };
+                    }
+                    else
+                    {
+                        computer.Processor = new Processor { Name = table[i + 1].Text };
+                    }
                 }
 
                 else if (table[i].Text.Contains("Operatyvioji atmintis (RAM)"))
