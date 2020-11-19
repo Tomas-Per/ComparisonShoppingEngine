@@ -11,6 +11,6 @@ namespace ItemLibrary.DataContexts
         public DbSet<Computer> Computers { get; set; }
         public DbSet<Processor> Processors { get; set; }
         protected override void OnConfiguring(DbContextOptionsBuilder options)
-            => options.UseSqlServer("Data Source=LAPTOP-2JE6GLH9\\SQLEXPRESS;Initial Catalog=LibraDb;Integrated Security=True;");
+            => options.UseSqlServer("Server=tcp:libradb.database.windows.net,1433;Initial Catalog=LibraDb;Persist Security Info=False;User ID=adminlibra;Password={your_password};MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;");
     }
 }
