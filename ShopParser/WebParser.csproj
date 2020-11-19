@@ -20,8 +20,4 @@
     <ProjectReference Include="..\ItemLibrary\ItemLibrary.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="ComponentsParser\" />
-  </ItemGroup>
-
 </Project>

@@ -6,6 +6,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using PathLibrary;
+using WebParser.ComponentsParser;
 
 namespace AdminService
 {
@@ -18,6 +19,8 @@ namespace AdminService
         public static void Main(string[] args)
         {
             string command;
+
+            new ProcessorParser().ParseProcessor("Ryzen 5 3600");
 
             do
             {
