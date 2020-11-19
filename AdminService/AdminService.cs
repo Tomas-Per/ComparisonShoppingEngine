@@ -20,8 +20,6 @@ namespace AdminService
         {
             string command;
 
-            new ProcessorParser().ParseProcessor("Ryzen 5 3600");
-
             do
             {
                 command = Console.ReadLine();

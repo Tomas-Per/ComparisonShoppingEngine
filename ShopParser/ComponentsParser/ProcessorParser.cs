@@ -1,6 +1,7 @@
 ﻿using ItemLibrary;
 using OpenQA.Selenium;
 using OpenQA.Selenium.Chrome;
+using OpenQA.Selenium.Support.UI;
 using Parsing;
 using PathLibrary;
 using System;
@@ -20,18 +21,24 @@ namespace WebParser.ComponentsParser
         {
             var options = new ChromeOptions();
             options.AddArguments("--headless");
-            //_driver = new Lazy<ChromeDriver>(() => new ChromeDriver(MainPath.GetShopParserPath(), options));
-            _driver = new Lazy<ChromeDriver>(() => new ChromeDriver(MainPath.GetShopParserPath()));
+            _driver = new Lazy<ChromeDriver>(() => new ChromeDriver(MainPath.GetShopParserPath(), options));
+
         }
 
-        public Processor ParseProcessor (string processorType)
+
+        public Processor ParseProcessor (string model)
         {
             _driver.Value.Navigate().GoToUrl(_url);
-            _driver.Value.FindElement(By.Name("SearchRecords")).SendKeys(processorType);
+            _driver.Value.FindElement(By.Name("SearchRecords")).SendKeys(model);
+
+            DefaultWait<IWebDriver> fluentWait = new DefaultWait<IWebDriver>(_driver.Value);
+            fluentWait.Timeout = TimeSpan.FromSeconds(5);
+            fluentWait.PollingInterval = TimeSpan.FromMilliseconds(250);
+            fluentWait.IgnoreExceptionTypes(typeof(NoSuchElementException));
+            IWebElement searchResult = fluentWait.Until(x => x.FindElement(By.Id("searchButton")));
+
             _driver.Value.FindElement(By.Id("searchButton")).Click();
 
-
-            //var a = _driver.Value.FindElements(By.TagName("a"));
 
             var button = _driver.Value.FindElements(By.CssSelector("a.btn.btn-default"));
 
@@ -39,32 +46,34 @@ namespace WebParser.ComponentsParser
 
             _driver.Value.Navigate().GoToUrl(link);
 
+     
             var table = _driver.Value.FindElements(By.TagName("td"));
 
-            Processor processor = new Processor { Name = processorType };
+            Processor processor = new Processor ();
+
+            processor.Model = _driver.Value.FindElement(By.ClassName("text-center"))
+                .GetAttribute("innerText").Split(new[] { '\r', '\n' }).FirstOrDefault();
 
             for (int i = 0; i < table.Count; i++)
             {
-                //Console.WriteLine(table[i].GetAttribute("innerHTML"));
                 if (table[i].GetAttribute("innerHTML").Contains("Cache L3"))
                 {
-                    processor.Cache = table[i + 1].Text.ParseInt();
-                    Console.WriteLine(processor.Cache);
-                }
-                else if (table[i].GetAttribute("innerHTML").Contains("Cores"))
-                {
-                    processor.MinCores = table[i + 1].Text.ParseInt();
-                    Console.WriteLine(processor.MinCores);
+                    processor.Cache = table[i + 1].GetAttribute("innerHTML").ParseInt();
                 }
             }
+            processor.MinCores = _driver.Value.FindElement(By.CssSelector("#fh5co-programs-section > div > form > div:nth-child(6) > div > table > tbody > tr:nth-child(2) > td:nth-child(2) > div > div:nth-child(2) > div:nth-child(1)"))
+                .GetAttribute("innerHTML").ParseInt();
 
+            ResetDriver();
+            return processor;
+        }
 
-
-
-
-
-
-            return null;
+        private void ResetDriver()
+        {
+            _driver.Value.Close();
+            var options = new ChromeOptions();
+            options.AddArguments("--headless");
+            _driver = new Lazy<ChromeDriver>(() => new ChromeDriver(MainPath.GetShopParserPath(), options));
         }
     }
 }
