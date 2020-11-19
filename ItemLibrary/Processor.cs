@@ -22,8 +22,6 @@ namespace ItemLibrary
             string name;
             if (Model.Contains("-")) name = Model.Substring(0, Model.IndexOf("-"));
             else name = Model.Substring(0, Model.IndexOf(Model.Split().Last()));
-            if (name.Contains("Core") || name.Contains("Pentium")) name = "Intel " + name;
-            else if (name.Contains("Ryzen") || name.Contains("Athlon")) name = "AMD " + name;
             Name = name;
         }
         
