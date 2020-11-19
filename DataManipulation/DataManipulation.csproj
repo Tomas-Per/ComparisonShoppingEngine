@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <TargetFramework>net5.0</TargetFramework>
@@ -6,7 +6,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\ItemLibrary\ItemLibrary.csproj" />
-    <ProjectReference Include="..\ShopParser\ShopParser.csproj" />
+    <ProjectReference Include="..\ShopParser\WebParser.csproj" />
   </ItemGroup>
 
 </Project>
