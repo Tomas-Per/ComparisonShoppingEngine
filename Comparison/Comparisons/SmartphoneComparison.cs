@@ -50,6 +50,7 @@ namespace Comparison.Comparisons
             PriceComparison(mainItem.Price, comparingItem.Price);
             RamComparison(mainItem.RAM, comparingItem.RAM);
             StorageComparison(mainItem.Storage, comparingItem.Storage);
+            CameraComparison(mainItem.BackCameraMP, comparingItem.BackCameraMP);
         }
 
         //Updates weights if new were given
