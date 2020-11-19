@@ -15,6 +15,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\ExceptionsLogging\ExceptionsLogging.csproj" />
+    <ProjectReference Include="..\Extensions\Extensions.csproj" />
     <ProjectReference Include="..\ItemLibrary\ItemLibrary.csproj" />
     <ProjectReference Include="..\PathLibrary\PathLibrary.csproj" />
     <ProjectReference Include="..\ShopParser\WebParser.csproj" />

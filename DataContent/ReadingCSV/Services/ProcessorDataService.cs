@@ -1,5 +1,7 @@
-﻿using ItemLibrary;
+﻿using ExceptionsLogging;
+using ItemLibrary;
 using ItemLibrary.DataContexts;
+using Parsing;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -31,18 +33,32 @@ namespace DataContent.ReadingCSV.Services
         }
         public Processor GetProcessor(string processorModel)
         {
-            using(_db = new ComputerContext())
+            processorModel.DeleteSpecialChars();
+            if (processorModel.Length > 3)
             {
-                var processor = _db.Processors
-                                .Where(x => x.Model.Contains(processorModel)
-                                || processorModel.Contains(x.Model)).FirstOrDefault();
-                if(processor!= null) return processor;
-                else
+                using (_db = new ComputerContext())
                 {
-                    var parser = new ProcessorParser();
-                    return processor;
+                    var processor = _db.Processors
+                                    .Where(x => x.Model.Contains(processorModel)
+                                    || processorModel.Contains(x.Model)).FirstOrDefault();
+                    if (processor != null) return processor;
+                    else
+                    {
+                        try
+                        {
+                            processor = new ProcessorParser().ParseProcessor(processorModel);
+                        }
+                        catch (ProcessorNotFoundException)
+                        {
+                            processor = new Processor { Model = processorModel };
+                            processor.SetName(processorModel);
+                            ExceptionLogger.LogProcessorParsingException(processor);
+                        }
+                        return processor;
+                    }
                 }
             }
+            else return null;
         }
     }
 }
