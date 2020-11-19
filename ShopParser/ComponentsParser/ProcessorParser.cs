@@ -51,8 +51,11 @@ namespace WebParser.ComponentsParser
 
             Processor processor = new Processor ();
 
-            processor.Model = _driver.Value.FindElement(By.ClassName("text-center"))
+            var processorModel = _driver.Value.FindElement(By.ClassName("text-center"))
                 .GetAttribute("innerText").Split(new[] { '\r', '\n' }).FirstOrDefault();
+
+            processor.Model = processorModel;
+            processor.SetName(processorModel);
 
             for (int i = 0; i < table.Count; i++)
             {
