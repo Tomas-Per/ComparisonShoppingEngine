@@ -34,7 +34,7 @@ namespace DataContent.ReadingCSV.Services
             {
                 var processor = _db.Processors
                                 .Where(x => x.Model.Contains(processorModel)
-                                || processorModel.Contains(x.Model)).First();
+                                || processorModel.Contains(x.Model)).FirstOrDefault();
                 if(processor!= null) return processor;
                 else
                 {

@@ -13,9 +13,9 @@ namespace DataContent.ReadingCSV.Services
         private ComputerContext _db { get; set; }
         static void Main()
         {
-            var a = new Computer() { Name = "Apple1", Price = 16.28, ItemURL = "www.b.com", RAM = 16, ManufacturerName = "Apple",
-                                    Processor = new Processor { Name = "Intel" }, StorageCapacity = 256, Resolution = "1980x720" };
-         
+            var p = new Processor { Name = "Intel Core i5", Model = "Intel Core i5-10400F", Cache = 12, MinCores = 6 };
+            var a = new Computer() { Name = "Apple1", Price = 162.28, ItemURL = "www.b.com", RAM = 16, ManufacturerName = "Apple",
+                                    Processor = p, StorageCapacity = 256, Resolution = "1980x720" };
             List<Computer> _list = new List<Computer>();
             _list.Add(a);
             var serv = new ComputerDataService();
@@ -40,7 +40,7 @@ namespace DataContent.ReadingCSV.Services
                     var sameComputer = _db.Computers
                                             .Where(x => x.Name == computer.Name)
                                             .Where(x => x.ShopName == computer.ShopName)
-                                            .First();
+                                            .FirstOrDefault();
                     if (sameComputer != null) sameComputer.Price = computer.Price;
                     else _db.Add(computer);
                     
