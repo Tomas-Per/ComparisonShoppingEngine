@@ -9,7 +9,7 @@ using System.Text;
 
 namespace DataContent.ReadingDB.Services
 {
-    class ComputerDataService :IData<IEnumerable<Computer>>
+    public class ComputerDataService :IData<IEnumerable<Computer>>
     {
         private ComputerContext _db { get; set; }
        
