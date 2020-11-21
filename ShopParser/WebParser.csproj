@@ -15,6 +15,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\DataContent\DataContent.csproj" />
     <ProjectReference Include="..\Extensions\Extensions.csproj" />
     <ProjectReference Include="..\ItemLibrary\ItemLibrary.csproj" />
     <ProjectReference Include="..\PathLibrary\PathLibrary.csproj" />

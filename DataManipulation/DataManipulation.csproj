@@ -6,7 +6,6 @@
 
   <ItemGroup>
     <ProjectReference Include="..\ItemLibrary\ItemLibrary.csproj" />
-    <ProjectReference Include="..\ShopParser\WebParser.csproj" />
   </ItemGroup>
 
 </Project>
