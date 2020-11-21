@@ -57,7 +57,7 @@ namespace WebParser.ShopParser
                     data.Add(computer);
                 }
             }
-            _driver.Value.Close();
+            ResetDriver();
             return data;
         }
 
@@ -100,9 +100,16 @@ namespace WebParser.ShopParser
                     computer.Resolution = table[i + 1].Text;
                 }
 
-                else if (table[i].Text.Contains("Procesoriaus klasė"))
+                else if (table[i].Text.Contains("Procesoriaus modelis"))
                 {
-                    computer.Processor = new Processor { Name = table[i + 1].Text };
+                    if (table[i + 1].Text.Contains("("))
+                    {
+                        computer.Processor = new Processor { Name = table[i + 1].Text.Substring(0, table[i + 1].Text.IndexOf("(")) };
+                    }
+                    else
+                    {
+                        computer.Processor = new Processor { Name = table[i + 1].Text };
+                    }
                 }
 
                 else if (table[i].Text.Contains("Operatyvioji atmintis (RAM)"))
@@ -143,9 +150,21 @@ namespace WebParser.ShopParser
                         computer.StorageCapacity += table[i + 1].Text.ParseInt();
                 }   
             }
-            _driver.Value.Close();
+            ResetDriver();
             return computer;
         }
+
+        private void ResetDriver()
+        {
+            _driver.Value.Close();
+            if (_driver.Value == null)
+            {
+                var options = new ChromeOptions();
+                options.AddArguments("--headless");
+                _driver = new Lazy<ChromeDriver>(() => new ChromeDriver(MainPath.GetShopParserPath(), options));
+            }
+        }
+
     }
 }
 

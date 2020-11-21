@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 
 namespace ItemLibrary
@@ -12,7 +13,7 @@ namespace ItemLibrary
         public int Storage { get; set; }
         public int RAM { get; set; }
         public string Processor { get; set; }
-        public string DisplaySize { get; set; }
+        public string Resolution { get; set; }
         public int BatteryStorage { get; set; }
 
 
@@ -20,10 +21,16 @@ namespace ItemLibrary
         {
         }
 
-        //will remove this method in near future
+        //find similar elements in a list
         public override List<Item> FindSimilar(List<Item> list)
+
         {
-            throw new NotImplementedException();
+            IEnumerable<Smartphone> phones = list.Cast<Smartphone>().Where(phone => phone != this && phone.RAM == this.RAM &&
+                                                                                    phone.Price >= this.Price - 100 && phone.Price <= this.Price + 100 &&
+                                                                                    phone.Storage == this.Storage &&
+                                                                                    (phone.BackCameraMP.Count == this.BackCameraMP.Count + 1 ||
+                                                                                    phone.BackCameraMP.Count == this.BackCameraMP.Count - 1));
+            return phones.Cast<Item>().ToList();
         }
     }
 }

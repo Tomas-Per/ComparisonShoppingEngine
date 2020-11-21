@@ -57,7 +57,7 @@ namespace WebParser.ShopParser
                     data.Add(computer);
                 }
             }
-
+            ResetDriver();
             return data;
         }
 
@@ -109,8 +109,19 @@ namespace WebParser.ShopParser
                 }
 
             }
-            _driver.Value.Close();
+            ResetDriver();
             return computer;
+        }
+
+        private void ResetDriver()
+        {
+            _driver.Value.Close();
+            if (_driver.Value == null)
+            {
+                var options = new ChromeOptions();
+                options.AddArguments("--headless");
+                _driver = new Lazy<ChromeDriver>(() => new ChromeDriver(MainPath.GetShopParserPath(), options));
+            }
         }
     }
 }

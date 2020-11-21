@@ -11,7 +11,7 @@ namespace DataManipulation.Filters
         {
 
         }
-        //Filters item list by the processor and sets the protected field to the filtered list
+        //Filters item list by the processor
         public List<Computer> FilterByProcessor(string processor)
         {
             List<Computer> result = _items.Where(item => (item.Processor.Name).DeleteSpecialChars() == processor).ToList();
