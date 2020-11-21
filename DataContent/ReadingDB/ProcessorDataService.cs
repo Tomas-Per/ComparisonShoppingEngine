@@ -67,6 +67,8 @@ namespace DataContent.ReadingDB.Services
                     {
                         processor = new Processor { Model = processorModel };
                         processor.SetName(processorModel);
+                        var result = new List<Processor>();
+                        WriteData(result);
                         ExceptionLogger.LogProcessorParsingException(processor);
                     }
                     return processor;
