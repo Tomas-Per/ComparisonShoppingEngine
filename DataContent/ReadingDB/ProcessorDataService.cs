@@ -44,7 +44,13 @@ namespace DataContent.ReadingDB.Services
             using(_db = new ComputerContext())
             {
                 var processorInDB = _db.Processors.Where(x => x.Id == processor.Id).FirstOrDefault();
-                if (processorInDB != null) processorInDB = processor;
+                if (processorInDB != null)
+                {
+                    processorInDB.Name = processor.Name;
+                    processorInDB.Model = processor.Model;
+                    processorInDB.Cache = processor.Cache;
+                    processorInDB.MinCores = processor.MinCores;
+                }
                 _db.SaveChanges();
             }
         }

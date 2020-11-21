@@ -41,14 +41,15 @@ namespace DataContent.ReadingDB.Services
                                             && x.Resolution.Contains(computer.Resolution)
                                             && computer.Resolution.Contains(x.Resolution))
                                             .ToList();
-                        similarComputers.Add(computer);
                         var sameComputers = new List<Computer>();
                         foreach(var similarComputer in similarComputers)
                         {
                             if (similarComputer.Equals(computer)) sameComputers.Add(similarComputer);
                         }
-                        sameComputers = new ComputerFiller().FillComputers(sameComputers);
-                        _db.AddRange(sameComputers);
+                        if(sameComputers.Count()>0)sameComputers = new ComputerFiller().FillComputers(sameComputers);
+                        _db.SaveChanges();
+                        computer.Processor = _db.Processors.Find(computer.Processor.Id);
+                        _db.Add(computer);
                     }
                 }
                 _db.SaveChanges();

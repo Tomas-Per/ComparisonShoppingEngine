@@ -20,9 +20,21 @@ namespace Parsing
             string value = Regex.Replace(text, @"[\s+]", "");
             return value;
         }
+        public static string DeleteMultipleSpaces(this string text)
+        {
+            
+            string value = Regex.Replace(text, @"\s+", " ");
+            return value;
+        }
         public static string DeleteSpecialChars(this string text)
         {
-            string value = Regex.Replace(text, @"[^a-zA-Z] ", " ");
+            var texts = text.Split(' ');
+            string value = "";
+            foreach(var t in texts)
+            {
+                value += Regex.Replace(t, @"[^a-zA-Z0-9]", " ") + " ";
+            }
+            value = value.DeleteMultipleSpaces();
             return value;
         }
         //returns double value from a given string

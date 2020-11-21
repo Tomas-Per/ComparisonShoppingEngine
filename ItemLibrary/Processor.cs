@@ -21,8 +21,13 @@ namespace ItemLibrary
         {
             string name;
             if (processorModel.Contains("-")) name = processorModel.Substring(0, processorModel.IndexOf("-"));
-            else name = processorModel.Substring(0, processorModel.IndexOf(processorModel.Split().Last()));
-            Name = name;
+            else
+            { var words = processorModel.Split();
+                if (words.Last() != "")
+                    name = processorModel.Substring(0, processorModel.IndexOf(processorModel.Split(' ').Last()));
+                else name = processorModel.Substring(0, processorModel.IndexOf(words[words.Count() - 2]));
+            }
+            this.Name = name;
         }
         
     }

@@ -23,7 +23,17 @@ namespace AdminService
         {
             string command;
 
+            List<Computer> test = new List<Computer>();
 
+            test.Add(new SenukaiParser().ParseWindow("https://www.senukai.lt/p/lenovo-ideapad-c340-14api-black-81n600atpb-pl/e8p3?cat=5ei&index=1"));
+
+            //test[0].ShopName = "bum bum";
+
+            var service0 = new ComputerDataService();
+
+            service0.WriteData(test);
+
+            Console.WriteLine("Done");
 
             do
             {
@@ -54,6 +64,7 @@ namespace AdminService
                         processor.Cache = Int32.Parse(specs[2]);
                         processor.MinCores = Int32.Parse(specs[3]);
                         service.UpdateProcessor(processor);
+                        Console.WriteLine("Updated");
                         break;
 
                     default:
