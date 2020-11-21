@@ -20,6 +20,9 @@ EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DataContent", "DataContent\DataContent.csproj", "{A7CE5AB7-241F-41FA-BFE0-40E59C5B6ACC}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DataManipulation", "DataManipulation\DataManipulation.csproj", "{2718FC63-674E-4F22-AF9C-3C7DFDF52BFC}"
+	ProjectSection(ProjectDependencies) = postProject
+		{0C84F054-D535-4BE9-8AC8-CB22FA7D6E34} = {0C84F054-D535-4BE9-8AC8-CB22FA7D6E34}
+	EndProjectSection
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Comparison", "Comparison\Comparison.csproj", "{E953965C-FB11-48E9-94E2-806D27257D04}"
 EndProject
@@ -35,7 +38,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PathLibrary", "PathLibrary\
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Extensions", "Extensions\Extensions.csproj", "{0C84F054-D535-4BE9-8AC8-CB22FA7D6E34}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ComponentParser", "ComponentParser\ComponentParser.csproj", "{2B078ED2-A2DB-4BA1-BEEE-ABA2B2387B2D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ComponentParser", "ComponentParser\ComponentParser.csproj", "{2B078ED2-A2DB-4BA1-BEEE-ABA2B2387B2D}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
