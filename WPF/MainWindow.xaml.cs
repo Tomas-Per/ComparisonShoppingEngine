@@ -25,6 +25,9 @@ using DataManipulation.Filters;
 using System.Xml;
 using System.Linq.Expressions;
 using PathLibrary;
+using WebAPI;
+using WebAPI.Controllers;
+using ItemLibrary.DataContexts;
 
 namespace WPF
 {
@@ -35,7 +38,7 @@ namespace WPF
     {
 
         private List<Computer> OriginalList = new List<Computer>();
-
+        private ComputersController comps;
  
         private IData<IEnumerable<Computer>> _DataService;
 
@@ -59,11 +62,12 @@ namespace WPF
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
             CreateFilterCheckbox();
-
+            comps = new ComputersController(new ComputerContext());
             _DataService = new LaptopServiceCSV(MainPath.GetComputerPath());
-            ItemsListBox.ItemsSource = _DataService.ReadData();
-         
-            OriginalList = ItemsListBox.ItemsSource.Cast<Computer>().ToList();
+            //ItemsListBox.ItemsSource = _DataService.ReadData();
+            ItemsListBox.ItemsSource = comps.GetComputers().ToList();
+            //OriginalList = ItemsListBox.ItemsSource.Cast<Computer>().ToList();
+            OriginalList = comps.GetComputers().ToList();
 
             _filter = new ComputerFilter(OriginalList);
             _sorter = new Sorter(OriginalList.Cast<Item>().ToList());

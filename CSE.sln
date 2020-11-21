@@ -40,6 +40,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Extensions", "Extensions\Ex
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ComponentParser", "ComponentParser\ComponentParser.csproj", "{2B078ED2-A2DB-4BA1-BEEE-ABA2B2387B2D}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebAPI", "WebAPI\WebAPI.csproj", "{811C021F-F85F-457D-9BE4-CDD907663A07}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -94,6 +96,10 @@ Global
 		{2B078ED2-A2DB-4BA1-BEEE-ABA2B2387B2D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{2B078ED2-A2DB-4BA1-BEEE-ABA2B2387B2D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{2B078ED2-A2DB-4BA1-BEEE-ABA2B2387B2D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{811C021F-F85F-457D-9BE4-CDD907663A07}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{811C021F-F85F-457D-9BE4-CDD907663A07}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{811C021F-F85F-457D-9BE4-CDD907663A07}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{811C021F-F85F-457D-9BE4-CDD907663A07}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
