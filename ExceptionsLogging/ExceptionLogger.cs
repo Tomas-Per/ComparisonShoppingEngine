@@ -38,7 +38,7 @@ namespace ExceptionsLogging
 
             using (StreamWriter streamWriter = new StreamWriter(_parsingFilePath, true))
             {
-                streamWriter.WriteLine("Could not parse processor for computer:   " + processor.Id);
+                streamWriter.WriteLine("Could not parse processor. Processor ID is:   " + processor.Id);
                 streamWriter.WriteLine("Time:    " + DateTime.Now);
             }
         }
