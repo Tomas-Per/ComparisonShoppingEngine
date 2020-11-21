@@ -68,6 +68,8 @@ namespace DataContent.ReadingDB.Services
                     try
                     {
                         processor = new ProcessorParser().ParseProcessor(processorModel);
+                        _db.Add(processor);
+                        _db.SaveChanges();
                     }
                     catch(ProcessorNotFoundException)
                     {

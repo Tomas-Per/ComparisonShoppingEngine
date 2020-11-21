@@ -27,7 +27,7 @@ namespace AdminService
 
             test.Add(new SenukaiParser().ParseWindow("https://www.senukai.lt/p/lenovo-ideapad-c340-14api-black-81n600atpb-pl/e8p3?cat=5ei&index=1"));
 
-            //test[0].ShopName = "bum bum";
+            test[0].ShopName = "la la ";
 
             var service0 = new ComputerDataService();
 
