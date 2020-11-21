@@ -50,7 +50,7 @@ namespace DataContent.ReadingDB.Services
         }
         public Processor GetProcessor(string processorModel)
         {
-            processorModel.DeleteSpecialChars();
+            processorModel = processorModel.DeleteSpecialChars();
             using(_db = new ComputerContext())
             {
                 var processor = _db.Processors
@@ -67,8 +67,12 @@ namespace DataContent.ReadingDB.Services
                     {
                         processor = new Processor { Model = processorModel };
                         processor.SetName(processorModel);
-                        var result = new List<Processor>();
-                        WriteData(result);
+                        using(_db = new ComputerContext())
+                        {
+                            _db.Add(processor);
+                            _db.SaveChanges();
+                            processor = _db.Processors.Where(x => x.Model == processorModel).FirstOrDefault();
+                        }
                         ExceptionLogger.LogProcessorParsingException(processor);
                     }
                     return processor;
