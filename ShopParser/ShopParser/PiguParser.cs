@@ -78,7 +78,7 @@ namespace WebParser.ShopParser
 
             for (int i = 0; i < table.Count; i++)
             {
-                if (table[i].Text.Contains("Procesoriaus tipas"))
+                if (table[i].Text.Contains("Procesorius"))
                 {
                     computer.Processor = new Processor{Name = table[i + 1].Text};
                 }
