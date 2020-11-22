@@ -6,7 +6,7 @@
         {
             Computer,
             Smartphone,
-            Desktop
+            DesktopComputer
         };
     }
 }
