@@ -18,7 +18,7 @@ namespace WebAPI.Controllers
     {
         private readonly ComputerDataService _service;
 
-        public ComputersController(IData<IEnumerable<Computer>> service)
+        public ComputersController(IDataItem<IEnumerable<Computer>> service)
         {
             _service = (ComputerDataService)service;
         }

@@ -40,7 +40,7 @@ namespace WPF
         private List<Computer> OriginalList = new List<Computer>();
         private ComputersController comps;
  
-        private IData<IEnumerable<Computer>> _DataService;
+        private IDataItem<IEnumerable<Computer>> _DataService;
 
         public MainWindow()
         {

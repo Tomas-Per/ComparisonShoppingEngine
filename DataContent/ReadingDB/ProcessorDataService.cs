@@ -11,7 +11,7 @@ using WebParser.ComponentsParser;
 
 namespace DataContent.ReadingDB.Services
 {
-    public class ProcessorDataService : IData<Processor>
+    public class ProcessorDataService : IDataComponent<Processor>
     {
         private ComputerContext _db { get; set; }
         public IEnumerable<Processor> ReadData()

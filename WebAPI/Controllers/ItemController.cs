@@ -14,9 +14,9 @@ namespace WebAPI.Controllers
     [ApiController]
     public class ItemController<T> : ControllerBase where T : Item
     {
-        private readonly IData<T> _service;
+        private readonly IDataItem<T> _service;
 
-        public ItemController(IData<T> service)
+        public ItemController(IDataItem<T> service)
         {
             _service = service;
         }
