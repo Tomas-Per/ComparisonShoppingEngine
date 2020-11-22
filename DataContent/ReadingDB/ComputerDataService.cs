@@ -84,14 +84,12 @@ namespace DataContent.ReadingDB.Services
                     computerInDB.ShopName = computer.ShopName;
                     computerInDB.ImageLink = computer.ImageLink;
                     computerInDB.ItemCategory = computer.ItemCategory;
-                    computerInDB.ComputerCategory = computer.ComputerCategory;
                     computerInDB.Processor = computer.Processor;
                     computerInDB.GraphicsCardName = computer.GraphicsCardName;
                     computerInDB.GraphicsCardMemory = computer.GraphicsCardMemory;
                     computerInDB.RAM = computer.RAM;
                     computerInDB.RAM_type = computer.RAM_type;
                     computerInDB.Resolution = computer.Resolution;
-                    computerInDB.ComputerCategory = computer.ComputerCategory;
                     computerInDB.ItemCode = computer.ItemCode;
                     computerInDB.ModifyDate = DateTime.Now;
                 }
