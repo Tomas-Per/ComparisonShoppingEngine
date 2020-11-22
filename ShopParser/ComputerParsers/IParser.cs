@@ -1,7 +1,7 @@
 ﻿using ItemLibrary;
 using System.Collections.Generic;
 
-namespace WebParser.ShopParser
+namespace WebParser.ComputerParsers
 {
     public interface IParser<T> where T :   Item
     { 

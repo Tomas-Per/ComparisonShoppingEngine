@@ -9,7 +9,7 @@ using static ItemLibrary.Categories;
 using PathLibrary;
 using DataContent.ReadingDB.Services;
 
-namespace WebParser.ShopParser
+namespace WebParser.ComputerParsers
 {
     public class SenukaiParser : IParser<Computer>
     {

@@ -9,7 +9,7 @@ using System.Linq;
 using PathLibrary;
 using DataContent.ReadingDB.Services;
 
-namespace WebParser.ShopParser
+namespace WebParser.ComputerParsers
 {
     public class AvitelaParser : IParser<Computer>
     {
