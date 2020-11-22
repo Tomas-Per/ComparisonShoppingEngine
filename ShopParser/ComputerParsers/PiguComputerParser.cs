@@ -53,7 +53,7 @@ namespace WebParser.ComputerParsers
                     _driver.Value.SwitchTo().Window(_driver.Value.WindowHandles.First());
 
                     computer.ItemCategory = ItemCategory.Computer;
-                    computer.ComputerCategory = ComputerCategory.Laptop;
+                    //computer.ComputerCategory = ComputerCategory.Laptop;
 
                     data.Add(computer);
                 }

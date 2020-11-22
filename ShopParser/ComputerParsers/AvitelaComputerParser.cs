@@ -58,7 +58,7 @@ namespace WebParser.ComputerParsers
                     if (computer.Resolution != null)
                     {
                         computer.ItemCategory = ItemCategory.Computer;
-                        computer.ComputerCategory = ComputerCategory.Laptop;
+                        //computer.ComputerCategory = ComputerCategory.Laptop;
                         data.Add(computer);
                     }
                 }
