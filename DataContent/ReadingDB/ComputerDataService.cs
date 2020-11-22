@@ -32,7 +32,11 @@ namespace DataContent.ReadingDB.Services
                                             .Where(x => x.Name == computer.Name
                                             && x.ShopName == computer.ShopName)
                                             .FirstOrDefault();
-                    if (sameComputer != null) sameComputer.Price = computer.Price;
+                    if (sameComputer != null)
+                    {
+                        sameComputer.Price = computer.Price;
+                        sameComputer.ModifyDate = DateTime.Now;
+                    }
                     else
                     {
                         var similarComputers = _db.Computers.Include(p => p.Processor)
@@ -42,14 +46,14 @@ namespace DataContent.ReadingDB.Services
                                             && computer.Resolution.Contains(x.Resolution))
                                             .ToList();
                         var sameComputers = new List<Computer>();
-                        foreach(var similarComputer in similarComputers)
+                        foreach (var similarComputer in similarComputers)
                         {
                             if (similarComputer.Equals(computer)) sameComputers.Add(similarComputer);
                         }
                         if (sameComputers.Count() > 0)
                         {
                             sameComputers = new ComputerFiller().FillComputers(sameComputers);
-                            computer.Id = sameComputers[0].Id;
+                            computer.ItemCode = sameComputers[0].Id;
                         }
                         _db.SaveChanges();
                         computer.Processor = _db.Processors.Find(computer.Processor.Id);
