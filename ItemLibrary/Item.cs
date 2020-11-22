@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using static ItemLibrary.Categories;
@@ -7,9 +8,14 @@ namespace ItemLibrary
 {
     public abstract class Item
     {
-        //not needed at the moment
-        //public ulong ItemCode { get; set; }
+       
         public int Id { get; set; }
+
+        [Required]
+        public int ItemCode { get; set; }
+
+        [Required]
+        public DateTime ModifyDate { get; set; }
 
         [Required]
         public double Price { get; set; }

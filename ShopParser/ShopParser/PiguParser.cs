@@ -1,4 +1,5 @@
-﻿using ItemLibrary;
+﻿using DataContent.ReadingDB.Services;
+using ItemLibrary;
 using OpenQA.Selenium;
 using OpenQA.Selenium.Chrome;
 using Parsing;
@@ -80,7 +81,7 @@ namespace WebParser.ShopParser
             {
                 if (table[i].Text.Contains("Procesorius"))
                 {
-                    computer.Processor = new Processor{Name = table[i + 1].Text};
+                    computer.Processor = new ProcessorDataService().GetProcessor(table[i + 1].Text);
                 }
 
                 else if (table[i].Text.Contains("Atminties dydis (RAM)"))

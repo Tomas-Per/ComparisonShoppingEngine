@@ -23,18 +23,6 @@ namespace AdminService
         {
             string command;
 
-            List<Computer> test = new List<Computer>();
-
-            test.Add(new SenukaiParser().ParseWindow("https://www.senukai.lt/p/lenovo-ideapad-c340-14api-black-81n600atpb-pl/e8p3?cat=5ei&index=1"));
-
-            test[0].ShopName = "la la ";
-
-            var service0 = new ComputerDataService();
-
-            service0.WriteData(test);
-
-            Console.WriteLine("Done");
-
             do
             {
                 command = Console.ReadLine();
