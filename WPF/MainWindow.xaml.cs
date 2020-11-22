@@ -62,13 +62,13 @@ namespace WPF
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
             CreateFilterCheckbox();
-            comps = new ComputersController(new ComputerContext());
-            _DataService = new LaptopServiceCSV(MainPath.GetComputerPath());
-            //ItemsListBox.ItemsSource = _DataService.ReadData();
-            ItemsListBox.ItemsSource = comps.GetComputers().ToList();
+            DataContent.ReadingDB.Services.ComputerDataService service = new DataContent.ReadingDB.Services.ComputerDataService();
+            comps = new ComputersController(service);
+            //_DataService = new LaptopServiceCSV(MainPath.GetComputerPath());
+            //ItemsListBox.ItemsSource = _DataService.ReadData();           
             //OriginalList = ItemsListBox.ItemsSource.Cast<Computer>().ToList();
             OriginalList = comps.GetComputers().ToList();
-
+            ItemsListBox.ItemsSource = OriginalList;
             _filter = new ComputerFilter(OriginalList);
             _sorter = new Sorter(OriginalList.Cast<Item>().ToList());
 

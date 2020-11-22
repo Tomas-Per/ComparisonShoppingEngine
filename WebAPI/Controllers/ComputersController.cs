@@ -7,6 +7,8 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using ItemLibrary;
 using ItemLibrary.DataContexts;
+using DataContent;
+using DataContent.ReadingDB.Services;
 
 namespace WebAPI.Controllers
 {
@@ -14,11 +16,11 @@ namespace WebAPI.Controllers
     [ApiController]
     public class ComputersController : ControllerBase
     {
-        private readonly ComputerContext _context;
+        private readonly ComputerDataService _service;
 
-        public ComputersController(ComputerContext context)
+        public ComputersController(IData<IEnumerable<Computer>> service)
         {
-            _context = context;
+            _service = (ComputerDataService)service;
         }
 
         // GET: api/Computers
@@ -30,83 +32,83 @@ namespace WebAPI.Controllers
 
         // GET: api/Computers
         [HttpGet]
-        public IEnumerable<Computer> GetComputers() => _context.Computers.Include(x => x.Processor).ToArray();
+        public IEnumerable<Computer> GetComputers() => _service.ReadData();
 
-        // GET: api/Computers/5
-        [HttpGet("{id}")]
-        public async Task<ActionResult<Computer>> GetComputer(int id)
-        {
-            var computer = await _context.Computers.FindAsync(id);
+        //// GET: api/Computers/5
+        //[HttpGet("{id}")]
+        //public async Task<ActionResult<Computer>> GetComputer(int id)
+        //{
+        //    var computer = await _service.Computers.FindAsync(id);
 
-            if (computer == null)
-            {
-                return NotFound();
-            }
+        //    if (computer == null)
+        //    {
+        //        return NotFound();
+        //    }
 
-            return computer;
-        }
+        //    return computer;
+        //}
 
-        // PUT: api/Computers/5
-        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
-        [HttpPut("{id}")]
-        public async Task<IActionResult> PutComputer(int id, Computer computer)
-        {
-            if (id != computer.Id)
-            {
-                return BadRequest();
-            }
+        //// PUT: api/Computers/5
+        //// To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
+        //[HttpPut("{id}")]
+        //public async Task<IActionResult> PutComputer(int id, Computer computer)
+        //{
+        //    if (id != computer.Id)
+        //    {
+        //        return BadRequest();
+        //    }
 
-            _context.Entry(computer).State = EntityState.Modified;
+        //    _context.Entry(computer).State = EntityState.Modified;
 
-            try
-            {
-                await _context.SaveChangesAsync();
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!ComputerExists(id))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
-            }
+        //    try
+        //    {
+        //        await _context.SaveChangesAsync();
+        //    }
+        //    catch (DbUpdateConcurrencyException)
+        //    {
+        //        if (!ComputerExists(id))
+        //        {
+        //            return NotFound();
+        //        }
+        //        else
+        //        {
+        //            throw;
+        //        }
+        //    }
 
-            return NoContent();
-        }
+        //    return NoContent();
+        //}
 
-        // POST: api/Computers
-        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
-        [HttpPost]
-        public async Task<ActionResult<Computer>> PostComputer(Computer computer)
-        {
-            _context.Computers.Add(computer);
-            await _context.SaveChangesAsync();
+        //// POST: api/Computers
+        //// To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
+        //[HttpPost]
+        //public async Task<ActionResult<Computer>> PostComputer(Computer computer)
+        //{
+        //    _context.Computers.Add(computer);
+        //    await _context.SaveChangesAsync();
 
-            return CreatedAtAction("GetComputer", new { id = computer.Id }, computer);
-        }
+        //    return CreatedAtAction("GetComputer", new { id = computer.Id }, computer);
+        //}
 
-        // DELETE: api/Computers/5
-        [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteComputer(int id)
-        {
-            var computer = await _context.Computers.FindAsync(id);
-            if (computer == null)
-            {
-                return NotFound();
-            }
+        //// DELETE: api/Computers/5
+        //[HttpDelete("{id}")]
+        //public async Task<IActionResult> DeleteComputer(int id)
+        //{
+        //    var computer = await _context.Computers.FindAsync(id);
+        //    if (computer == null)
+        //    {
+        //        return NotFound();
+        //    }
 
-            _context.Computers.Remove(computer);
-            await _context.SaveChangesAsync();
+        //    _context.Computers.Remove(computer);
+        //    await _context.SaveChangesAsync();
 
-            return NoContent();
-        }
+        //    return NoContent();
+        //}
 
-        private bool ComputerExists(int id)
-        {
-            return _context.Computers.Any(e => e.Id == id);
-        }
+        //private bool ComputerExists(int id)
+        //{
+        //    return _context.Computers.Any(e => e.Id == id);
+        //}
     }
 }

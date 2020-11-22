@@ -11,6 +11,9 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using DataContent;
+using DataContent.ReadingDB.Services;
+using ItemLibrary;
 
 namespace WebAPI
 {
@@ -32,6 +35,7 @@ namespace WebAPI
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "WebAPI", Version = "v1" });
             });
+            services.AddScoped<IData<IEnumerable<Computer>>, ComputerDataService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
