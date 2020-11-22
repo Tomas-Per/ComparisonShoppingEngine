@@ -4,7 +4,8 @@
     {
         public enum ItemCategory
         {
-            Computer
+            Computer,
+            Smartphone
         };
 
         public enum ComputerCategory
