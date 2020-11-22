@@ -59,5 +59,39 @@ namespace DataContent.ReadingDB.Services
                 _db.SaveChanges();
             }
         }
+        public Computer GetDataByID(int id)
+        {
+            using (_db = new ComputerContext())
+            {
+                var computer = _db.Computers.Include(x => x.Id == id).FirstOrDefault();
+                return computer;
+            }
+        }
+        public void UpdateProcessor(Computer computer)
+        {
+            using (_db = new ComputerContext())
+            {
+                var computerInDB = _db.Computers.Where(x => x.Id == computer.Id).FirstOrDefault();
+                if (computerInDB != null)
+                {
+                    computerInDB.Name = computer.Name;
+                    computerInDB.ManufacturerName = computer.ManufacturerName;
+                    computerInDB.Price = computer.Price;
+                    computerInDB.ItemURL = computer.ItemURL;
+                    computerInDB.ShopName = computer.ShopName;
+                    computerInDB.ImageLink = computer.ImageLink;
+                    computerInDB.ItemCategory = computer.ItemCategory;
+                    computerInDB.ComputerCategory = computer.ComputerCategory;
+                    computerInDB.Processor = computer.Processor;
+                    computerInDB.GraphicsCardName = computer.GraphicsCardName;
+                    computerInDB.GraphicsCardMemory = computer.GraphicsCardMemory;
+                    computerInDB.RAM = computer.RAM;
+                    computerInDB.RAM_type = computer.RAM_type;
+                    computerInDB.Resolution = computer.Resolution;
+                    computerInDB.ComputerCategory = computer.ComputerCategory;
+                }
+                _db.SaveChanges();
+            }
+        }
     }
 }
