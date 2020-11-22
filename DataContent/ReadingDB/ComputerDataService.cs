@@ -35,20 +35,25 @@ namespace DataContent.ReadingDB.Services
                     if (sameComputer != null) sameComputer.Price = computer.Price;
                     else
                     {
-                        var similarComputers = _db.Computers
+                        var similarComputers = _db.Computers.Include(p => p.Processor)
                                             .Where(x => x.RAM == computer.RAM
                                             && x.StorageCapacity == computer.StorageCapacity
                                             && x.Resolution.Contains(computer.Resolution)
                                             && computer.Resolution.Contains(x.Resolution))
                                             .ToList();
-                        similarComputers.Add(computer);
                         var sameComputers = new List<Computer>();
                         foreach(var similarComputer in similarComputers)
                         {
                             if (similarComputer.Equals(computer)) sameComputers.Add(similarComputer);
                         }
-                        sameComputers = new ComputerFiller().FillComputers(sameComputers);
-                        _db.AddRange(sameComputers);
+                        if (sameComputers.Count() > 0)
+                        {
+                            sameComputers = new ComputerFiller().FillComputers(sameComputers);
+                            computer.Id = sameComputers[0].Id;
+                        }
+                        _db.SaveChanges();
+                        computer.Processor = _db.Processors.Find(computer.Processor.Id);
+                        _db.Add(computer);
                     }
                 }
                 _db.SaveChanges();
