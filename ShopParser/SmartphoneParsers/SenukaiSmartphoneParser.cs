@@ -65,7 +65,7 @@ namespace WebParser.ComputerParsers
 
 
      
-        //Parses Smartphone from an url. may throw
+        //Parses Smartphone from an url
         public Smartphone ParseWindow(string url)
         {
             _driver.Value.Navigate().GoToUrl(url);
