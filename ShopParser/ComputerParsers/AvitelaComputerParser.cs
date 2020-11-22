@@ -9,14 +9,14 @@ using System.Linq;
 using PathLibrary;
 using DataContent.ReadingDB.Services;
 
-namespace WebParser.ShopParser
+namespace WebParser.ComputerParsers
 {
-    public class AvitelaParser : IParser<Computer>
+    public class AvitelaComputerParser : IParser<Computer>
     {
         private readonly string _url = "https://avitela.lt/kompiuterine-technika/nesiojamieji-kompiuteriai/nesiojami-kompiuteriai?page=1";
         private Lazy<ChromeDriver> _driver;
 
-        public AvitelaParser()
+        public AvitelaComputerParser()
         {
             var options = new ChromeOptions();
             options.AddArguments("--headless");
@@ -58,7 +58,7 @@ namespace WebParser.ShopParser
                     if (computer.Resolution != null)
                     {
                         computer.ItemCategory = ItemCategory.Computer;
-                        computer.ComputerCategory = ComputerCategory.Laptop;
+                        //computer.ComputerCategory = ComputerCategory.Laptop;
                         data.Add(computer);
                     }
                 }

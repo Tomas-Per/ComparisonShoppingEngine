@@ -1,7 +1,7 @@
 ﻿using DataContent.ReadingCSV.Services;
 using DataUpdater;
 using ExceptionsLogging;
-using WebParser.ShopParser;
+using WebParser.ComputerParsers;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -37,7 +37,7 @@ namespace AdminService
                         break;
 
                     case "1":
-                        var updater = new ComputerDataUpdater(new SenukaiParser());
+                        var updater = new ComputerDataUpdater(new SenukaiComputerParser());
                         updater.UpdateItemListFile(updater.GetItemListFromWeb());
                         Console.WriteLine("Shop Parsed");
                         break;

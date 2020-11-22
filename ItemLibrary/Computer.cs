@@ -24,7 +24,6 @@ namespace ItemLibrary
 
         [MaxLength(16)]
         public string Resolution { get; set; }
-        public ComputerCategory ComputerCategory { get; set; }
 
         public static explicit operator Computer(List<Item> v)
         {

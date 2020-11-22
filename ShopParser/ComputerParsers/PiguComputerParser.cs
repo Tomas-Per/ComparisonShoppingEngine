@@ -9,14 +9,14 @@ using System.Collections.Generic;
 using System.Linq;
 using static ItemLibrary.Categories;
 
-namespace WebParser.ShopParser
+namespace WebParser.ComputerParsers
 {
-    public class PiguParser : IParser<Computer>
+    public class PiguComputerParser : IParser<Computer>
     {
         private readonly string _url = "https://pigu.lt/lt/kompiuteriai/nesiojami-kompiuteriai?page=1";
         private Lazy<ChromeDriver> _driver;
 
-        public PiguParser ()
+        public PiguComputerParser ()
         {
             var options = new ChromeOptions();
             options.AddArguments("--headless");
@@ -53,7 +53,7 @@ namespace WebParser.ShopParser
                     _driver.Value.SwitchTo().Window(_driver.Value.WindowHandles.First());
 
                     computer.ItemCategory = ItemCategory.Computer;
-                    computer.ComputerCategory = ComputerCategory.Laptop;
+                    //computer.ComputerCategory = ComputerCategory.Laptop;
 
                     data.Add(computer);
                 }
