@@ -11,7 +11,7 @@ using System.Text;
 
 namespace DataContent.ReadingCSV.Services
 {
-    class SmartphoneServiceCSV : IData<IEnumerable<Smartphone>>
+    class SmartphoneServiceCSV
     {
         public string Path { get; set; }
         private FileMode Filemode { get; set; }
