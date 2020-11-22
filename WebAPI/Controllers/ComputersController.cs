@@ -24,29 +24,13 @@ namespace WebAPI.Controllers
         }
 
         // GET: api/Computers
-        //[HttpGet]
-        //public async Task<ActionResult<IEnumerable<Computer>>> GetComputers()
-        //{
-        //    return await _context.Computers.ToListAsync();
-        //}
-
-        // GET: api/Computers
         [HttpGet]
         public IEnumerable<Computer> GetComputers() => _service.ReadData();
 
-        //// GET: api/Computers/5
-        //[HttpGet("{id}")]
-        //public async Task<ActionResult<Computer>> GetComputer(int id)
-        //{
-        //    var computer = await _service.Computers.FindAsync(id);
+        // GET: api/Computers/5
+        [HttpGet("{id}")]
+        public Computer GetComputer(int id) => _service.GetDataByID(id);
 
-        //    if (computer == null)
-        //    {
-        //        return NotFound();
-        //    }
-
-        //    return computer;
-        //}
 
         //// PUT: api/Computers/5
         //// To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
