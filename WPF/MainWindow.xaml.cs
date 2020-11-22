@@ -38,7 +38,7 @@ namespace WPF
     {
 
         private List<Computer> OriginalList = new List<Computer>();
-        private ComputersController comps;
+        private ItemController<Computer> comps;
  
         private IDataItem<Computer> _DataService;
 
@@ -62,12 +62,8 @@ namespace WPF
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
             CreateFilterCheckbox();
-            DataContent.ReadingDB.Services.ComputerDataService service = new DataContent.ReadingDB.Services.ComputerDataService();
-            comps = new ComputersController(service);
-            //_DataService = new LaptopServiceCSV(MainPath.GetComputerPath());
-            //ItemsListBox.ItemsSource = _DataService.ReadData();           
-            //OriginalList = ItemsListBox.ItemsSource.Cast<Computer>().ToList();
-            OriginalList = comps.GetComputers().ToList();
+            comps = new ItemController<Computer>(new DataContent.ReadingDB.Services.ComputerDataService());
+            OriginalList = comps.Get().ToList();
             ItemsListBox.ItemsSource = OriginalList;
             _filter = new ComputerFilter(OriginalList);
             _sorter = new Sorter(OriginalList.Cast<Item>().ToList());
