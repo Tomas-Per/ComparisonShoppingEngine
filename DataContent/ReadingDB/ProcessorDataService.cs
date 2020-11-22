@@ -31,7 +31,7 @@ namespace DataContent.ReadingDB.Services
                 _db.SaveChanges();
             }
         }
-        public Processor GetProccesorByID(int id)
+        public Processor GetDataByID(int id)
         {
             using (_db = new ComputerContext())
             {
@@ -39,7 +39,7 @@ namespace DataContent.ReadingDB.Services
                 return processorInDB;
             }
         }
-        public void UpdateProcessor(Processor processor)
+        public void UpdateData(Processor processor)
         {
             using(_db = new ComputerContext())
             {
@@ -51,6 +51,14 @@ namespace DataContent.ReadingDB.Services
                     processorInDB.Cache = processor.Cache;
                     processorInDB.MinCores = processor.MinCores;
                 }
+                _db.SaveChanges();
+            }
+        }
+        public void DeleteData(int id)
+        {
+            using(_db = new ComputerContext()){
+                var processor = GetDataByID(id);
+                _db.Processors.Remove(processor);
                 _db.SaveChanges();
             }
         }

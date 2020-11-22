@@ -21,7 +21,6 @@ namespace DataContent.ReadingDB.Services
                 return computers;
             }
         }
-
         public void WriteData(IEnumerable<Computer> list)
         {
             using (_db = new ComputerContext())
