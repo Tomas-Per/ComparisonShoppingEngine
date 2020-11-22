@@ -44,14 +44,14 @@ namespace AdminService
                     case "5":
                         Console.WriteLine("Type processor ID");
                         var service = new ProcessorDataService();
-                        var processor = service.GetProccesorByID(Int32.Parse(Console.ReadLine()));
+                        var processor = service.GetDataByID(Int32.Parse(Console.ReadLine()));
                         Console.WriteLine("Write Name, Model, Cache, Cores");
                         var specs = Console.ReadLine().Split(',');
                         processor.Name = specs[0];
                         processor.Model = specs[1];
                         processor.Cache = Int32.Parse(specs[2]);
                         processor.MinCores = Int32.Parse(specs[3]);
-                        service.UpdateProcessor(processor);
+                        service.UpdateData(processor);
                         Console.WriteLine("Updated");
                         break;
 
