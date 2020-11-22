@@ -4,8 +4,12 @@ using System.Linq;
 
 namespace ItemLibrary
 {
-    public class Processor : Component
+    public class Processor
     {
+        public int Id { get; set; }
+
+        [MaxLength(32)]
+        public string Name { get; set; }
 
         [MaxLength(32)]
         public string Model { get; set; }
