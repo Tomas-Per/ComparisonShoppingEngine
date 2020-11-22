@@ -2,9 +2,9 @@
 
 namespace DataContent
 { 
-    public interface IData<T> where T : IEnumerable<object>
+    public interface IData<T>
     {
-        public T ReadData();
-        public void WriteData(T list);
+        public IEnumerable<T> ReadData();
+        public void WriteData(IEnumerable<T> list);
     }
 }
