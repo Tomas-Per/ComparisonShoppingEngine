@@ -3,13 +3,13 @@ using OpenQA.Selenium;
 using OpenQA.Selenium.Chrome;
 using System;
 using System.Collections.Generic;
-using System.Runtime.InteropServices.ComTypes;
 using Parsing;
 using static ItemLibrary.Categories;
 using System.Linq;
 using PathLibrary;
+using DataContent.ReadingDB.Services;
 
-namespace ShopParser
+namespace WebParser.ShopParser
 {
     public class AvitelaParser : IParser<Computer>
     {
@@ -119,7 +119,7 @@ namespace ShopParser
                 }
                 else if (table[i].Text.Contains("Procesoriaus tipas"))
                 {
-                    computer.Processor = new Processor { Name = table[i + 1].Text };
+                    computer.Processor = new ProcessorDataService().GetProcessor(table[i + 1].Text);
                 }
 
                 else if (computer.GraphicsCardName == null && table[i].Text.Contains("Vaizdo plokštės tipas"))
@@ -129,7 +129,7 @@ namespace ShopParser
 
                 else if (computer.Processor.Name == null && table[i].Text.Contains("Procesoriaus modelis"))
                 {
-                    computer.Processor = new Processor { Name = table[i + 1].Text };
+                    computer.Processor = new ProcessorDataService().GetProcessor(table[i + 1].Text);
                 }
 
             }

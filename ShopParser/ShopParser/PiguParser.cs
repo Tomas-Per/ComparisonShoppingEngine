@@ -1,4 +1,5 @@
-﻿using ItemLibrary;
+﻿using DataContent.ReadingDB.Services;
+using ItemLibrary;
 using OpenQA.Selenium;
 using OpenQA.Selenium.Chrome;
 using Parsing;
@@ -8,7 +9,7 @@ using System.Collections.Generic;
 using System.Linq;
 using static ItemLibrary.Categories;
 
-namespace ShopParser
+namespace WebParser.ShopParser
 {
     public class PiguParser : IParser<Computer>
     {
@@ -78,9 +79,9 @@ namespace ShopParser
 
             for (int i = 0; i < table.Count; i++)
             {
-                if (table[i].Text.Contains("Procesoriaus tipas"))
+                if (table[i].Text.Contains("Procesorius"))
                 {
-                    computer.Processor = new Processor{Name = table[i + 1].Text};
+                    computer.Processor = new ProcessorDataService().GetProcessor(table[i + 1].Text);
                 }
 
                 else if (table[i].Text.Contains("Atminties dydis (RAM)"))

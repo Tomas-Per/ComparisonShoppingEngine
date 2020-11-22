@@ -1,11 +1,15 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <OutputType>Library</OutputType>
     <TargetFramework>net5.0</TargetFramework>
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="Selenium.WebDriver" Version="3.141.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Extensions\Extensions.csproj" />
     <ProjectReference Include="..\ItemLibrary\ItemLibrary.csproj" />
     <ProjectReference Include="..\PathLibrary\PathLibrary.csproj" />
   </ItemGroup>

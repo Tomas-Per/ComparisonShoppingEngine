@@ -1,4 +1,5 @@
-﻿using PathLibrary;
+﻿using ItemLibrary;
+using PathLibrary;
 using System;
 using System.Diagnostics;
 using System.IO;
@@ -9,6 +10,7 @@ namespace ExceptionsLogging
     public static class ExceptionLogger 
     {
         private readonly static string _filePath = MainPath.GetMainPath() + @"\ExceptionsLogging\Log.txt";
+        private readonly static string _parsingFilePath = MainPath.GetMainPath() + @"\ExceptionsLogging\NotParsedElementsLog.txt";
 
         //Logs Exception to a file
         public static void Log (Exception ex)
@@ -16,7 +18,6 @@ namespace ExceptionsLogging
             if (!File.Exists(_filePath))
             {
                 File.Create(_filePath).Close();
-
             }
 
             using (StreamWriter streamWriter = new StreamWriter(_filePath, true))
@@ -24,9 +25,24 @@ namespace ExceptionsLogging
                 streamWriter.WriteLine("Error:   " + ex.Message);
                 streamWriter.WriteLine("Occured At:    " + GetFullStackTrace(ex));
                 streamWriter.WriteLine("Time:    " + DateTime.Now);
-                streamWriter.Close();
             }
         }
+
+
+        public static void LogProcessorParsingException(Processor processor)
+        {
+            if (!File.Exists(_parsingFilePath))
+            {
+                File.Create(_parsingFilePath).Close();
+            }
+
+            using (StreamWriter streamWriter = new StreamWriter(_parsingFilePath, true))
+            {
+                streamWriter.WriteLine("Could not parse processor. Processor ID is:   " + processor.Id);
+                streamWriter.WriteLine("Time:    " + DateTime.Now);
+            }
+        }
+
 
 
         //returns Exception's full stack trace as string

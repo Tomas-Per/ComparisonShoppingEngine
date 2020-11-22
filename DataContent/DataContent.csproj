@@ -7,10 +7,17 @@
 
   <ItemGroup>
     <PackageReference Include="CsvHelper" Version="12.3.2" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="5.0.0">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\ComponentParser\ComponentParser.csproj" />
+    <ProjectReference Include="..\DataManipulation\DataManipulation.csproj" />
     <ProjectReference Include="..\ExceptionsLogging\ExceptionsLogging.csproj" />
+    <ProjectReference Include="..\Extensions\Extensions.csproj" />
     <ProjectReference Include="..\ItemLibrary\ItemLibrary.csproj" />
     <ProjectReference Include="..\PathLibrary\PathLibrary.csproj" />
   </ItemGroup>

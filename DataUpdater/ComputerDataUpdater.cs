@@ -1,4 +1,4 @@
-﻿using ShopParser;
+﻿using WebParser.ShopParser;
 using ItemLibrary;
 using DataContent.ReadingCSV.Services;
 using System.Collections.Generic;

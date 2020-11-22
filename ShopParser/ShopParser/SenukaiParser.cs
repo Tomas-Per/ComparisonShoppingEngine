@@ -7,8 +7,9 @@ using System.Linq;
 using Parsing;
 using static ItemLibrary.Categories;
 using PathLibrary;
+using DataContent.ReadingDB.Services;
 
-namespace ShopParser
+namespace WebParser.ShopParser
 {
     public class SenukaiParser : IParser<Computer>
     {
@@ -103,11 +104,11 @@ namespace ShopParser
                 {
                     if (table[i + 1].Text.Contains("("))
                     {
-                        computer.Processor = new Processor { Name = table[i + 1].Text.Substring(0, table[i + 1].Text.IndexOf("(")) };
+                        computer.Processor = new ProcessorDataService().GetProcessor(table[i + 1].Text.Substring(0, table[i + 1].Text.IndexOf("(")));
                     }
                     else
                     {
-                        computer.Processor = new Processor { Name = table[i + 1].Text };
+                        computer.Processor = new ProcessorDataService().GetProcessor(table[i + 1].Text );
                     }
                 }
 

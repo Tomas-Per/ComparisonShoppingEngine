@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using static ItemLibrary.Categories;
 
@@ -8,10 +9,20 @@ namespace ItemLibrary
     public class Computer : Item
     {
         public Processor Processor { get; set; }
+
+        [MaxLength(64)]
         public string GraphicsCardName { get; set; }
+
+        [MaxLength(16)]
         public string GraphicsCardMemory { get; set; }
+
+        [Required]
         public int RAM { get; set; }
+
+        [MaxLength(16)]
         public string RAM_type { get; set; }
+
+        [MaxLength(16)]
         public string Resolution { get; set; }
         public ComputerCategory ComputerCategory { get; set; }
 
@@ -20,6 +31,7 @@ namespace ItemLibrary
             throw new NotImplementedException();
         }
 
+        [Required]
         public int StorageCapacity { get; set; }
 
 
@@ -42,6 +54,28 @@ namespace ItemLibrary
                                                                     || comp.StorageCapacity == this.StorageCapacity));
             return computers.Cast<Item>().ToList();
         }
+        public override bool Equals(object obj)
+        {
+            if (obj == null || !this.GetType().Equals(obj.GetType())) return false;
+            else
+            {
+                Computer comp = (Computer)obj;
+                if (comp.ManufacturerName != this.ManufacturerName)
+                {
+                    if (((this.ManufacturerName != null && !comp.Name.Contains(this.ManufacturerName)))
+                       && ((comp.Name != null && !this.Name.Contains(comp.ManufacturerName)))) return false;
+                }
+                if (comp.Processor.Name.Equals(this.Processor.Name) &&
+                    comp.StorageCapacity ==this.StorageCapacity &&
+                     comp.RAM == this.RAM &&
+                      (comp.Resolution.Contains(this.Resolution) || this.Resolution.Contains(comp.Resolution))) return true;
 
+                else return false;
+            }
+        }
+        public override int GetHashCode()
+        {
+            return base.GetHashCode();
+        }
     }
 }
