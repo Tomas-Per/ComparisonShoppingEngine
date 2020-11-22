@@ -11,12 +11,12 @@ using DataContent.ReadingDB.Services;
 
 namespace WebParser.ComputerParsers
 {
-    public class SenukaiParser : IParser<Computer>
+    public class SenukaiComputerParser : IParser<Computer>
     {
         private readonly string _url = "https://www.senukai.lt/c/kompiuterine-technika-biuro-prekes/nesiojami-kompiuteriai-ir-priedai/nesiojami-kompiuteriai/5ei?page=1";
         private Lazy<ChromeDriver> _driver;   
 
-        public SenukaiParser()
+        public SenukaiComputerParser()
         {
             var options = new ChromeOptions();
             options.AddArguments("--headless");

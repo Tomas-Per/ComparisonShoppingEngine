@@ -11,12 +11,12 @@ using DataContent.ReadingDB.Services;
 
 namespace WebParser.ComputerParsers
 {
-    public class AvitelaParser : IParser<Computer>
+    public class AvitelaComputerParser : IParser<Computer>
     {
         private readonly string _url = "https://avitela.lt/kompiuterine-technika/nesiojamieji-kompiuteriai/nesiojami-kompiuteriai?page=1";
         private Lazy<ChromeDriver> _driver;
 
-        public AvitelaParser()
+        public AvitelaComputerParser()
         {
             var options = new ChromeOptions();
             options.AddArguments("--headless");

@@ -11,12 +11,12 @@ using static ItemLibrary.Categories;
 
 namespace WebParser.ComputerParsers
 {
-    public class PiguParser : IParser<Computer>
+    public class PiguComputerParser : IParser<Computer>
     {
         private readonly string _url = "https://pigu.lt/lt/kompiuteriai/nesiojami-kompiuteriai?page=1";
         private Lazy<ChromeDriver> _driver;
 
-        public PiguParser ()
+        public PiguComputerParser ()
         {
             var options = new ChromeOptions();
             options.AddArguments("--headless");
