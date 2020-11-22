@@ -71,7 +71,7 @@ namespace DataContent.ReadingDB.Services
                 return computer;
             }
         }
-        public void UpdateProcessor(Computer computer)
+        public void UpdateData(Computer computer)
         {
             using (_db = new ComputerContext())
             {
@@ -93,7 +93,18 @@ namespace DataContent.ReadingDB.Services
                     computerInDB.RAM_type = computer.RAM_type;
                     computerInDB.Resolution = computer.Resolution;
                     computerInDB.ComputerCategory = computer.ComputerCategory;
+                    computerInDB.ItemCode = computer.ItemCode;
+                    computerInDB.ModifyDate = DateTime.Now;
                 }
+                _db.SaveChanges();
+            }
+        }
+        public void DeleteData(int id)
+        {
+            using(_db = new ComputerContext())
+            {
+                var computer = GetDataByID(id);
+                _db.Computers.Remove(computer);
                 _db.SaveChanges();
             }
         }
