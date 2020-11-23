@@ -29,7 +29,7 @@ namespace ExceptionsLogging
         }
 
 
-        public static void LogProcessorParsingException(Processor processor)
+        public static void LogProcessorParsingException(Processor processor, Exception ex)
         {
             if (!File.Exists(_parsingFilePath))
             {
@@ -38,7 +38,8 @@ namespace ExceptionsLogging
 
             using (StreamWriter streamWriter = new StreamWriter(_parsingFilePath, true))
             {
-                streamWriter.WriteLine("Could not parse processor. Processor ID is:   " + processor.Id);
+                streamWriter.WriteLine(ex.Message);
+                streamWriter.WriteLine("Processor ID is:   " + processor.Id);
                 streamWriter.WriteLine("Time:    " + DateTime.Now);
             }
         }

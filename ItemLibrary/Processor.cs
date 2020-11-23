@@ -1,4 +1,5 @@
-﻿using System;
+﻿using ItemLibrary.Exceptions;
+using System;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 
@@ -23,8 +24,11 @@ namespace ItemLibrary
                     name = processorModel.Substring(0, processorModel.IndexOf(processorModel.Split(' ').Last()));
                 else name = processorModel.Substring(0, processorModel.IndexOf(words[words.Count() - 2]));
             }
+
             this.Name = name;
-        }
+
+            if (name.Length <= 3) throw new ProcessorInvalidNameException("Processor has invalid name");
+         }
         
     }
 }
