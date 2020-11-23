@@ -35,5 +35,9 @@ namespace WebAPI.Controllers
         [HttpPut]
         public void PutProcessor(Processor processor) => _service.UpdateData(processor);
 
+        // POST: api/Processors
+        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
+        [HttpPost]
+        public void PostProcessor(List<Processor> processors) => _service.WriteData(processors);
     }
 }
