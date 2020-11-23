@@ -9,12 +9,12 @@ using DataContent;
 
 namespace DataUpdater
 {
-    public class ComputerDataUpdater : IDataUpdater<Computer>
+    public class ComputerDataUpdater<T> where T : Item
     {
-        private IParser<Computer> _parser { get; set; }
-        private IData<IEnumerable<Computer>> _dataService;
+        private IParser<T> _parser { get; set; }
+        private IData<IEnumerable<T>> _dataService;
 
-        public ComputerDataUpdater (IParser<Computer> parser, IData<IEnumerable<Computer>> dataService)
+        public ComputerDataUpdater (IParser<T> parser, IData<IEnumerable<T>> dataService)
         {
             _parser = parser;
             _dataService = dataService;
@@ -22,14 +22,14 @@ namespace DataUpdater
 
 
         //calls shop parser and returns parsed item list
-        public List<Computer> GetItemListFromWeb()
+        public List<T> GetItemListFromWeb()
         {
-            List<Computer> data = _parser.ParseShop();
+            List<T> data = _parser.ParseShop();
             return data;
         }
 
         //updates CSV file with new data
-        public void UpdateItemListFile(List<Computer> data)
+        public void UpdateItemListFile(List<T> data)
         {
             _dataService.WriteData(data);
         }
