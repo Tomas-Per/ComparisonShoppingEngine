@@ -39,5 +39,9 @@ namespace WebAPI.Controllers
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
         public void PostProcessor(List<Processor> processors) => _service.WriteData(processors);
+
+        // DELETE: api/Processors/5
+        [HttpDelete("{id}")]
+        public void DeleteProcessor(int id) => _service.DeleteData(id);
     }
 }
