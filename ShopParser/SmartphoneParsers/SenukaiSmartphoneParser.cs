@@ -9,7 +9,7 @@ using static ItemLibrary.Categories;
 using PathLibrary;
 using DataContent.ReadingDB.Services;
 
-namespace WebParser.ComputerParsers
+namespace WebParser.SmartphoneParsers
 {
     public class SenukaiSmartphoneParser : IParser<Smartphone>
     {
@@ -46,6 +46,7 @@ namespace WebParser.ComputerParsers
                     ((IJavaScriptExecutor)_driver.Value).ExecuteScript("window.open();");
                     _driver.Value.SwitchTo().Window(_driver.Value.WindowHandles.Last());
 
+                    _driver.Value.Navigate().GoToUrl(link);
                     Smartphone smartphone = ParseWindow(link);
 
                     _driver.Value.SwitchTo().Window(_driver.Value.WindowHandles.First());
@@ -94,7 +95,7 @@ namespace WebParser.ComputerParsers
 
             catch (ArgumentOutOfRangeException)
             {
-                smartphone.ImageLink = "https://ksd-images.lt/display/aikido/store/1e3628060337b388dd4ffbce4f20f608.jpg?h=742&w=816";
+                smartphone.ImageLink = "https://ksd-images.lt/display/aikido/store/3bb53f9a34e0ed486f44798e1f417a8d.jpg?h=742&w=816";
             }
 
             var table = _driver.Value.FindElements(By.TagName("td"));
@@ -145,6 +146,10 @@ namespace WebParser.ComputerParsers
                     List<int> cameras = new List<int>();
                     values.ToList().ForEach(item => cameras.Add(item.ParseInt()));
                     smartphone.FrontCameraMP = cameras;
+                }
+                else if (table[i].Text.Contains("Operatyvioji atmintis (RAM)"))
+                {
+                    smartphone.RAM = table[i + 1].Text.ParseInt();
                 }
             }
 
