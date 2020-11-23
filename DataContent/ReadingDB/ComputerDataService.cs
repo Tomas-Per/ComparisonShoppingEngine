@@ -42,6 +42,8 @@ namespace DataContent.ReadingDB.Services
 
                     else
                     {
+                        computer.ItemCode = _db.Computers.Count();
+
                         //extract simiilar computer from DB
                         var similarComputers = _db.Computers.Include(p => p.Processor)
                                             .Where(x => x.RAM == computer.RAM
@@ -59,7 +61,14 @@ namespace DataContent.ReadingDB.Services
                         //if equal computers found, fill all possible information
                         if (sameComputers.Count() > 0)
                         {
-                            sameComputers = new ComputerFiller().FillComputers(sameComputers);
+                            sameComputer = new ComputerFiller().FillComputers(sameComputers);
+                            foreach (var sameComp in sameComputers)
+                            {
+                                sameComp.ManufacturerName = sameComputer.ManufacturerName;
+                                sameComp.GraphicsCardName = sameComputer.GraphicsCardName;
+                                sameComp.GraphicsCardMemory = sameComputer.GraphicsCardMemory;
+                                sameComp.RAM_type = sameComputer.RAM_type;
+                            }
                             computer.ItemCode = sameComputers[0].Id;
                         }
 
