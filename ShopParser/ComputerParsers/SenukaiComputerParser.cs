@@ -24,8 +24,6 @@ namespace WebParser.ComputerParsers
         }
 
         //parses laptops from senukai.lt and returns results in a List<Computer>
-        //this method parses first 5 pages (48laptops in every page), because later pages are
-        //outdated and don't have items in stock for a long time
         public List<Computer> ParseShop()
         {
             List<Computer> data = new List<Computer>();
