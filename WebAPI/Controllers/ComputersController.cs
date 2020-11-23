@@ -32,36 +32,13 @@ namespace WebAPI.Controllers
         public Computer GetComputer(int id) => _service.GetDataByID(id);
 
 
-        //// PUT: api/Computers/5
-        //// To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
-        //[HttpPut("{id}")]
-        //public async Task<IActionResult> PutComputer(int id, Computer computer)
-        //{
-        //    if (id != computer.Id)
-        //    {
-        //        return BadRequest();
-        //    }
-
-        //    _context.Entry(computer).State = EntityState.Modified;
-
-        //    try
-        //    {
-        //        await _context.SaveChangesAsync();
-        //    }
-        //    catch (DbUpdateConcurrencyException)
-        //    {
-        //        if (!ComputerExists(id))
-        //        {
-        //            return NotFound();
-        //        }
-        //        else
-        //        {
-        //            throw;
-        //        }
-        //    }
-
-        //    return NoContent();
-        //}
+        // PUT: api/Computers/5
+        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
+        [HttpPut]
+        public void PutComputer(Computer computer)
+        {
+            _service.UpdateData(computer);
+        }
 
         // POST: api/Computers
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
