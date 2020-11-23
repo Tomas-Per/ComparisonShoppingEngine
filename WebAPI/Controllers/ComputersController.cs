@@ -63,16 +63,14 @@ namespace WebAPI.Controllers
         //    return NoContent();
         //}
 
-        //// POST: api/Computers
-        //// To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
-        //[HttpPost]
-        //public async Task<ActionResult<Computer>> PostComputer(Computer computer)
-        //{
-        //    _context.Computers.Add(computer);
-        //    await _context.SaveChangesAsync();
+        // POST: api/Computers
+        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
+        [HttpPost]
+        public void PostComputer(List<Computer> computer)
+        {
+            _service.WriteData(computer);
 
-        //    return CreatedAtAction("GetComputer", new { id = computer.Id }, computer);
-        //}
+        }
 
         //// DELETE: api/Computers/5
         //[HttpDelete("{id}")]
