@@ -27,7 +27,8 @@ namespace WebAPI.Controllers
         [HttpGet]
         public IEnumerable<Processor> GetProcessors() => _service.ReadData();
 
-
+        [HttpGet("{id}")]
+        public Processor GetProcessor(int id) => _service.GetDataByID(id);
 
     }
 }
