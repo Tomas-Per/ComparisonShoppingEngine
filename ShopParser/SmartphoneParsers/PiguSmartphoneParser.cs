@@ -13,7 +13,7 @@ namespace WebParser.SmartphoneParsers
 {
     public class PiguSmartphoneParser : IParser<Smartphone>
     {
-        private readonly string _url = "https://pigu.lt/lt/kompiuteriai/nesiojami-kompiuteriai?page=1";
+        private readonly string _url = "https://pigu.lt/lt/foto-gsm-mp3/mobilieji-telefonai?page=1";
         private Lazy<ChromeDriver> _driver;
 
         public PiguSmartphoneParser()
@@ -23,17 +23,14 @@ namespace WebParser.SmartphoneParsers
             _driver = new Lazy<ChromeDriver>(() => new ChromeDriver(MainPath.GetShopParserPath(), options));
         }
 
-        //parses laptops from avitela.lt and returns results in a List<Computer>
         public List<Smartphone> ParseShop()
         {
             List<Smartphone> data = new List<Smartphone>();
             List<string> links = new List<string>();
 
-            for (int i = 1; i <= 3; i++)
+            for (int i = 1; i <= 5; i++)
             {
-
                 var nextPage = _url.Remove(_url.Length - 1, 1) + i;
-
                 _driver.Value.Navigate().GoToUrl(nextPage);
 
                 var elements = _driver.Value.FindElements(By.ClassName("cover-link"));
@@ -48,70 +45,83 @@ namespace WebParser.SmartphoneParsers
                     ((IJavaScriptExecutor)_driver.Value).ExecuteScript("window.open();");
                     _driver.Value.SwitchTo().Window(_driver.Value.WindowHandles.Last());
 
-                    var computer = ParseWindow(link);
+                    var smartphone = ParseWindow(link);
 
                     _driver.Value.SwitchTo().Window(_driver.Value.WindowHandles.First());
 
-                    computer.ItemCategory = ItemCategory.Computer;
-                    //computer.ComputerCategory = ComputerCategory.Laptop;
-
-                    data.Add();
+                    smartphone.ItemCategory = ItemCategory.Smartphone;
+                    data.Add(smartphone);
                 }
             }
             ResetDriver();
             return data;
         }
 
-        //parses laptop window, updates computer fields
-        public Computer ParseWindow(string url)
+        //parses smartphone window
+        public Smartphone ParseWindow(string url)
         {
             _driver.Value.Navigate().GoToUrl(url);
 
-            Computer computer = new Computer();
+            Smartphone smartphone = new Smartphone();
 
-            computer.Name = _driver.Value.FindElement(By.TagName("h1")).Text;
-            computer.Price = _driver.Value.FindElement(By.XPath("//meta[@itemprop='price']")).GetAttribute("content").ParseDouble();
-            computer.ImageLink = _driver.Value.FindElement(By.ClassName("media-items-wrap")).FindElement(By.TagName("img")).GetAttribute("src");
-            computer.ItemURL = url;
-            computer.ShopName = "Pigu";
+            smartphone.Name = _driver.Value.FindElement(By.TagName("h1")).Text;
+            smartphone.Price = _driver.Value.FindElement(By.XPath("//meta[@itemprop='price']")).GetAttribute("content").ParseDouble();
+            smartphone.ImageLink = _driver.Value.FindElement(By.ClassName("media-items-wrap")).FindElement(By.TagName("img")).GetAttribute("src");
+            smartphone.ItemURL = url;
+            smartphone.ShopName = "Pigu";
 
             var table = _driver.Value.FindElements(By.TagName("td"));
 
             for (int i = 0; i < table.Count; i++)
             {
-                if (table[i].Text.Contains("Procesorius"))
+                if(table[i].Text.Contains("Prekės ženklas"))
                 {
-                    computer.Processor = new ProcessorDataService().GetProcessor(table[i + 1].Text);
+                    smartphone.ManufacturerName = table[i + 1].Text;
                 }
-
-                else if (table[i].Text.Contains("Atminties dydis (RAM)"))
+                else if (table[i].Text.Contains("Ekrano dydis(coliais)"))
                 {
-                    computer.RAM = table[i + 1].Text.ParseInt();
+                    smartphone.ScreenDiagonal = table[i + 1].Text.ParseDouble();
                 }
-
-                else if (table[i].Text.Contains("raiška"))
+                else if (table[i].Text.Contains("Pagrindinė kamera"))
                 {
-                    computer.Resolution = table[i + 1].Text;
+                    var values = table[i + 1].Text.Split('+');
+                    List<int> cameras = new List<int>();
+                    values.ToList().ForEach(item => cameras.Add(item.ParseInt()));
+                    smartphone.BackCameraMP = cameras;
+
+                    smartphone.BackCameraMP.ForEach(item => Console.WriteLine(item));
                 }
-
-                else if (table[i].Text.Contains("Atminties tipas"))
+                else if (table[i].Text.Contains("Priekinė kamera"))
                 {
-                    computer.RAM_type = table[i + 1].Text;
+                    var values = table[i + 1].Text.Split('+');
+                    List<int> cameras = new List<int>();
+                    values.ToList().ForEach(item => cameras.Add(item.ParseInt()));
+                    smartphone.BackCameraMP = cameras;
                 }
-
-                else if (table[i].Text.Equals("Vaizdo plokštė"))
+                else if (table[i].Text.Contains("Procesoriaus tipas"))
                 {
-                    computer.GraphicsCardName = table[i + 1].Text;
+                    smartphone.Processor = table[i + 1].Text;
                 }
-
-                else if (table[i].Text.Contains("Kietasis diskas SSD") || table[i].Text.Contains("Kietasis diskas HDD"))
+                else if (table[i].Text.Contains("Vidinė atmintis"))
                 {
-                    computer.StorageCapacity += table[i + 1].Text.ParseInt();
+                    smartphone.Storage = table[i + 1].Text.ParseInt();
+                }
+                else if (table[i].Text.Contains("Operatyvinė atmintis (RAM)"))
+                {
+                    smartphone.RAM = table[i + 1].Text.ParseInt();
+                    if (table[i + 1].Text.Contains("MB"))
+                    {
+                        smartphone.RAM = smartphone.RAM / 1024;
+                    }
+                }
+                else if (table[i].Text.Contains("Baterijos talpa"))
+                {
+                    smartphone.RAM = table[i + 1].Text.ParseInt();
                 }
 
             }
             ResetDriver();
-            return computer;
+            return smartphone;
         }
 
         private void ResetDriver()

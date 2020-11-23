@@ -9,6 +9,7 @@ using PathLibrary;
 using WebParser.ComponentsParser;
 using DataContent.ReadingDB.Services;
 using ItemLibrary;
+using WebParser.SmartphoneParsers;
 
 namespace AdminService
 {

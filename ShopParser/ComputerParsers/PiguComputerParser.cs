@@ -23,7 +23,6 @@ namespace WebParser.ComputerParsers
             _driver = new Lazy<ChromeDriver>(() => new ChromeDriver(MainPath.GetShopParserPath(), options));
         }
 
-        //parses laptops from avitela.lt and returns results in a List<Computer>
         public List<Computer> ParseShop()
         {
             List<Computer> data = new List<Computer>();
