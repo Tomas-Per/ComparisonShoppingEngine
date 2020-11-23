@@ -5,16 +5,19 @@ using System.Collections.Generic;
 using PathLibrary;
 using WebParser;
 using DataContent.ReadingDB.Services;
+using DataContent;
 
 namespace DataUpdater
 {
     public class ComputerDataUpdater : IDataUpdater<Computer>
     {
         private IParser<Computer> _parser { get; set; }
+        private IData<IEnumerable<Computer>> _dataService;
 
-        public ComputerDataUpdater (IParser<Computer> parser)
+        public ComputerDataUpdater (IParser<Computer> parser, IData<IEnumerable<Computer>> dataService)
         {
             _parser = parser;
+            _dataService = dataService;
         }
 
 
@@ -28,7 +31,7 @@ namespace DataUpdater
         //updates CSV file with new data
         public void UpdateItemListFile(List<Computer> data)
         {
-            new ComputerDataService().WriteData(data);
+            _dataService.WriteData(data);
         }
     }
 }
