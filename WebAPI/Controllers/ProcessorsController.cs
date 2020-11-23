@@ -30,5 +30,10 @@ namespace WebAPI.Controllers
         [HttpGet("{id}")]
         public Processor GetProcessor(int id) => _service.GetDataByID(id);
 
+        // PUT: api/Processors/5
+        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
+        [HttpPut]
+        public void PutProcessor(Processor processor) => _service.UpdateData(processor);
+
     }
 }
