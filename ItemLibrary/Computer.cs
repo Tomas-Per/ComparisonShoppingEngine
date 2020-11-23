@@ -37,7 +37,7 @@ namespace ItemLibrary
         //builder pattern??
         public Computer()
         {
-            //needed for csvHelper to work
+            ModifyDate = DateTime.Now;
         }
 
 
