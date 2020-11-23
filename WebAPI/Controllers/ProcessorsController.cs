@@ -23,5 +23,11 @@ namespace WebAPI.Controllers
             _service = (ProcessorDataService)service;
         }
 
+        // GET: api/Processors
+        [HttpGet]
+        public IEnumerable<Processor> GetProcessors() => _service.ReadData();
+
+
+
     }
 }
