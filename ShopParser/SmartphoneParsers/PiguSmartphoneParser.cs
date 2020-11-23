@@ -9,14 +9,14 @@ using System.Collections.Generic;
 using System.Linq;
 using static ItemLibrary.Categories;
 
-namespace WebParser.ComputerParsers
+namespace WebParser.SmartphoneParsers
 {
-    public class PiguComputerParser : IParser<Computer>
+    public class PiguSmartphoneParser : IParser<Smartphone>
     {
         private readonly string _url = "https://pigu.lt/lt/kompiuteriai/nesiojami-kompiuteriai?page=1";
         private Lazy<ChromeDriver> _driver;
 
-        public PiguComputerParser ()
+        public PiguSmartphoneParser()
         {
             var options = new ChromeOptions();
             options.AddArguments("--headless");
@@ -24,9 +24,9 @@ namespace WebParser.ComputerParsers
         }
 
         //parses laptops from avitela.lt and returns results in a List<Computer>
-        public List<Computer> ParseShop()
+        public List<Smartphone> ParseShop()
         {
-            List<Computer> data = new List<Computer>();
+            List<Smartphone> data = new List<Smartphone>();
             List<string> links = new List<string>();
 
             for (int i = 1; i <= 3; i++)
@@ -55,7 +55,7 @@ namespace WebParser.ComputerParsers
                     computer.ItemCategory = ItemCategory.Computer;
                     //computer.ComputerCategory = ComputerCategory.Laptop;
 
-                    data.Add(computer);
+                    data.Add();
                 }
             }
             ResetDriver();
