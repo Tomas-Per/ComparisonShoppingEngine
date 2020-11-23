@@ -31,7 +31,7 @@ namespace WebParser.ComputerParsers
             List<Computer> data = new List<Computer>();
             List<string> links = new List<string>();
 
-            for (int i = 1; i <= 5; i++)
+            for (int i = 1; i <= 3; i++)
             {
                 var nextPage = _url.Remove(_url.Length - 1, 1) + i;
 
@@ -52,8 +52,11 @@ namespace WebParser.ComputerParsers
 
                     _driver.Value.SwitchTo().Window(_driver.Value.WindowHandles.First());
 
+                    if (computer.Price == 0)
+                    {
+                        continue;
+                    }
                     computer.ItemCategory = ItemCategory.Computer;
-                    //computer.ComputerCategory = ComputerCategory.Laptop;
                     data.Add(computer);
                 }
             }
@@ -70,7 +73,15 @@ namespace WebParser.ComputerParsers
             Computer computer = new Computer();
 
             computer.Name = _driver.Value.FindElement(By.TagName("h1")).Text;
-            computer.Price = _driver.Value.FindElement(By.XPath("//span[@class = 'price']")).Text.ParseDouble();
+            try
+            {
+                computer.Price = _driver.Value.FindElement(By.XPath("//span[@class = 'price']")).Text.ParseDouble();
+            }
+            catch(Exception)
+            {
+                computer.Price = 0;
+            }
+            
             computer.ItemURL = url;
             computer.ShopName = "Senukai.lt";
 

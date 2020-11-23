@@ -4,6 +4,7 @@ using DataContent.ReadingCSV.Services;
 using System.Collections.Generic;
 using PathLibrary;
 using WebParser;
+using DataContent.ReadingDB.Services;
 
 namespace DataUpdater
 {
@@ -27,7 +28,7 @@ namespace DataUpdater
         //updates CSV file with new data
         public void UpdateItemListFile(List<Computer> data)
         {
-            new LaptopServiceCSV(MainPath.GetComputerPath()).WriteData(data);
+            new ComputerDataService().WriteData(data);
         }
     }
 }
