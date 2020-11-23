@@ -21,7 +21,7 @@ namespace WebParser.SmartphoneParsers
         {
             var options = new ChromeOptions();
             options.AddArguments("--headless");
-            _driver = new Lazy<ChromeDriver>(() => new ChromeDriver(MainPath.GetShopParserPath()), options);
+            _driver = new Lazy<ChromeDriver>(() => new ChromeDriver(MainPath.GetShopParserPath(), options));
         }
 
 
