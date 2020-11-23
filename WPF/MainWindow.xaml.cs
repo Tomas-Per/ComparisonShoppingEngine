@@ -39,9 +39,7 @@ namespace WPF
     {
 
         private List<Computer> OriginalList = new List<Computer>();
-        private ItemController<Computer> comps;
         private static HttpClient client = new HttpClient();
-        private IDataItem<Computer> _DataService;
 
         public MainWindow()
         {
@@ -63,8 +61,6 @@ namespace WPF
         private async void Window_Loaded(object sender, RoutedEventArgs e)
         {
             CreateFilterCheckbox();
-            //comps = new ItemController<Computer>(new DataContent.ReadingDB.Services.ComputerDataService());
-            //OriginalList = comps.Get().ToList();
             OriginalList = await GetAPIAsync("https://localhost:44305/api/Computers");
             ItemsListBox.ItemsSource = OriginalList;
             _filter = new ComputerFilter(OriginalList);
