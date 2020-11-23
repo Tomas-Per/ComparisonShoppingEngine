@@ -36,6 +36,7 @@ namespace WebAPI
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "WebAPI", Version = "v1" });
             });
             services.AddScoped<IDataItem<Computer>, ComputerDataService>();
+            services.AddScoped<IDataComponent<Processor>, ProcessorDataService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
