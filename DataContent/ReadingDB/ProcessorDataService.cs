@@ -1,6 +1,7 @@
 ﻿using ExceptionsLogging;
 using ItemLibrary;
 using ItemLibrary.DataContexts;
+using ItemLibrary.Exceptions;
 using Parsing;
 using System;
 using System.Collections.Generic;
@@ -64,32 +65,47 @@ namespace DataContent.ReadingDB.Services
         }
         public Processor GetProcessor(string processorModel)
         {
+            //Deletes all trademarks and etc. Deletes sufix Processor
+            if (processorModel.Contains("Processor")) processorModel = processorModel.Substring(0, processorModel.IndexOf("Processor"));
             processorModel = processorModel.DeleteSpecialChars();
+
             using(_db = new ComputerContext())
             {
+
+                //search for processor in DB
                 var processor = _db.Processors
                                 .Where(x => x.Model.Contains(processorModel)
                                 || processorModel.Contains(x.Model)).FirstOrDefault();
+
                 if(processor!= null) return processor;
                 else
                 {
+                    //try parse processor from Gpuskin database site
                     try
                     {
                         processor = new ProcessorParser().ParseProcessor(processorModel);
                         _db.Add(processor);
                         _db.SaveChanges();
                     }
-                    catch(ProcessorNotFoundException)
+                    catch(ProcessorNotFoundException ex)
                     {
+                        //add new processor but throw exception, so it could be logged
                         processor = new Processor { Model = processorModel };
-                        processor.SetName(processorModel);
+                        try
+                        {
+                            processor.SetName(processorModel);
+                        }
+                        catch(ProcessorInvalidNameException e)
+                        {
+                            ExceptionLogger.LogProcessorParsingException(processor, e);
+                        }
                         using(_db = new ComputerContext())
                         {
                             _db.Add(processor);
                             _db.SaveChanges();
                             processor = _db.Processors.Where(x => x.Model == processorModel).FirstOrDefault();
                         }
-                        ExceptionLogger.LogProcessorParsingException(processor);
+                        ExceptionLogger.LogProcessorParsingException(processor, ex);
                     }
                     return processor;
                 }

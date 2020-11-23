@@ -27,34 +27,55 @@ namespace DataContent.ReadingDB.Services
             {
                 foreach (Computer computer in list)
                 {
+                    //check for the computer in DB
                     var sameComputer = _db.Computers
                                             .Where(x => x.Name == computer.Name
                                             && x.ShopName == computer.ShopName)
                                             .FirstOrDefault();
+
+                    //change price and mofidy date if the computer is found in DB
                     if (sameComputer != null)
                     {
                         sameComputer.Price = computer.Price;
-                        sameComputer.ModifyDate = DateTime.Now;
+                        sameComputer.ModifyDate = computer.ModifyDate;
                     }
+
                     else
                     {
+                        computer.ItemCode = _db.Computers.Count();
+
+                        //extract simiilar computer from DB
                         var similarComputers = _db.Computers.Include(p => p.Processor)
                                             .Where(x => x.RAM == computer.RAM
                                             && x.StorageCapacity == computer.StorageCapacity
-                                            && x.Resolution.Contains(computer.Resolution)
-                                            && computer.Resolution.Contains(x.Resolution))
+                                            && (x.Resolution.Contains(computer.Resolution) || computer.Resolution.Contains(x.Resolution)))
                                             .ToList();
+
+                        //check and get list of equal computers, but in other shops
                         var sameComputers = new List<Computer>();
                         foreach (var similarComputer in similarComputers)
                         {
                             if (similarComputer.Equals(computer)) sameComputers.Add(similarComputer);
                         }
+                        
+                        //if equal computers found, fill all possible information
                         if (sameComputers.Count() > 0)
                         {
-                            sameComputers = new ComputerFiller().FillComputers(sameComputers);
+                            sameComputer = new ComputerFiller().FillComputers(sameComputers);
+                            foreach (var sameComp in sameComputers)
+                            {
+                                sameComp.ManufacturerName = sameComputer.ManufacturerName;
+                                sameComp.GraphicsCardName = sameComputer.GraphicsCardName;
+                                sameComp.GraphicsCardMemory = sameComputer.GraphicsCardMemory;
+                                sameComp.RAM_type = sameComputer.RAM_type;
+                            }
                             computer.ItemCode = sameComputers[0].Id;
                         }
+
+                        //update equal computers in DB
                         _db.SaveChanges();
+
+                        //add new computer with existing Processor to DB
                         computer.Processor = _db.Processors.Find(computer.Processor.Id);
                         _db.Add(computer);
                     }
