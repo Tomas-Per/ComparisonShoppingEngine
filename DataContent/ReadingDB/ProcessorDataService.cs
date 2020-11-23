@@ -57,7 +57,7 @@ namespace DataContent.ReadingDB.Services
         public void DeleteData(int id)
         {
             using(_db = new ComputerContext()){
-                var processor = GetDataByID(id);
+                var processor = _db.Processors.Where(p => p.Id == id).FirstOrDefault();
                 _db.Processors.Remove(processor);
                 _db.SaveChanges();
             }
