@@ -69,24 +69,14 @@ namespace WebAPI.Controllers
         public void PostComputer(List<Computer> computer)
         {
             _service.WriteData(computer);
-
         }
 
-        //// DELETE: api/Computers/5
-        //[HttpDelete("{id}")]
-        //public async Task<IActionResult> DeleteComputer(int id)
-        //{
-        //    var computer = await _context.Computers.FindAsync(id);
-        //    if (computer == null)
-        //    {
-        //        return NotFound();
-        //    }
-
-        //    _context.Computers.Remove(computer);
-        //    await _context.SaveChangesAsync();
-
-        //    return NoContent();
-        //}
+        // DELETE: api/Computers/5
+        [HttpDelete("{id}")]
+        public void DeleteComputer(int id)
+        {
+            _service.DeleteData(id);
+        }
 
         //private bool ComputerExists(int id)
         //{

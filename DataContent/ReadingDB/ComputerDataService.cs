@@ -66,7 +66,7 @@ namespace DataContent.ReadingDB.Services
         {
             using (_db = new ComputerContext())
             {
-                var computer = _db.Computers.Include(x => x.Id == id).FirstOrDefault();
+                var computer = _db.Computers.Where(x => x.Id == id).FirstOrDefault();
                 return computer;
             }
         }
