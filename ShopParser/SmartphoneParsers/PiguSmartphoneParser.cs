@@ -1,29 +1,28 @@
-﻿using ItemLibrary;
+﻿using DataContent.ReadingDB.Services;
+using ItemLibrary;
 using OpenQA.Selenium;
 using OpenQA.Selenium.Chrome;
+using Parsing;
+using PathLibrary;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Parsing;
 using static ItemLibrary.Categories;
-using PathLibrary;
-using DataContent.ReadingDB.Services;
 
 namespace WebParser.SmartphoneParsers
 {
-    public class SenukaiSmartphoneParser : IParser<Smartphone>
+    public class PiguSmartphoneParser : IParser<Smartphone>
     {
-        private readonly string _url = "https://www.senukai.lt/c/telefonai-plansetiniai-kompiuteriai/mobilieji-telefonai/5nt?page=1";
+        private readonly string _url = "https://pigu.lt/lt/foto-gsm-mp3/mobilieji-telefonai?page=1";
         private Lazy<ChromeDriver> _driver;
 
-        public SenukaiSmartphoneParser()
+        public PiguSmartphoneParser()
         {
             var options = new ChromeOptions();
             options.AddArguments("--headless");
             _driver = new Lazy<ChromeDriver>(() => new ChromeDriver(MainPath.GetShopParserPath(), options));
         }
 
-        //parses smartphones from senukai.lt and returns results in a List<Smartphone>
         public List<Smartphone> ParseShop()
         {
             List<Smartphone> data = new List<Smartphone>();
@@ -32,13 +31,13 @@ namespace WebParser.SmartphoneParsers
             for (int i = 1; i <= 5; i++)
             {
                 var nextPage = _url.Remove(_url.Length - 1, 1) + i;
-
                 _driver.Value.Navigate().GoToUrl(nextPage);
 
-                var elements = _driver.Value.FindElements(By.XPath("//*[@class = 'catalog-taxons-product__name']"));
-                foreach (var element in elements)
+                var elements = _driver.Value.FindElements(By.ClassName("cover-link"));
+
+                foreach (var item in elements)
                 {
-                    links.Add(element.GetAttribute("href"));
+                    links.Add(item.GetAttribute("href"));
                 }
 
                 foreach (var link in links)
@@ -46,15 +45,9 @@ namespace WebParser.SmartphoneParsers
                     ((IJavaScriptExecutor)_driver.Value).ExecuteScript("window.open();");
                     _driver.Value.SwitchTo().Window(_driver.Value.WindowHandles.Last());
 
-                    _driver.Value.Navigate().GoToUrl(link);
-                    Smartphone smartphone = ParseWindow(link);
+                    var smartphone = ParseWindow(link);
 
                     _driver.Value.SwitchTo().Window(_driver.Value.WindowHandles.First());
-
-                    if (smartphone.Price == 0)
-                    {
-                        continue;
-                    }
 
                     smartphone.ItemCategory = ItemCategory.Smartphone;
                     data.Add(smartphone);
@@ -64,9 +57,7 @@ namespace WebParser.SmartphoneParsers
             return data;
         }
 
-
-     
-        //Parses Smartphone from an url
+        //parses smartphone window
         public Smartphone ParseWindow(string url)
         {
             _driver.Value.Navigate().GoToUrl(url);
@@ -74,85 +65,61 @@ namespace WebParser.SmartphoneParsers
             Smartphone smartphone = new Smartphone();
 
             smartphone.Name = _driver.Value.FindElement(By.TagName("h1")).Text;
-            try
-            {
-                smartphone.Price = _driver.Value.FindElement(By.XPath("//span[@class = 'price']")).Text.ParseDouble();
-            }
-            catch (Exception)
-            {
-                smartphone.Price = 0;
-            }
-
+            smartphone.Price = _driver.Value.FindElement(By.XPath("//meta[@itemprop='price']")).GetAttribute("content").ParseDouble();
+            smartphone.ImageLink = _driver.Value.FindElement(By.ClassName("media-items-wrap")).FindElement(By.TagName("img")).GetAttribute("src");
             smartphone.ItemURL = url;
-            smartphone.ShopName = "Senukai.lt";
-
-            var image = _driver.Value.FindElements(By.ClassName("product-gallery-slider__slide__image"));
-
-            try
-            {
-                smartphone.ImageLink = image[0].GetAttribute("src");
-            }
-
-            catch (ArgumentOutOfRangeException)
-            {
-                smartphone.ImageLink = "https://ksd-images.lt/display/aikido/store/3bb53f9a34e0ed486f44798e1f417a8d.jpg?h=742&w=816";
-            }
+            smartphone.ShopName = "Pigu";
 
             var table = _driver.Value.FindElements(By.TagName("td"));
 
             for (int i = 0; i < table.Count; i++)
             {
-                if (table[i].Text.Contains("Prekės ženklas"))
+                if(table[i].Text.Contains("Prekės ženklas"))
                 {
                     smartphone.ManufacturerName = table[i + 1].Text;
                 }
-
-                else if (table[i].Text.Contains("Ekrano dydis"))
+                else if (table[i].Text.Contains("Ekrano dydis(coliais)"))
                 {
                     smartphone.ScreenDiagonal = table[i + 1].Text.ParseDouble();
                 }
-
-                else if (table[i].Text.Contains("Ekrano raiška"))
+                else if (table[i].Text.Contains("Pagrindinė kamera"))
                 {
-                    smartphone.Resolution = table[i + 1].Text;
-                }
-
-                else if (table[i].Text.Contains("Procesoriaus modelis"))
-                {
-                    smartphone.Processor = table[i + 1].Text.Substring(0, table[i + 1].Text.IndexOf("("));
-                }
-
-                else if (table[i].Text.Contains("Atminties talpa"))
-                {
-                    smartphone.Storage = table[i + 1].Text.ParseInt();
-                }
-
-                else if (table[i].Text.Contains("Akumuliatoriaus/baterijos talpa"))
-                {
-                    smartphone.BatteryStorage = table[i + 1].Text.ParseInt();
-                }
-
-                else if (table[i].Text.Contains("Galinė kamera"))
-                {
-                    var values = table[i + 1].Text.Split(',');
+                    var values = table[i + 1].Text.Split('+');
                     List<int> cameras = new List<int>();
                     values.ToList().ForEach(item => cameras.Add(item.ParseInt()));
                     smartphone.BackCameraMP = cameras;
 
+                    smartphone.BackCameraMP.ForEach(item => Console.WriteLine(item));
                 }
                 else if (table[i].Text.Contains("Priekinė kamera"))
                 {
-                    var values = table[i + 1].Text.Split(',');
+                    var values = table[i + 1].Text.Split('+');
                     List<int> cameras = new List<int>();
                     values.ToList().ForEach(item => cameras.Add(item.ParseInt()));
-                    smartphone.FrontCameraMP = cameras;
+                    smartphone.BackCameraMP = cameras;
                 }
-                else if (table[i].Text.Contains("Operatyvioji atmintis (RAM)"))
+                else if (table[i].Text.Contains("Procesoriaus tipas"))
+                {
+                    smartphone.Processor = table[i + 1].Text;
+                }
+                else if (table[i].Text.Contains("Vidinė atmintis"))
+                {
+                    smartphone.Storage = table[i + 1].Text.ParseInt();
+                }
+                else if (table[i].Text.Contains("Operatyvinė atmintis (RAM)"))
+                {
+                    smartphone.RAM = table[i + 1].Text.ParseInt();
+                    if (table[i + 1].Text.Contains("MB"))
+                    {
+                        smartphone.RAM = smartphone.RAM / 1024;
+                    }
+                }
+                else if (table[i].Text.Contains("Baterijos talpa"))
                 {
                     smartphone.RAM = table[i + 1].Text.ParseInt();
                 }
-            }
 
+            }
             ResetDriver();
             return smartphone;
         }
@@ -167,9 +134,5 @@ namespace WebParser.SmartphoneParsers
                 _driver = new Lazy<ChromeDriver>(() => new ChromeDriver(MainPath.GetShopParserPath(), options));
             }
         }
-
     }
 }
-
-
-
