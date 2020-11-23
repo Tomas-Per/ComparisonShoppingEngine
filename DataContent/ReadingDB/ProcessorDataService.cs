@@ -64,15 +64,22 @@ namespace DataContent.ReadingDB.Services
         }
         public Processor GetProcessor(string processorModel)
         {
+            //Deletes all trademarks and etc. Deletes sufix Processor
+            if (processorModel.Contains("Processor")) processorModel = processorModel.Substring(0, processorModel.IndexOf("Processor"));
             processorModel = processorModel.DeleteSpecialChars();
+
             using(_db = new ComputerContext())
             {
+
+                //search for processor in DB
                 var processor = _db.Processors
                                 .Where(x => x.Model.Contains(processorModel)
                                 || processorModel.Contains(x.Model)).FirstOrDefault();
+
                 if(processor!= null) return processor;
                 else
                 {
+                    //try parse processor from Gpuskin database site
                     try
                     {
                         processor = new ProcessorParser().ParseProcessor(processorModel);
@@ -81,6 +88,7 @@ namespace DataContent.ReadingDB.Services
                     }
                     catch(ProcessorNotFoundException)
                     {
+                        //add new processor but throw exception, so it could be logged
                         processor = new Processor { Model = processorModel };
                         processor.SetName(processorModel);
                         using(_db = new ComputerContext())
