@@ -28,6 +28,7 @@ using PathLibrary;
 using WebAPI;
 using WebAPI.Controllers;
 using ItemLibrary.DataContexts;
+using System.Net.Http;
 
 namespace WPF
 {
@@ -39,7 +40,7 @@ namespace WPF
 
         private List<Computer> OriginalList = new List<Computer>();
         private ItemController<Computer> comps;
- 
+        private static HttpClient client = new HttpClient();
         private IDataItem<Computer> _DataService;
 
         public MainWindow()
@@ -59,16 +60,28 @@ namespace WPF
             
         }
 
-        private void Window_Loaded(object sender, RoutedEventArgs e)
+        private async void Window_Loaded(object sender, RoutedEventArgs e)
         {
             CreateFilterCheckbox();
-            comps = new ItemController<Computer>(new DataContent.ReadingDB.Services.ComputerDataService());
-            OriginalList = comps.Get().ToList();
+            //comps = new ItemController<Computer>(new DataContent.ReadingDB.Services.ComputerDataService());
+            //OriginalList = comps.Get().ToList();
+            OriginalList = await GetAPI("https://localhost:44305/api/Computers");
             ItemsListBox.ItemsSource = OriginalList;
             _filter = new ComputerFilter(OriginalList);
             _sorter = new Sorter(OriginalList.Cast<Item>().ToList());
 
         }
+
+        private static async Task<List<Computer>> GetAPI(string path)
+        {
+            List<Computer> computers = null;
+            HttpResponseMessage response = await client.GetAsync(path);
+            if(response.IsSuccessStatusCode)
+            {
+                computers = await response.Content.ReadAsAsync<List<Computer>>();
+            }
+            return computers;
+        }  
 
         private void FilterButton_Click(object sender, RoutedEventArgs e)
         {
