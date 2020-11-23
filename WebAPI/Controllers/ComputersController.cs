@@ -35,25 +35,16 @@ namespace WebAPI.Controllers
         // PUT: api/Computers/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut]
-        public void PutComputer(Computer computer)
-        {
-            _service.UpdateData(computer);
-        }
+        public void PutComputer(Computer computer) => _service.UpdateData(computer);
 
         // POST: api/Computers
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
-        public void PostComputer(List<Computer> computer)
-        {
-            _service.WriteData(computer);
-        }
+        public void PostComputer(List<Computer> computer) => _service.WriteData(computer);
 
         // DELETE: api/Computers/5
         [HttpDelete("{id}")]
-        public void DeleteComputer(int id)
-        {
-            _service.DeleteData(id);
-        }
+        public void DeleteComputer(int id) => _service.DeleteData(id);
 
         //private bool ComputerExists(int id)
         //{
