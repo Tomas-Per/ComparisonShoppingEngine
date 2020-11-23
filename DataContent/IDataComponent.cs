@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace DataContent
 {
-    interface IDataComponent<T> where T : Component
+    public interface IDataComponent<T> where T : Component
     {
         public IEnumerable<T> ReadData();
         public void WriteData(IEnumerable<T> list);
