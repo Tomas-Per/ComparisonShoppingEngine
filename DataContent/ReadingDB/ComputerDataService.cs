@@ -100,7 +100,7 @@ namespace DataContent.ReadingDB.Services
         {
             using(_db = new ComputerContext())
             {
-                var computer = GetDataByID(id);
+                var computer = _db.Computers.Where(x => x.Id == id).FirstOrDefault();
                 _db.Computers.Remove(computer);
                 _db.SaveChanges();
             }
