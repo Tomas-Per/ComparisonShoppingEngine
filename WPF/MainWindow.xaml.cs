@@ -65,14 +65,13 @@ namespace WPF
             CreateFilterCheckbox();
             //comps = new ItemController<Computer>(new DataContent.ReadingDB.Services.ComputerDataService());
             //OriginalList = comps.Get().ToList();
-            OriginalList = await GetAPI("https://localhost:44305/api/Computers");
+            OriginalList = await GetAPIAsync("https://localhost:44305/api/Computers");
             ItemsListBox.ItemsSource = OriginalList;
             _filter = new ComputerFilter(OriginalList);
             _sorter = new Sorter(OriginalList.Cast<Item>().ToList());
-
         }
 
-        private static async Task<List<Computer>> GetAPI(string path)
+        private static async Task<List<Computer>> GetAPIAsync(string path)
         {
             List<Computer> computers = null;
             HttpResponseMessage response = await client.GetAsync(path);
