@@ -10,7 +10,7 @@ using WebParser.ComponentsParser;
 using DataContent.ReadingDB.Services;
 using ItemLibrary;
 using WebParser.SmartphoneParsers;
-
+using static ItemLibrary.Categories;
 
 namespace AdminService
 {
@@ -39,10 +39,11 @@ namespace AdminService
                         break;
 
                     case "1":
-                        var updater = new DataUpdater<Computer>(new SenukaiComputerParser(), new ComputerDataService());
-                        updater.UpdateItemListFile(updater.GetItemListFromWeb());
+                        var updater = new DataUpdater<Computer>(new ComputerDataService(), ItemCategory.Laptop);
+                        updater.UpdateItemListFile(updater.GetItemListFromWeb(new SenukaiComputerParser()));
                         Console.WriteLine("Shop Parsed");
                         break;
+
                     case "5":
                         Console.WriteLine("Type processor ID");
                         var service = new ProcessorDataService();

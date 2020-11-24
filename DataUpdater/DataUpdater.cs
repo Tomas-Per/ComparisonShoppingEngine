@@ -12,39 +12,47 @@ namespace DataUpdater
 {
     public class DataUpdater<T> where T : Item
     {
-        private IParser<T> _parser { get; set; }
         private IData<IEnumerable<T>> _dataService;
+        private ItemCategory _itemCategory { get; set; }
 
-        public DataUpdater(IParser<T> parser, IData<IEnumerable<T>> dataService)
+        public DataUpdater(IData<IEnumerable<T>> dataService, ItemCategory itemCategory)
         {
-            _parser = parser;
             _dataService = dataService;
+            _itemCategory = itemCategory;
+
+
         }
 
-
         //calls shop parser and returns parsed item list
-        public List<T> GetItemListFromWeb()
+        public List<T> GetItemListFromWeb(IParser<T> parser)
         {
-            List<T> data = _parser.ParseShop();
+            List<T> data = parser.ParseShop();
             return data;
         }
 
-        //updates CSV file with new data
+        //updates DB with new data
         public void UpdateItemListFile(List<T> data)
         {
             _dataService.WriteData(data);
         }
 
-        public List<T> GetItemCategoryListFromWeb(ItemCategory itemCategory)
+        //calls shop parser for a spcecific item category and returns parsed item list
+        public List<T> GetItemCategoryListFromWeb()
         {
             List<T> data = new List<T>();
 
-            switch (itemCategory)
+            switch (_itemCategory)
             {
                 case ItemCategory.Laptop:
 
-                    
-                    return null;
+                    var item1 = new SenukaiComputerParser().ParseWindow("https://www.senukai.lt/p/lenovo-ideapad-3-15ada-81w1005jpb-pl/eya2?cat=5ei&index=2");
+                    var item2 = new AvitelaComputerParser().ParseWindow("https://avitela.lt/kompiuterine-technika/nesiojamieji-kompiuteriai/nesiojami-kompiuteriai/nesiojamasis-kompiuteris-acer-aspire-a514-53-54z4-silver-i5-1035g1-8gb-256gb-ssd-win10");
+                    var item3 = new PiguComputerParser().ParseWindow("https://pigu.lt/lt/kompiuteriai/nesiojami-kompiuteriai/nesiojamas-kompiuteris-hp-17-by3053cl?id=34110896");
+
+                    //data.Add((T)item1);
+
+
+                    return data;
 
                 case ItemCategory.Smartphone:
 
