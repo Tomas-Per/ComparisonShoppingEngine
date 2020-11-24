@@ -18,7 +18,7 @@ namespace DataContent.DAL.Repositories
             _context = context;
         }
 
-        public Task<Computer> CreateComputerAsync(Computer computer)
+        public Task<Computer> AddComputersAsync(List<Computer> computers)
         {
             throw new NotImplementedException();
         }
