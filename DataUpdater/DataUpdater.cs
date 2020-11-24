@@ -27,9 +27,9 @@ namespace DataUpdater
         }
 
         //calls shop parser and returns parsed item list
-        public List<T> GetItemListFromWeb(IParser<T> parser)
+        public async Task<List<T>> GetItemListFromWeb(IParser<T> parser)
         {
-            List<T> data = parser.ParseShop();
+            List<T> data = await parser.ParseShop();
             return data;
         }
 

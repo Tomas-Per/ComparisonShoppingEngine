@@ -11,6 +11,7 @@ using DataContent.ReadingDB.Services;
 using ItemLibrary;
 using WebParser.SmartphoneParsers;
 using static ItemLibrary.Categories;
+using System.Threading.Tasks;
 
 namespace AdminService
 {
@@ -21,13 +22,13 @@ namespace AdminService
                                             "5 - Update Processor in database" +
                                             "\n0 - close program";
 
-        public static void Main(string[] args)
+        public static async Task Main(string[] args)
         {
             string command;
 
             var updaterr = new DataUpdater<Computer>(new ComputerDataService(), ItemCategory.Laptop);
 
-            updaterr.GetItemCategoryListFromWebAsync();
+            await updaterr.GetItemCategoryListFromWebAsync();
 
 
             do
@@ -44,8 +45,8 @@ namespace AdminService
                         break;
 
                     case "1":
-                        var updater = new DataUpdater<Computer>(new ComputerDataService(), ItemCategory.Laptop);
-                        updater.UpdateItemListFile(updater.GetItemListFromWeb(new SenukaiComputerParser()));
+                        //var updater = new DataUpdater<Computer>(new ComputerDataService(), ItemCategory.Laptop);
+                        //updater.UpdateItemListFile(updater.GetItemListFromWeb(new SenukaiComputerParser()));
                         Console.WriteLine("Shop Parsed");
                         break;
 
