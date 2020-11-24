@@ -7,6 +7,7 @@ using WebParser;
 using DataContent.ReadingDB.Services;
 using DataContent;
 using static ItemLibrary.Categories;
+using System.Linq;
 
 namespace DataUpdater
 {
@@ -39,20 +40,20 @@ namespace DataUpdater
         //calls shop parser for a spcecific item category and returns parsed item list
         public List<T> GetItemCategoryListFromWeb()
         {
-            List<T> data = new List<T>();
+            //List<T> data = new List<T>();
 
             switch (_itemCategory)
             {
                 case ItemCategory.Laptop:
-
+                    var data = new List<Computer>();
                     var item1 = new SenukaiComputerParser().ParseWindow("https://www.senukai.lt/p/lenovo-ideapad-3-15ada-81w1005jpb-pl/eya2?cat=5ei&index=2");
                     var item2 = new AvitelaComputerParser().ParseWindow("https://avitela.lt/kompiuterine-technika/nesiojamieji-kompiuteriai/nesiojami-kompiuteriai/nesiojamasis-kompiuteris-acer-aspire-a514-53-54z4-silver-i5-1035g1-8gb-256gb-ssd-win10");
                     var item3 = new PiguComputerParser().ParseWindow("https://pigu.lt/lt/kompiuteriai/nesiojami-kompiuteriai/nesiojamas-kompiuteris-hp-17-by3053cl?id=34110896");
 
-                    //data.Add((T)item1);
+                    data.Add(item1);
+                    
 
-
-                    return data;
+                    return data.Cast<T>().ToList();
 
                 case ItemCategory.Smartphone:
 
