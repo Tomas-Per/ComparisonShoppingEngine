@@ -4,7 +4,7 @@
     {
         public enum ItemCategory
         {
-            Computer,
+            Laptop,
             Smartphone,
             DesktopComputer
         };

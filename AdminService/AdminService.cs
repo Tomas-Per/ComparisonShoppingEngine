@@ -39,7 +39,7 @@ namespace AdminService
                         break;
 
                     case "1":
-                        var updater = new ComputerDataUpdater(new SenukaiComputerParser(), new ComputerDataService());
+                        var updater = new DataUpdater<Computer>(new SenukaiComputerParser(), new ComputerDataService());
                         updater.UpdateItemListFile(updater.GetItemListFromWeb());
                         Console.WriteLine("Shop Parsed");
                         break;
