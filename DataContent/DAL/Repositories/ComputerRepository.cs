@@ -1,5 +1,6 @@
 ﻿using DataContent.DAL.Interfaces;
 using ItemLibrary;
+using ItemLibrary.DataContexts;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,6 +11,13 @@ namespace DataContent.DAL.Repositories
 {
     class ComputerRepository : IComputerRepository
     {
+        private readonly ComputerContext _context;
+        
+        public ComputerRepository(ComputerContext context)
+        {
+            _context = context;
+        }
+
         public Task<Computer> CreateComputerAsync(Computer computer)
         {
             throw new NotImplementedException();
