@@ -27,7 +27,7 @@ namespace AdminService
 
             var updaterr = new DataUpdater<Computer>(new ComputerDataService(), ItemCategory.Laptop);
 
-            updaterr.GetItemCategoryListFromWeb();
+            updaterr.GetItemCategoryListFromWebAsync();
 
 
             do

@@ -7,6 +7,7 @@ using PathLibrary;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using static ItemLibrary.Categories;
 
 namespace WebParser.SmartphoneParsers
@@ -23,7 +24,7 @@ namespace WebParser.SmartphoneParsers
             _driver = new Lazy<ChromeDriver>(() => new ChromeDriver(MainPath.GetShopParserPath(), options));
         }
 
-        public List<Smartphone> ParseShop()
+        public async Task<List<Smartphone>> ParseShop()
         {
             List<Smartphone> data = new List<Smartphone>();
             List<string> links = new List<string>();
@@ -45,7 +46,7 @@ namespace WebParser.SmartphoneParsers
                     ((IJavaScriptExecutor)_driver.Value).ExecuteScript("window.open();");
                     _driver.Value.SwitchTo().Window(_driver.Value.WindowHandles.Last());
 
-                    var smartphone = ParseWindow(link);
+                    var smartphone = await ParseWindow(link);
 
                     _driver.Value.SwitchTo().Window(_driver.Value.WindowHandles.First());
 
@@ -58,7 +59,7 @@ namespace WebParser.SmartphoneParsers
         }
 
         //parses smartphone window
-        public Smartphone ParseWindow(string url)
+        public async Task<Smartphone> ParseWindow(string url)
         {
             _driver.Value.Navigate().GoToUrl(url);
 

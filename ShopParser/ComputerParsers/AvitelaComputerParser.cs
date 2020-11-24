@@ -8,6 +8,7 @@ using static ItemLibrary.Categories;
 using System.Linq;
 using PathLibrary;
 using DataContent.ReadingDB.Services;
+using System.Threading.Tasks;
 
 namespace WebParser.ComputerParsers
 {
@@ -25,7 +26,7 @@ namespace WebParser.ComputerParsers
 
         //parses laptops from avitela.lt and returns results in a List<Computer>
         //this method parses first 5 pages (18 laptops in every page), because later pages are outdated 
-        public List<Computer> ParseShop()
+        public async Task<List<Computer>> ParseShop()
         {
             List<Computer> data = new List<Computer>();
             List<string> links = new List<string>();
@@ -51,7 +52,7 @@ namespace WebParser.ComputerParsers
                     ((IJavaScriptExecutor)_driver.Value).ExecuteScript("window.open();");
                     _driver.Value.SwitchTo().Window(_driver.Value.WindowHandles.Last());
 
-                    var computer = ParseWindow(link);
+                    var computer = await ParseWindow(link);
 
                     _driver.Value.SwitchTo().Window(_driver.Value.WindowHandles.First());
 
@@ -69,7 +70,7 @@ namespace WebParser.ComputerParsers
 
 
         //parses laptop window, updates computer fields
-        public Computer ParseWindow(string url)
+        public async Task<Computer> ParseWindow(string url)
         {
             _driver.Value.Navigate().GoToUrl(url);
 

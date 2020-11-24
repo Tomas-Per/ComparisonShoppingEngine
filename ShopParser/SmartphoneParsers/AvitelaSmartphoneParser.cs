@@ -7,6 +7,7 @@ using Parsing;
 using static ItemLibrary.Categories;
 using System.Linq;
 using PathLibrary;
+using System.Threading.Tasks;
 
 namespace WebParser.SmartphoneParsers
 {
@@ -25,7 +26,7 @@ namespace WebParser.SmartphoneParsers
         }
 
 
-        public List<Smartphone> ParseShop()
+        public async Task<List<Smartphone>> ParseShop()
         {
             List<Smartphone> data = new List<Smartphone>();
             List<string> links = new List<string>();
@@ -52,7 +53,7 @@ namespace WebParser.SmartphoneParsers
 
                     _driver.Value.Navigate().GoToUrl(link);
 
-                    var smartphone = ParseWindow(link);
+                    var smartphone = await ParseWindow(link);
 
                     _driver.Value.SwitchTo().Window(_driver.Value.WindowHandles.First());
 
@@ -70,7 +71,7 @@ namespace WebParser.SmartphoneParsers
 
 
         //parses smartphone window, updates smartphone fields
-        public Smartphone ParseWindow(string url)
+        public async Task<Smartphone> ParseWindow(string url)
         {
             _driver.Value.Navigate().GoToUrl(url);
 
