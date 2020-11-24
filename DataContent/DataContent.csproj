@@ -22,8 +22,4 @@
     <ProjectReference Include="..\PathLibrary\PathLibrary.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="DAL\Repositories\" />
-  </ItemGroup>
-
 </Project>
