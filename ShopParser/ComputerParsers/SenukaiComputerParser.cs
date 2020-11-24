@@ -54,7 +54,7 @@ namespace WebParser.ComputerParsers
                     {
                         continue;
                     }
-                    computer.ItemCategory = ItemCategory.Computer;
+                    computer.ItemCategory = ItemCategory.Laptop;
                     data.Add(computer);
                 }
             }
