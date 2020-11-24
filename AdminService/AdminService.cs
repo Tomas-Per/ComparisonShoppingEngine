@@ -10,17 +10,19 @@ using WebParser.ComponentsParser;
 using DataContent.ReadingDB.Services;
 using ItemLibrary;
 using WebParser.SmartphoneParsers;
+using static ItemLibrary.Categories;
+using System.Threading.Tasks;
 
 namespace AdminService
 {
     //Exe class which is for admins only. this class controls data updates
     public class AdminService
     {
-        public static string _helpMessage = "1 - parse Laptops from Senukai" +
-                                            "5 - Update Processor in database" +
+        public static string _helpMessage = "1 - parse Laptops from shops" +
+                                            "\n5 - Update Processor in database" +
                                             "\n0 - close program";
 
-        public static void Main(string[] args)
+        public static async Task Main(string[] args)
         {
             string command;
 
@@ -38,10 +40,12 @@ namespace AdminService
                         break;
 
                     case "1":
-                        var updater = new ComputerDataUpdater(new SenukaiComputerParser());
-                        updater.UpdateItemListFile(updater.GetItemListFromWeb());
+                        var updater = new DataUpdater<Computer>(new ComputerDataService(), ItemCategory.Laptop);
+                        var results = await updater.GetItemCategoryListFromWebAsync();
+                        updater.UpdateItemListFile(results);
                         Console.WriteLine("Shop Parsed");
                         break;
+
                     case "5":
                         Console.WriteLine("Type processor ID");
                         var service = new ProcessorDataService();

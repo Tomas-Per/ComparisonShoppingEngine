@@ -8,6 +8,7 @@ using static ItemLibrary.Categories;
 using System.Linq;
 using PathLibrary;
 using DataContent.ReadingDB.Services;
+using System.Threading.Tasks;
 
 namespace WebParser.ComputerParsers
 {
@@ -25,7 +26,7 @@ namespace WebParser.ComputerParsers
 
         //parses laptops from avitela.lt and returns results in a List<Computer>
         //this method parses first 5 pages (18 laptops in every page), because later pages are outdated 
-        public List<Computer> ParseShop()
+        public async Task<List<Computer>> ParseShop()
         {
             List<Computer> data = new List<Computer>();
             List<string> links = new List<string>();
@@ -51,14 +52,13 @@ namespace WebParser.ComputerParsers
                     ((IJavaScriptExecutor)_driver.Value).ExecuteScript("window.open();");
                     _driver.Value.SwitchTo().Window(_driver.Value.WindowHandles.Last());
 
-                    var computer = ParseWindow(link);
+                    var computer = await ParseWindow(link);
 
                     _driver.Value.SwitchTo().Window(_driver.Value.WindowHandles.First());
 
                     if (computer.Resolution != null)
                     {
-                        computer.ItemCategory = ItemCategory.Computer;
-                        //computer.ComputerCategory = ComputerCategory.Laptop;
+                        computer.ItemCategory = ItemCategory.Laptop;
                         data.Add(computer);
                     }
                 }
@@ -70,14 +70,15 @@ namespace WebParser.ComputerParsers
 
 
         //parses laptop window, updates computer fields
-        public Computer ParseWindow(string url)
+        public async Task<Computer> ParseWindow(string url)
         {
+            _driver.Value.Navigate().GoToUrl(url);
 
             Computer computer = new Computer();
-            computer.Name = _driver.Value.FindElement(By.Id("pname")).Text;
+            computer.Name = _driver.Value.FindElement(By.CssSelector("#pname")).Text;
             computer.Price = _driver.Value.FindElement(By.Id("price-old")).Text.ParseDouble();
             computer.ItemURL = url;
-            computer.ShopName = "Avitela";
+            computer.ShopName = "Avitela.lt";
 
             try
             {
@@ -127,7 +128,7 @@ namespace WebParser.ComputerParsers
                     computer.GraphicsCardName = table[i + 1].Text;
                 }
 
-                else if (computer.Processor.Name == null && table[i].Text.Contains("Procesoriaus modelis"))
+                else if (table[i].Text.Contains("Procesoriaus modelis"))
                 {
                     computer.Processor = new ProcessorDataService().GetProcessor(table[i + 1].Text);
                 }

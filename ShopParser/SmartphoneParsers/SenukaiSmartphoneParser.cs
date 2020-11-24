@@ -8,6 +8,7 @@ using Parsing;
 using static ItemLibrary.Categories;
 using PathLibrary;
 using DataContent.ReadingDB.Services;
+using System.Threading.Tasks;
 
 namespace WebParser.SmartphoneParsers
 {
@@ -24,7 +25,7 @@ namespace WebParser.SmartphoneParsers
         }
 
         //parses smartphones from senukai.lt and returns results in a List<Smartphone>
-        public List<Smartphone> ParseShop()
+        public async Task<List<Smartphone>> ParseShop()
         {
             List<Smartphone> data = new List<Smartphone>();
             List<string> links = new List<string>();
@@ -47,7 +48,7 @@ namespace WebParser.SmartphoneParsers
                     _driver.Value.SwitchTo().Window(_driver.Value.WindowHandles.Last());
 
                     _driver.Value.Navigate().GoToUrl(link);
-                    Smartphone smartphone = ParseWindow(link);
+                    Smartphone smartphone = await ParseWindow(link);
 
                     _driver.Value.SwitchTo().Window(_driver.Value.WindowHandles.First());
 
@@ -67,7 +68,7 @@ namespace WebParser.SmartphoneParsers
 
      
         //Parses Smartphone from an url
-        public Smartphone ParseWindow(string url)
+        public async Task<Smartphone> ParseWindow(string url)
         {
             _driver.Value.Navigate().GoToUrl(url);
 

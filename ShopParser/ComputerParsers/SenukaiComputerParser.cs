@@ -8,6 +8,7 @@ using Parsing;
 using static ItemLibrary.Categories;
 using PathLibrary;
 using DataContent.ReadingDB.Services;
+using System.Threading.Tasks;
 
 namespace WebParser.ComputerParsers
 {
@@ -24,14 +25,12 @@ namespace WebParser.ComputerParsers
         }
 
         //parses laptops from senukai.lt and returns results in a List<Computer>
-        //this method parses first 5 pages (48laptops in every page), because later pages are
-        //outdated and don't have items in stock for a long time
-        public List<Computer> ParseShop()
+        public async Task<List<Computer>> ParseShop()
         {
             List<Computer> data = new List<Computer>();
             List<string> links = new List<string>();
 
-            for (int i = 1; i <= 5; i++)
+            for (int i = 1; i <= 3; i++)
             {
                 var nextPage = _url.Remove(_url.Length - 1, 1) + i;
 
@@ -48,12 +47,15 @@ namespace WebParser.ComputerParsers
                     ((IJavaScriptExecutor)_driver.Value).ExecuteScript("window.open();");
                     _driver.Value.SwitchTo().Window(_driver.Value.WindowHandles.Last());
 
-                    var computer = ParseWindow(link);
+                    var computer = await ParseWindow(link);
 
                     _driver.Value.SwitchTo().Window(_driver.Value.WindowHandles.First());
 
-                    computer.ItemCategory = ItemCategory.Computer;
-                    //computer.ComputerCategory = ComputerCategory.Laptop;
+                    if (computer.Price == 0)
+                    {
+                        continue;
+                    }
+                    computer.ItemCategory = ItemCategory.Laptop;
                     data.Add(computer);
                 }
             }
@@ -63,14 +65,22 @@ namespace WebParser.ComputerParsers
 
 
         //parses laptop window, updates computer fields 
-        public Computer ParseWindow(string url)
+        public async Task<Computer> ParseWindow(string url)
         {
             _driver.Value.Navigate().GoToUrl(url);
 
             Computer computer = new Computer();
 
             computer.Name = _driver.Value.FindElement(By.TagName("h1")).Text;
-            computer.Price = _driver.Value.FindElement(By.XPath("//span[@class = 'price']")).Text.ParseDouble();
+            try
+            {
+                computer.Price = _driver.Value.FindElement(By.XPath("//span[@class = 'price']")).Text.ParseDouble();
+            }
+            catch(Exception)
+            {
+                computer.Price = 0;
+            }
+            
             computer.ItemURL = url;
             computer.ShopName = "Senukai.lt";
 

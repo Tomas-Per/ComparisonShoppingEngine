@@ -14,6 +14,7 @@ namespace DataContent.ReadingDB.Services
     public class ProcessorDataService : IData<IEnumerable<Processor>>
     {
         private ComputerContext _db { get; set; }
+        private Object _lock = new Object();
         public IEnumerable<Processor> ReadData()
         {
             using (_db = new ComputerContext())
@@ -56,34 +57,37 @@ namespace DataContent.ReadingDB.Services
         }
         public Processor GetProcessor(string processorModel)
         {
-            processorModel = processorModel.DeleteSpecialChars();
-            using(_db = new ComputerContext())
+            lock (_lock)
             {
-                var processor = _db.Processors
-                                .Where(x => x.Model.Contains(processorModel)
-                                || processorModel.Contains(x.Model)).FirstOrDefault();
-                if(processor!= null) return processor;
-                else
+                processorModel = processorModel.DeleteSpecialChars();
+                using (_db = new ComputerContext())
                 {
-                    try
+                    var processor = _db.Processors
+                                    .Where(x => x.Model.Contains(processorModel)
+                                    || processorModel.Contains(x.Model)).FirstOrDefault();
+                    if (processor != null) return processor;
+                    else
                     {
-                        processor = new ProcessorParser().ParseProcessor(processorModel);
-                        _db.Add(processor);
-                        _db.SaveChanges();
-                    }
-                    catch(ProcessorNotFoundException)
-                    {
-                        processor = new Processor { Model = processorModel };
-                        processor.SetName(processorModel);
-                        using(_db = new ComputerContext())
+                        try
                         {
+                            processor = new ProcessorParser().ParseProcessor(processorModel);
                             _db.Add(processor);
                             _db.SaveChanges();
-                            processor = _db.Processors.Where(x => x.Model == processorModel).FirstOrDefault();
                         }
-                        ExceptionLogger.LogProcessorParsingException(processor);
+                        catch (ProcessorNotFoundException)
+                        {
+                            processor = new Processor { Model = processorModel };
+                            processor.SetName(processorModel);
+                            using (_db = new ComputerContext())
+                            {
+                                _db.Add(processor);
+                                _db.SaveChanges();
+                                processor = _db.Processors.Where(x => x.Model == processorModel).FirstOrDefault();
+                            }
+                            ExceptionLogger.LogProcessorParsingException(processor);
+                        }
+                        return processor;
                     }
-                    return processor;
                 }
             }
         }
