@@ -68,7 +68,7 @@ namespace WebParser.SmartphoneParsers
             smartphone.Price = _driver.Value.FindElement(By.XPath("//meta[@itemprop='price']")).GetAttribute("content").ParseDouble();
             smartphone.ImageLink = _driver.Value.FindElement(By.ClassName("media-items-wrap")).FindElement(By.TagName("img")).GetAttribute("src");
             smartphone.ItemURL = url;
-            smartphone.ShopName = "Pigu";
+            smartphone.ShopName = "Pigu.lt";
 
             var table = _driver.Value.FindElements(By.TagName("td"));
 

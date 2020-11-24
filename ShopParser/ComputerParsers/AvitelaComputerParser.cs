@@ -71,12 +71,13 @@ namespace WebParser.ComputerParsers
         //parses laptop window, updates computer fields
         public Computer ParseWindow(string url)
         {
+            _driver.Value.Navigate().GoToUrl(url);
 
             Computer computer = new Computer();
-            computer.Name = _driver.Value.FindElement(By.Id("pname")).Text;
+            computer.Name = _driver.Value.FindElement(By.CssSelector("#pname")).Text;
             computer.Price = _driver.Value.FindElement(By.Id("price-old")).Text.ParseDouble();
             computer.ItemURL = url;
-            computer.ShopName = "Avitela";
+            computer.ShopName = "Avitela.lt";
 
             try
             {
@@ -126,7 +127,7 @@ namespace WebParser.ComputerParsers
                     computer.GraphicsCardName = table[i + 1].Text;
                 }
 
-                else if (computer.Processor.Name == null && table[i].Text.Contains("Procesoriaus modelis"))
+                else if (table[i].Text.Contains("Procesoriaus modelis"))
                 {
                     computer.Processor = new ProcessorDataService().GetProcessor(table[i + 1].Text);
                 }

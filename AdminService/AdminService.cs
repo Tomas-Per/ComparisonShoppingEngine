@@ -25,6 +25,11 @@ namespace AdminService
         {
             string command;
 
+            var updaterr = new DataUpdater<Computer>(new ComputerDataService(), ItemCategory.Laptop);
+
+            updaterr.GetItemCategoryListFromWeb();
+
+
             do
             {
                 command = Console.ReadLine();

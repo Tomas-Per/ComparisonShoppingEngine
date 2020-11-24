@@ -71,7 +71,7 @@ namespace WebParser.ComputerParsers
             computer.Price = _driver.Value.FindElement(By.XPath("//meta[@itemprop='price']")).GetAttribute("content").ParseDouble();
             computer.ImageLink = _driver.Value.FindElement(By.ClassName("media-items-wrap")).FindElement(By.TagName("img")).GetAttribute("src");
             computer.ItemURL = url;
-            computer.ShopName = "Pigu";
+            computer.ShopName = "Pigu.lt";
 
             var table = _driver.Value.FindElements(By.TagName("td"));
 
@@ -97,7 +97,7 @@ namespace WebParser.ComputerParsers
                     computer.RAM_type = table[i + 1].Text;
                 }
 
-                else if (table[i].Text.Equals("Vaizdo plokštė"))
+                else if (table[i].Text.Contains("Vaizdo plokštė"))
                 {
                     computer.GraphicsCardName = table[i + 1].Text;
                 }

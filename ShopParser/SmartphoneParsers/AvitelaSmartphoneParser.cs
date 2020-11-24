@@ -72,11 +72,13 @@ namespace WebParser.SmartphoneParsers
         //parses smartphone window, updates smartphone fields
         public Smartphone ParseWindow(string url)
         {
+            _driver.Value.Navigate().GoToUrl(url);
+
             Smartphone smartphone = new Smartphone();
             smartphone.Name = _driver.Value.FindElement(By.Id("pname")).Text;
             smartphone.Price = _driver.Value.FindElement(By.Id("price-old")).Text.ParseDouble();
             smartphone.ItemURL = url;
-            smartphone.ShopName = "Avitela";
+            smartphone.ShopName = "Avitela.lt";
 
             try
             {
