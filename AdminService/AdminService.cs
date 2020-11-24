@@ -41,7 +41,7 @@ namespace AdminService
 
                     case "1":
                         var updater = new DataUpdater<Computer>(new ComputerDataService(), ItemCategory.Laptop);
-                        var results = await updaterr.GetItemCategoryListFromWebAsync();
+                        var results = await updater.GetItemCategoryListFromWebAsync();
                         updater.UpdateItemListFile(results);
                         Console.WriteLine("Shop Parsed");
                         break;
