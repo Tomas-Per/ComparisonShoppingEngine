@@ -10,6 +10,7 @@ using static ItemLibrary.Categories;
 using System.Linq;
 using System;
 using System.Threading.Tasks;
+using WebParser.SmartphoneParsers;
 
 namespace DataUpdater
 {
@@ -46,27 +47,25 @@ namespace DataUpdater
             {
                 case ItemCategory.Laptop:
 
-                    var time = DateTime.Now;
+                    List<Task<List<Computer>>> laptopTasks = new List<Task<List<Computer>>>();
 
-                    var data = new List<Computer>();
- 
-
-                    List<Task> tasks = new List<Task>();
-
-                    tasks.Add(Task.Run(() => new SenukaiComputerParser().ParseWindow("https://www.senukai.lt/p/lenovo-ideapad-3-15ada-81w1005jpb-pl/eya2?cat=5ei&index=2")));
-                    tasks.Add(Task.Run(() => new AvitelaComputerParser().ParseWindow("https://avitela.lt/kompiuterine-technika/nesiojamieji-kompiuteriai/nesiojamieji-kompiuteriai-zaidimams/nitro-5-an515-54-acer-15-6-fhd-i5-9300h-8gb-1tb-128gb-ssd-geforce-1650-4gb-win10h-en-black-ne-komp")));
-                    tasks.Add(Task.Run(() => new PiguComputerParser().ParseWindow("https://pigu.lt/lt/kompiuteriai/nesiojami-kompiuteriai/nesiojamas-kompiuteris-hp-17-by3053cl?id=34110896")));
-
-                    await Task.WhenAll(tasks);
-
-                    Console.WriteLine(DateTime.Now - time);
-
-                   return data.Cast<T>().ToList();
+                    laptopTasks.Add(Task.Run(() => new SenukaiComputerParser().ParseShop()));
+                    laptopTasks.Add(Task.Run(() => new AvitelaComputerParser().ParseShop()));
+                    laptopTasks.Add(Task.Run(() => new PiguComputerParser().ParseShop()));
+                    
+                    var laptopData = await Task.WhenAll(laptopTasks);
+                    return laptopData.Cast<T>().ToList();
 
                 case ItemCategory.Smartphone:
 
+                    List<Task<List<Smartphone>>> smartphoneTasks = new List<Task<List<Smartphone>>>();
 
-                    return null;
+                    smartphoneTasks.Add(Task.Run(() => new SenukaiSmartphoneParser().ParseShop()));
+                    smartphoneTasks.Add(Task.Run(() => new AvitelaSmartphoneParser().ParseShop()));
+                    smartphoneTasks.Add(Task.Run(() => new PiguSmartphoneParser().ParseShop()));
+
+                    var smartphoneData = await Task.WhenAll(smartphoneTasks);
+                    return smartphoneData.Cast<T>().ToList();
 
 
                 case ItemCategory.DesktopComputer:

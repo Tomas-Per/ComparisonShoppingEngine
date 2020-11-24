@@ -18,18 +18,13 @@ namespace AdminService
     //Exe class which is for admins only. this class controls data updates
     public class AdminService
     {
-        public static string _helpMessage = "1 - parse Laptops from Senukai" +
-                                            "5 - Update Processor in database" +
+        public static string _helpMessage = "1 - parse Laptops from shops" +
+                                            "\n5 - Update Processor in database" +
                                             "\n0 - close program";
 
         public static async Task Main(string[] args)
         {
             string command;
-
-            var updaterr = new DataUpdater<Computer>(new ComputerDataService(), ItemCategory.Laptop);
-
-            await updaterr.GetItemCategoryListFromWebAsync();
-
 
             do
             {
@@ -45,8 +40,9 @@ namespace AdminService
                         break;
 
                     case "1":
-                        //var updater = new DataUpdater<Computer>(new ComputerDataService(), ItemCategory.Laptop);
-                        //updater.UpdateItemListFile(updater.GetItemListFromWeb(new SenukaiComputerParser()));
+                        var updater = new DataUpdater<Computer>(new ComputerDataService(), ItemCategory.Laptop);
+                        var results = await updaterr.GetItemCategoryListFromWebAsync();
+                        updater.UpdateItemListFile(results);
                         Console.WriteLine("Shop Parsed");
                         break;
 
