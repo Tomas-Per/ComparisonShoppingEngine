@@ -92,9 +92,10 @@ namespace DataContent.DAL.Repositories
             return computers;
         }
 
-        public Task<Computer> GetComputerByIdAsync(int id)
+        public async Task<Computer> GetComputerByIdAsync(int id)
         {
-            throw new NotImplementedException();
+            var computer = await _context.Computers.Where(x => x.Id == id).FirstOrDefaultAsync();
+            return computer;
         }
 
         public Task<Computer> UpdateComputerAsync(int id, Computer computer)
