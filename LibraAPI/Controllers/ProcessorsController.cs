@@ -68,25 +68,18 @@ namespace LibraAPI.Controllers
             return Ok(processors);
         }
 
-        //// DELETE: api/Processors/5
-        //[HttpDelete("{id}")]
-        //public async Task<IActionResult> DeleteProcessor(int id)
-        //{
-        //    var processor = await _context.Processors.FindAsync(id);
-        //    if (processor == null)
-        //    {
-        //        return NotFound();
-        //    }
+        // DELETE: api/Processors/5
+        [HttpDelete("{id}")]
+        public async Task<IActionResult> DeleteProcessor(int id)
+        {
+            var processor = await _repository.DeleteProcessorAsync(id);
+            if (processor == null)
+            {
+                return NotFound();
+            }
 
-        //    _context.Processors.Remove(processor);
-        //    await _context.SaveChangesAsync();
+            return NoContent();
+        }
 
-        //    return NoContent();
-        //}
-
-        //private bool ProcessorExists(int id)
-        //{
-        //    return _context.Processors.Any(e => e.Id == id);
-        //}
     }
 }
