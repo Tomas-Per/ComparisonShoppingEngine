@@ -18,6 +18,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\DataContent\DataContent.csproj" />
     <ProjectReference Include="..\ItemLibrary\ItemLibrary.csproj" />
   </ItemGroup>
 

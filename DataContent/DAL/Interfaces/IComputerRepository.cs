@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace DataContent.DAL.Interfaces
 {
-    interface IComputerRepository
+    public interface IComputerRepository
     {
         Task<List<Computer>> GetAllComputersAsync();
         Task<Computer> GetComputerByIdAsync(int id);
