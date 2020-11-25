@@ -41,6 +41,7 @@ namespace LibraAPI
             });
             services.AddScoped<IComputerRepository, ComputerRepository>();
             services.AddScoped<IProcessorRepository, ProcessorRepository>();
+            services.AddScoped<ISmartphoneRepository, SmartphoneRepository>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

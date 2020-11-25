@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 
 namespace DataContent.DAL.Repositories
 {
-    class SmartphoneRepository : ISmartphoneRepository
+    public class SmartphoneRepository : ISmartphoneRepository
     {
         private readonly SmartphoneContext _context;
 
