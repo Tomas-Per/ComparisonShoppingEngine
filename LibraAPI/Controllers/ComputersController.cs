@@ -44,36 +44,20 @@ namespace LibraAPI.Controllers
             return computer;
         }
 
-        //// PUT: api/Computers/5
-        //// To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
-        //[HttpPut("{id}")]
-        //public async Task<IActionResult> PutComputer(int id, Computer computer)
-        //{
-        //    if (id != computer.Id)
-        //    {
-        //        return BadRequest();
-        //    }
+        // PUT: api/Computers/5
+        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
+        [HttpPut]
+        public async Task<IActionResult> PutComputer(Computer computer)
+        {
+            if (computer == null)
+            {
+                return BadRequest();
+            }
 
-        //    _context.Entry(computer).State = EntityState.Modified;
+            await _repository.UpdateComputerAsync(computer);
 
-        //    try
-        //    {
-        //        await _context.SaveChangesAsync();
-        //    }
-        //    catch (DbUpdateConcurrencyException)
-        //    {
-        //        if (!ComputerExists(id))
-        //        {
-        //            return NotFound();
-        //        }
-        //        else
-        //        {
-        //            throw;
-        //        }
-        //    }
-
-        //    return NoContent();
-        //}
+            return NoContent();
+        }
 
         //// POST: api/Computers
         //// To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754

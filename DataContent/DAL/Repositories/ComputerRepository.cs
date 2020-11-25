@@ -101,7 +101,7 @@ namespace DataContent.DAL.Repositories
             return computer;
         }
 
-        public async Task<Computer> UpdateComputerAsync(int id, Computer computer)
+        public async Task<Computer> UpdateComputerAsync(Computer computer)
         {
             var computerInDB = _context.Computers.Where(x => x.Id == computer.Id).FirstOrDefault();
             if (computerInDB != null)
