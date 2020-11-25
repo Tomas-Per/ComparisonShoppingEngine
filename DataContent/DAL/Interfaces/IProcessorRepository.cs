@@ -11,6 +11,7 @@ namespace DataContent.DAL.Interfaces
     {
         Task<List<Processor>> GetAllProcessorsAsync();
         Task<Processor> GetProcessorByIdAsync(int id);
+        Task<Processor> GetProcessorByNameAsync(string model);
         Task<Processor> UpdateProcessorAsync(Processor processor);
         Task<List<Processor>> AddProcessorsAsync(List<Processor> processors);
         Task<Processor> DeleteProcessorAsync(int id);
