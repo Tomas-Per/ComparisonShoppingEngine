@@ -35,9 +35,10 @@ namespace DataContent.DAL.Repositories
             return processors;
         }
 
-        public Task<Processor> GetProcessorByIdAsync(int id)
+        public async Task<Processor> GetProcessorByIdAsync(int id)
         {
-            throw new NotImplementedException();
+            var processor = await _context.Processors.Where(x => x.Id == id).FirstOrDefaultAsync();
+            return processor;
         }
 
         public Task<Processor> UpdateProcessorAsync(Processor processors)
