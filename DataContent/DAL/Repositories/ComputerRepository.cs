@@ -81,9 +81,12 @@ namespace DataContent.DAL.Repositories
             return list;
         }
 
-        public Task<Computer> DeleteComputerAsync(Computer computer)
+        public async Task<Computer> DeleteComputerAsync(int id)
         {
-            throw new NotImplementedException();
+            var computer = await _context.Computers.Where(x => x.Id == id).FirstOrDefaultAsync();
+            _context.Computers.Remove(computer);
+            await _context.SaveChangesAsync();
+            return computer;
         }
 
         public async Task<List<Computer>> GetAllComputersAsync()

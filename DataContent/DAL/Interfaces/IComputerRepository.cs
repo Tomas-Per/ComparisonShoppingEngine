@@ -13,7 +13,7 @@ namespace DataContent.DAL.Interfaces
         Task<Computer> GetComputerByIdAsync(int id);
         Task<Computer> UpdateComputerAsync(int id, Computer computer);
         Task<List<Computer>> AddComputersAsync(List<Computer> computers);
-        Task<Computer> DeleteComputerAsync(Computer computer);
+        Task<Computer> DeleteComputerAsync(int id);
 
     }
 }
