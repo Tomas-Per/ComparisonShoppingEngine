@@ -1,13 +1,16 @@
 ﻿using ItemLibrary;
+using System;
+using System.Collections.Generic;
 
 namespace Comparison
 {
     public class ItemComparison<T> where T : Item
-    { 
+    {
         public int PriceWeight { get; protected set; }
         protected (double, double) PriceRanking { get; set; }
         protected (double, double) ItemRanking {get; set;}
         protected int TotalWeight { get; set; }
+        protected (double, double) SpecRanking { get; set; }
 
         public ItemComparison(int priceWeight)
         {
@@ -26,30 +29,19 @@ namespace Comparison
 
 
         //Compares price by given items prices
-        protected void PriceComparison(double mainPrice, double comparingPrice)
+        protected (double, double) PriceComparison(double mainPrice, double comparingPrice)
         {
-            PriceRanking = SpecComparison(mainPrice, comparingPrice, PriceWeight);
-            ItemRanking = (ItemRanking.Item1 + PriceRanking.Item2, ItemRanking.Item2 + PriceRanking.Item1);
+            var priceRanking = SpecComparison(mainPrice, comparingPrice, PriceWeight);
+            ItemRanking = (ItemRanking.Item1 + priceRanking.Item2, ItemRanking.Item2 + priceRanking.Item1);
+            return priceRanking;
         }
-        //Compares 2 given items
-        public virtual void UpdateRatings(T mainItem, T comparingItem)
-        {
-            ItemRanking = (0,0);
-            PriceComparison(mainItem.Price, comparingItem.Price);
-        }
+        
         //Updates weights if new were given
         public void UpdateWeights(int priceWeight)
         {
             PriceWeight = priceWeight;
             TotalWeight = priceWeight;
         }
-        public (double, double) GetPriceRankings()
-        {
-            return PriceRanking;
-        }
-        public (double, double) GetItemRankings()
-        {
-            return ItemRanking;
-        }
+        
     }
 }

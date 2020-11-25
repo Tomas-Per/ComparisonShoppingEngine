@@ -1,5 +1,6 @@
 ﻿using ItemLibrary;
 using System;
+using System.Collections.Generic;
 
 namespace Comparison.Comparisons
 {
@@ -7,32 +8,36 @@ namespace Comparison.Comparisons
     {
         public int StorageWeight { get; protected set; }
         public int RamWeight { get; protected set; }
-        protected (double, double) StorageRanking { get; set; }
-        protected (double, double) RamRanking { get; set; }
+
         public ComputerComparison(int priceWeight, int storageWeight, int ramWeight)
                                     : base(priceWeight)
         {
             UpdateWeights(priceWeight, storageWeight, ramWeight);
         }
         //Compares items storage by given items storage
-        public void StorageComparison (int mainStorage, int comparingStorage)
+        public (double, double) StorageComparison (int mainStorage, int comparingStorage)
         {
-            StorageRanking = SpecComparison(Convert.ToDouble(mainStorage), Convert.ToDouble(comparingStorage), StorageWeight);
-            ItemRanking = (ItemRanking.Item1 + StorageRanking.Item1, ItemRanking.Item2 + StorageRanking.Item2);
+            var storageRanking = SpecComparison(Convert.ToDouble(mainStorage), Convert.ToDouble(comparingStorage), StorageWeight);
+            ItemRanking = (ItemRanking.Item1 + storageRanking.Item1, ItemRanking.Item2 + storageRanking.Item2);
+            return storageRanking;
         }
         //Compares items RAMs by given items RAMs
-        public void RamComparison(int mainRAM, int comparingRAM)
+        public (double, double) RamComparison(int mainRAM, int comparingRAM)
         {
-            RamRanking = SpecComparison(Convert.ToDouble(mainRAM), Convert.ToDouble(comparingRAM), RamWeight);
-            ItemRanking = (ItemRanking.Item1 + RamRanking.Item1, ItemRanking.Item2 + RamRanking.Item2);
+            var ramRanking = SpecComparison(Convert.ToDouble(mainRAM), Convert.ToDouble(comparingRAM), RamWeight);
+            ItemRanking = (ItemRanking.Item1 + ramRanking.Item1, ItemRanking.Item2 + ramRanking.Item2);
+            return ramRanking;
         }
-        public override void UpdateRatings(Computer mainItem, Computer comparingItem)
+        public void UpdateRatings(Computer mainItem, Computer comparingItem, Action<(double, double)> priceRanking,
+                                  Action<(double, double)> storageRanking, Action<(double, double)> ramRanking,
+                                                                             Action<(double, double)> itemRanking)
         //Compares two given computers by preferences
         {
             ItemRanking = (0, 0);
-            PriceComparison(mainItem.Price, comparingItem.Price);
-            StorageComparison(mainItem.StorageCapacity, comparingItem.StorageCapacity);
-            RamComparison(mainItem.RAM, comparingItem.RAM);
+            priceRanking(PriceComparison(mainItem.Price, comparingItem.Price));
+            storageRanking(StorageComparison(mainItem.StorageCapacity, comparingItem.StorageCapacity));
+            ramRanking(RamComparison(mainItem.RAM, comparingItem.RAM));
+            itemRanking(ItemRanking);
         }
         //Updates weights if new were given
         public void UpdateWeights(int priceWeight, int storageWeight, int ramWeight)
@@ -41,14 +46,6 @@ namespace Comparison.Comparisons
             StorageWeight = storageWeight;
             RamWeight = ramWeight;
             TotalWeight += StorageWeight + RamWeight;
-        }
-        public (double, double) GetStorageRankings()
-        {
-            return StorageRanking;
-        }
-        public (double, double) GetRamRankings()
-        {
-            return RamRanking;
         }
     }
 }
