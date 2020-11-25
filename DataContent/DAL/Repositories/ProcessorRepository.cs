@@ -19,9 +19,11 @@ namespace DataContent.DAL.Repositories
             _context = context;
         }
 
-        public Task<List<Processor>> AddProcessorsAsync(List<Processor> processors)
+        public async Task<List<Processor>> AddProcessorsAsync(List<Processor> processors)
         {
-            throw new NotImplementedException();
+            _context.AddRange(processors);
+            await _context.SaveChangesAsync();
+            return processors;
         }
 
         public async Task<Processor> DeleteProcessorAsync(int id)
