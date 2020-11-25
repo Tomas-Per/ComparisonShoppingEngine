@@ -47,14 +47,5 @@ namespace Comparison.Comparisons
             RamWeight = ramWeight;
             TotalWeight += StorageWeight + RamWeight;
         }
-        public static void Main()
-        {
-            var a = new Computer { Price = 15, RAM = 16, StorageCapacity = 256};
-            var b = new Computer { Price = 10, RAM = 8, StorageCapacity = 128 };
-
-            var comparison = new ComputerComparison(5, 5, 5);
-            comparison.UpdateRatings(a, b, (c) => Console.WriteLine(c), (c) => Console.WriteLine(c), (c) => Console.WriteLine(c),
-                                            (c) => Console.WriteLine(c)) ;
-        }
     }
 }
