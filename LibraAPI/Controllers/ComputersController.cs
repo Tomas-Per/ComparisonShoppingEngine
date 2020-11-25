@@ -69,25 +69,18 @@ namespace LibraAPI.Controllers
             return Ok(computers);
         }
 
-        //// DELETE: api/Computers/5
-        //[HttpDelete("{id}")]
-        //public async Task<IActionResult> DeleteComputer(int id)
-        //{
-        //    var computer = await _context.Computers.FindAsync(id);
-        //    if (computer == null)
-        //    {
-        //        return NotFound();
-        //    }
+        // DELETE: api/Computers/5
+        [HttpDelete("{id}")]
+        public async Task<IActionResult> DeleteComputer(int id)
+        {
+            var computer = await _repository.DeleteComputerAsync(id);
+            if (computer == null)
+            {
+                return NotFound();
+            }
 
-        //    _context.Computers.Remove(computer);
-        //    await _context.SaveChangesAsync();
+            return NoContent();
+        }
 
-        //    return NoContent();
-        //}
-
-        //private bool ComputerExists(int id)
-        //{
-        //    return _context.Computers.Any(e => e.Id == id);
-        //}
     }
 }
