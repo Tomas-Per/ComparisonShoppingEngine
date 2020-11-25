@@ -24,16 +24,16 @@ namespace LibraAPI.Controllers
 
         // GET: api/Smartphones
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Smartphone>>> GetSmartphones()
+        public async Task<ActionResult<List<Smartphone>>> GetSmartphones()
         {
-            return await _context.Smartphones.ToListAsync();
+            return await _repository.GetAllSmartphonesAsync();
         }
 
         // GET: api/Smartphones/5
         [HttpGet("{id}")]
         public async Task<ActionResult<Smartphone>> GetSmartphone(int id)
         {
-            var smartphone = await _context.Smartphones.FindAsync(id);
+            var smartphone = await _repository.GetSmartphoneByIdAsync(id);
 
             if (smartphone == null)
             {
@@ -46,30 +46,14 @@ namespace LibraAPI.Controllers
         // PUT: api/Smartphones/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutSmartphone(int id, Smartphone smartphone)
+        public async Task<IActionResult> PutSmartphone(Smartphone smartphone)
         {
-            if (id != smartphone.Id)
+            if (smartphone == null)
             {
                 return BadRequest();
             }
 
-            _context.Entry(smartphone).State = EntityState.Modified;
-
-            try
-            {
-                await _context.SaveChangesAsync();
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!SmartphoneExists(id))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
-            }
+            await _repository.UpdateSmartphoneAsync(smartphone);
 
             return NoContent();
         }
@@ -77,33 +61,25 @@ namespace LibraAPI.Controllers
         // POST: api/Smartphones
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
-        public async Task<ActionResult<Smartphone>> PostSmartphone(Smartphone smartphone)
+        public async Task<ActionResult<List<Smartphone>>> PostSmartphone(List<Smartphone> smartphones)
         {
-            _context.Smartphones.Add(smartphone);
-            await _context.SaveChangesAsync();
+            await _repository.AddSmartphonesAsync(smartphones);
 
-            return CreatedAtAction("GetSmartphone", new { id = smartphone.Id }, smartphone);
+            return Ok(smartphones);
         }
 
         // DELETE: api/Smartphones/5
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteSmartphone(int id)
         {
-            var smartphone = await _context.Smartphones.FindAsync(id);
+            var smartphone = await _repository.DeleteSmartphoneAsync(id);
             if (smartphone == null)
             {
                 return NotFound();
             }
 
-            _context.Smartphones.Remove(smartphone);
-            await _context.SaveChangesAsync();
-
             return NoContent();
         }
 
-        private bool SmartphoneExists(int id)
-        {
-            return _context.Smartphones.Any(e => e.Id == id);
-        }
     }
 }
