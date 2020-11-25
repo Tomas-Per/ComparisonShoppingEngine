@@ -24,86 +24,86 @@ namespace LibraAPI.Controllers
 
         // GET: api/Processors
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Processor>>> GetProcessors()
+        public async Task<ActionResult<List<Processor>>> GetProcessors()
         {
-            return await _context.Processors.ToListAsync();
+            return await _repository.GetAllProcessorsAsync();
         }
 
-        // GET: api/Processors/5
-        [HttpGet("{id}")]
-        public async Task<ActionResult<Processor>> GetProcessor(int id)
-        {
-            var processor = await _context.Processors.FindAsync(id);
+        //// GET: api/Processors/5
+        //[HttpGet("{id}")]
+        //public async Task<ActionResult<Processor>> GetProcessor(int id)
+        //{
+        //    var processor = await _context.Processors.FindAsync(id);
 
-            if (processor == null)
-            {
-                return NotFound();
-            }
+        //    if (processor == null)
+        //    {
+        //        return NotFound();
+        //    }
 
-            return processor;
-        }
+        //    return processor;
+        //}
 
-        // PUT: api/Processors/5
-        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
-        [HttpPut("{id}")]
-        public async Task<IActionResult> PutProcessor(int id, Processor processor)
-        {
-            if (id != processor.Id)
-            {
-                return BadRequest();
-            }
+        //// PUT: api/Processors/5
+        //// To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
+        //[HttpPut("{id}")]
+        //public async Task<IActionResult> PutProcessor(int id, Processor processor)
+        //{
+        //    if (id != processor.Id)
+        //    {
+        //        return BadRequest();
+        //    }
 
-            _context.Entry(processor).State = EntityState.Modified;
+        //    _context.Entry(processor).State = EntityState.Modified;
 
-            try
-            {
-                await _context.SaveChangesAsync();
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!ProcessorExists(id))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
-            }
+        //    try
+        //    {
+        //        await _context.SaveChangesAsync();
+        //    }
+        //    catch (DbUpdateConcurrencyException)
+        //    {
+        //        if (!ProcessorExists(id))
+        //        {
+        //            return NotFound();
+        //        }
+        //        else
+        //        {
+        //            throw;
+        //        }
+        //    }
 
-            return NoContent();
-        }
+        //    return NoContent();
+        //}
 
-        // POST: api/Processors
-        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
-        [HttpPost]
-        public async Task<ActionResult<Processor>> PostProcessor(Processor processor)
-        {
-            _context.Processors.Add(processor);
-            await _context.SaveChangesAsync();
+        //// POST: api/Processors
+        //// To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
+        //[HttpPost]
+        //public async Task<ActionResult<Processor>> PostProcessor(Processor processor)
+        //{
+        //    _context.Processors.Add(processor);
+        //    await _context.SaveChangesAsync();
 
-            return CreatedAtAction("GetProcessor", new { id = processor.Id }, processor);
-        }
+        //    return CreatedAtAction("GetProcessor", new { id = processor.Id }, processor);
+        //}
 
-        // DELETE: api/Processors/5
-        [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteProcessor(int id)
-        {
-            var processor = await _context.Processors.FindAsync(id);
-            if (processor == null)
-            {
-                return NotFound();
-            }
+        //// DELETE: api/Processors/5
+        //[HttpDelete("{id}")]
+        //public async Task<IActionResult> DeleteProcessor(int id)
+        //{
+        //    var processor = await _context.Processors.FindAsync(id);
+        //    if (processor == null)
+        //    {
+        //        return NotFound();
+        //    }
 
-            _context.Processors.Remove(processor);
-            await _context.SaveChangesAsync();
+        //    _context.Processors.Remove(processor);
+        //    await _context.SaveChangesAsync();
 
-            return NoContent();
-        }
+        //    return NoContent();
+        //}
 
-        private bool ProcessorExists(int id)
-        {
-            return _context.Processors.Any(e => e.Id == id);
-        }
+        //private bool ProcessorExists(int id)
+        //{
+        //    return _context.Processors.Any(e => e.Id == id);
+        //}
     }
 }
