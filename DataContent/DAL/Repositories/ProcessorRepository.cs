@@ -1,12 +1,16 @@
 ﻿using DataContent.DAL.Interfaces;
+using ExceptionsLogging;
 using ItemLibrary;
 using ItemLibrary.DataContexts;
+using ItemLibrary.Exceptions;
 using Microsoft.EntityFrameworkCore;
+using Parsing;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using WebParser.ComponentsParser;
 
 namespace DataContent.DAL.Repositories
 {
@@ -46,9 +50,47 @@ namespace DataContent.DAL.Repositories
             return processor;
         }
 
-        public Task<Processor> GetProcessorByNameAsync(string model)
+        public async Task<Processor> GetProcessorByNameAsync(string model)
         {
-            throw new NotImplementedException();
+            if (model.Contains("Processor")) model = model.Substring(0, model.IndexOf("Processor"));
+            model = model.DeleteSpecialChars();
+
+            //search for processor in DB
+            var processor = _context.Processors
+                            .Where(x => x.Model.Contains(model)
+                            || model.Contains(x.Model)).FirstOrDefault();
+
+            if (processor != null) return processor;
+            else
+            {
+                //try parse processor from Gpuskin database site
+                try
+                {
+                    processor = new ProcessorParser().ParseProcessor(model);
+                    _context.Add(processor);
+                    await _context.SaveChangesAsync();
+                }
+                catch (ProcessorNotFoundException ex)
+                {
+                    //add new processor but throw exception, so it could be logged
+                    processor = new Processor { Model = model };
+                    try
+                    {
+                        processor.SetName(model);
+                    }
+                    catch (ProcessorInvalidNameException e)
+                    {
+                        ExceptionLogger.LogProcessorParsingException(processor, e);
+                    }
+
+                    _context.Add(processor);
+                    await _context.SaveChangesAsync();
+                    processor = _context.Processors.Where(x => x.Model == model).FirstOrDefault();
+
+                    ExceptionLogger.LogProcessorParsingException(processor, ex);
+                }
+                return processor;
+            }
         }
 
         public async Task<Processor> UpdateProcessorAsync(Processor processor)

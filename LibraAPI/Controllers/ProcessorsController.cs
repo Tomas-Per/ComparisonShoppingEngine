@@ -43,6 +43,19 @@ namespace LibraAPI.Controllers
             return processor;
         }
 
+        [HttpGet("/Models/{model}")]
+        public async Task<ActionResult<Processor>> GetProcessorByModel(string model)
+        {
+            var processor = await _repository.GetProcessorByNameAsync(model);
+
+            if (processor == null)
+            {
+                return NotFound();
+            }
+
+            return processor;
+        }
+
         // PUT: api/Processors/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut]
