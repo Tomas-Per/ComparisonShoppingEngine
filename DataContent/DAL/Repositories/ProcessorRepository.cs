@@ -41,9 +41,18 @@ namespace DataContent.DAL.Repositories
             return processor;
         }
 
-        public Task<Processor> UpdateProcessorAsync(Processor processors)
+        public async Task<Processor> UpdateProcessorAsync(Processor processor)
         {
-            throw new NotImplementedException();
+            var processorInDB = _context.Processors.Where(x => x.Id == processor.Id).FirstOrDefault();
+            if (processorInDB != null)
+            {
+                processorInDB.Name = processor.Name;
+                processorInDB.Model = processor.Model;
+                processorInDB.Cache = processor.Cache;
+                processorInDB.MinCores = processor.MinCores;
+            }
+            await _context.SaveChangesAsync();
+            return processor;
         }
     }
 }
