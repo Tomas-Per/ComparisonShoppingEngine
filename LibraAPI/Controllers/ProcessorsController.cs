@@ -58,16 +58,15 @@ namespace LibraAPI.Controllers
             return NoContent();
         }
 
-        //// POST: api/Processors
-        //// To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
-        //[HttpPost]
-        //public async Task<ActionResult<Processor>> PostProcessor(Processor processor)
-        //{
-        //    _context.Processors.Add(processor);
-        //    await _context.SaveChangesAsync();
+        // POST: api/Processors
+        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
+        [HttpPost]
+        public async Task<ActionResult<List<Processor>>> PostProcessor(List<Processor> processors)
+        {
+            await _repository.AddProcessorsAsync(processors);
 
-        //    return CreatedAtAction("GetProcessor", new { id = processor.Id }, processor);
-        //}
+            return Ok(processors);
+        }
 
         //// DELETE: api/Processors/5
         //[HttpDelete("{id}")]
