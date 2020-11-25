@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using ItemLibrary;
 using ItemLibrary.DataContexts;
+using DataContent.DAL.Interfaces;
 
 namespace LibraAPI.Controllers
 {
@@ -14,11 +15,11 @@ namespace LibraAPI.Controllers
     [ApiController]
     public class ComputersController : ControllerBase
     {
-        private readonly ComputerContext _context;
+        private readonly IComputerRepository _repository;
 
-        public ComputersController(ComputerContext context)
+        public ComputersController(IComputerRepository repository)
         {
-            _context = context;
+            _repository = repository;
         }
 
         // GET: api/Computers
