@@ -11,11 +11,11 @@ using System.Threading.Tasks;
 
 namespace DataContent.DAL.Repositories
 {
-    class SmarphoneRepository : ISmartphoneRepository
+    class SmartphoneRepository : ISmartphoneRepository
     {
         private readonly SmartphoneContext _context;
 
-        public SmarphoneRepository(SmartphoneContext context)
+        public SmartphoneRepository(SmartphoneContext context)
         {
             _context = context;
         }
