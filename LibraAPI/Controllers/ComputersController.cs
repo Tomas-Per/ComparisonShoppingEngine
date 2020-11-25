@@ -59,16 +59,15 @@ namespace LibraAPI.Controllers
             return NoContent();
         }
 
-        //// POST: api/Computers
-        //// To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
-        //[HttpPost]
-        //public async Task<ActionResult<Computer>> PostComputer(Computer computer)
-        //{
-        //    _context.Computers.Add(computer);
-        //    await _context.SaveChangesAsync();
+        // POST: api/Computers
+        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
+        [HttpPost]
+        public async Task<ActionResult<List<Computer>>> PostComputer(List<Computer> computers)
+        {
+            await _repository.AddComputersAsync(computers);
 
-        //    return CreatedAtAction("GetComputer", new { id = computer.Id }, computer);
-        //}
+            return Ok(computers);
+        }
 
         //// DELETE: api/Computers/5
         //[HttpDelete("{id}")]
