@@ -29,19 +29,19 @@ namespace LibraAPI.Controllers
             return await _repository.GetAllProcessorsAsync();
         }
 
-        //// GET: api/Processors/5
-        //[HttpGet("{id}")]
-        //public async Task<ActionResult<Processor>> GetProcessor(int id)
-        //{
-        //    var processor = await _context.Processors.FindAsync(id);
+        // GET: api/Processors/5
+        [HttpGet("{id}")]
+        public async Task<ActionResult<Processor>> GetProcessor(int id)
+        {
+            var processor = await _repository.GetProcessorByIdAsync(id);
 
-        //    if (processor == null)
-        //    {
-        //        return NotFound();
-        //    }
+            if (processor == null)
+            {
+                return NotFound();
+            }
 
-        //    return processor;
-        //}
+            return processor;
+        }
 
         //// PUT: api/Processors/5
         //// To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
