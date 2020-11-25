@@ -24,9 +24,12 @@ namespace DataContent.DAL.Repositories
             throw new NotImplementedException();
         }
 
-        public Task<Processor> DeleteProcessorAsync(int id)
+        public async Task<Processor> DeleteProcessorAsync(int id)
         {
-            throw new NotImplementedException();
+            var processor = await _context.Processors.Where(p => p.Id == id).FirstOrDefaultAsync();
+            _context.Processors.Remove(processor);
+            await _context.SaveChangesAsync();
+            return processor;
         }
 
         public async Task<List<Processor>> GetAllProcessorsAsync()
