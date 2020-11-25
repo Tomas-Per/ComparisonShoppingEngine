@@ -40,6 +40,7 @@ namespace LibraAPI
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "LibraAPI", Version = "v1" });
             });
             services.AddScoped<IComputerRepository, ComputerRepository>();
+            services.AddScoped<IProcessorRepository, ProcessorRepository>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
