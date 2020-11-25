@@ -23,7 +23,6 @@
     <ProjectReference Include="..\ItemLibrary\ItemLibrary.csproj" />
     <ProjectReference Include="..\DataManipulation\DataManipulation.csproj" />
     <ProjectReference Include="..\ShopParser\WebParser.csproj" />
-    <ProjectReference Include="..\WebAPI\WebAPI.csproj" />
   </ItemGroup>
 
   <ItemGroup>

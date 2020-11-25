@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 
 namespace DataContent.DAL.Repositories
 {
-    class ComputerRepository : IComputerRepository
+    public class ComputerRepository : IComputerRepository
     {
         private readonly ComputerContext _context;
         

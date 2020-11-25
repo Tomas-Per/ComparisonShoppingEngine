@@ -25,8 +25,6 @@ using DataManipulation.Filters;
 using System.Xml;
 using System.Linq.Expressions;
 using PathLibrary;
-using WebAPI;
-using WebAPI.Controllers;
 using ItemLibrary.DataContexts;
 using System.Net.Http;
 
@@ -61,10 +59,10 @@ namespace WPF
         private async void Window_Loaded(object sender, RoutedEventArgs e)
         {
             CreateFilterCheckbox();
-            OriginalList = await GetAPIAsync("https://localhost:44305/api/Computers");
+            OriginalList = await GetAPIAsync("https://localhost:44315/api/Computers");
             ItemsListBox.ItemsSource = OriginalList;
-            _filter = new ComputerFilter(OriginalList);
-            _sorter = new Sorter(OriginalList.Cast<Item>().ToList());
+            //_filter = new ComputerFilter(OriginalList);
+            //_sorter = new Sorter(OriginalList.Cast<Item>().ToList());
         }
 
         private static async Task<List<Computer>> GetAPIAsync(string path)
