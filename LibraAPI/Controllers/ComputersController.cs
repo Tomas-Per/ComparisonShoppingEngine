@@ -30,19 +30,19 @@ namespace LibraAPI.Controllers
             return computers;
         }
 
-        //// GET: api/Computers/5
-        //[HttpGet("{id}")]
-        //public async Task<ActionResult<Computer>> GetComputer(int id)
-        //{
-        //    var computer = await _context.Computers.FindAsync(id);
+        // GET: api/Computers/5
+        [HttpGet("{id}")]
+        public async Task<ActionResult<Computer>> GetComputer(int id)
+        {
+            var computer = await _repository.GetComputerByIdAsync(id);
 
-        //    if (computer == null)
-        //    {
-        //        return NotFound();
-        //    }
+            if (computer == null)
+            {
+                return NotFound();
+            }
 
-        //    return computer;
-        //}
+            return computer;
+        }
 
         //// PUT: api/Computers/5
         //// To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
