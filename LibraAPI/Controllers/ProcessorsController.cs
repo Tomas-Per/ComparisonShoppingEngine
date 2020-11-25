@@ -43,36 +43,20 @@ namespace LibraAPI.Controllers
             return processor;
         }
 
-        //// PUT: api/Processors/5
-        //// To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
-        //[HttpPut("{id}")]
-        //public async Task<IActionResult> PutProcessor(int id, Processor processor)
-        //{
-        //    if (id != processor.Id)
-        //    {
-        //        return BadRequest();
-        //    }
+        // PUT: api/Processors/5
+        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
+        [HttpPut]
+        public async Task<IActionResult> PutProcessor(Processor processor)
+        {
+            if (processor == null)
+            {
+                return BadRequest();
+            }
 
-        //    _context.Entry(processor).State = EntityState.Modified;
+            await _repository.UpdateProcessorAsync(processor);
 
-        //    try
-        //    {
-        //        await _context.SaveChangesAsync();
-        //    }
-        //    catch (DbUpdateConcurrencyException)
-        //    {
-        //        if (!ProcessorExists(id))
-        //        {
-        //            return NotFound();
-        //        }
-        //        else
-        //        {
-        //            throw;
-        //        }
-        //    }
-
-        //    return NoContent();
-        //}
+            return NoContent();
+        }
 
         //// POST: api/Processors
         //// To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
