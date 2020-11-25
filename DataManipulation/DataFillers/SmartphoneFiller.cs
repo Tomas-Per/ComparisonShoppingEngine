@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace DataManipulation.DataFillers
 {
-    class SmartphoneFiller
+    public class SmartphoneFiller
     {
         private Smartphone Smartphone = new Smartphone();
 

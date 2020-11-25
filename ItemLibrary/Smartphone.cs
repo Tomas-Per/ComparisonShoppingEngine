@@ -53,5 +53,32 @@ namespace ItemLibrary
                                                                                     phone.BackCameraMP.Count == this.BackCameraMP.Count - 1));
             return phones.Cast<Item>().ToList();
         }
+
+        public override bool Equals(object obj)
+        {
+            if (obj == null || !this.GetType().Equals(obj.GetType())) return false;
+            else
+            {
+                Smartphone phone = (Smartphone)obj;
+                //check if the manufacturer is the same (if it isn't in manufacturer field, it should be in the name then)
+                if (phone.ManufacturerName != this.ManufacturerName)
+                {
+                    if (((this.ManufacturerName != null && !phone.Name.Contains(this.ManufacturerName)))
+                       && ((phone.Name != null && !this.Name.Contains(phone.ManufacturerName)))) return false;
+                }
+
+                //check if all mandatory fields are equal
+                if (phone.Storage == this.Storage &&
+                     phone.RAM == this.RAM &&
+                      (phone.Resolution.Contains(this.Resolution) || this.Resolution.Contains(phone.Resolution)) &&
+                        (!phone.ShopName.Equals(this.ShopName))) return true;
+
+                else return false;
+            }
+        }
+        public override int GetHashCode()
+        {
+            return base.GetHashCode();
+        }
     }
 }
