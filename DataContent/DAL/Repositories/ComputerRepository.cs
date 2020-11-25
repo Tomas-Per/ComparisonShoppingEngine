@@ -86,9 +86,10 @@ namespace DataContent.DAL.Repositories
             throw new NotImplementedException();
         }
 
-        public Task<List<Computer>> GetAllComputersAsync()
+        public async Task<List<Computer>> GetAllComputersAsync()
         {
-            throw new NotImplementedException();
+            var computers = await _context.Computers.Include(x => x.Processor).ToListAsync();
+            return computers;
         }
 
         public Task<Computer> GetComputerByIdAsync(int id)
