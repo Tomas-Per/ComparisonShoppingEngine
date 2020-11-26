@@ -1,0 +1,63 @@
+﻿.sidenav {
+    height: 100%;
+    width: 250px;
+    position: fixed;
+    z-index: 1;
+    top: 0;
+    left: 0;
+    overflow-x: hidden;
+    padding-top: 20px;
+    background: rgb(148,187,233);
+    background: linear-gradient(0deg, rgba(148,187,233,1) 10%, rgb(221,160,221) 100%);
+}
+    .sidenav a {
+        padding: 8px 8px 8px 32px;
+        text-decoration: none;
+        font-size: 25px;
+        color: #818181;
+        display: block;
+        transition: 0.3s;
+    }
+
+        /* When you mouse over the navigation links, change their color */
+        .sidenav a:hover {
+            color: #f1f1f1;
+        }
+
+    /* Position and style the close button (top right corner) */
+    .sidenav .closebtn {
+        position: absolute;
+        top: 0;
+        right: 25px;
+        font-size: 36px;
+        margin-left: 50px;
+    }
+    .sidenav > p {
+    font-size: 15px;
+    color: white;
+    text-align: center;
+    font-family: monospace;
+    }
+    .sidenav * h5 {
+        color: white;
+        text-align: center;
+        font-family: monospace;
+        text-decoration-line: underline;
+        text-decoration-style: wavy;
+        text-decoration-color: white;
+        margin:0px 0px 25px 0px;
+    }
+
+@media screen and (max-height: 450px) {
+    .sidenav {
+        padding-top: 15px;
+    }
+
+        .sidenav a {
+            font-size: 18px;
+        }
+}
+grid {
+    background-color: black;
+    opacity: 0.3;
+}

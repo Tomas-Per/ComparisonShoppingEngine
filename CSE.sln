@@ -32,6 +32,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ExceptionsLogging", "Except
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PathLibrary", "PathLibrary\PathLibrary.csproj", "{0BE975ED-DF55-4B95-B906-FC7123FC5FB9}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LibraWebApp", "LibraWebApp\LibraWebApp.csproj", "{28872904-E68C-41EC-8E53-B5939BD8CA2E}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -82,6 +84,10 @@ Global
 		{0BE975ED-DF55-4B95-B906-FC7123FC5FB9}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{0BE975ED-DF55-4B95-B906-FC7123FC5FB9}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{0BE975ED-DF55-4B95-B906-FC7123FC5FB9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{28872904-E68C-41EC-8E53-B5939BD8CA2E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{28872904-E68C-41EC-8E53-B5939BD8CA2E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{28872904-E68C-41EC-8E53-B5939BD8CA2E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{28872904-E68C-41EC-8E53-B5939BD8CA2E}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
