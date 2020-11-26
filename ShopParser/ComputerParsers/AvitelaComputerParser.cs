@@ -8,30 +8,29 @@ using static ItemLibrary.Categories;
 using System.Linq;
 using PathLibrary;
 using DataContent.ReadingDB.Services;
+using System.Threading.Tasks;
 
-namespace WebParser.ShopParser
+namespace WebParser.ComputerParsers
 {
-    public class AvitelaParser : IParser<Computer>
+    public class AvitelaComputerParser : IParser<Computer>
     {
-        private readonly string _url = "https://avitela.lt/kompiuterine-technika/nesiojamieji-kompiuteriai/nesiojami-kompiuteriai?page=1";
+        private readonly string _url = "https://avitela.lt/kompiuterine-technika/nesiojamieji-kompiuteriai/nesiojami-kompiuteriai?limit=50&page=1";
         private Lazy<ChromeDriver> _driver;
 
-        public AvitelaParser()
+        public AvitelaComputerParser()
         {
             var options = new ChromeOptions();
             options.AddArguments("--headless");
             _driver = new Lazy<ChromeDriver>(() => new ChromeDriver(MainPath.GetShopParserPath(), options));
         }
 
-        //parses laptops from avitela.lt and returns results in a List<Computer>
-        //this method parses first 5 pages (18 laptops in every page), because later pages are outdated 
-        public List<Computer> ParseShop()
+        public async Task<List<Computer>> ParseShop()
         {
             List<Computer> data = new List<Computer>();
             List<string> links = new List<string>();
             string nextPage = _url;
 
-            for (int i = 1; i <= 5; i++)
+            for (int i = 1; i <= 3; i++)
             {
                 nextPage = _url.Remove(_url.Length - 1, 1) + i;
                 _driver.Value.Navigate().GoToUrl(nextPage);
@@ -55,15 +54,19 @@ namespace WebParser.ShopParser
 
                     _driver.Value.SwitchTo().Window(_driver.Value.WindowHandles.First());
 
+                    if (computer == null) continue;
+
                     if (computer.Resolution != null)
                     {
-                        computer.ItemCategory = ItemCategory.Computer;
+                        computer.ItemCategory = ItemCategory.Laptop;
                         data.Add(computer);
                     }
                 }
+                break;
                 
             }
-            ResetDriver();
+            _driver.Value.Close();
+            //ResetDriver();
             return data;
         }
 
@@ -71,12 +74,20 @@ namespace WebParser.ShopParser
         //parses laptop window, updates computer fields
         public Computer ParseWindow(string url)
         {
+            _driver.Value.Navigate().GoToUrl(url);
 
             Computer computer = new Computer();
-            computer.Name = _driver.Value.FindElement(By.Id("pname")).Text;
-            computer.Price = _driver.Value.FindElement(By.Id("price-old")).Text.ParseDouble();
+            try
+            {
+                computer.Name = _driver.Value.FindElement(By.CssSelector("#pname")).Text;
+                computer.Price = _driver.Value.FindElement(By.Id("price-old")).Text.ParseDouble();
+            }
+            catch(Exception)
+            {
+                return null;
+            }
             computer.ItemURL = url;
-            computer.ShopName = "Avitela";
+            computer.ShopName = "Avitela.lt";
 
             try
             {
@@ -110,11 +121,22 @@ namespace WebParser.ShopParser
                 else if (table[i].Text.Contains("Vidinė atmintis"))
                 {
                     computer.StorageCapacity = table[i + 1].Text.ParseInt();
+                    if (table[i + 1].Text.Contains("TB"))
+                    {
+                        computer.StorageCapacity *= 1024; 
+                    }
                 }
 
                 else if (table[i].Text.Contains("Ekrano raiška"))
                 {
-                    computer.Resolution = table[i + 1].Text;
+                    if (table[i + 1].Text.Contains("("))
+                    {
+                        computer.Resolution = table[i + 1].Text.Substring(0, table[i + 1].Text.IndexOf("("));
+                    }
+                    else
+                    {
+                        computer.Resolution = table[i + 1].Text;
+                    }
                 }
                 else if (table[i].Text.Contains("Procesoriaus tipas"))
                 {
@@ -126,13 +148,13 @@ namespace WebParser.ShopParser
                     computer.GraphicsCardName = table[i + 1].Text;
                 }
 
-                else if (computer.Processor.Name == null && table[i].Text.Contains("Procesoriaus modelis"))
+                else if (table[i].Text.Contains("Procesoriaus modelis"))
                 {
                     computer.Processor = new ProcessorDataService().GetProcessor(table[i + 1].Text);
                 }
 
             }
-            ResetDriver();
+            //ResetDriver();
             return computer;
         }
 

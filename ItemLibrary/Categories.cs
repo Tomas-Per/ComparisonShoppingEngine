@@ -4,13 +4,9 @@
     {
         public enum ItemCategory
         {
-            Computer
-        };
-
-        public enum ComputerCategory
-        {
-            Desktop,
-            Laptop
+            Laptop,
+            Smartphone,
+            DesktopComputer
         };
     }
 }

@@ -11,7 +11,6 @@ namespace WPF
 {
     public partial class MainWindow
     {
-        private (double first, double second) _itemRating;
 
         private Computer _comparingItem1;
         private Computer _comparingItem2;
@@ -20,19 +19,21 @@ namespace WPF
 
         private void DisplayRatings()
         {
-            _comparison.UpdateRatings(_comparingItem1, _comparingItem2);
-            _itemRating = _comparison.GetItemRankings();
-            
-            if(Double.IsNaN(_itemRating.first) || Double.IsNaN(_itemRating.second))
-            {
-                ComparisonProductRating1.Text = "No preferences selected";
-                ComparisonProductRating2.Text = "No preferences selected";
-            }
-            else
-            {
-                ComparisonProductRating1.Text = (_itemRating.first).ToString("F2");
-                ComparisonProductRating2.Text = (_itemRating.second).ToString("F2");
-            }
+            _comparison.UpdateRatings(_comparingItem1, _comparingItem2,
+                                (ranking) => { }, (ranking) => { }, (ranking) => { },
+                                        (itemRanking) =>
+                                        {
+                                            if (Double.IsNaN(itemRanking.Item1) || Double.IsNaN(itemRanking.Item2))
+                                            {
+                                                ComparisonProductRating1.Text = "No preferences selected";
+                                                ComparisonProductRating2.Text = "No preferences selected";
+                                            }
+                                            else
+                                            {
+                                                ComparisonProductRating1.Text = (itemRanking.Item1).ToString("F2");
+                                                ComparisonProductRating2.Text = (itemRanking.Item2).ToString("F2");
+                                            }
+                                        });
             
         }
         private void UpdateComparison()

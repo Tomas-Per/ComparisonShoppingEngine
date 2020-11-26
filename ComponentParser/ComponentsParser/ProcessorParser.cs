@@ -25,25 +25,36 @@ namespace WebParser.ComponentsParser
 
         }
 
-
+        [Obsolete]
         public Processor ParseProcessor (string model)
         {
             _driver.Value.Navigate().GoToUrl(_url);
-            _driver.Value.FindElement(By.Name("SearchRecords")).SendKeys(model);
+   
+            try
+            {
+                _driver.Value.FindElement(By.Name("SearchRecords")).SendKeys(model);
+                //DefaultWait<IWebDriver> fluentWait = new DefaultWait<IWebDriver>(_driver.Value);
+                //fluentWait.Timeout = TimeSpan.FromSeconds(30);
+                //fluentWait.PollingInterval = TimeSpan.FromMilliseconds(250);
+                //fluentWait.IgnoreExceptionTypes(typeof(NoSuchElementException));
+                //fluentWait.Until(x => x.FindElement(By.Id("searchButton")));
 
-            DefaultWait<IWebDriver> fluentWait = new DefaultWait<IWebDriver>(_driver.Value);
-            fluentWait.Timeout = TimeSpan.FromSeconds(5);
-            fluentWait.PollingInterval = TimeSpan.FromMilliseconds(250);
-            fluentWait.IgnoreExceptionTypes(typeof(NoSuchElementException));
-            IWebElement searchResult = fluentWait.Until(x => x.FindElement(By.Id("searchButton")));
 
-            _driver.Value.FindElement(By.Id("searchButton")).Click();
+                WebDriverWait wait = new WebDriverWait(_driver.Value, TimeSpan.FromSeconds(10));
+                IWebElement element = wait.Until(ExpectedConditions.ElementIsVisible(By.Id("searchButton")));
+                element.Click();
 
 
-            var button = _driver.Value.FindElements(By.CssSelector("a.btn.btn-default"));
+                //_driver.Value.FindElement(By.Id("searchButton")).Click();
+            }
+            catch (Exception)
+            {
+                throw new ProcessorNotFoundException("Could not parse processor");
+            }
 
             try
             {
+                var button = _driver.Value.FindElements(By.CssSelector("a.btn.btn-default"));
                 var link = button[0].GetAttribute("href");
                 _driver.Value.Navigate().GoToUrl(link);
             }
@@ -73,7 +84,8 @@ namespace WebParser.ComponentsParser
             processor.MinCores = _driver.Value.FindElement(By.CssSelector("#fh5co-programs-section > div > form > div:nth-child(6) > div > table > tbody > tr:nth-child(2) > td:nth-child(2) > div > div:nth-child(2) > div:nth-child(1)"))
                 .GetAttribute("innerHTML").ParseInt();
 
-            ResetDriver();
+            _driver.Value.Close();
+            //ResetDriver();
             return processor;
         }
 

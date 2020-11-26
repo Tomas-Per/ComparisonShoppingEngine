@@ -63,7 +63,7 @@ namespace ItemLibrary
                 if (comp.ManufacturerName != this.ManufacturerName)
                 {
                     if (((this.ManufacturerName != null && !comp.Name.Contains(this.ManufacturerName)))
-                       && ((comp.Name != null && !this.Name.Contains(comp.ManufacturerName)))) return false;
+                       && ((comp.ManufacturerName != null && !this.Name.Contains(comp.ManufacturerName)))) return false;
                 }
 
                 //check if all mandatory fields are equal

@@ -10,51 +10,41 @@ namespace DataManipulation.Filters
 {
     public class SmartphoneFilter : Filter<Smartphone>
     {
-        public SmartphoneFilter(List<Smartphone> items) : base(items)
-        {
 
+        //Filters item filter by the processor
+        public void FilterByProcessor(string processor, List<Smartphone> items, FilterList filter)
+        {
+            filter(items.Where(item => (item.Processor).DeleteSpecialChars() == processor).ToList());
         }
 
-        //Filters item list by the processor
-        public List<Smartphone> FilterByProcessor(string processor)
+        //Filters item filter by the screen diagonal
+        public void FilterByScreenDiagonal(double diagonal, List<Smartphone> items, FilterList filter)
         {
-            List<Smartphone> result = _items.Where(item => (item.Processor).DeleteSpecialChars() == processor).ToList();
-            return result;
+            filter(items.Where(item => item.ScreenDiagonal == diagonal).ToList());
         }
 
-        //Filters item list by the screen diagonal
-        public List<Smartphone> FilterByScreenDiagonal(double diagonal)
+        //Filters item filter by RAM amount
+        public void FilterByRAM(int RAM, List<Smartphone> items, FilterList filter)
         {
-            List<Smartphone> result = _items.Where(item => item.ScreenDiagonal == diagonal).ToList();
-            return result;
+            filter(items.Where(item => item.RAM == RAM).ToList());
         }
 
-        //Filters item list by RAM amount
-        public List<Smartphone> FilterByRAM(int RAM)
+        //Filters item filter by storage amount
+        public void FilterByStorage(int storage, List<Smartphone> items, FilterList filter)
         {
-            List<Smartphone> result = _items.Where(item => item.RAM == RAM).ToList();
-            return result;
+            filter(items.Where(item => item.Storage == storage).ToList());
         }
 
-        //Filters item list by storage amount
-        public List<Smartphone> FilterByStorage(int storage)
+        //Filters item filter by camera type (quad, triple, dual, single)
+        public void FilterByCameraType(int cameraAmount, List<Smartphone> items, FilterList filter)
         {
-            List<Smartphone> result = _items.Where(item => item.Storage == storage).ToList();
-            return result;
+            filter(items.Where(item => item.BackCameraMP.Count == cameraAmount).ToList());
         }
 
-        //Filters item list by camera type (quad, triple, dual, single)
-        public List<Smartphone> FilterByCameraType(int cameraAmount)
+        //Filters item filter by the megapixels if the phone has a single camera
+        public void FilterByCameraMP(int megapixels, List<Smartphone> items, FilterList filter)
         {
-            List<Smartphone> result = _items.Where(item => item.BackCameraMP.Count == cameraAmount).ToList();
-            return result;
-        }
-
-        //Filters item list by the megapixels if the phone has a single camera
-        public List<Smartphone> FilterByCameraMP(int megapixels)
-        {
-            List<Smartphone> result = _items.Where(item => item.BackCameraMP.Count == 1 && item.BackCameraMP.First() == megapixels).ToList();
-            return result;
+            filter(items.Where(item => item.BackCameraMP.Count == 1 && item.BackCameraMP.First() == megapixels).ToList());
         }
     }
 }

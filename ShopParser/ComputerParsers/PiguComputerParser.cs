@@ -7,27 +7,27 @@ using PathLibrary;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using static ItemLibrary.Categories;
 
-namespace WebParser.ShopParser
+namespace WebParser.ComputerParsers
 {
-    public class PiguParser : IParser<Computer>
+    public class PiguComputerParser : IParser<Computer>
     {
         private readonly string _url = "https://pigu.lt/lt/kompiuteriai/nesiojami-kompiuteriai?page=1";
         private Lazy<ChromeDriver> _driver;
 
-        public PiguParser ()
+        public PiguComputerParser ()
         {
             var options = new ChromeOptions();
             options.AddArguments("--headless");
             _driver = new Lazy<ChromeDriver>(() => new ChromeDriver(MainPath.GetShopParserPath(), options));
         }
 
-        //parses laptops from avitela.lt and returns results in a List<Computer>
-        public List<Computer> ParseShop()
+        public async Task<List<Computer>> ParseShop()
         {
             List<Computer> data = new List<Computer>();
-            List<String> links = new List<String>();
+            List<string> links = new List<string>();
 
             for (int i = 1; i <= 3; i++)
             {
@@ -52,12 +52,16 @@ namespace WebParser.ShopParser
 
                     _driver.Value.SwitchTo().Window(_driver.Value.WindowHandles.First());
 
-                    computer.ItemCategory = ItemCategory.Computer;
+                    if (computer == null) continue;
+
+                    computer.ItemCategory = ItemCategory.Laptop;
 
                     data.Add(computer);
                 }
+                break;
             }
-            ResetDriver();
+            _driver.Value.Close();
+            //ResetDriver();
             return data;
         }
 
@@ -68,11 +72,18 @@ namespace WebParser.ShopParser
 
             Computer computer = new Computer();
 
-            computer.Name = _driver.Value.FindElement(By.TagName("h1")).Text;
-            computer.Price = _driver.Value.FindElement(By.XPath("//meta[@itemprop='price']")).GetAttribute("content").ParseDouble();
-            computer.ImageLink = _driver.Value.FindElement(By.ClassName("media-items-wrap")).FindElement(By.TagName("img")).GetAttribute("src");
+            try
+            {
+                computer.Name = _driver.Value.FindElement(By.TagName("h1")).Text;
+                computer.Price = _driver.Value.FindElement(By.XPath("//meta[@itemprop='price']")).GetAttribute("content").ParseDouble();
+                computer.ImageLink = _driver.Value.FindElement(By.ClassName("media-items-wrap")).FindElement(By.TagName("img")).GetAttribute("src");
+            }
+            catch(Exception)
+            {
+                return null;
+            }
             computer.ItemURL = url;
-            computer.ShopName = "Pigu";
+            computer.ShopName = "Pigu.lt";
 
             var table = _driver.Value.FindElements(By.TagName("td"));
 
@@ -82,7 +93,10 @@ namespace WebParser.ShopParser
                 {
                     computer.Processor = new ProcessorDataService().GetProcessor(table[i + 1].Text);
                 }
-
+                else if (table[i].Text.Contains("Prekės ženklas"))
+                {
+                    computer.ManufacturerName = table[i + 1].Text;
+                }
                 else if (table[i].Text.Contains("Atminties dydis (RAM)"))
                 {
                     computer.RAM = table[i + 1].Text.ParseInt();
@@ -90,7 +104,14 @@ namespace WebParser.ShopParser
 
                 else if (table[i].Text.Contains("raiška"))
                 {
-                    computer.Resolution = table[i + 1].Text;
+                    if (table[i + 1].Text.Contains("("))
+                    {
+                        computer.Resolution = table[i + 1].Text.Substring(0, table[i + 1].Text.IndexOf("("));
+                    }
+                    else
+                    {
+                        computer.Resolution = table[i + 1].Text;
+                    }
                 }
 
                 else if (table[i].Text.Contains("Atminties tipas"))
@@ -98,18 +119,23 @@ namespace WebParser.ShopParser
                     computer.RAM_type = table[i + 1].Text;
                 }
 
-                else if (table[i].Text.Equals("Vaizdo plokštė"))
+                else if (table[i].Text.Contains("Vaizdo plokštė"))
                 {
                     computer.GraphicsCardName = table[i + 1].Text;
                 }
 
-                else if (table[i].Text.Contains("Kietasis diskas SSD") || table[i].Text.Contains("Kietasis diskas HDD"))
+                else if (table[i].Text.Contains("Kietasis diskas SSD") || table[i].Text.Contains("Kietasis diskas HDD") 
+                    || table[i].Text.Contains("Diskas SSD M.2 PCIe"))
                 {
                     computer.StorageCapacity += table[i + 1].Text.ParseInt();
+                    if (table[i + 1].Text.Contains("TB"))
+                    {
+                        computer.StorageCapacity *= 1024;
+                    }
                 }
 
             }
-            ResetDriver();
+            //ResetDriver();
             return computer;
         }
 
