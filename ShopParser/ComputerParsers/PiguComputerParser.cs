@@ -119,7 +119,7 @@ namespace WebParser.ComputerParsers
                     computer.RAM_type = table[i + 1].Text;
                 }
 
-                else if (table[i].Text.Contains("Vaizdo plokštė"))
+                else if (table[i].Text.Contains("Vaizdo plokštė:"))
                 {
                     computer.GraphicsCardName = table[i + 1].Text;
                 }
