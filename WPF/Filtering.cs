@@ -33,19 +33,15 @@ namespace WPF
             {
 
                 //Filtering by price range
-                List = _filter.FilterByPrice(0, MaxRange);
+                _filter.FilterByPrice(0, MaxRange, List, (list) => {List = list;});
 
-                //updating the list inside the class so we can filter out the list 
-                //*which already has been filtered by price
-                //
-                _filter.UpdateList(List);
             }
             //checking every checkbox and if is checked, we use filter
             foreach (var checkBox in _brandsCheckBoxes)
             {
                 if ((bool)checkBox.IsChecked)
                 {
-                    List1.AddRange(_filter.FilterByManufacturer(checkBox.Content.ToString()));
+                    _filter.FilterByManufacturer(checkBox.Content.ToString(), List,  (l) => { List1.AddRange(l); });
                     isThereCheckedBox = true;
                 }
             }
@@ -53,14 +49,13 @@ namespace WPF
             {
                 if ((bool)checkBox.IsChecked)
                 {
-                    List1.AddRange(_filter.FilterByProcessor(checkBox.Content.ToString()));
+                    _filter.FilterByProcessor(checkBox.Content.ToString(), List, (l) => { List1.AddRange(l); });
                     isThereCheckedBox = true;
                 }
             }
             //we check, if there wasn't any checked checkboxes
             if (isThereCheckedBox == false) List1 = List;
             ItemsListBox.ItemsSource = List1;
-            _filter.UpdateList(OriginalList);
 
             ListNameTextBlock.Text = "Filtered List";
         }
