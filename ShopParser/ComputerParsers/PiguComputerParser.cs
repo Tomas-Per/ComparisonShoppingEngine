@@ -127,10 +127,13 @@ namespace WebParser.ComputerParsers
                 else if (table[i].Text.Contains("Kietasis diskas SSD") || table[i].Text.Contains("Kietasis diskas HDD") 
                     || table[i].Text.Contains("Diskas SSD M.2 PCIe"))
                 {
-                    computer.StorageCapacity += table[i + 1].Text.ParseInt();
                     if (table[i + 1].Text.Contains("TB"))
                     {
-                        computer.StorageCapacity *= 1024;
+                        computer.StorageCapacity += table[i + 1].Text.ParseInt() * 1024;
+                    }
+                    else
+                    {
+                        computer.StorageCapacity += table[i + 1].Text.ParseInt();
                     }
                 }
 

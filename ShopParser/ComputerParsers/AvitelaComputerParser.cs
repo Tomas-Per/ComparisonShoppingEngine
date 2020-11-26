@@ -120,10 +120,14 @@ namespace WebParser.ComputerParsers
 
                 else if (table[i].Text.Contains("Vidinė atmintis"))
                 {
-                    computer.StorageCapacity = table[i + 1].Text.ParseInt();
+                    
                     if (table[i + 1].Text.Contains("TB"))
                     {
-                        computer.StorageCapacity *= 1024; 
+                        computer.StorageCapacity += table[i + 1].Text.ParseInt() * 1024;
+                    }
+                    else
+                    {
+                        computer.StorageCapacity += table[i + 1].Text.ParseInt();
                     }
                 }
 
