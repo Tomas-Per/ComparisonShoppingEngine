@@ -37,8 +37,8 @@ namespace ItemLibrary
 
         public Smartphone ()
         {
-            FrontCameras = string.Join(',', FrontCameraMP);
-            BackCameras = string.Join(',', BackCameraMP);
+            //FrontCameras = string.Join(',', FrontCameraMP.Select(x => x.ToString()).ToArray());
+            //BackCameras = string.Join(',', BackCameraMP.Select(x => x.ToString()).ToArray());
             ModifyDate = DateTime.Now;
         }
 

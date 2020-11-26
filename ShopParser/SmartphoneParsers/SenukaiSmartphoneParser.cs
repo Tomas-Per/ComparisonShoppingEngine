@@ -7,7 +7,6 @@ using System.Linq;
 using Parsing;
 using static ItemLibrary.Categories;
 using PathLibrary;
-using DataContent.ReadingDB.Services;
 using System.Threading.Tasks;
 
 namespace WebParser.SmartphoneParsers

@@ -7,7 +7,6 @@ using Parsing;
 using static ItemLibrary.Categories;
 using System.Linq;
 using PathLibrary;
-using DataContent.ReadingDB.Services;
 using System.Threading.Tasks;
 
 namespace WebParser.ComputerParsers
@@ -140,7 +139,7 @@ namespace WebParser.ComputerParsers
                 }
                 else if (table[i].Text.Contains("Procesoriaus tipas"))
                 {
-                    computer.Processor = new ProcessorDataService().GetProcessor(table[i + 1].Text);
+                    //computer.Processor = new ProcessorDataService().GetProcessor(table[i + 1].Text);
                 }
 
                 else if (computer.GraphicsCardName == null && table[i].Text.Contains("Vaizdo plokštės tipas"))
@@ -150,7 +149,7 @@ namespace WebParser.ComputerParsers
 
                 else if (table[i].Text.Contains("Procesoriaus modelis"))
                 {
-                    computer.Processor = new ProcessorDataService().GetProcessor(table[i + 1].Text);
+                    //computer.Processor = new ProcessorDataService().GetProcessor(table[i + 1].Text);
                 }
 
             }

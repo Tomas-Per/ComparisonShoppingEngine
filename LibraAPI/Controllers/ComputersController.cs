@@ -11,6 +11,7 @@ using DataContent.DAL.Interfaces;
 
 namespace LibraAPI.Controllers
 {
+    //localhost:port/api/computers
     [Route("api/[controller]")]
     [ApiController]
     public class ComputersController : ControllerBase

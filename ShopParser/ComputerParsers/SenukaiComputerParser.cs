@@ -7,7 +7,6 @@ using System.Linq;
 using Parsing;
 using static ItemLibrary.Categories;
 using PathLibrary;
-using DataContent.ReadingDB.Services;
 using System.Threading.Tasks;
 
 namespace WebParser.ComputerParsers
@@ -115,11 +114,11 @@ namespace WebParser.ComputerParsers
                 {
                     if (table[i + 1].Text.Contains("("))
                     {
-                        computer.Processor = new ProcessorDataService().GetProcessor(table[i + 1].Text.Substring(0, table[i + 1].Text.IndexOf("(")));
+                        //computer.Processor = new ProcessorDataService().GetProcessor(table[i + 1].Text.Substring(0, table[i + 1].Text.IndexOf("(")));
                     }
                     else
                     {
-                        computer.Processor = new ProcessorDataService().GetProcessor(table[i + 1].Text );
+                        //computer.Processor = new ProcessorDataService().GetProcessor(table[i + 1].Text );
                     }
                 }
 

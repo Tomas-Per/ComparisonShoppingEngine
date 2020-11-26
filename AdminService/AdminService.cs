@@ -7,7 +7,6 @@ using System.Collections.Generic;
 using System.IO;
 using PathLibrary;
 using WebParser.ComponentsParser;
-using DataContent.ReadingDB.Services;
 using ItemLibrary;
 using static ItemLibrary.Categories;
 using System.Threading.Tasks;
@@ -42,9 +41,9 @@ namespace AdminService
                     case "1":
                         try
                         {
-                            var updater = new DataUpdater<Computer>(new ComputerDataService(), ItemCategory.Laptop);
+                            var updater = new DataUpdater<Computer>(ItemCategory.Laptop);
                             var results = await updater.GetItemCategoryListFromWebAsync();
-                            updater.UpdateItemListFile(results);
+                            await updater.UpdateItemListFile(results);
                         }
                         catch (Exception ex)
                         {
@@ -55,17 +54,17 @@ namespace AdminService
                         break;
 
                     case "5":
-                        Console.WriteLine("Type processor ID");
-                        var service = new ProcessorDataService();
-                        var processor = service.GetDataByID(Int32.Parse(Console.ReadLine()));
-                        Console.WriteLine("Write Name, Model, Cache, Cores");
-                        var specs = Console.ReadLine().Split(',');
-                        processor.Name = specs[0];
-                        processor.Model = specs[1];
-                        processor.Cache = Int32.Parse(specs[2]);
-                        processor.MinCores = Int32.Parse(specs[3]);
-                        service.UpdateData(processor);
-                        Console.WriteLine("Updated");
+                        //Console.WriteLine("Type processor ID");
+                        //var service = new ProcessorDataService();
+                        //var processor = service.GetDataByID(Int32.Parse(Console.ReadLine()));
+                        //Console.WriteLine("Write Name, Model, Cache, Cores");
+                        //var specs = Console.ReadLine().Split(',');
+                        //processor.Name = specs[0];
+                        //processor.Model = specs[1];
+                        //processor.Cache = Int32.Parse(specs[2]);
+                        //processor.MinCores = Int32.Parse(specs[3]);
+                        //service.UpdateData(processor);
+                        //Console.WriteLine("Updated");
                         break;
 
                     default:

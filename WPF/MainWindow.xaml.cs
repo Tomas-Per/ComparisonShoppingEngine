@@ -59,7 +59,7 @@ namespace WPF
         private async void Window_Loaded(object sender, RoutedEventArgs e)
         {
             CreateFilterCheckbox();
-            OriginalList = await GetAPIAsync("https://localhost:44315/api/Computers");
+            OriginalList = await GetAPIAsync("http://localhost:53882/api/Computers");
             ItemsListBox.ItemsSource = OriginalList;
             //_filter = new ComputerFilter(OriginalList);
             //_sorter = new Sorter(OriginalList.Cast<Item>().ToList());

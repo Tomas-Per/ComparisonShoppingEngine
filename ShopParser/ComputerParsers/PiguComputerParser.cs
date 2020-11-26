@@ -1,5 +1,4 @@
-﻿using DataContent.ReadingDB.Services;
-using ItemLibrary;
+﻿using ItemLibrary;
 using OpenQA.Selenium;
 using OpenQA.Selenium.Chrome;
 using Parsing;
@@ -7,6 +6,7 @@ using PathLibrary;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.Http;
 using System.Threading.Tasks;
 using static ItemLibrary.Categories;
 
@@ -16,12 +16,13 @@ namespace WebParser.ComputerParsers
     {
         private readonly string _url = "https://pigu.lt/lt/kompiuteriai/nesiojami-kompiuteriai?page=1";
         private Lazy<ChromeDriver> _driver;
-
+        private HttpClient _client;
         public PiguComputerParser ()
         {
             var options = new ChromeOptions();
             options.AddArguments("--headless");
             _driver = new Lazy<ChromeDriver>(() => new ChromeDriver(MainPath.GetShopParserPath(), options));
+            _client = new HttpClient();
         }
 
         public async Task<List<Computer>> ParseShop()
@@ -91,7 +92,7 @@ namespace WebParser.ComputerParsers
             {
                 if (table[i].Text.Contains("Procesorius"))
                 {
-                    computer.Processor = new ProcessorDataService().GetProcessor(table[i + 1].Text);
+                    //computer.Processor = _client.GetAsync();
                 }
                 else if (table[i].Text.Contains("Prekės ženklas"))
                 {

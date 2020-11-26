@@ -1,5 +1,4 @@
-﻿using DataContent.ReadingDB.Services;
-using ItemLibrary;
+﻿using ItemLibrary;
 using OpenQA.Selenium;
 using OpenQA.Selenium.Chrome;
 using Parsing;
