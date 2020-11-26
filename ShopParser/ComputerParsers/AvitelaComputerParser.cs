@@ -14,7 +14,7 @@ namespace WebParser.ComputerParsers
 {
     public class AvitelaComputerParser : IParser<Computer>
     {
-        private readonly string _url = "https://avitela.lt/kompiuterine-technika/nesiojamieji-kompiuteriai/nesiojami-kompiuteriai?page=1";
+        private readonly string _url = "https://avitela.lt/kompiuterine-technika/nesiojamieji-kompiuteriai/nesiojami-kompiuteriai?limit=50&page=1";
         private Lazy<ChromeDriver> _driver;
 
         public AvitelaComputerParser()
@@ -24,15 +24,13 @@ namespace WebParser.ComputerParsers
             _driver = new Lazy<ChromeDriver>(() => new ChromeDriver(MainPath.GetShopParserPath(), options));
         }
 
-        //parses laptops from avitela.lt and returns results in a List<Computer>
-        //this method parses first 5 pages (18 laptops in every page), because later pages are outdated 
         public async Task<List<Computer>> ParseShop()
         {
             List<Computer> data = new List<Computer>();
             List<string> links = new List<string>();
             string nextPage = _url;
 
-            for (int i = 1; i <= 5; i++)
+            for (int i = 1; i <= 3; i++)
             {
                 nextPage = _url.Remove(_url.Length - 1, 1) + i;
                 _driver.Value.Navigate().GoToUrl(nextPage);
@@ -52,9 +50,11 @@ namespace WebParser.ComputerParsers
                     ((IJavaScriptExecutor)_driver.Value).ExecuteScript("window.open();");
                     _driver.Value.SwitchTo().Window(_driver.Value.WindowHandles.Last());
 
-                    var computer = await ParseWindow(link);
+                    var computer = ParseWindow(link);
 
                     _driver.Value.SwitchTo().Window(_driver.Value.WindowHandles.First());
+
+                    if (computer == null) continue;
 
                     if (computer.Resolution != null)
                     {
@@ -62,21 +62,30 @@ namespace WebParser.ComputerParsers
                         data.Add(computer);
                     }
                 }
+                break;
                 
             }
-            ResetDriver();
+            _driver.Value.Close();
+            //ResetDriver();
             return data;
         }
 
 
         //parses laptop window, updates computer fields
-        public async Task<Computer> ParseWindow(string url)
+        public Computer ParseWindow(string url)
         {
             _driver.Value.Navigate().GoToUrl(url);
 
             Computer computer = new Computer();
-            computer.Name = _driver.Value.FindElement(By.CssSelector("#pname")).Text;
-            computer.Price = _driver.Value.FindElement(By.Id("price-old")).Text.ParseDouble();
+            try
+            {
+                computer.Name = _driver.Value.FindElement(By.CssSelector("#pname")).Text;
+                computer.Price = _driver.Value.FindElement(By.Id("price-old")).Text.ParseDouble();
+            }
+            catch(Exception)
+            {
+                return null;
+            }
             computer.ItemURL = url;
             computer.ShopName = "Avitela.lt";
 
@@ -112,11 +121,22 @@ namespace WebParser.ComputerParsers
                 else if (table[i].Text.Contains("Vidinė atmintis"))
                 {
                     computer.StorageCapacity = table[i + 1].Text.ParseInt();
+                    if (table[i + 1].Text.Contains("TB"))
+                    {
+                        computer.StorageCapacity *= 1024; 
+                    }
                 }
 
                 else if (table[i].Text.Contains("Ekrano raiška"))
                 {
-                    computer.Resolution = table[i + 1].Text;
+                    if (table[i + 1].Text.Contains("("))
+                    {
+                        computer.Resolution = table[i + 1].Text.Substring(0, table[i + 1].Text.IndexOf("("));
+                    }
+                    else
+                    {
+                        computer.Resolution = table[i + 1].Text;
+                    }
                 }
                 else if (table[i].Text.Contains("Procesoriaus tipas"))
                 {
@@ -134,7 +154,7 @@ namespace WebParser.ComputerParsers
                 }
 
             }
-            ResetDriver();
+            //ResetDriver();
             return computer;
         }
 

@@ -47,7 +47,7 @@ namespace WebParser.ComputerParsers
                     ((IJavaScriptExecutor)_driver.Value).ExecuteScript("window.open();");
                     _driver.Value.SwitchTo().Window(_driver.Value.WindowHandles.Last());
 
-                    var computer = await ParseWindow(link);
+                    var computer =  ParseWindow(link);
 
                     _driver.Value.SwitchTo().Window(_driver.Value.WindowHandles.First());
 
@@ -59,13 +59,14 @@ namespace WebParser.ComputerParsers
                     data.Add(computer);
                 }
             }
-            ResetDriver();
+            _driver.Value.Close();
+            //ResetDriver();
             return data;
         }
 
 
         //parses laptop window, updates computer fields 
-        public async Task<Computer> ParseWindow(string url)
+        public Computer ParseWindow(string url)
         {
             _driver.Value.Navigate().GoToUrl(url);
 
@@ -160,7 +161,7 @@ namespace WebParser.ComputerParsers
                         computer.StorageCapacity += table[i + 1].Text.ParseInt();
                 }   
             }
-            ResetDriver();
+            //ResetDriver();
             return computer;
         }
 

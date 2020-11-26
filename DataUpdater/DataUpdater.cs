@@ -10,7 +10,7 @@ using static ItemLibrary.Categories;
 using System.Linq;
 using System;
 using System.Threading.Tasks;
-using WebParser.SmartphoneParsers;
+
 
 namespace DataUpdater
 {
@@ -49,20 +49,29 @@ namespace DataUpdater
 
                     List<Task<List<Computer>>> laptopTasks = new List<Task<List<Computer>>>();
 
-                    laptopTasks.Add(Task.Run(() => new SenukaiComputerParser().ParseShop()));
+                    //laptopTasks.Add(Task.Run(() => new SenukaiComputerParser().ParseShop()));
                     laptopTasks.Add(Task.Run(() => new AvitelaComputerParser().ParseShop()));
                     laptopTasks.Add(Task.Run(() => new PiguComputerParser().ParseShop()));
                     
                     var laptopData = await Task.WhenAll(laptopTasks);
-                    return laptopData.Cast<T>().ToList();
 
+                    List<Computer> results = new List<Computer>();
+                    results = laptopData[0].Concat(laptopData[1]).ToList();
+
+                    return results.Cast<T>().ToList();
+                    //return laptopData.ToList().Cast<T>().ToList();
+
+
+
+
+                    //this ItemCategory still needs to be tested
                 case ItemCategory.Smartphone:
 
                     List<Task<List<Smartphone>>> smartphoneTasks = new List<Task<List<Smartphone>>>();
 
-                    smartphoneTasks.Add(Task.Run(() => new SenukaiSmartphoneParser().ParseShop()));
-                    smartphoneTasks.Add(Task.Run(() => new AvitelaSmartphoneParser().ParseShop()));
-                    smartphoneTasks.Add(Task.Run(() => new PiguSmartphoneParser().ParseShop()));
+                    //smartphoneTasks.Add(Task.Run(() => new SenukaiSmartphoneParser().ParseShop()));
+                    //smartphoneTasks.Add(Task.Run(() => new AvitelaSmartphoneParser().ParseShop()));
+                    //smartphoneTasks.Add(Task.Run(() => new PiguSmartphoneParser().ParseShop()));
 
                     var smartphoneData = await Task.WhenAll(smartphoneTasks);
                     return smartphoneData.Cast<T>().ToList();

@@ -23,6 +23,10 @@ namespace ExceptionsLogging
             using (StreamWriter streamWriter = new StreamWriter(_filePath, true))
             {
                 streamWriter.WriteLine("Error:   " + ex.Message);
+                if (ex.InnerException != null)
+                {
+                    streamWriter.WriteLine("Error inner:   " + ex.InnerException.Message);
+                }
                 streamWriter.WriteLine("Occured At:    " + GetFullStackTrace(ex));
                 streamWriter.WriteLine("Time:    " + DateTime.Now);
             }
