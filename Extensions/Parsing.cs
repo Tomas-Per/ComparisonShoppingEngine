@@ -34,6 +34,7 @@ namespace Parsing
             {
                 value += Regex.Replace(t, @"[^a-zA-Z0-9]", " ") + " ";
             }
+            if (value.EndsWith(' ')) value = value.Substring(0, value.Length - 1);
             value = value.DeleteMultipleSpaces();
             return value;
         }

@@ -65,7 +65,7 @@ namespace WPF
          
             OriginalList = ItemsListBox.ItemsSource.Cast<Computer>().ToList();
 
-            _filter = new ComputerFilter(OriginalList);
+            _filter = new ComputerFilter();
             _sorter = new Sorter(OriginalList.Cast<Item>().ToList());
 
         }

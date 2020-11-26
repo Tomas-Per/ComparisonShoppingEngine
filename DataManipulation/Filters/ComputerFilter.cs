@@ -7,15 +7,10 @@ namespace DataManipulation.Filters
 {
     public class ComputerFilter : Filter<Computer>
     {
-        public ComputerFilter(List<Computer> items) : base(items)
-        {
-
-        }
         //Filters item list by the processor
-        public List<Computer> FilterByProcessor(string processor)
+        public void FilterByProcessor(string processor, List<Computer> items, FilterList filter)
         {
-            List<Computer> result = _items.Where(item => (item.Processor.Name).DeleteSpecialChars() == processor).ToList();
-            return result;
+            filter(items.Where(item => (item.Processor.Name).DeleteSpecialChars() == processor).ToList());
         }
     }
 }
