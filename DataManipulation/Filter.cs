@@ -6,33 +6,18 @@ namespace DataManipulation
 {
     public class Filter<T> where T : Item
     {
-        protected List<T> _items { get; private set; }
-
-        public Filter(List<T> items)
-        {
-            _items = items;
-        }
-
+        public delegate void FilterList(List<T> list);
 
         //Filters item list by the manufacturer and sets the private field to the filtered list
-        public List<T> FilterByManufacturer(string manufacturer)
+        public void FilterByManufacturer(string manufacturer, List<T> items, FilterList filter)
         {
-
-            List<T> result = _items.Where(item => item.ManufacturerName == manufacturer).ToList();
-            return result;
+            filter(items.Where(item => item.ManufacturerName == manufacturer).ToList());
         }
 
         //Filters items by a price range, sets private field to the filtered list
-        public List<T> FilterByPrice(double minRange, double maxRange)
+        public void FilterByPrice(double minRange, double maxRange, List<T> items, FilterList filter)
         {
-
-            List<T> result = _items.Where(item => item.Price >= minRange && item.Price <= maxRange).ToList();
-            return result;
-        }
-
-        public void UpdateList(List<T> items)
-        {
-            _items = items;
+            filter(items.Where(item => item.Price >= minRange && item.Price <= maxRange).ToList());
         }
 
     }
