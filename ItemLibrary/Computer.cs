@@ -62,7 +62,7 @@ namespace ItemLibrary
                 if (comp.ManufacturerName != this.ManufacturerName)
                 {
                     if (((this.ManufacturerName != null && !comp.Name.Contains(this.ManufacturerName)))
-                       && ((comp.Name != null && !this.Name.Contains(comp.ManufacturerName)))) return false;
+                       && ((comp.ManufacturerName != null && !this.Name.Contains(comp.ManufacturerName)))) return false;
                 }
                 if (comp.Processor.Name.Equals(this.Processor.Name) &&
                     comp.StorageCapacity ==this.StorageCapacity &&

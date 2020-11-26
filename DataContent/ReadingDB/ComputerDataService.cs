@@ -55,6 +55,7 @@ namespace DataContent.ReadingDB.Services
                             sameComputers = new ComputerFiller().FillComputers(sameComputers);
                             computer.ItemCode = sameComputers[0].Id;
                         }
+                        
                         _db.SaveChanges();
                         computer.Processor = _db.Processors.Find(computer.Processor.Id);
                         _db.Add(computer);

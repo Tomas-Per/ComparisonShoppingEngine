@@ -48,29 +48,40 @@ namespace WebParser.ComputerParsers
                     ((IJavaScriptExecutor)_driver.Value).ExecuteScript("window.open();");
                     _driver.Value.SwitchTo().Window(_driver.Value.WindowHandles.Last());
 
-                    var computer = await ParseWindow(link);
+                    var computer = ParseWindow(link);
 
                     _driver.Value.SwitchTo().Window(_driver.Value.WindowHandles.First());
+
+                    if (computer == null) continue;
 
                     computer.ItemCategory = ItemCategory.Laptop;
 
                     data.Add(computer);
                 }
+                break;
             }
-            ResetDriver();
+            _driver.Value.Close();
+            //ResetDriver();
             return data;
         }
 
         //parses laptop window, updates computer fields
-        public async Task<Computer> ParseWindow(string url)
+        public Computer ParseWindow(string url)
         {
             _driver.Value.Navigate().GoToUrl(url);
 
             Computer computer = new Computer();
 
-            computer.Name = _driver.Value.FindElement(By.TagName("h1")).Text;
-            computer.Price = _driver.Value.FindElement(By.XPath("//meta[@itemprop='price']")).GetAttribute("content").ParseDouble();
-            computer.ImageLink = _driver.Value.FindElement(By.ClassName("media-items-wrap")).FindElement(By.TagName("img")).GetAttribute("src");
+            try
+            {
+                computer.Name = _driver.Value.FindElement(By.TagName("h1")).Text;
+                computer.Price = _driver.Value.FindElement(By.XPath("//meta[@itemprop='price']")).GetAttribute("content").ParseDouble();
+                computer.ImageLink = _driver.Value.FindElement(By.ClassName("media-items-wrap")).FindElement(By.TagName("img")).GetAttribute("src");
+            }
+            catch(Exception)
+            {
+                return null;
+            }
             computer.ItemURL = url;
             computer.ShopName = "Pigu.lt";
 
@@ -82,7 +93,10 @@ namespace WebParser.ComputerParsers
                 {
                     computer.Processor = new ProcessorDataService().GetProcessor(table[i + 1].Text);
                 }
-
+                else if (table[i].Text.Contains("Prekės ženklas"))
+                {
+                    computer.ManufacturerName = table[i + 1].Text;
+                }
                 else if (table[i].Text.Contains("Atminties dydis (RAM)"))
                 {
                     computer.RAM = table[i + 1].Text.ParseInt();
@@ -90,7 +104,14 @@ namespace WebParser.ComputerParsers
 
                 else if (table[i].Text.Contains("raiška"))
                 {
-                    computer.Resolution = table[i + 1].Text;
+                    if (table[i + 1].Text.Contains("("))
+                    {
+                        computer.Resolution = table[i + 1].Text.Substring(0, table[i + 1].Text.IndexOf("("));
+                    }
+                    else
+                    {
+                        computer.Resolution = table[i + 1].Text;
+                    }
                 }
 
                 else if (table[i].Text.Contains("Atminties tipas"))
@@ -103,13 +124,18 @@ namespace WebParser.ComputerParsers
                     computer.GraphicsCardName = table[i + 1].Text;
                 }
 
-                else if (table[i].Text.Contains("Kietasis diskas SSD") || table[i].Text.Contains("Kietasis diskas HDD"))
+                else if (table[i].Text.Contains("Kietasis diskas SSD") || table[i].Text.Contains("Kietasis diskas HDD") 
+                    || table[i].Text.Contains("Diskas SSD M.2 PCIe"))
                 {
                     computer.StorageCapacity += table[i + 1].Text.ParseInt();
+                    if (table[i + 1].Text.Contains("TB"))
+                    {
+                        computer.StorageCapacity *= 1024;
+                    }
                 }
 
             }
-            ResetDriver();
+            //ResetDriver();
             return computer;
         }
 

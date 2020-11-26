@@ -55,6 +55,7 @@ namespace DataContent.ReadingDB.Services
                 _db.SaveChanges();
             }
         }
+
         public Processor GetProcessor(string processorModel)
         {
             lock (_lock)
@@ -77,14 +78,18 @@ namespace DataContent.ReadingDB.Services
                         catch (ProcessorNotFoundException)
                         {
                             processor = new Processor { Model = processorModel };
-                            processor.SetName(processorModel);
-                            using (_db = new ComputerContext())
+                            if (processor.Model.Length < 33)
                             {
-                                _db.Add(processor);
-                                _db.SaveChanges();
-                                processor = _db.Processors.Where(x => x.Model == processorModel).FirstOrDefault();
+
+                                processor.SetName(processorModel);
+                                using (_db = new ComputerContext())
+                                {
+                                    _db.Add(processor);
+                                    _db.SaveChanges();
+                                    processor = _db.Processors.Where(x => x.Model == processorModel).FirstOrDefault();
+                                }
+                                ExceptionLogger.LogProcessorParsingException(processor);
                             }
-                            ExceptionLogger.LogProcessorParsingException(processor);
                         }
                         return processor;
                     }

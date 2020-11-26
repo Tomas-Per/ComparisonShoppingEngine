@@ -9,7 +9,6 @@ using PathLibrary;
 using WebParser.ComponentsParser;
 using DataContent.ReadingDB.Services;
 using ItemLibrary;
-using WebParser.SmartphoneParsers;
 using static ItemLibrary.Categories;
 using System.Threading.Tasks;
 
@@ -26,6 +25,7 @@ namespace AdminService
         {
             string command;
 
+
             do
             {
                 command = Console.ReadLine();
@@ -40,9 +40,17 @@ namespace AdminService
                         break;
 
                     case "1":
-                        var updater = new DataUpdater<Computer>(new ComputerDataService(), ItemCategory.Laptop);
-                        var results = await updater.GetItemCategoryListFromWebAsync();
-                        updater.UpdateItemListFile(results);
+                        try
+                        {
+                            var updater = new DataUpdater<Computer>(new ComputerDataService(), ItemCategory.Laptop);
+                            var results = await updater.GetItemCategoryListFromWebAsync();
+                            updater.UpdateItemListFile(results);
+                        }
+                        catch (Exception ex)
+                        {
+                            ExceptionLogger.Log(ex);
+                        }
+
                         Console.WriteLine("Shop Parsed");
                         break;
 

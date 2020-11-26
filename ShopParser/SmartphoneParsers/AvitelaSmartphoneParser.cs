@@ -53,7 +53,7 @@ namespace WebParser.SmartphoneParsers
 
                     _driver.Value.Navigate().GoToUrl(link);
 
-                    var smartphone = await ParseWindow(link);
+                    var smartphone = ParseWindow(link);
 
                     _driver.Value.SwitchTo().Window(_driver.Value.WindowHandles.First());
 
@@ -71,7 +71,7 @@ namespace WebParser.SmartphoneParsers
 
 
         //parses smartphone window, updates smartphone fields
-        public async Task<Smartphone> ParseWindow(string url)
+        public Smartphone ParseWindow(string url)
         {
             _driver.Value.Navigate().GoToUrl(url);
 
