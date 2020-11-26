@@ -43,9 +43,9 @@ namespace LibraAPI.Controllers
             return smartphone;
         }
 
-        // PUT: api/Smartphones/5
+        // PUT: api/Smartphones
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
-        [HttpPut("{id}")]
+        [HttpPut]
         public async Task<IActionResult> PutSmartphone(Smartphone smartphone)
         {
             if (smartphone == null)
