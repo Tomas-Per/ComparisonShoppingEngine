@@ -1,3 +1,0 @@
-Processor could not be parsed
-Processor ID is:   51
-Time:    25/11/2020 19:02:24
