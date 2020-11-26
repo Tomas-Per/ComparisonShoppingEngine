@@ -123,6 +123,10 @@ namespace WebParser.ComputerParsers
                 {
                     computer.GraphicsCardName = table[i + 1].Text;
                 }
+                else if (table[i].Text.Contains("Vaizdo plokštės atmintinė"))
+                {
+                    computer.GraphicsCardMemory = table[i + 1].Text;
+                }
 
                 else if (table[i].Text.Contains("Kietasis diskas SSD") || table[i].Text.Contains("Kietasis diskas HDD") 
                     || table[i].Text.Contains("Diskas SSD M.2 PCIe"))
