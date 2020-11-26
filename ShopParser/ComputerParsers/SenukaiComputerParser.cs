@@ -25,7 +25,7 @@ namespace WebParser.ComputerParsers
         }
 
         //parses laptops from senukai.lt and returns results in a List<Computer>
-        public async Task<List<Computer>> ParseShop()
+        public List<Computer> ParseShop()
         {
             List<Computer> data = new List<Computer>();
             List<string> links = new List<string>();

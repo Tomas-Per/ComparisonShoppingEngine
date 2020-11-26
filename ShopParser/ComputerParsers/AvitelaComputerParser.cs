@@ -24,7 +24,7 @@ namespace WebParser.ComputerParsers
             _driver = new Lazy<ChromeDriver>(() => new ChromeDriver(MainPath.GetShopParserPath(), options));
         }
 
-        public async Task<List<Computer>> ParseShop()
+        public List<Computer> ParseShop()
         {
             List<Computer> data = new List<Computer>();
             List<string> links = new List<string>();

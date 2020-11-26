@@ -28,9 +28,9 @@ namespace DataUpdater
         }
 
         //calls shop parser and returns parsed item list
-        public async Task<List<T>> GetItemListFromWeb(IParser<T> parser)
+        public  List<T> GetItemListFromWeb(IParser<T> parser)
         {
-            List<T> data = await parser.ParseShop();
+            List<T> data =  parser.ParseShop();
             return data;
         }
 
@@ -49,7 +49,7 @@ namespace DataUpdater
 
                     List<Task<List<Computer>>> laptopTasks = new List<Task<List<Computer>>>();
 
-                    //laptopTasks.Add(Task.Run(() => new SenukaiComputerParser().ParseShop()));
+                    laptopTasks.Add(Task.Run(() => new SenukaiComputerParser().ParseShop()));
                     laptopTasks.Add(Task.Run(() => new AvitelaComputerParser().ParseShop()));
                     laptopTasks.Add(Task.Run(() => new PiguComputerParser().ParseShop()));
                     
@@ -59,7 +59,6 @@ namespace DataUpdater
                     results = laptopData[0].Concat(laptopData[1]).ToList();
 
                     return results.Cast<T>().ToList();
-                    //return laptopData.ToList().Cast<T>().ToList();
 
 
 

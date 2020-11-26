@@ -25,7 +25,7 @@ namespace WebParser.SmartphoneParsers
         }
 
         //parses smartphones from senukai.lt and returns results in a List<Smartphone>
-        public async Task<List<Smartphone>> ParseShop()
+        public List<Smartphone> ParseShop()
         {
             List<Smartphone> data = new List<Smartphone>();
             List<string> links = new List<string>();
