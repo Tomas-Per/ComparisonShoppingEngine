@@ -61,8 +61,8 @@ namespace WPF
             CreateFilterCheckbox();
             OriginalList = await GetAPIAsync("http://localhost:53882/api/Computers");
             ItemsListBox.ItemsSource = OriginalList;
-            //_filter = new ComputerFilter(OriginalList);
-            //_sorter = new Sorter(OriginalList.Cast<Item>().ToList());
+            _filter = new ComputerFilter();
+            _sorter = new Sorter(OriginalList.Cast<Item>().ToList());
         }
 
         private static async Task<List<Computer>> GetAPIAsync(string path)
