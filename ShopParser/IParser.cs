@@ -8,6 +8,6 @@ namespace WebParser
     { 
         public Task<List<T>> ParseShop();
 
-        public T ParseWindow(string url);
+        public Task<T> ParseWindow(string url);
     }
 }
