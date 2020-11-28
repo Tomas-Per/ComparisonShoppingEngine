@@ -22,6 +22,7 @@ namespace WebParser.ComputerParsers
             var options = new ChromeOptions();
             options.AddArguments("--headless");
             _driver = new Lazy<ChromeDriver>(() => new ChromeDriver(MainPath.GetShopParserPath(), options));
+            _client = new HttpClient();
         }
 
         //parses laptops from senukai.lt and returns results in a List<Computer>
