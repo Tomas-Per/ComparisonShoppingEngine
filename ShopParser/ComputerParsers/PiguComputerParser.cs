@@ -49,7 +49,7 @@ namespace WebParser.ComputerParsers
                     ((IJavaScriptExecutor)_driver.Value).ExecuteScript("window.open();");
                     _driver.Value.SwitchTo().Window(_driver.Value.WindowHandles.Last());
 
-                    var computer = ParseWindow(link);
+                    var computer = await ParseWindow(link);
 
                     _driver.Value.SwitchTo().Window(_driver.Value.WindowHandles.First());
 
@@ -67,7 +67,7 @@ namespace WebParser.ComputerParsers
         }
 
         //parses laptop window, updates computer fields
-        public Computer ParseWindow(string url)
+        public async Task<Computer> ParseWindow(string url)
         {
             _driver.Value.Navigate().GoToUrl(url);
 
@@ -88,11 +88,20 @@ namespace WebParser.ComputerParsers
 
             var table = _driver.Value.FindElements(By.TagName("td"));
 
+            //FOR API CALLS
+            var apiUrl = "https://localhost:44315/Models/";
+            HttpResponseMessage response;
+            //---------------------------------------------
+
             for (int i = 0; i < table.Count; i++)
             {
                 if (table[i].Text.Contains("Procesorius"))
                 {
-                    //computer.Processor = _client.GetAsync();
+                    response = await _client.GetAsync(apiUrl + table[i + 1].Text);
+                    if (response.IsSuccessStatusCode)
+                    {
+                        computer.Processor = await response.Content.ReadAsAsync<Processor>();
+                    }
                 }
                 else if (table[i].Text.Contains("Prekės ženklas"))
                 {
