@@ -26,7 +26,7 @@ namespace WebParser.SmartphoneParsers
         }
 
 
-        public  List<Smartphone> ParseShop()
+        public async Task<List<Smartphone>> ParseShop()
         {
             List<Smartphone> data = new List<Smartphone>();
             List<string> links = new List<string>();

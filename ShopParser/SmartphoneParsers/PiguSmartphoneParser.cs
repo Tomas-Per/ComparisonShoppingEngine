@@ -23,7 +23,7 @@ namespace WebParser.SmartphoneParsers
             _driver = new Lazy<ChromeDriver>(() => new ChromeDriver(MainPath.GetShopParserPath(), options));
         }
 
-        public  List<Smartphone> ParseShop()
+        public async Task<List<Smartphone>> ParseShop()
         {
             List<Smartphone> data = new List<Smartphone>();
             List<string> links = new List<string>();

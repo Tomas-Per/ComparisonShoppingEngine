@@ -26,7 +26,7 @@ namespace WebParser.ComputerParsers
             _client = new HttpClient();
         }
 
-        public List<Computer> ParseShop()
+        public async Task<List<Computer>> ParseShop()
         {
             List<Computer> data = new List<Computer>();
             List<string> links = new List<string>();
