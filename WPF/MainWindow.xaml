@@ -78,7 +78,7 @@
             </Grid>
 
         </Grid>
-        <Grid Margin="200,60,0,0" Grid.Row="1" Grid.ColumnSpan="2">
+        <Grid Margin="200,60,0,0" Grid.Row="1" Grid.ColumnSpan="2" Visibility="Collapsed">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*"/>
                 <ColumnDefinition Width="*"/>
@@ -378,7 +378,7 @@
                 </StackPanel>
             </StackPanel>
         </Grid>
-        <Grid Margin="0,60,0,0" Grid.Column="1" Visibility="Collapsed" x:Name="CategoriesMenuGrid">
+        <Grid Margin="0,60,0,0" Grid.Column="1" Visibility="Visible" x:Name="CategoriesMenuGrid">
             <StackPanel Visibility="Visible" Height="534">
                 <StackPanel.Background>
                     <SolidColorBrush Color="#2A2929" Opacity="1"/>
