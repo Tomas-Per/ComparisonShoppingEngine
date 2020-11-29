@@ -7,6 +7,7 @@
 
   <ItemGroup>
     <PackageReference Include="HtmlAgilityPack" Version="1.11.25" />
+    <PackageReference Include="Microsoft.AspNet.WebApi.Client" Version="5.2.7" />
     <PackageReference Include="Selenium.Chrome.WebDriver" Version="85.0.0" />
     <PackageReference Include="Selenium.Support" Version="3.141.0" />
     <PackageReference Include="Selenium.WebDriver" Version="3.141.0" />

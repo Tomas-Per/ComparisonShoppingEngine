@@ -37,7 +37,7 @@ namespace ItemLibrary
         //builder pattern??
         public Computer()
         {
-            //needed for csvHelper to work
+            ModifyDate = DateTime.Now;
         }
 
 
@@ -59,15 +59,19 @@ namespace ItemLibrary
             else
             {
                 Computer comp = (Computer)obj;
+                //check if the manufacturer is the same (if it isn't in manufacturer field, it should be in the name then)
                 if (comp.ManufacturerName != this.ManufacturerName)
                 {
                     if (((this.ManufacturerName != null && !comp.Name.Contains(this.ManufacturerName)))
                        && ((comp.ManufacturerName != null && !this.Name.Contains(comp.ManufacturerName)))) return false;
                 }
+
+                //check if all mandatory fields are equal
                 if (comp.Processor.Name.Equals(this.Processor.Name) &&
                     comp.StorageCapacity ==this.StorageCapacity &&
                      comp.RAM == this.RAM &&
-                      (comp.Resolution.Contains(this.Resolution) || this.Resolution.Contains(comp.Resolution))) return true;
+                      (comp.Resolution.Contains(this.Resolution) || this.Resolution.Contains(comp.Resolution)) &&
+                        (!comp.ShopName.Equals(this.ShopName))) return true;
 
                 else return false;
             }

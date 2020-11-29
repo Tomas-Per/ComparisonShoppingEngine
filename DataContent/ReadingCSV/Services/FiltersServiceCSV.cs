@@ -12,7 +12,7 @@ using System.Text;
 
 namespace DataContent.ReadingCSV.Services
 {
-    public class FiltersServiceCSV : IData<IEnumerable<FilterSpec>>
+    public class FiltersServiceCSV
     {
         public string Path { get; set; }
         private FileMode Filemode { get; set; }

@@ -7,7 +7,6 @@ using System.Linq;
 using Parsing;
 using static ItemLibrary.Categories;
 using PathLibrary;
-using DataContent.ReadingDB.Services;
 using System.Threading.Tasks;
 
 namespace WebParser.SmartphoneParsers
@@ -48,7 +47,7 @@ namespace WebParser.SmartphoneParsers
                     _driver.Value.SwitchTo().Window(_driver.Value.WindowHandles.Last());
 
                     _driver.Value.Navigate().GoToUrl(link);
-                    Smartphone smartphone = ParseWindow(link);
+                    Smartphone smartphone = await ParseWindow(link);
 
                     _driver.Value.SwitchTo().Window(_driver.Value.WindowHandles.First());
 
@@ -68,7 +67,7 @@ namespace WebParser.SmartphoneParsers
 
      
         //Parses Smartphone from an url
-        public  Smartphone ParseWindow(string url)
+        public async Task<Smartphone> ParseWindow(string url)
         {
             _driver.Value.Navigate().GoToUrl(url);
 

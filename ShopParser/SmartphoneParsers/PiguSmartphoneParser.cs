@@ -1,5 +1,4 @@
-﻿using DataContent.ReadingDB.Services;
-using ItemLibrary;
+﻿using ItemLibrary;
 using OpenQA.Selenium;
 using OpenQA.Selenium.Chrome;
 using Parsing;
@@ -46,7 +45,7 @@ namespace WebParser.SmartphoneParsers
                     ((IJavaScriptExecutor)_driver.Value).ExecuteScript("window.open();");
                     _driver.Value.SwitchTo().Window(_driver.Value.WindowHandles.Last());
 
-                    var smartphone = ParseWindow(link);
+                    var smartphone = await ParseWindow(link);
 
                     _driver.Value.SwitchTo().Window(_driver.Value.WindowHandles.First());
 
@@ -59,7 +58,7 @@ namespace WebParser.SmartphoneParsers
         }
 
         //parses smartphone window
-        public Smartphone ParseWindow(string url)
+        public async Task<Smartphone> ParseWindow(string url)
         {
             _driver.Value.Navigate().GoToUrl(url);
 

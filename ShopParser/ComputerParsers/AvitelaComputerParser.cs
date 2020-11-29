@@ -7,8 +7,8 @@ using Parsing;
 using static ItemLibrary.Categories;
 using System.Linq;
 using PathLibrary;
-using DataContent.ReadingDB.Services;
 using System.Threading.Tasks;
+using System.Net.Http;
 
 namespace WebParser.ComputerParsers
 {
@@ -16,12 +16,14 @@ namespace WebParser.ComputerParsers
     {
         private readonly string _url = "https://avitela.lt/kompiuterine-technika/nesiojamieji-kompiuteriai/nesiojami-kompiuteriai?limit=50&page=1";
         private Lazy<ChromeDriver> _driver;
+        private HttpClient _client;
 
         public AvitelaComputerParser()
         {
             var options = new ChromeOptions();
             options.AddArguments("--headless");
             _driver = new Lazy<ChromeDriver>(() => new ChromeDriver(MainPath.GetShopParserPath(), options));
+            _client = new HttpClient();
         }
 
         public async Task<List<Computer>> ParseShop()
@@ -50,7 +52,7 @@ namespace WebParser.ComputerParsers
                     ((IJavaScriptExecutor)_driver.Value).ExecuteScript("window.open();");
                     _driver.Value.SwitchTo().Window(_driver.Value.WindowHandles.Last());
 
-                    var computer = ParseWindow(link);
+                    var computer = await ParseWindow(link);
 
                     _driver.Value.SwitchTo().Window(_driver.Value.WindowHandles.First());
 
@@ -72,7 +74,7 @@ namespace WebParser.ComputerParsers
 
 
         //parses laptop window, updates computer fields
-        public Computer ParseWindow(string url)
+        public async Task<Computer> ParseWindow(string url)
         {
             _driver.Value.Navigate().GoToUrl(url);
 
@@ -100,6 +102,11 @@ namespace WebParser.ComputerParsers
             }
 
             var table = _driver.Value.FindElements(By.TagName("td"));
+
+            //FOR API CALLS
+            var apiUrl = "https://localhost:44315/Models/";
+            HttpResponseMessage response;
+            //---------------------------------------------
 
             for (int i = 0; i < table.Count; i++)
             {
@@ -140,7 +147,11 @@ namespace WebParser.ComputerParsers
                 }
                 else if (table[i].Text.Contains("Procesoriaus tipas"))
                 {
-                    computer.Processor = new ProcessorDataService().GetProcessor(table[i + 1].Text);
+                    response = await _client.GetAsync(apiUrl + table[i + 1].Text);
+                    if (response.IsSuccessStatusCode)
+                    {
+                        computer.Processor = await response.Content.ReadAsAsync<Processor>();
+                    }
                 }
 
                 else if (computer.GraphicsCardName == null && table[i].Text.Contains("Vaizdo plokštės tipas"))
@@ -150,7 +161,11 @@ namespace WebParser.ComputerParsers
 
                 else if (table[i].Text.Contains("Procesoriaus modelis"))
                 {
-                    computer.Processor = new ProcessorDataService().GetProcessor(table[i + 1].Text);
+                    response = await _client.GetAsync(apiUrl + table[i + 1].Text);
+                    if (response.IsSuccessStatusCode)
+                    {
+                        computer.Processor = await response.Content.ReadAsAsync<Processor>();
+                    }
                 }
 
             }

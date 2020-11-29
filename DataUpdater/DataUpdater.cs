@@ -4,27 +4,27 @@ using DataContent.ReadingCSV.Services;
 using System.Collections.Generic;
 using PathLibrary;
 using WebParser;
-using DataContent.ReadingDB.Services;
 using DataContent;
 using static ItemLibrary.Categories;
 using System.Linq;
 using System;
 using System.Threading.Tasks;
-
+using System.Net.Http;
+using Newtonsoft.Json;
+using System.Text;
 
 namespace DataUpdater
 {
     public class DataUpdater<T> where T : Item
     {
-        private IData<IEnumerable<T>> _dataService;
+        private HttpClient _httpClient;
+
         private ItemCategory _itemCategory { get; set; }
 
-        public DataUpdater(IData<IEnumerable<T>> dataService, ItemCategory itemCategory)
+        public DataUpdater(ItemCategory itemCategory)
         {
-            _dataService = dataService;
             _itemCategory = itemCategory;
-
-
+            _httpClient = new HttpClient();
         }
 
         //calls shop parser and returns parsed item list
@@ -35,9 +35,33 @@ namespace DataUpdater
         }
 
         //updates DB with new data
-        public void UpdateItemListFile(List<T> data)
+        public async Task UpdateItemListFile(List<T> data)
         {
-            _dataService.WriteData(data);
+            
+            //switch
+            if (typeof(Computer) == typeof(T))
+            {
+                var url = "https://localhost:44315/api/Computers";
+                var json = JsonConvert.SerializeObject(data);
+                var postData = new StringContent(json, Encoding.UTF8, "application/json");
+                HttpResponseMessage response = await _httpClient.PostAsync(url, postData); ;
+                if (response.IsSuccessStatusCode)
+                {
+                    return;
+                }
+
+            }
+            else if (typeof(Smartphone) == typeof(T))
+            {
+                var url = "https://localhost:44315/api/Smartphones";
+                var json = JsonConvert.SerializeObject(data);
+                var postData = new StringContent(json, Encoding.UTF8, "application/json");
+                HttpResponseMessage response = await _httpClient.PostAsync(url, postData); ;
+                if (response.IsSuccessStatusCode)
+                {
+                    return;
+                }
+            }
         }
 
         //calls shop parser for a spcecific item category and returns parsed item list
