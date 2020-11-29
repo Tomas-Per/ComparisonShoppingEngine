@@ -36,7 +36,7 @@ namespace WPF
     public partial class MainWindow : Window
     {
 
-        private List<Computer> OriginalList = new List<Computer>();
+        private List<Item> OriginalList = new List<Item>();
         private static HttpClient client = new HttpClient();
 
         public MainWindow()
@@ -59,24 +59,21 @@ namespace WPF
         private async void Window_Loaded(object sender, RoutedEventArgs e)
         {
             CreateFilterCheckbox();
-            OriginalList = await GetAPIAsync("http://localhost:53882/api/Computers");
-            OriginalList = new List<Computer>();
-            var c = new Computer() { Name = "Shrek SWAMP" };
-            OriginalList.Add(c);
+            OriginalList = (await GetAPIAsync<Computer>("http://localhost:53882/api/Computers")).Cast<Item>().ToList();
             ItemsListBox.ItemsSource = OriginalList;
             _filter = new ComputerFilter();
             _sorter = new Sorter(OriginalList.Cast<Item>().ToList());
         }
 
-        private static async Task<List<Computer>> GetAPIAsync(string path)
+        private static async Task<List<T>> GetAPIAsync<T>(string path) where T:Item
         {
-            List<Computer> computers = null;
+            List<T> objects = null;
             HttpResponseMessage response = await client.GetAsync(path);
             if(response.IsSuccessStatusCode)
             {
-                computers = await response.Content.ReadAsAsync<List<Computer>>();
+                objects = await response.Content.ReadAsAsync<List<T>>();
             }
-            return computers;
+            return objects;
         }  
 
         private void FilterButton_Click(object sender, RoutedEventArgs e)
@@ -114,6 +111,7 @@ namespace WPF
             ProductGraphicsCard.Text = item.GraphicsCardName + ' ' + item.GraphicsCardMemory;
             ProductResolution.Text = item.Resolution;
             ProductStorage.Text = (item.StorageCapacity).ToString() + "GB";
+            InfoStackPanelSecond.Children.Add(new TextBlock() { Text = "BUM BUM" });
             SimilarProducts.Text = "Similar Products";
             BuyHereButton.Visibility = Visibility.Visible;
             CompareButton.Visibility = Visibility.Visible;
@@ -320,7 +318,10 @@ namespace WPF
 
         private void LaptopCategory_Click(object sender, RoutedEventArgs e)
         {
-
+            ItemInfoStackPanel.Visibility = Visibility.Visible;
+            ListStackPanel.Visibility = Visibility.Visible;
+            ComparisonGrid.Visibility = Visibility.Collapsed;
+            CategoriesMenuGrid.Visibility = Visibility.Collapsed;
         }
     }
 }

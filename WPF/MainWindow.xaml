@@ -78,13 +78,13 @@
             </Grid>
 
         </Grid>
-        <Grid Margin="200,60,0,0" Grid.Row="1" Grid.ColumnSpan="2" Visibility="Collapsed">
+        <Grid Margin="200,60,0,0" Grid.Row="1" Grid.ColumnSpan="2" >
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*"/>
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
 
-            <StackPanel Grid.Column="0" Background="White" Name="ListStackPanel" Visibility="Visible">
+            <StackPanel Grid.Column="0" Background="White" Name="ListStackPanel" Visibility="Collapsed">
                 <Grid Height="40">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="*"/>
@@ -124,7 +124,7 @@
             </StackPanel>
             <StackPanel Grid.Column="1" >
 
-                <StackPanel x:Name="ItemInfoStackPanel" Visibility="Visible" Background="White" Height="535" >
+                <StackPanel x:Name="ItemInfoStackPanel" Visibility="Collapsed" Background="White" Height="535" >
                     <TextBlock x:Name="ProductName" TextWrapping="Wrap" Height="40" FontFamily="Candara Light" FontSize="16" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="10,10,10,3"></TextBlock>
 
                     <Grid>
@@ -381,7 +381,7 @@
         <Grid Margin="0,60,0,0" Grid.Column="1" Visibility="Visible" x:Name="CategoriesMenuGrid">
             <StackPanel Visibility="Visible" Height="534">
                 <StackPanel.Background>
-                    <SolidColorBrush Color="#2A2929" Opacity="1"/>
+                    <SolidColorBrush Color="White" Opacity="1"/>
                 </StackPanel.Background>
 
                 <Grid Margin="0,50,0,0" HorizontalAlignment="Center">
