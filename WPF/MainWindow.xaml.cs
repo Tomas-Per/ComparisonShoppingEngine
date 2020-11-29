@@ -60,6 +60,9 @@ namespace WPF
         {
             CreateFilterCheckbox();
             OriginalList = await GetAPIAsync("http://localhost:53882/api/Computers");
+            OriginalList = new List<Computer>();
+            var c = new Computer() { Name = "Shrek SWAMP" };
+            OriginalList.Add(c);
             ItemsListBox.ItemsSource = OriginalList;
             _filter = new ComputerFilter();
             _sorter = new Sorter(OriginalList.Cast<Item>().ToList());
@@ -302,7 +305,20 @@ namespace WPF
             FilterButtonGrid.Visibility = Visibility.Collapsed;
         }
 
-        private void FavoritesButton_Click(object sender, RoutedEventArgs e)
+        private void CategoriesButton_Click(object sender, RoutedEventArgs e)
+        {
+            ItemInfoStackPanel.Visibility = Visibility.Collapsed;
+            ListStackPanel.Visibility = Visibility.Collapsed;
+            ComparisonGrid.Visibility = Visibility.Collapsed;
+            CategoriesMenuGrid.Visibility = Visibility.Visible;
+        }
+
+        private void SmartphoneCategory_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void LaptopCategory_Click(object sender, RoutedEventArgs e)
         {
 
         }

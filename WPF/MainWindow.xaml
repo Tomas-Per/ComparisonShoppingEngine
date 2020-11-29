@@ -270,14 +270,13 @@
                     <Button x:Name="OpenComparisonWindowButton" FontSize="14"  Height="50" FontWeight="Bold" FontFamily="Candara Light" Click="CompareButton_Click" Content="Comparison Tab" HorizontalAlignment="Stretch" Background="{x:Null}" BorderBrush="{x:Null}" />
                     <materialDesign:PackIcon Kind="Compare" Foreground="white" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="0,0,25,0"/>
                 </Grid>
-                <!--
                 <Grid Margin="0,20,0,0" Height="50">
                     <Grid.Background>
                         <SolidColorBrush Opacity="0.1" Color="Black"/>
                     </Grid.Background>
-                    <Button  x:Name="FavoritesButton" FontSize="14"  Height="50" FontWeight="Bold" FontFamily="Candara Light" Click="FavoritesButton_Click" Content="Favorites" HorizontalAlignment="Stretch" Background="{x:Null}" BorderBrush="{x:Null}"/>
-                    <materialDesign:PackIcon Kind="Star" Foreground="white" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="0,0,25,0"/>
-                </Grid>  -->
+                    <Button  x:Name="CategoriesButton" FontSize="14"  Height="50" FontWeight="Bold" FontFamily="Candara Light" Click="CategoriesButton_Click" Content="Categories Menu" HorizontalAlignment="Stretch" Background="{x:Null}" BorderBrush="{x:Null}"/>
+                    <materialDesign:PackIcon Kind="Menu" Foreground="white" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="0,0,25,0"/>
+                </Grid> 
 
             </StackPanel>
         </Grid>
@@ -379,7 +378,45 @@
                 </StackPanel>
             </StackPanel>
         </Grid>
+        <Grid Margin="0,60,0,0" Grid.Column="1" Visibility="Collapsed" x:Name="CategoriesMenuGrid">
+            <StackPanel Visibility="Visible" Height="534">
+                <StackPanel.Background>
+                    <SolidColorBrush Color="#2A2929" Opacity="1"/>
+                </StackPanel.Background>
 
+                <Grid Margin="0,50,0,0" HorizontalAlignment="Center">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+                    <Grid x:Name="Laptops" Grid.Column="1" HorizontalAlignment="Center" Margin="0,30,40,0">
+                        <Image VerticalAlignment="Center" HorizontalAlignment="Center">
+                            <Image.Source>
+                                <BitmapImage UriSource="/ImagesSource/laptop_cart.png" />
+                            </Image.Source>
+                        </Image>
+                        <Button Margin="0,200,0,0" Height="50" VerticalAlignment="Center" HorizontalAlignment="Center" Background="Transparent" BorderBrush="Transparent" Click="LaptopCategory_Click">
+                            <StackPanel>
+                                <Image Source="/ImagesSource/button.png" Stretch="Uniform"/>
+                            </StackPanel>
+                        </Button>
+                    </Grid>
+                    <Grid Grid.Column="2" HorizontalAlignment="Center" Margin="40,30,0,0">
+                        <Image>
+                            <Image.Source>
+                                <BitmapImage UriSource="/ImagesSource/smartphone_cart.png" />
+                            </Image.Source>
+                        </Image>
+                        <Button Margin="0,200,0,0" Height="50" VerticalAlignment="Center" HorizontalAlignment="Center" Background="Transparent" BorderBrush="Transparent" Click="SmartphoneCategory_Click">
+                            <StackPanel>
+                                <Image Source="/ImagesSource/button.png" Stretch="Uniform"/>
+                            </StackPanel>
+                        </Button>
+                    </Grid>
+                </Grid>
+            </StackPanel>
+        </Grid>
     </Grid>
 
 
