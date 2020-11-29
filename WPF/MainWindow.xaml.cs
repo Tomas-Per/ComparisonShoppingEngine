@@ -25,6 +25,8 @@ using DataManipulation.Filters;
 using System.Xml;
 using System.Linq.Expressions;
 using PathLibrary;
+using ItemLibrary.DataContexts;
+using System.Net.Http;
 
 namespace WPF
 {
@@ -35,9 +37,7 @@ namespace WPF
     {
 
         private List<Computer> OriginalList = new List<Computer>();
-
- 
-        private IData<IEnumerable<Computer>> _DataService;
+        private static HttpClient client = new HttpClient();
 
         public MainWindow()
         {
@@ -56,19 +56,25 @@ namespace WPF
             
         }
 
-        private void Window_Loaded(object sender, RoutedEventArgs e)
+        private async void Window_Loaded(object sender, RoutedEventArgs e)
         {
             CreateFilterCheckbox();
-
-            _DataService = new LaptopServiceCSV(MainPath.GetComputerPath());
-            ItemsListBox.ItemsSource = _DataService.ReadData();
-         
-            OriginalList = ItemsListBox.ItemsSource.Cast<Computer>().ToList();
-
+            OriginalList = await GetAPIAsync("http://localhost:53882/api/Computers");
+            ItemsListBox.ItemsSource = OriginalList;
             _filter = new ComputerFilter();
             _sorter = new Sorter(OriginalList.Cast<Item>().ToList());
-
         }
+
+        private static async Task<List<Computer>> GetAPIAsync(string path)
+        {
+            List<Computer> computers = null;
+            HttpResponseMessage response = await client.GetAsync(path);
+            if(response.IsSuccessStatusCode)
+            {
+                computers = await response.Content.ReadAsAsync<List<Computer>>();
+            }
+            return computers;
+        }  
 
         private void FilterButton_Click(object sender, RoutedEventArgs e)
         {

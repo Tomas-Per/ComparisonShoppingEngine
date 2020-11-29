@@ -10,7 +10,7 @@ using System.Linq;
 
 namespace DataContent.ReadingCSV.Services
 {
-    public class LaptopServiceCSV : IData<IEnumerable<Computer>>
+    public class LaptopServiceCSV
     {
         public string Path { get; set; }
         private FileMode Filemode { get; set; }
