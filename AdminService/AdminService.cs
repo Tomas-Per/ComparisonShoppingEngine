@@ -42,7 +42,7 @@ namespace AdminService
                         try
                         {
                             var updater = new DataUpdater<Computer>(ItemCategory.Laptop);
-                            var results = await updater.GetItemCategoryListFromWebAsync();
+                            var results = await updater.GetItemCategoryListFromWebAsync(ItemCategory.Laptop);
                             await updater.UpdateItemListFile(results);
                         }
                         catch (Exception ex)

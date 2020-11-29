@@ -19,11 +19,8 @@ namespace DataUpdater
     {
         private HttpClient _httpClient;
 
-        private ItemCategory _itemCategory { get; set; }
-
         public DataUpdater(ItemCategory itemCategory)
         {
-            _itemCategory = itemCategory;
             _httpClient = new HttpClient();
         }
 
@@ -65,15 +62,15 @@ namespace DataUpdater
         }
 
         //calls shop parser for a spcecific item category and returns parsed item list
-        public async Task<List<T>> GetItemCategoryListFromWebAsync()
+        public async Task<List<T>> GetItemCategoryListFromWebAsync(ItemCategory itemCategory)
         {
-            switch (_itemCategory)
+            switch (itemCategory)
             {
                 case ItemCategory.Laptop:
 
                     List<Task<List<Computer>>> laptopTasks = new List<Task<List<Computer>>>();
 
-                    //laptopTasks.Add(Task.Run(() => new SenukaiComputerParser().ParseShop()));
+                    laptopTasks.Add(Task.Run(() => new SenukaiComputerParser().ParseShop()));
                     laptopTasks.Add(Task.Run(() => new AvitelaComputerParser().ParseShop()));
                     laptopTasks.Add(Task.Run(() => new PiguComputerParser().ParseShop()));
                     
@@ -83,8 +80,6 @@ namespace DataUpdater
                     results = laptopData[0].Concat(laptopData[1]).ToList();
 
                     return results.Cast<T>().ToList();
-                    //return laptopData.ToList().Cast<T>().ToList();
-
 
 
 
