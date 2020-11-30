@@ -295,9 +295,9 @@
                                 <TextBlock Text="Brand" HorizontalAlignment="Center" FontFamily="Candara Light" FontSize="14" Foreground="#b271a9" />
                                 <TextBlock Text="Processor" HorizontalAlignment="Center" FontFamily="Candara Light" FontSize="14" Foreground="#b271a9" />
                                 <TextBlock Text="RAM" HorizontalAlignment="Center" FontFamily="Candara Light" FontSize="14" Foreground="#b271a9" />
-                                <TextBlock Text="Graphics Card" HorizontalAlignment="Center" FontFamily="Candara Light" FontSize="14" Foreground="#b271a9" />
-                                <TextBlock Text="Resolution" HorizontalAlignment="Center" FontFamily="Candara Light" FontSize="14" Foreground="#b271a9" />
-                                <TextBlock Text="Storage" HorizontalAlignment="Center" FontFamily="Candara Light" FontSize="14" Foreground="#b271a9" />
+                                <TextBlock Name="Custom1" HorizontalAlignment="Center" FontFamily="Candara Light" FontSize="14" Foreground="#b271a9" />
+                                <TextBlock Name="Custom2" HorizontalAlignment="Center" FontFamily="Candara Light" FontSize="14" Foreground="#b271a9" />
+                                <TextBlock Name="Custom3" HorizontalAlignment="Center" FontFamily="Candara Light" FontSize="14" Foreground="#b271a9" />
                                 <TextBlock Text="Rating" HorizontalAlignment="Center" FontFamily="Candara Light" FontSize="14" Foreground="#b271a9" />
                             </StackPanel>
                         </Grid>
@@ -305,15 +305,15 @@
                         <Grid Height="240" VerticalAlignment="Top" HorizontalAlignment="Stretch" Grid.Column="0">
                             <Rectangle Height="200" Width="290" Margin="20,20,10,20" Fill="White" RadiusX="13" RadiusY="13" HorizontalAlignment="Left"/>
 
-                            <StackPanel Margin="30,0,25,0" >
+                            <StackPanel Margin="30,0,25,0" x:Name="Comparison1">
                                 <TextBlock x:Name="ComparisonProductName1" TextWrapping="Wrap"  Height="40" FontFamily="Candara Light" FontSize="16" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="0,20,0,5"></TextBlock>
                                 <TextBlock x:Name="ComparisonProductPrice1"  FontFamily="Candara Light" FontSize="14" ></TextBlock>
                                 <TextBlock x:Name="ComparisonProductBrand1"  FontFamily="Candara Light" FontSize="14"></TextBlock>
                                 <TextBlock x:Name="ComparisonProductProcessor1"  FontFamily="Candara Light" FontSize="14"></TextBlock>
                                 <TextBlock x:Name="ComparisonProductRAM1" FontFamily="Candara Light" FontSize="14" ></TextBlock>
-                                <TextBlock x:Name="ComparisonProductGraphicsCard1"  FontFamily="Candara Light" FontSize="14" ></TextBlock>
-                                <TextBlock x:Name="ComparisonProductResolution1" FontFamily="Candara Light" FontSize="14" ></TextBlock>
-                                <TextBlock x:Name="ComparisonProductStorage1"  FontFamily="Candara Light" FontSize="14" ></TextBlock>
+                                <TextBlock x:Name="ComparisonProduct1Custom1" FontFamily="Candara Light" FontSize="14" ></TextBlock>
+                                <TextBlock x:Name="ComparisonProduct1Custom2" FontFamily="Candara Light" FontSize="14" ></TextBlock>
+                                <TextBlock x:Name="ComparisonProduct1Custom3" FontFamily="Candara Light" FontSize="14" ></TextBlock>
                                 <TextBlock x:Name="ComparisonProductRating1"  FontFamily="Candara Light" FontSize="14" ></TextBlock>
                                 <Button Content="Remove" x:Name="RemoveButton1" FontFamily="Candara Light"  Grid.Column="1" Margin="5,5,10,0" HorizontalAlignment="Right" Foreground="#b271a9" Background="White" BorderBrush="#b271a9" Click="RemoveButton1_Click"/>
                             </StackPanel>
@@ -321,16 +321,16 @@
                         </Grid>
                         <Grid Height="240" VerticalAlignment="Top" HorizontalAlignment="Stretch" Grid.Column="2">
                             <Rectangle Height="200" Width="290" Margin="10,20,10,20" Fill="White" RadiusX="13" RadiusY="13" HorizontalAlignment="Left"/>
-                            <StackPanel Margin="25,0,15,0">
+                            <StackPanel Margin="25,0,15,0" x:Name="Comparison2">
                                 <TextBlock x:Name="ComparisonProductName2" TextWrapping="Wrap" Height="40" FontFamily="Candara Light" FontSize="16" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="0,20,0,5"></TextBlock>
                                 <TextBlock x:Name="ComparisonProductPrice2" FontFamily="Candara Light" FontSize="14" ></TextBlock>
                                 <TextBlock x:Name="ComparisonProductBrand2" FontFamily="Candara Light" FontSize="14"></TextBlock>
                                 <TextBlock x:Name="ComparisonProductProcessor2" FontFamily="Candara Light" FontSize="14"></TextBlock>
                                 <TextBlock x:Name="ComparisonProductRAM2" FontFamily="Candara Light" FontSize="14" ></TextBlock>
-                                <TextBlock x:Name="ComparisonProductGraphicsCard2" FontFamily="Candara Light" FontSize="14" ></TextBlock>
-                                <TextBlock x:Name="ComparisonProductResolution2" FontFamily="Candara Light" FontSize="14" ></TextBlock>
-                                <TextBlock x:Name="ComparisonProductStorage2" FontFamily="Candara Light" FontSize="14" ></TextBlock>
-                                <TextBlock x:Name="ComparisonProductRating2" FontFamily="Candara Light" FontSize="14" ></TextBlock>
+                                <TextBlock x:Name="ComparisonProduct2Custom1" FontFamily="Candara Light" FontSize="14" ></TextBlock>
+                                <TextBlock x:Name="ComparisonProduct2Custom2" FontFamily="Candara Light" FontSize="14" ></TextBlock>
+                                <TextBlock x:Name="ComparisonProduct2Custom3" FontFamily="Candara Light" FontSize="14" ></TextBlock>
+                                <TextBlock x:Name="ComparisonProductRating2"  FontFamily="Candara Light" FontSize="14" ></TextBlock>
                                 <Button Content="Remove" x:Name="RemoveButton2" FontFamily="Candara Light"  Grid.Column="1" Margin="5,5,10,0" HorizontalAlignment="Right" Foreground="#b271a9" Background="White" BorderBrush="#b271a9" Click="RemoveButton2_Click"/>
                             </StackPanel>
                         </Grid>
@@ -341,24 +341,24 @@
                             <ColumnDefinition Width="0.55*"/>
                             <ColumnDefinition Width="*"/>
                         </Grid.ColumnDefinitions>
-                        <TextBlock Text="Price" Grid.Column="0" HorizontalAlignment="Right" FontFamily="Candara Light" FontSize="16" Foreground="#b271a9" VerticalAlignment="Top" Margin="0,0,15,0"/>
-                        <Slider x:Name="PriceWeightSlider" Grid.Column="1" HorizontalAlignment="Left" AutoToolTipPlacement="TopLeft" AutoToolTipPrecision="0" IsSnapToTickEnabled="True" Maximum="10" Minimum="0" TickFrequency="1" Foreground="#FFB271A9" TickPlacement="Both" Width="232" Value="5" ValueChanged="PriceWeightSlider_ValueChanged"/>
+                        <TextBlock Name="Slidet1Text" Grid.Column="0" HorizontalAlignment="Right" FontFamily="Candara Light" FontSize="16" Foreground="#b271a9" VerticalAlignment="Top" Margin="0,0,15,0"/>
+                        <Slider x:Name="Slider1" Grid.Column="1" HorizontalAlignment="Left" AutoToolTipPlacement="TopLeft" AutoToolTipPrecision="0" IsSnapToTickEnabled="True" Maximum="10" Minimum="0" TickFrequency="1" Foreground="#FFB271A9" TickPlacement="Both" Width="232" Value="5" ValueChanged="Slider1_ValueChanged"/>
                     </Grid>
                     <Grid Margin="0,0,0,15" >
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="0.55*"/>
                             <ColumnDefinition Width="*"/>
                         </Grid.ColumnDefinitions>
-                        <TextBlock Text="Storage" Grid.Column="0" HorizontalAlignment="Right" FontFamily="Candara Light" FontSize="16" Foreground="#b271a9" VerticalAlignment="Top" Margin="0,0,15,0"/>
-                        <Slider x:Name="StorageWeightSlider" Grid.Column="1" HorizontalAlignment="Left" AutoToolTipPlacement="TopLeft" AutoToolTipPrecision="0" IsSnapToTickEnabled="True" Maximum="10" Minimum="0" TickFrequency="1" Foreground="#FFB271A9" TickPlacement="Both" Width="232" Value="5" ValueChanged="StorageWeightSlider_ValueChanged"/>
+                        <TextBlock Name="Slidet2Text" Grid.Column="0" HorizontalAlignment="Right" FontFamily="Candara Light" FontSize="16" Foreground="#b271a9" VerticalAlignment="Top" Margin="0,0,15,0"/>
+                        <Slider x:Name="Slider2" Grid.Column="1" HorizontalAlignment="Left" AutoToolTipPlacement="TopLeft" AutoToolTipPrecision="0" IsSnapToTickEnabled="True" Maximum="10" Minimum="0" TickFrequency="1" Foreground="#FFB271A9" TickPlacement="Both" Width="232" Value="5" ValueChanged="Slider2_ValueChanged"/>
                     </Grid>
                     <Grid>
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="0.55*"/>
                             <ColumnDefinition Width="*"/>
                         </Grid.ColumnDefinitions>
-                        <TextBlock Text="RAM" Grid.Column="0" HorizontalAlignment="Right" FontFamily="Candara Light" FontSize="16" Foreground="#b271a9" VerticalAlignment="Top" Margin="0,0,15,0"/>
-                        <Slider x:Name="RAMWeightSlider" Grid.Column="1" HorizontalAlignment="Left" AutoToolTipPlacement="TopLeft" AutoToolTipPrecision="0" IsSnapToTickEnabled="True" Maximum="10" Minimum="0" TickFrequency="1" Foreground="#FFB271A9" TickPlacement="Both" Width="232" Value="5" ValueChanged="RAMWeightSlider_ValueChanged"/>
+                        <TextBlock Name="Slidet3Text" Grid.Column="0" HorizontalAlignment="Right" FontFamily="Candara Light" FontSize="16" Foreground="#b271a9" VerticalAlignment="Top" Margin="0,0,15,0"/>
+                        <Slider x:Name="Slider3" Grid.Column="1" HorizontalAlignment="Left" AutoToolTipPlacement="TopLeft" AutoToolTipPrecision="0" IsSnapToTickEnabled="True" Maximum="10" Minimum="0" TickFrequency="1" Foreground="#FFB271A9" TickPlacement="Both" Width="232" Value="5" ValueChanged="Slider3_ValueChanged"/>
                     </Grid>
                 </StackPanel>
             </StackPanel>

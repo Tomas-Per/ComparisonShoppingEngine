@@ -270,12 +270,10 @@ namespace WPF
             ComparisonProductBrand1.Text = null;
             ComparisonProductProcessor1.Text = null;
             ComparisonProductRAM1.Text = null;
-            ComparisonProductGraphicsCard1.Text = null;
-            ComparisonProductResolution1.Text = null;
-            ComparisonProductStorage1.Text = null;
             ComparisonProductRating1.Text = null;
 
             _comparingItem1 = null;
+            _comparing2Item1 = null;
         }
 
         private void RemoveButton2_Click(object sender, RoutedEventArgs e)
@@ -285,12 +283,9 @@ namespace WPF
             ComparisonProductBrand2.Text = null;
             ComparisonProductProcessor2.Text = null;
             ComparisonProductRAM2.Text = null;
-            ComparisonProductGraphicsCard2.Text = null;
-            ComparisonProductResolution2.Text = null;
-            ComparisonProductStorage2.Text = null;
             ComparisonProductRating2.Text = null;
-
             _comparingItem2 = null;
+            _comparing2Item2 = null;
         }
 
         private void CompareButton_Click(object sender, RoutedEventArgs e)
@@ -303,10 +298,22 @@ namespace WPF
                 ComparisonProductBrand1.Text = ProductBrand.Text;
                 ComparisonProductProcessor1.Text = ProductProcessor.Text;
                 ComparisonProductRAM1.Text = ProductRAM.Text;
-               
 
-                _comparingItem1 = (Computer)ItemsListBox.SelectedItem;
 
+                if (Type == typeof(Computer))
+                {
+                    _comparingItem1 = (Computer)ItemsListBox.SelectedItem;
+                    ComparisonProduct1Custom1.Text = _comparingItem1.GraphicsCardName;
+                    ComparisonProduct1Custom2.Text = _comparingItem1.Resolution;
+                    ComparisonProduct1Custom3.Text = _comparingItem1.StorageCapacity.ToString();
+                }
+                else if (Type == typeof(Smartphone))
+                {
+                    _comparing2Item1 = (Smartphone)ItemsListBox.SelectedItem;
+                    ComparisonProduct1Custom1.Text = _comparing2Item1.ScreenDiagonal.ToString();
+                    ComparisonProduct1Custom2.Text = _comparing2Item1.Resolution;
+                    ComparisonProduct1Custom3.Text = _comparing2Item1.BatteryStorage.ToString();
+                }
             }
             else 
             {
@@ -316,9 +323,22 @@ namespace WPF
                 ComparisonProductBrand2.Text = ProductBrand.Text;
                 ComparisonProductProcessor2.Text = ProductProcessor.Text;
                 ComparisonProductRAM2.Text = ProductRAM.Text;
-               
 
-                _comparingItem2 = (Computer)ItemsListBox.SelectedItem;
+
+                if (Type == typeof(Computer))
+                {
+                    _comparingItem2 = (Computer)ItemsListBox.SelectedItem;
+                    ComparisonProduct2Custom1.Text = _comparingItem2.GraphicsCardName;
+                    ComparisonProduct2Custom2.Text = _comparingItem2.Resolution;
+                    ComparisonProduct2Custom3.Text = _comparingItem2.StorageCapacity.ToString();
+                }
+                else if (Type == typeof(Smartphone))
+                {
+                    _comparing2Item2 = (Smartphone)ItemsListBox.SelectedItem;
+                    ComparisonProduct2Custom1.Text = _comparing2Item2.ScreenDiagonal.ToString();
+                    ComparisonProduct2Custom2.Text = _comparing2Item2.Resolution;
+                    ComparisonProduct2Custom3.Text = _comparing2Item2.BatteryStorage.ToString();
+                }
 
             }
             UpdateComparison();
@@ -380,6 +400,13 @@ namespace WPF
             OriginalList = (await GetAPIAsync<Smartphone>("http://localhost:53882/api/Smartphones")).Cast<Item>().ToList();
             ItemsListBox.ItemsSource = OriginalList;
             Type = typeof(Smartphone);
+            Slidet1Text.Text = "Price";
+            Slidet2Text.Text = "Storage";
+            Slidet3Text.Text = "RAM";
+            Custom1.Text = "Screen";
+            Custom2.Text = "Resolution";
+            Custom3.Text = "Battery";
+            ResetComparison();
         }
 
         private async void LaptopCategory_Click(object sender, RoutedEventArgs e)
@@ -391,6 +418,13 @@ namespace WPF
             OriginalList = (await GetAPIAsync<Computer>("http://localhost:53882/api/Computers")).Cast<Item>().ToList();
             ItemsListBox.ItemsSource = OriginalList;
             Type = typeof(Computer);
+            Slidet1Text.Text = "Price";
+            Slidet2Text.Text = "Storage";
+            Slidet3Text.Text = "RAM";
+            Custom1.Text = "Graphic Card";
+            Custom2.Text = "Resolution";
+            Custom3.Text = "Storage";
+            ResetComparison();
         }
     }
 }
