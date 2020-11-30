@@ -44,13 +44,23 @@ namespace ItemLibrary
 
         //find similar elements in a list
         public override List<Item> FindSimilar(List<Item> list)
-
         {
-            IEnumerable<Smartphone> phones = list.Cast<Smartphone>().Where(phone => phone != this && phone.RAM == this.RAM &&
-                                                                                    phone.Price >= this.Price - 100 && phone.Price <= this.Price + 100 &&
-                                                                                    phone.Storage == this.Storage &&
-                                                                                    (phone.BackCameraMP.Count == this.BackCameraMP.Count + 1 ||
-                                                                                    phone.BackCameraMP.Count == this.BackCameraMP.Count - 1));
+            IEnumerable<Smartphone> phones;
+            if(this.BackCameraMP!=null)
+            {
+                phones = list.Cast<Smartphone>().Where(phone => phone != this && phone.RAM == this.RAM &&
+                                                                                            phone.Price >= this.Price - 100 && phone.Price <= this.Price + 100 &&
+                                                                                            phone.Storage == this.Storage &&
+                                                                                            (phone.BackCameraMP!=null &&(phone.BackCameraMP.Count == this.BackCameraMP.Count + 1 ||
+                                                                                            phone.BackCameraMP.Count == this.BackCameraMP.Count - 1)));
+            }
+            else
+            {
+
+                phones = list.Cast<Smartphone>().Where(phone => phone != this && phone.RAM == this.RAM &&
+                                                                                            phone.Price >= this.Price - 100 && phone.Price <= this.Price + 100 &&
+                                                                                            phone.Storage == this.Storage);
+            }
             return phones.Cast<Item>().ToList();
         }
 

@@ -35,7 +35,7 @@ namespace WPF
     /// </summary>
     public partial class MainWindow : Window
     {
-
+        private Type Type = null;
         private List<Item> OriginalList = new List<Item>();
         private static HttpClient client = new HttpClient();
 
@@ -56,11 +56,9 @@ namespace WPF
             
         }
 
-        private async void Window_Loaded(object sender, RoutedEventArgs e)
+        private void Window_Loaded(object sender, RoutedEventArgs e)
         {
             CreateFilterCheckbox();
-            OriginalList = (await GetAPIAsync<Computer>("http://localhost:53882/api/Computers")).Cast<Item>().ToList();
-            ItemsListBox.ItemsSource = OriginalList;
             _filter = new ComputerFilter();
             _sorter = new Sorter(OriginalList.Cast<Item>().ToList());
         }
@@ -89,13 +87,24 @@ namespace WPF
         private void ListBox_SelectionChanged(object sender, SelectionChangedEventArgs args)
         {
             if (ItemsListBox.SelectedIndex == -1) return;
+            if (Type == typeof(Computer))
+            {
+                Computer item = (sender as ListBox).SelectedItem as Computer;
 
-            Computer item = (sender as ListBox).SelectedItem as Computer;
+                DisplayItem(item);
 
-            DisplayItem(item);
+                List<Item> SimilarItems = item.FindSimilar(OriginalList.Cast<Item>().ToList());
+                SimilarItemsListBox.ItemsSource = SimilarItems;
+            }
+            else if(Type == typeof(Smartphone))
+            {
+                Smartphone item = (sender as ListBox).SelectedItem as Smartphone;
 
-            List<Item> SimilarItems = item.FindSimilar(OriginalList.Cast<Item>().ToList());
-            SimilarItemsListBox.ItemsSource = SimilarItems;
+                DisplayItem(item);
+
+                List<Item> SimilarItems = item.FindSimilar(OriginalList.Cast<Item>().ToList());
+                SimilarItemsListBox.ItemsSource = SimilarItems;
+            }
             
 
         }
@@ -111,6 +120,31 @@ namespace WPF
             ProductGraphicsCard.Text = item.GraphicsCardName + ' ' + item.GraphicsCardMemory;
             ProductResolution.Text = item.Resolution;
             ProductStorage.Text = (item.StorageCapacity).ToString() + "GB";
+            InfoStackPanelSecond.Children.Add(new TextBlock() { Text = "BUM BUM" });
+            SimilarProducts.Text = "Similar Products";
+            BuyHereButton.Visibility = Visibility.Visible;
+            CompareButton.Visibility = Visibility.Visible;
+            InfoStackPanelSecond.Visibility = Visibility.Visible;
+            InfoStackPanelFirst.Visibility = Visibility.Visible;
+            var bi = new BitmapImage();
+            bi.BeginInit();
+            bi.UriSource = new Uri(item.ImageLink);
+            bi.EndInit();
+            image1.Source = bi;
+
+            Uri uri = new Uri(item.ItemURL);
+            BuyHereHyper.NavigateUri = uri;
+        }
+        private void DisplayItem(Smartphone item)
+        {
+            //Setting textboxes
+            ProductName.Text = item.Name;
+            ProductPrice.Text = '€' + (item.Price).ToString();
+            ProductBrand.Text = item.ManufacturerName;
+            ProductProcessor.Text = item.Processor;
+            ProductGraphicsCard.Text = item.ScreenDiagonal.ToString();
+            ProductResolution.Text = item.Resolution;
+            ProductStorage.Text = (item.Storage).ToString() + "GB";
             InfoStackPanelSecond.Children.Add(new TextBlock() { Text = "BUM BUM" });
             SimilarProducts.Text = "Similar Products";
             BuyHereButton.Visibility = Visibility.Visible;
@@ -311,17 +345,26 @@ namespace WPF
             CategoriesMenuGrid.Visibility = Visibility.Visible;
         }
 
-        private void SmartphoneCategory_Click(object sender, RoutedEventArgs e)
-        {
-
-        }
-
-        private void LaptopCategory_Click(object sender, RoutedEventArgs e)
+        private async void SmartphoneCategory_Click(object sender, RoutedEventArgs e)
         {
             ItemInfoStackPanel.Visibility = Visibility.Visible;
             ListStackPanel.Visibility = Visibility.Visible;
             ComparisonGrid.Visibility = Visibility.Collapsed;
             CategoriesMenuGrid.Visibility = Visibility.Collapsed;
+            OriginalList = (await GetAPIAsync<Smartphone>("http://localhost:53882/api/Smartphones")).Cast<Item>().ToList();
+            ItemsListBox.ItemsSource = OriginalList;
+            Type = typeof(Smartphone);
+        }
+
+        private async void LaptopCategory_Click(object sender, RoutedEventArgs e)
+        {
+            ItemInfoStackPanel.Visibility = Visibility.Visible;
+            ListStackPanel.Visibility = Visibility.Visible;
+            ComparisonGrid.Visibility = Visibility.Collapsed;
+            CategoriesMenuGrid.Visibility = Visibility.Collapsed;
+            OriginalList = (await GetAPIAsync<Computer>("http://localhost:53882/api/Computers")).Cast<Item>().ToList();
+            ItemsListBox.ItemsSource = OriginalList;
+            Type = typeof(Computer);
         }
     }
 }
