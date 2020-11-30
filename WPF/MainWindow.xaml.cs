@@ -27,6 +27,7 @@ using System.Linq.Expressions;
 using PathLibrary;
 using ItemLibrary.DataContexts;
 using System.Net.Http;
+using System.Configuration;
 
 namespace WPF
 {
@@ -397,7 +398,7 @@ namespace WPF
             ListStackPanel.Visibility = Visibility.Visible;
             ComparisonGrid.Visibility = Visibility.Collapsed;
             CategoriesMenuGrid.Visibility = Visibility.Collapsed;
-            OriginalList = (await GetAPIAsync<Smartphone>("http://localhost:53882/api/Smartphones")).Cast<Item>().ToList();
+            OriginalList = (await GetAPIAsync<Smartphone>(ConfigurationManager.AppSettings.Get("smartphoneKey"))).Cast<Item>().ToList();
             ItemsListBox.ItemsSource = OriginalList;
             Type = typeof(Smartphone);
             Slidet1Text.Text = "Price";
@@ -415,7 +416,7 @@ namespace WPF
             ListStackPanel.Visibility = Visibility.Visible;
             ComparisonGrid.Visibility = Visibility.Collapsed;
             CategoriesMenuGrid.Visibility = Visibility.Collapsed;
-            OriginalList = (await GetAPIAsync<Computer>("http://localhost:53882/api/Computers")).Cast<Item>().ToList();
+            OriginalList = (await GetAPIAsync<Computer>(ConfigurationManager.AppSettings.Get("computerKey"))).Cast<Item>().ToList();
             ItemsListBox.ItemsSource = OriginalList;
             Type = typeof(Computer);
             Slidet1Text.Text = "Price";
