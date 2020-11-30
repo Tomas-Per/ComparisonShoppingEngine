@@ -36,6 +36,7 @@ namespace WPF
     public partial class MainWindow : Window
     {
         private Type Type = null;
+        private List<Grid> CustomTextBlocks = new List<Grid>();
         private List<Item> OriginalList = new List<Item>();
         private static HttpClient client = new HttpClient();
 
@@ -112,19 +113,19 @@ namespace WPF
         private void DisplayItem(Computer item)
         {
             //Setting textboxes
+            foreach (var grid in CustomTextBlocks) { InfoStackPanelFirst.Children.Remove(grid); };
+            CustomTextBlocks = new List<Grid>();
             ProductName.Text = item.Name;
             ProductPrice.Text = '€' + (item.Price).ToString();
             ProductBrand.Text = item.ManufacturerName;
             ProductProcessor.Text = item.Processor.Name;
             ProductRAM.Text = (item.RAM).ToString() + "GB " + item.RAM_type;
-            ProductGraphicsCard.Text = item.GraphicsCardName + ' ' + item.GraphicsCardMemory;
-            ProductResolution.Text = item.Resolution;
-            ProductStorage.Text = (item.StorageCapacity).ToString() + "GB";
-            InfoStackPanelSecond.Children.Add(new TextBlock() { Text = "BUM BUM" });
+            AddTextblock(InfoStackPanelFirst, "Graphics card" ,item.GraphicsCardName + ' ' + item.GraphicsCardMemory);
+            AddTextblock(InfoStackPanelFirst,"Resolution", item.Resolution);
+            AddTextblock(InfoStackPanelFirst,"Storage", item.StorageCapacity.ToString() + "GB");
             SimilarProducts.Text = "Similar Products";
             BuyHereButton.Visibility = Visibility.Visible;
             CompareButton.Visibility = Visibility.Visible;
-            InfoStackPanelSecond.Visibility = Visibility.Visible;
             InfoStackPanelFirst.Visibility = Visibility.Visible;
             var bi = new BitmapImage();
             bi.BeginInit();
@@ -135,21 +136,42 @@ namespace WPF
             Uri uri = new Uri(item.ItemURL);
             BuyHereHyper.NavigateUri = uri;
         }
+        private void AddTextblock(StackPanel panel, string name, string value)
+        {
+            var grid = new Grid() { Name = name.Replace(" ", "")};
+            grid.Children.Add(new TextBlock()
+            {
+                Text = name + ":",
+                FontFamily = new FontFamily("Candara Light"),
+                FontSize = 14,
+                Margin = new Thickness(10, 0, 10, 0)
+            });
+            grid.Children.Add(new TextBlock()
+            {
+                Text = value,
+                FontFamily = new FontFamily("Candara Light"),
+                FontSize = 14,
+                Margin = new Thickness(100, 0, 10, 0)
+            });
+            CustomTextBlocks.Add(grid);
+            panel.Children.Add(grid);
+        }
         private void DisplayItem(Smartphone item)
         {
             //Setting textboxes
+            foreach (var grid in CustomTextBlocks) { InfoStackPanelFirst.Children.Remove(grid); };
+            CustomTextBlocks = new List<Grid>();
             ProductName.Text = item.Name;
             ProductPrice.Text = '€' + (item.Price).ToString();
             ProductBrand.Text = item.ManufacturerName;
             ProductProcessor.Text = item.Processor;
-            ProductGraphicsCard.Text = item.ScreenDiagonal.ToString();
-            ProductResolution.Text = item.Resolution;
-            ProductStorage.Text = (item.Storage).ToString() + "GB";
-            InfoStackPanelSecond.Children.Add(new TextBlock() { Text = "BUM BUM" });
+            AddTextblock(InfoStackPanelFirst, "Screen", item.ScreenDiagonal.ToString());
+            AddTextblock(InfoStackPanelFirst, "RAM", item.RAM + "GB");
+            AddTextblock(InfoStackPanelFirst, "Battery", item.BatteryStorage.ToString() + "AMh"); 
             SimilarProducts.Text = "Similar Products";
             BuyHereButton.Visibility = Visibility.Visible;
             CompareButton.Visibility = Visibility.Visible;
-            InfoStackPanelSecond.Visibility = Visibility.Visible;
+            
             InfoStackPanelFirst.Visibility = Visibility.Visible;
             var bi = new BitmapImage();
             bi.BeginInit();
@@ -196,13 +218,21 @@ namespace WPF
         {
             if (SimilarItemsListBox.SelectedIndex == -1) return;
 
-            //Setting textboxes
-            Computer item = (sender as ListBox).SelectedItem as Computer;
+            if (Type == typeof(Computer))
+            {
+                Computer item = (sender as ListBox).SelectedItem as Computer;
 
-            DisplayItem(item);
+                DisplayItem(item);
 
-            Uri uri = new Uri(item.ItemURL);
-            BuyHereHyper.NavigateUri = uri;
+                List<Item> SimilarItems = item.FindSimilar(OriginalList.Cast<Item>().ToList());
+                SimilarItemsListBox.ItemsSource = SimilarItems;
+            }
+            else if (Type == typeof(Smartphone))
+            {
+                Smartphone item = (sender as ListBox).SelectedItem as Smartphone;
+
+                DisplayItem(item);
+            }
         }
 
         private void SearchButton_Click(object sender, RoutedEventArgs e)
@@ -273,9 +303,7 @@ namespace WPF
                 ComparisonProductBrand1.Text = ProductBrand.Text;
                 ComparisonProductProcessor1.Text = ProductProcessor.Text;
                 ComparisonProductRAM1.Text = ProductRAM.Text;
-                ComparisonProductGraphicsCard1.Text = ProductGraphicsCard.Text;
-                ComparisonProductResolution1.Text = ProductResolution.Text;
-                ComparisonProductStorage1.Text = ProductStorage.Text;
+               
 
                 _comparingItem1 = (Computer)ItemsListBox.SelectedItem;
 
@@ -288,9 +316,7 @@ namespace WPF
                 ComparisonProductBrand2.Text = ProductBrand.Text;
                 ComparisonProductProcessor2.Text = ProductProcessor.Text;
                 ComparisonProductRAM2.Text = ProductRAM.Text;
-                ComparisonProductGraphicsCard2.Text = ProductGraphicsCard.Text;
-                ComparisonProductResolution2.Text = ProductResolution.Text;
-                ComparisonProductStorage2.Text = ProductStorage.Text;
+               
 
                 _comparingItem2 = (Computer)ItemsListBox.SelectedItem;
 

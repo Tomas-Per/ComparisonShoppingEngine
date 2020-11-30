@@ -156,21 +156,6 @@
                             <Image x:Name="image1" MaxHeight="85"  HorizontalAlignment="Left"  />
                         </StackPanel>
                     </Grid>
-                    <StackPanel x:Name="InfoStackPanelSecond" Visibility="Collapsed" Margin="10,0,0,0">
-                       
-                        <Grid >
-                            <TextBlock Text="Graphics Card:" FontFamily="Candara Light" FontSize="14" Margin="10,0,10,0" HorizontalAlignment="Left"/>
-                            <TextBlock x:Name="ProductGraphicsCard" FontFamily="Candara Light" FontSize="14" Margin="100,0,10,0" HorizontalAlignment="Left"/>
-                        </Grid>
-                        <Grid >
-                            <TextBlock Text="Resolution:" FontFamily="Candara Light" FontSize="14" Margin="10,0,10,0" HorizontalAlignment="Left"/>
-                            <TextBlock x:Name="ProductResolution" FontFamily="Candara Light" FontSize="14" Margin="100,0,10,0" HorizontalAlignment="Left"/>
-                        </Grid>
-                        <Grid >
-                            <TextBlock Text="Storage:" FontFamily="Candara Light" FontSize="14" Margin="10,0,10,0" HorizontalAlignment="Left"/>
-                            <TextBlock x:Name="ProductStorage" FontFamily="Candara Light" FontSize="14" Margin="100,0,10,0" HorizontalAlignment="Left"/>
-                        </Grid>
-                    </StackPanel>
                     <Button x:Name="BuyHereButton" Visibility="Collapsed" Margin="30,5,20,0" Foreground="#b271a9" Background="white" BorderBrush="#b271a9" FontFamily="Candara Light" Click="Hyperlink_RequestNavigate">
                         <Hyperlink x:Name="BuyHereHyper" NavigateUri="{Binding Path=Url}" TextDecorations=""
                                       RequestNavigate="Hyperlink_RequestNavigate" >
