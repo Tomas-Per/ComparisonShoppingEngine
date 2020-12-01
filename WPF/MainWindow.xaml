@@ -126,7 +126,7 @@
             </StackPanel>
             <StackPanel Grid.Column="1" >
 
-                <StackPanel x:Name="ItemInfoStackPanel" Visibility="Collapsed" Background="{Binding Source={x:Static properties:UserSettings.Default}, Path=FBackgroundColor, Mode=TwoWay}" Height="535" >
+                <StackPanel x:Name="ItemInfoStackPanel" Visibility="Collapsed" Background="{Binding Source={x:Static properties:UserSettings.Default}, Path=BackgroundColor, Mode=TwoWay}" Height="535" >
                     <TextBlock x:Name="ProductName" TextWrapping="Wrap" Height="40" Foreground="{Binding Source={x:Static properties:UserSettings.Default}, Path=FontColor, Mode=TwoWay}" FontFamily="Candara Light" FontSize="16" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="10,10,10,3"></TextBlock>
 
                     <Grid>

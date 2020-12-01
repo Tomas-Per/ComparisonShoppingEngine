@@ -39,6 +39,7 @@ namespace WPF
         private Type Type = null;
         private SolidColorBrush brush = Brushes.Black;
         private List<Grid> CustomTextBlocks = new List<Grid>();
+        private List<TextBlock> CustomTexts = new List<TextBlock>();
         private List<Item> OriginalList = new List<Item>();
         private static HttpClient client = new HttpClient();
 
@@ -117,6 +118,7 @@ namespace WPF
         {
             //Setting textboxes
             foreach (var grid in CustomTextBlocks) { InfoStackPanelFirst.Children.Remove(grid); };
+            CustomTexts.Clear();
             CustomTextBlocks = new List<Grid>();
             ProductName.Text = item.Name;
             ProductPrice.Text = '€' + (item.Price).ToString();
@@ -142,22 +144,26 @@ namespace WPF
         private void AddTextblock(StackPanel panel, string name, string value)
         {
             var grid = new Grid() { Name = name.Replace(" ", "")};
-            grid.Children.Add(new TextBlock()
+            var text = new TextBlock()
             {
                 Text = name + ":",
                 FontFamily = new FontFamily("Candara Light"),
                 Foreground = brush,
                 FontSize = 14,
                 Margin = new Thickness(10, 0, 10, 0)
-            });
-            grid.Children.Add(new TextBlock()
+            };
+            CustomTexts.Add(text);
+            grid.Children.Add(text);
+            text = new TextBlock()
             {
                 Text = value,
                 FontFamily = new FontFamily("Candara Light"),
                 Foreground = brush,
                 FontSize = 14,
                 Margin = new Thickness(100, 0, 10, 0)
-            });
+            };
+            CustomTexts.Add(text);
+            grid.Children.Add(text);
             CustomTextBlocks.Add(grid);
             panel.Children.Add(grid);
         }
@@ -165,6 +171,7 @@ namespace WPF
         {
             //Setting textboxes
             foreach (var grid in CustomTextBlocks) { InfoStackPanelFirst.Children.Remove(grid); };
+            CustomTexts.Clear();
             CustomTextBlocks = new List<Grid>();
             ProductName.Text = item.Name;
             ProductPrice.Text = '€' + (item.Price).ToString();
@@ -452,6 +459,7 @@ namespace WPF
                 UserSettings.Default.Theme = "Dark";
                 UserSettings.Default.Save();
                 brush = Brushes.White;
+                foreach(var text in CustomTexts) { text.Foreground = brush; }
             }
             else
             {
@@ -464,6 +472,7 @@ namespace WPF
                 UserSettings.Default.Theme = "Light";
                 UserSettings.Default.Save();
                 brush = Brushes.Black;
+                foreach (var text in CustomTexts) { text.Foreground = brush; }
             }
         }
     }
