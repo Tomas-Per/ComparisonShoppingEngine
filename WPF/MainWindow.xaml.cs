@@ -36,6 +36,7 @@ namespace WPF
     public partial class MainWindow : Window
     {
         private Type Type = null;
+        private SolidColorBrush brush = Brushes.Black;
         private List<Grid> CustomTextBlocks = new List<Grid>();
         private List<Item> OriginalList = new List<Item>();
         private static HttpClient client = new HttpClient();
@@ -59,6 +60,7 @@ namespace WPF
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
+            if (UserSettings.Default.Theme == "Dark") brush = Brushes.White;
             CreateFilterCheckbox();
             _filter = new ComputerFilter();
             _sorter = new Sorter(OriginalList.Cast<Item>().ToList());
@@ -143,6 +145,7 @@ namespace WPF
             {
                 Text = name + ":",
                 FontFamily = new FontFamily("Candara Light"),
+                Foreground = brush,
                 FontSize = 14,
                 Margin = new Thickness(10, 0, 10, 0)
             });
@@ -150,6 +153,7 @@ namespace WPF
             {
                 Text = value,
                 FontFamily = new FontFamily("Candara Light"),
+                Foreground = brush,
                 FontSize = 14,
                 Margin = new Thickness(100, 0, 10, 0)
             });
@@ -425,6 +429,34 @@ namespace WPF
             Custom2.Text = "Resolution";
             Custom3.Text = "Storage";
             ResetComparison();
+        }
+
+        private void ThemeButton_Click(object sender, RoutedEventArgs e)
+        {
+            if(UserSettings.Default.Theme == "Light")
+            {
+                UserSettings.Default.PrimaryColor = "#80DEEA";
+                UserSettings.Default.SecondaryColor = "#2A2828";
+                UserSettings.Default.ThirdColor = "#2A2828";
+                UserSettings.Default.AdditionalColor = "#E5A1DB";
+                UserSettings.Default.BackgroundColor = "#312F2F";
+                UserSettings.Default.FontColor = "#FFFFFF";
+                UserSettings.Default.Theme = "Dark";
+                UserSettings.Default.Save();
+                brush = Brushes.White;
+            }
+            else
+            {
+                UserSettings.Default.PrimaryColor = "#FFFFFF";
+                UserSettings.Default.SecondaryColor = "#80DEEA";
+                UserSettings.Default.ThirdColor = "#E5A1DB";
+                UserSettings.Default.AdditionalColor = "#FFFFFF";
+                UserSettings.Default.BackgroundColor = "#FFFFFF";
+                UserSettings.Default.FontColor = "#000000";
+                UserSettings.Default.Theme = "Light";
+                UserSettings.Default.Save();
+                brush = Brushes.Black;
+            }
         }
     }
 }
