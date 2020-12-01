@@ -276,6 +276,9 @@ namespace WPF
             ComparisonProductProcessor1.Text = null;
             ComparisonProductRAM1.Text = null;
             ComparisonProductRating1.Text = null;
+            ComparisonProduct1Custom1.Text = null;
+            ComparisonProduct1Custom2.Text = null;
+            ComparisonProduct1Custom3.Text = null;
 
             _comparingItem1 = null;
             _comparing2Item1 = null;
@@ -289,6 +292,10 @@ namespace WPF
             ComparisonProductProcessor2.Text = null;
             ComparisonProductRAM2.Text = null;
             ComparisonProductRating2.Text = null;
+            ComparisonProduct2Custom1.Text = null;
+            ComparisonProduct2Custom2.Text = null;
+            ComparisonProduct2Custom3.Text = null;
+
             _comparingItem2 = null;
             _comparing2Item2 = null;
         }
