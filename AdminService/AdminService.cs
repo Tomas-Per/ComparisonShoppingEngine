@@ -10,6 +10,9 @@ using WebParser.ComponentsParser;
 using ItemLibrary;
 using static ItemLibrary.Categories;
 using System.Threading.Tasks;
+using WebParser.SmartphoneParsers;
+using Parsing;
+using System.Linq;
 
 namespace AdminService
 {
@@ -23,7 +26,6 @@ namespace AdminService
         public static async Task Main(string[] args)
         {
             string command;
-
 
             do
             {
@@ -41,16 +43,32 @@ namespace AdminService
                     case "1":
                         try
                         {
-                            var updater = new DataUpdater<Computer>(ItemCategory.Laptop);
+                            var updater = new DataUpdater<Computer>();
                             var results = await updater.GetItemCategoryListFromWebAsync(ItemCategory.Laptop);
                             await updater.UpdateItemListFile(results);
+                            Console.WriteLine("Shop Parsed");
                         }
                         catch (Exception ex)
                         {
+                            Console.WriteLine("Something wrong happened. Check Logs");
                             ExceptionLogger.Log(ex);
                         }
+                        break;
 
-                        Console.WriteLine("Shop Parsed");
+
+                    case "2":
+                        try
+                        {
+                            var updater = new DataUpdater<Smartphone>();
+                            var results = await updater.GetItemCategoryListFromWebAsync(ItemCategory.Smartphone);
+                            await updater.UpdateItemListFile(results);
+                            Console.WriteLine("Shop Parsed");
+                        }
+                        catch (Exception ex)
+                        {
+                            Console.WriteLine("Something wrong happened. Check Logs");
+                            ExceptionLogger.Log(ex);
+                        }
                         break;
 
                     case "5":
