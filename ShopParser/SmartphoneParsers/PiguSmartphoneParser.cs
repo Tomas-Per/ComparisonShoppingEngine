@@ -13,7 +13,7 @@ namespace WebParser.SmartphoneParsers
 {
     public class PiguSmartphoneParser : IParser<Smartphone>
     {
-        private readonly string _url = "https://pigu.lt/lt/foto-gsm-mp3/mobilieji-telefonai?page=1";
+        private readonly string _url = "https://pigu.lt/lt/foto-gsm-mp3/mobilieji-telefonai?f[17780][759425]=&page=1";
         private Lazy<ChromeDriver> _driver;
 
         public PiguSmartphoneParser()
@@ -54,7 +54,7 @@ namespace WebParser.SmartphoneParsers
                     smartphone.ItemCategory = ItemCategory.Smartphone;
                     data.Add(smartphone);
                 }
-                break;
+                //break;
             }
             _driver.Value.Close();
             //ResetDriver();
@@ -95,17 +95,20 @@ namespace WebParser.SmartphoneParsers
                 }
                 else if (table[i].Text.Contains("Pagrindinė kamera"))
                 {
-                    var values = table[i + 1].Text.Split('+');
-                    List<int> cameras = new List<int>();
-                    values.ToList().ForEach(item => cameras.Add(item.ParseInt()));
-                    smartphone.BackCameraMP = cameras;
+                    smartphone.BackCameras = table[i + 1].Text;
+                    //var values = table[i + 1].Text.Split('+');
+                    //List<int> cameras = new List<int>();
+                    //values.ToList().ForEach(item => cameras.Add(item.ParseInt()));
+                    //smartphone.BackCameraMP = cameras;
                 }
                 else if (table[i].Text.Contains("Priekinė kamera"))
                 {
-                    var values = table[i + 1].Text.Split('+');
-                    List<int> cameras = new List<int>();
-                    values.ToList().ForEach(item => cameras.Add(item.ParseInt()));
-                    smartphone.BackCameraMP = cameras;
+                    smartphone.FrontCameras = table[i + 1].Text;
+
+                    //var values = table[i + 1].Text.Split('+');
+                    //List<int> cameras = new List<int>();
+                    //values.ToList().ForEach(item => cameras.Add(item.ParseInt()));
+                    //smartphone.BackCameraMP = cameras;
                 }
                 else if (table[i].Text.Contains("Procesoriaus tipas"))
                 {

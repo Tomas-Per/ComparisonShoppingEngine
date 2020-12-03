@@ -59,7 +59,7 @@ namespace WebParser.SmartphoneParsers
                     data.Add(smartphone);
 
                 }
-                break;
+                //break;
             }
             _driver.Value.Close();
             //ResetDriver();
@@ -146,18 +146,22 @@ namespace WebParser.SmartphoneParsers
 
                 else if (table[i].Text.Contains("Galinė kamera"))
                 {
-                    var values = table[i + 1].Text.Split(',');
-                    List<int> cameras = new List<int>();
-                    values.ToList().ForEach(item => cameras.Add(item.ParseInt()));
-                    smartphone.BackCameraMP = cameras;
+                    smartphone.BackCameras = table[i + 1].Text;
+
+                    //var values = table[i + 1].Text.Split(',');
+                    //List<int> cameras = new List<int>();
+                    //values.ToList().ForEach(item => cameras.Add(item.ParseInt()));
+                    //smartphone.BackCameraMP = cameras;
 
                 }
                 else if (table[i].Text.Contains("Priekinė kamera"))
                 {
-                    var values = table[i + 1].Text.Split(',');
-                    List<int> cameras = new List<int>();
-                    values.ToList().ForEach(item => cameras.Add(item.ParseInt()));
-                    smartphone.FrontCameraMP = cameras;
+                    smartphone.FrontCameras = table[i + 1].Text;
+
+                    //var values = table[i + 1].Text.Split(',');
+                    //List<int> cameras = new List<int>();
+                    //values.ToList().ForEach(item => cameras.Add(item.ParseInt()));
+                    //smartphone.FrontCameraMP = cameras;
                 }
                 else if (table[i].Text.Contains("Operatyvioji atmintis (RAM)"))
                 {

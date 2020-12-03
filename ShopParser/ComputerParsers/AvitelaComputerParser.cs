@@ -64,7 +64,7 @@ namespace WebParser.ComputerParsers
                         data.Add(computer);
                     }                    
                 }
-                break;
+                //break;
                 
             }
             _driver.Value.Close();
