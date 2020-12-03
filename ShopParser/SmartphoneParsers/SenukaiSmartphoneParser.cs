@@ -46,7 +46,6 @@ namespace WebParser.SmartphoneParsers
                     ((IJavaScriptExecutor)_driver.Value).ExecuteScript("window.open();");
                     _driver.Value.SwitchTo().Window(_driver.Value.WindowHandles.Last());
 
-                    _driver.Value.Navigate().GoToUrl(link);
                     Smartphone smartphone = await ParseWindow(link);
 
                     _driver.Value.SwitchTo().Window(_driver.Value.WindowHandles.First());
@@ -58,9 +57,12 @@ namespace WebParser.SmartphoneParsers
 
                     smartphone.ItemCategory = ItemCategory.Smartphone;
                     data.Add(smartphone);
+
                 }
+                break;
             }
-            ResetDriver();
+            _driver.Value.Close();
+            //ResetDriver();
             return data;
         }
 
@@ -85,7 +87,6 @@ namespace WebParser.SmartphoneParsers
 
             smartphone.ItemURL = url;
             smartphone.ShopName = "Senukai.lt";
-
             var image = _driver.Value.FindElements(By.ClassName("product-gallery-slider__slide__image"));
 
             try
@@ -119,7 +120,18 @@ namespace WebParser.SmartphoneParsers
 
                 else if (table[i].Text.Contains("Procesoriaus modelis"))
                 {
-                    smartphone.Processor = table[i + 1].Text.Substring(0, table[i + 1].Text.IndexOf("("));
+                    try
+                    {
+                        smartphone.Processor = table[i + 1].Text.Substring(0, table[i + 1].Text.IndexOf("("));
+                    }
+                    catch(Exception)
+                    {
+                        smartphone.Processor = table[i + 1].Text;
+                    }
+                    if(smartphone.Processor.Length > 64)
+                    {
+                        smartphone.Processor = smartphone.Processor.Substring(0, 64);
+                    }
                 }
 
                 else if (table[i].Text.Contains("Atminties talpa"))
@@ -153,7 +165,8 @@ namespace WebParser.SmartphoneParsers
                 }
             }
 
-            ResetDriver();
+            //ResetDriver();
+            _driver.Value.Close();
             return smartphone;
         }
 

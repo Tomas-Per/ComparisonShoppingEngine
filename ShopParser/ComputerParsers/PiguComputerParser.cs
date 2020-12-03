@@ -152,6 +152,7 @@ namespace WebParser.ComputerParsers
                 }
 
             }
+            _driver.Value.Close();
             //ResetDriver();
             return computer;
         }

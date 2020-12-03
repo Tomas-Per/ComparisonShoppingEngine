@@ -62,7 +62,7 @@ namespace WebParser.ComputerParsers
                     {
                         computer.ItemCategory = ItemCategory.Laptop;
                         data.Add(computer);
-                    }
+                    }                    
                 }
                 break;
                 
@@ -174,6 +174,7 @@ namespace WebParser.ComputerParsers
 
             }
             //ResetDriver();
+            _driver.Value.Close();
             return computer;
         }
 

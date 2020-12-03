@@ -180,6 +180,7 @@ namespace WebParser.ComputerParsers
                 }   
             }
             //ResetDriver();
+            _driver.Value.Close();
             return computer;
         }
 
