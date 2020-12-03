@@ -133,13 +133,21 @@ namespace WPF
             CompareButton.Visibility = Visibility.Visible;
             InfoStackPanelFirst.Visibility = Visibility.Visible;
             var bi = new BitmapImage();
-            bi.BeginInit();
-            bi.UriSource = new Uri(item.ImageLink);
-            bi.EndInit();
-            image1.Source = bi;
-
-            Uri uri = new Uri(item.ItemURL);
-            BuyHereHyper.NavigateUri = uri;
+            try
+            {
+                
+                bi.BeginInit();
+                bi.UriSource = new Uri(item.ImageLink);
+                bi.EndInit();
+                image1.Source = bi;
+                Uri uri = new Uri(item.ItemURL);
+                BuyHereHyper.NavigateUri = uri;
+            }
+            catch(UriFormatException ex)
+            {
+                
+            }
+            
         }
         private void AddTextblock(StackPanel panel, string name, string value)
         {
