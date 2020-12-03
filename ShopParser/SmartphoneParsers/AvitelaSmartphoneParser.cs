@@ -15,8 +15,8 @@ namespace WebParser.SmartphoneParsers
     {
         private readonly string _url = "https://avitela.lt/telefonai-ir-laikrodziai/mobilieji-telefonai";
         private Lazy<ChromeDriver> _driver;
-        private List<string> _subLinks = new List<string>() { "/apple-telefonai?limit=100", "/samsung-telefonai?limit=100",
-            "/huawei-telefonai?limit=100", "/xiaomi-telefonai?limit=100" };
+        private List<string> _subLinks = new List<string>() { "/apple-telefonai?limit=50", "/samsung-telefonai?limit=50",
+            "/huawei-telefonai?limit=50", "/xiaomi-telefonai?limit=50" };
 
         public AvitelaSmartphoneParser()
         {
@@ -53,19 +53,19 @@ namespace WebParser.SmartphoneParsers
 
                     _driver.Value.Navigate().GoToUrl(link);
 
-                    var smartphone = await ParseWindow(link);
+                    Smartphone smartphone = await ParseWindow(link);
 
                     _driver.Value.SwitchTo().Window(_driver.Value.WindowHandles.First());
 
-                    if (smartphone.Resolution != null)
-                    {
-                        smartphone.ItemCategory = ItemCategory.Smartphone;
-                        data.Add(smartphone);
-                    }
-                }
+                    if (smartphone == null) continue;
 
+                    smartphone.ItemCategory = ItemCategory.Smartphone;
+                    data.Add(smartphone);        
+                }
+                //break;
             }
-            ResetDriver();
+            _driver.Value.Close();
+            //ResetDriver();
             return data;
         }
 
@@ -76,8 +76,16 @@ namespace WebParser.SmartphoneParsers
             _driver.Value.Navigate().GoToUrl(url);
 
             Smartphone smartphone = new Smartphone();
-            smartphone.Name = _driver.Value.FindElement(By.Id("pname")).Text;
-            smartphone.Price = _driver.Value.FindElement(By.Id("price-old")).Text.ParseDouble();
+
+            try
+            {
+                smartphone.Name = _driver.Value.FindElement(By.Id("pname")).Text;
+                smartphone.Price = _driver.Value.FindElement(By.Id("price-old")).Text.ParseDouble();
+            }
+            catch(Exception)
+            {
+                return null;
+            }
             smartphone.ItemURL = url;
             smartphone.ShopName = "Avitela.lt";
 
@@ -105,17 +113,19 @@ namespace WebParser.SmartphoneParsers
                 }
                 else if (table[i].Text.Contains("Priekinė kamera"))
                 {
-                    var values = table[i + 1].Text.Split('+');
-                    List<int> cameras = new List<int>();
-                    values.ToList().ForEach(item => cameras.Add(item.ParseInt()));
-                    smartphone.FrontCameraMP = cameras;
+                    smartphone.FrontCameras = table[i + 1].Text;
+                    //var values = table[i + 1].Text.Split('+');
+                    //List<int> cameras = new List<int>();
+                    //values.ToList().ForEach(item => cameras.Add(item.ParseInt()));
+                    //smartphone.FrontCameraMP = cameras;
                 }
                 else if (table[i].Text.Equals("Kamera"))
                 {
-                    var values = table[i + 1].Text.Split('+');
-                    List<int> cameras = new List<int>();
-                    values.ToList().ForEach(item => cameras.Add(item.ParseInt()));  
-                    smartphone.BackCameraMP = cameras;    
+                    smartphone.BackCameras = table[i + 1].Text;
+                    //var values = table[i + 1].Text.Split('+');
+                    //List<int> cameras = new List<int>();
+                    //values.ToList().ForEach(item => cameras.Add(item.ParseInt()));  
+                    //smartphone.BackCameraMP = cameras;    
                 }
                 else if (table[i].Text.Contains("Vidinė atmintis"))
                 {
@@ -138,7 +148,8 @@ namespace WebParser.SmartphoneParsers
                     smartphone.RAM = table[i + 1].Text.ParseInt();
                 }
             }
-            ResetDriver();
+            //ResetDriver();
+            _driver.Value.Close();
             return smartphone;
         }
 

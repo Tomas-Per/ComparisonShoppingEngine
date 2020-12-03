@@ -59,7 +59,7 @@ namespace WebParser.ComputerParsers
 
                     data.Add(computer);
                 }
-                break;
+                //break;
             }
             _driver.Value.Close();
             //ResetDriver();
@@ -129,22 +129,30 @@ namespace WebParser.ComputerParsers
                     computer.RAM_type = table[i + 1].Text;
                 }
 
-                else if (table[i].Text.Contains("Vaizdo plokštė"))
+                else if (table[i].Text.Contains("Vaizdo plokštė:"))
                 {
                     computer.GraphicsCardName = table[i + 1].Text;
+                }
+                else if (table[i].Text.Contains("Vaizdo plokštės atmintinė"))
+                {
+                    computer.GraphicsCardMemory = table[i + 1].Text;
                 }
 
                 else if (table[i].Text.Contains("Kietasis diskas SSD") || table[i].Text.Contains("Kietasis diskas HDD") 
                     || table[i].Text.Contains("Diskas SSD M.2 PCIe"))
                 {
-                    computer.StorageCapacity += table[i + 1].Text.ParseInt();
                     if (table[i + 1].Text.Contains("TB"))
                     {
-                        computer.StorageCapacity *= 1024;
+                        computer.StorageCapacity += table[i + 1].Text.ParseInt() * 1024;
+                    }
+                    else
+                    {
+                        computer.StorageCapacity += table[i + 1].Text.ParseInt();
                     }
                 }
 
             }
+            _driver.Value.Close();
             //ResetDriver();
             return computer;
         }

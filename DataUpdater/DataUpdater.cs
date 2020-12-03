@@ -12,6 +12,7 @@ using System.Threading.Tasks;
 using System.Net.Http;
 using Newtonsoft.Json;
 using System.Text;
+using WebParser.SmartphoneParsers;
 
 namespace DataUpdater
 {
@@ -19,11 +20,8 @@ namespace DataUpdater
     {
         private HttpClient _httpClient;
 
-        private ItemCategory _itemCategory { get; set; }
-
-        public DataUpdater(ItemCategory itemCategory)
+        public DataUpdater()
         {
-            _itemCategory = itemCategory;
             _httpClient = new HttpClient();
         }
 
@@ -65,40 +63,41 @@ namespace DataUpdater
         }
 
         //calls shop parser for a spcecific item category and returns parsed item list
-        public async Task<List<T>> GetItemCategoryListFromWebAsync()
+        public async Task<List<T>> GetItemCategoryListFromWebAsync(ItemCategory itemCategory)
         {
-            switch (_itemCategory)
+            switch (itemCategory)
             {
                 case ItemCategory.Laptop:
 
                     List<Task<List<Computer>>> laptopTasks = new List<Task<List<Computer>>>();
 
-                    //laptopTasks.Add(Task.Run(() => new SenukaiComputerParser().ParseShop()));
+                    laptopTasks.Add(Task.Run(() => new SenukaiComputerParser().ParseShop()));
                     laptopTasks.Add(Task.Run(() => new AvitelaComputerParser().ParseShop()));
                     laptopTasks.Add(Task.Run(() => new PiguComputerParser().ParseShop()));
                     
                     var laptopData = await Task.WhenAll(laptopTasks);
 
-                    List<Computer> results = new List<Computer>();
-                    results = laptopData[0].Concat(laptopData[1]).ToList();
+                    List<Computer> computerResults = new List<Computer>();
+                    laptopData.ToList().ForEach(elem => elem.ForEach(item => computerResults.Add(item)));
 
-                    return results.Cast<T>().ToList();
-                    //return laptopData.ToList().Cast<T>().ToList();
-
+                    return computerResults.Cast<T>().ToList();
 
 
-
-                    //this ItemCategory still needs to be tested
                 case ItemCategory.Smartphone:
 
                     List<Task<List<Smartphone>>> smartphoneTasks = new List<Task<List<Smartphone>>>();
 
-                    //smartphoneTasks.Add(Task.Run(() => new SenukaiSmartphoneParser().ParseShop()));
-                    //smartphoneTasks.Add(Task.Run(() => new AvitelaSmartphoneParser().ParseShop()));
-                    //smartphoneTasks.Add(Task.Run(() => new PiguSmartphoneParser().ParseShop()));
-
+                    smartphoneTasks.Add(Task.Run(() => new AvitelaSmartphoneParser().ParseShop()));
+                    smartphoneTasks.Add(Task.Run(() => new PiguSmartphoneParser().ParseShop()));
+                    smartphoneTasks.Add(Task.Run(() => new SenukaiSmartphoneParser().ParseShop()));
+                    
                     var smartphoneData = await Task.WhenAll(smartphoneTasks);
-                    return smartphoneData.Cast<T>().ToList();
+
+
+                    List<Smartphone> smartphoneResults = new List<Smartphone>();
+                    smartphoneData.ToList().ForEach(elem => elem.ForEach(item => smartphoneResults.Add(item)));
+
+                    return smartphoneResults.Cast<T>().ToList();
 
 
                 case ItemCategory.DesktopComputer:
