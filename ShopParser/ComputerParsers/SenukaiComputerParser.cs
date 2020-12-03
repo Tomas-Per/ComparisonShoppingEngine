@@ -164,18 +164,23 @@ namespace WebParser.ComputerParsers
                         computer.GraphicsCardMemory = table[i + 1].Text;
                     }
                 }
-                else if (table[i].Text.Contains("MMC disko talpa"))
-                {
-                    computer.StorageCapacity += table[i + 1].Text.ParseInt();
-                }
 
-                else if (table[i].Text.Contains("Kietojo disko talpa(HDD)"))
+                else if (table[i].Text.Contains("Kietojo disko talpa(HDD)") ||
+                    table[i].Text.Contains("MMC disko talpa"))
                 {
 
+                    if (table[i + 1].Text.Contains("TB"))
+                    {
+                        computer.StorageCapacity += table[i + 1].Text.ParseInt() * 1024;
+                    }
+                    else
+                    {
                         computer.StorageCapacity += table[i + 1].Text.ParseInt();
+                    }
                 }   
             }
             //ResetDriver();
+            _driver.Value.Close();
             return computer;
         }
 

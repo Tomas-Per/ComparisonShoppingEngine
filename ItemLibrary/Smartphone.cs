@@ -78,7 +78,8 @@ namespace ItemLibrary
                 }
 
                 //check if all mandatory fields are equal
-                if (phone.Storage == this.Storage &&
+                if (phone.Resolution !=  null && this.Resolution != null &&
+                    phone.Storage == this.Storage &&
                      phone.RAM == this.RAM &&
                       (phone.Resolution.Contains(this.Resolution) || this.Resolution.Contains(phone.Resolution)) &&
                         (!phone.ShopName.Equals(this.ShopName))) return true;
