@@ -71,11 +71,12 @@ namespace ItemLibrary
             {
                 Smartphone phone = (Smartphone)obj;
                 //check if the manufacturer is the same (if it isn't in manufacturer field, it should be in the name then)
-                if (phone.ManufacturerName != this.ManufacturerName)
+                if (phone.ManufacturerName != this.ManufacturerName && phone.Name != null && phone.ManufacturerName != null && this.Name != null)
                 {
                     if (((this.ManufacturerName != null && !phone.Name.Contains(this.ManufacturerName)))
                        && ((phone.Name != null && !this.Name.Contains(phone.ManufacturerName)))) return false;
                 }
+                else return false;
 
                 //check if all mandatory fields are equal
                 if (phone.Resolution !=  null && this.Resolution != null &&
