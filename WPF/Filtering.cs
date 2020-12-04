@@ -27,7 +27,7 @@ namespace WPF
         {
             List<Computer> List1 = new List<Computer>();
             int MaxRange = (int)PriceSlider.Value;
-            var List = OriginalList;
+            var List = OriginalList.Cast<Computer>().ToList();
             bool isThereCheckedBox = false;
             if (MaxRange != 0)
             {

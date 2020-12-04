@@ -44,13 +44,23 @@ namespace ItemLibrary
 
         //find similar elements in a list
         public override List<Item> FindSimilar(List<Item> list)
-
         {
-            IEnumerable<Smartphone> phones = list.Cast<Smartphone>().Where(phone => phone != this && phone.RAM == this.RAM &&
-                                                                                    phone.Price >= this.Price - 100 && phone.Price <= this.Price + 100 &&
-                                                                                    phone.Storage == this.Storage &&
-                                                                                    (phone.BackCameraMP.Count == this.BackCameraMP.Count + 1 ||
-                                                                                    phone.BackCameraMP.Count == this.BackCameraMP.Count - 1));
+            IEnumerable<Smartphone> phones;
+            if(this.BackCameraMP!=null)
+            {
+                phones = list.Cast<Smartphone>().Where(phone => phone != this && phone.RAM == this.RAM &&
+                                                                                            phone.Price >= this.Price - 100 && phone.Price <= this.Price + 100 &&
+                                                                                            phone.Storage == this.Storage &&
+                                                                                            (phone.BackCameraMP!=null &&(phone.BackCameraMP.Count == this.BackCameraMP.Count + 1 ||
+                                                                                            phone.BackCameraMP.Count == this.BackCameraMP.Count - 1)));
+            }
+            else
+            {
+
+                phones = list.Cast<Smartphone>().Where(phone => phone != this && phone.RAM == this.RAM &&
+                                                                                            phone.Price >= this.Price - 100 && phone.Price <= this.Price + 100 &&
+                                                                                            phone.Storage == this.Storage);
+            }
             return phones.Cast<Item>().ToList();
         }
 
@@ -61,11 +71,12 @@ namespace ItemLibrary
             {
                 Smartphone phone = (Smartphone)obj;
                 //check if the manufacturer is the same (if it isn't in manufacturer field, it should be in the name then)
-                if (phone.ManufacturerName != this.ManufacturerName)
+                if (phone.ManufacturerName != this.ManufacturerName && phone.Name != null && phone.ManufacturerName != null && this.Name != null)
                 {
                     if (((this.ManufacturerName != null && !phone.Name.Contains(this.ManufacturerName)))
                        && ((phone.Name != null && !this.Name.Contains(phone.ManufacturerName)))) return false;
                 }
+                else return false;
 
                 //check if all mandatory fields are equal
                 if (phone.Resolution !=  null && this.Resolution != null &&

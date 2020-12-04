@@ -27,6 +27,7 @@ using System.Linq.Expressions;
 using PathLibrary;
 using ItemLibrary.DataContexts;
 using System.Net.Http;
+using System.Configuration;
 
 namespace WPF
 {
@@ -35,8 +36,11 @@ namespace WPF
     /// </summary>
     public partial class MainWindow : Window
     {
-
-        private List<Computer> OriginalList = new List<Computer>();
+        private Type Type = null;
+        private SolidColorBrush brush = Brushes.Black;
+        private List<Grid> CustomTextBlocks = new List<Grid>();
+        private List<TextBlock> CustomTexts = new List<TextBlock>();
+        private List<Item> OriginalList = new List<Item>();
         private static HttpClient client = new HttpClient();
 
         public MainWindow()
@@ -56,24 +60,23 @@ namespace WPF
             
         }
 
-        private async void Window_Loaded(object sender, RoutedEventArgs e)
+        private void Window_Loaded(object sender, RoutedEventArgs e)
         {
+            if (UserSettings.Default.Theme == "Dark") brush = Brushes.White;
             CreateFilterCheckbox();
-            OriginalList = await GetAPIAsync("http://localhost:53882/api/Computers");
-            ItemsListBox.ItemsSource = OriginalList;
             _filter = new ComputerFilter();
             _sorter = new Sorter(OriginalList.Cast<Item>().ToList());
         }
 
-        private static async Task<List<Computer>> GetAPIAsync(string path)
+        private static async Task<List<T>> GetAPIAsync<T>(string path) where T:Item
         {
-            List<Computer> computers = null;
+            List<T> objects = null;
             HttpResponseMessage response = await client.GetAsync(path);
             if(response.IsSuccessStatusCode)
             {
-                computers = await response.Content.ReadAsAsync<List<Computer>>();
+                objects = await response.Content.ReadAsAsync<List<T>>();
             }
-            return computers;
+            return objects;
         }  
 
         private void FilterButton_Click(object sender, RoutedEventArgs e)
@@ -89,13 +92,24 @@ namespace WPF
         private void ListBox_SelectionChanged(object sender, SelectionChangedEventArgs args)
         {
             if (ItemsListBox.SelectedIndex == -1) return;
+            if (Type == typeof(Computer))
+            {
+                Computer item = (sender as ListBox).SelectedItem as Computer;
 
-            Computer item = (sender as ListBox).SelectedItem as Computer;
+                DisplayItem(item);
 
-            DisplayItem(item);
+                List<Item> SimilarItems = item.FindSimilar(OriginalList.Cast<Item>().ToList());
+                SimilarItemsListBox.ItemsSource = SimilarItems;
+            }
+            else if(Type == typeof(Smartphone))
+            {
+                Smartphone item = (sender as ListBox).SelectedItem as Smartphone;
 
-            List<Item> SimilarItems = item.FindSimilar(OriginalList.Cast<Item>().ToList());
-            SimilarItemsListBox.ItemsSource = SimilarItems;
+                DisplayItem(item);
+
+                List<Item> SimilarItems = item.FindSimilar(OriginalList.Cast<Item>().ToList());
+                SimilarItemsListBox.ItemsSource = SimilarItems;
+            }
             
 
         }
@@ -103,18 +117,81 @@ namespace WPF
         private void DisplayItem(Computer item)
         {
             //Setting textboxes
+            foreach (var grid in CustomTextBlocks) { InfoStackPanelFirst.Children.Remove(grid); };
+            CustomTexts.Clear();
+            CustomTextBlocks = new List<Grid>();
             ProductName.Text = item.Name;
             ProductPrice.Text = '€' + (item.Price).ToString();
             ProductBrand.Text = item.ManufacturerName;
             ProductProcessor.Text = item.Processor.Name;
             ProductRAM.Text = (item.RAM).ToString() + "GB " + item.RAM_type;
-            ProductGraphicsCard.Text = item.GraphicsCardName + ' ' + item.GraphicsCardMemory;
-            ProductResolution.Text = item.Resolution;
-            ProductStorage.Text = (item.StorageCapacity).ToString() + "GB";
+            AddTextblock(InfoStackPanelFirst, "Graphics card" ,item.GraphicsCardName + ' ' + item.GraphicsCardMemory);
+            AddTextblock(InfoStackPanelFirst,"Resolution", item.Resolution);
+            AddTextblock(InfoStackPanelFirst,"Storage", item.StorageCapacity.ToString() + "GB");
             SimilarProducts.Text = "Similar Products";
             BuyHereButton.Visibility = Visibility.Visible;
             CompareButton.Visibility = Visibility.Visible;
-            InfoStackPanelSecond.Visibility = Visibility.Visible;
+            InfoStackPanelFirst.Visibility = Visibility.Visible;
+            var bi = new BitmapImage();
+            try
+            {
+                
+                bi.BeginInit();
+                bi.UriSource = new Uri(item.ImageLink);
+                bi.EndInit();
+                image1.Source = bi;
+                Uri uri = new Uri(item.ItemURL);
+                BuyHereHyper.NavigateUri = uri;
+            }
+            catch(UriFormatException ex)
+            {
+                
+            }
+            
+        }
+        private void AddTextblock(StackPanel panel, string name, string value)
+        {
+            var grid = new Grid() { Name = name.Replace(" ", "")};
+            var text = new TextBlock()
+            {
+                Text = name + ":",
+                FontFamily = new FontFamily("Candara Light"),
+                Foreground = brush,
+                FontSize = 14,
+                Margin = new Thickness(10, 0, 10, 0)
+            };
+            CustomTexts.Add(text);
+            grid.Children.Add(text);
+            text = new TextBlock()
+            {
+                Text = value,
+                FontFamily = new FontFamily("Candara Light"),
+                Foreground = brush,
+                FontSize = 14,
+                Margin = new Thickness(100, 0, 10, 0)
+            };
+            CustomTexts.Add(text);
+            grid.Children.Add(text);
+            CustomTextBlocks.Add(grid);
+            panel.Children.Add(grid);
+        }
+        private void DisplayItem(Smartphone item)
+        {
+            //Setting textboxes
+            foreach (var grid in CustomTextBlocks) { InfoStackPanelFirst.Children.Remove(grid); };
+            CustomTexts.Clear();
+            CustomTextBlocks = new List<Grid>();
+            ProductName.Text = item.Name;
+            ProductPrice.Text = '€' + (item.Price).ToString();
+            ProductBrand.Text = item.ManufacturerName;
+            ProductProcessor.Text = item.Processor;
+            AddTextblock(InfoStackPanelFirst, "Screen", item.ScreenDiagonal.ToString());
+            AddTextblock(InfoStackPanelFirst, "RAM", item.RAM + "GB");
+            AddTextblock(InfoStackPanelFirst, "Battery", item.BatteryStorage.ToString() + "AMh"); 
+            SimilarProducts.Text = "Similar Products";
+            BuyHereButton.Visibility = Visibility.Visible;
+            CompareButton.Visibility = Visibility.Visible;
+            
             InfoStackPanelFirst.Visibility = Visibility.Visible;
             var bi = new BitmapImage();
             bi.BeginInit();
@@ -161,13 +238,21 @@ namespace WPF
         {
             if (SimilarItemsListBox.SelectedIndex == -1) return;
 
-            //Setting textboxes
-            Computer item = (sender as ListBox).SelectedItem as Computer;
+            if (Type == typeof(Computer))
+            {
+                Computer item = (sender as ListBox).SelectedItem as Computer;
 
-            DisplayItem(item);
+                DisplayItem(item);
 
-            Uri uri = new Uri(item.ItemURL);
-            BuyHereHyper.NavigateUri = uri;
+                List<Item> SimilarItems = item.FindSimilar(OriginalList.Cast<Item>().ToList());
+                SimilarItemsListBox.ItemsSource = SimilarItems;
+            }
+            else if (Type == typeof(Smartphone))
+            {
+                Smartphone item = (sender as ListBox).SelectedItem as Smartphone;
+
+                DisplayItem(item);
+            }
         }
 
         private void SearchButton_Click(object sender, RoutedEventArgs e)
@@ -205,12 +290,13 @@ namespace WPF
             ComparisonProductBrand1.Text = null;
             ComparisonProductProcessor1.Text = null;
             ComparisonProductRAM1.Text = null;
-            ComparisonProductGraphicsCard1.Text = null;
-            ComparisonProductResolution1.Text = null;
-            ComparisonProductStorage1.Text = null;
             ComparisonProductRating1.Text = null;
+            ComparisonProduct1Custom1.Text = null;
+            ComparisonProduct1Custom2.Text = null;
+            ComparisonProduct1Custom3.Text = null;
 
             _comparingItem1 = null;
+            _comparing2Item1 = null;
         }
 
         private void RemoveButton2_Click(object sender, RoutedEventArgs e)
@@ -220,12 +306,13 @@ namespace WPF
             ComparisonProductBrand2.Text = null;
             ComparisonProductProcessor2.Text = null;
             ComparisonProductRAM2.Text = null;
-            ComparisonProductGraphicsCard2.Text = null;
-            ComparisonProductResolution2.Text = null;
-            ComparisonProductStorage2.Text = null;
             ComparisonProductRating2.Text = null;
+            ComparisonProduct2Custom1.Text = null;
+            ComparisonProduct2Custom2.Text = null;
+            ComparisonProduct2Custom3.Text = null;
 
             _comparingItem2 = null;
+            _comparing2Item2 = null;
         }
 
         private void CompareButton_Click(object sender, RoutedEventArgs e)
@@ -238,12 +325,22 @@ namespace WPF
                 ComparisonProductBrand1.Text = ProductBrand.Text;
                 ComparisonProductProcessor1.Text = ProductProcessor.Text;
                 ComparisonProductRAM1.Text = ProductRAM.Text;
-                ComparisonProductGraphicsCard1.Text = ProductGraphicsCard.Text;
-                ComparisonProductResolution1.Text = ProductResolution.Text;
-                ComparisonProductStorage1.Text = ProductStorage.Text;
 
-                _comparingItem1 = (Computer)ItemsListBox.SelectedItem;
 
+                if (Type == typeof(Computer))
+                {
+                    _comparingItem1 = (Computer)ItemsListBox.SelectedItem;
+                    ComparisonProduct1Custom1.Text = _comparingItem1.GraphicsCardName;
+                    ComparisonProduct1Custom2.Text = _comparingItem1.Resolution;
+                    ComparisonProduct1Custom3.Text = _comparingItem1.StorageCapacity.ToString();
+                }
+                else if (Type == typeof(Smartphone))
+                {
+                    _comparing2Item1 = (Smartphone)ItemsListBox.SelectedItem;
+                    ComparisonProduct1Custom1.Text = _comparing2Item1.ScreenDiagonal.ToString();
+                    ComparisonProduct1Custom2.Text = _comparing2Item1.Resolution;
+                    ComparisonProduct1Custom3.Text = _comparing2Item1.BatteryStorage.ToString();
+                }
             }
             else 
             {
@@ -253,11 +350,22 @@ namespace WPF
                 ComparisonProductBrand2.Text = ProductBrand.Text;
                 ComparisonProductProcessor2.Text = ProductProcessor.Text;
                 ComparisonProductRAM2.Text = ProductRAM.Text;
-                ComparisonProductGraphicsCard2.Text = ProductGraphicsCard.Text;
-                ComparisonProductResolution2.Text = ProductResolution.Text;
-                ComparisonProductStorage2.Text = ProductStorage.Text;
 
-                _comparingItem2 = (Computer)ItemsListBox.SelectedItem;
+
+                if (Type == typeof(Computer))
+                {
+                    _comparingItem2 = (Computer)ItemsListBox.SelectedItem;
+                    ComparisonProduct2Custom1.Text = _comparingItem2.GraphicsCardName;
+                    ComparisonProduct2Custom2.Text = _comparingItem2.Resolution;
+                    ComparisonProduct2Custom3.Text = _comparingItem2.StorageCapacity.ToString();
+                }
+                else if (Type == typeof(Smartphone))
+                {
+                    _comparing2Item2 = (Smartphone)ItemsListBox.SelectedItem;
+                    ComparisonProduct2Custom1.Text = _comparing2Item2.ScreenDiagonal.ToString();
+                    ComparisonProduct2Custom2.Text = _comparing2Item2.Resolution;
+                    ComparisonProduct2Custom3.Text = _comparing2Item2.BatteryStorage.ToString();
+                }
 
             }
             UpdateComparison();
@@ -302,9 +410,78 @@ namespace WPF
             FilterButtonGrid.Visibility = Visibility.Collapsed;
         }
 
-        private void FavoritesButton_Click(object sender, RoutedEventArgs e)
+        private void CategoriesButton_Click(object sender, RoutedEventArgs e)
         {
+            ItemInfoStackPanel.Visibility = Visibility.Collapsed;
+            ListStackPanel.Visibility = Visibility.Collapsed;
+            ComparisonGrid.Visibility = Visibility.Collapsed;
+            CategoriesMenuGrid.Visibility = Visibility.Visible;
+        }
 
+        private async void SmartphoneCategory_Click(object sender, RoutedEventArgs e)
+        {
+            ItemInfoStackPanel.Visibility = Visibility.Visible;
+            ListStackPanel.Visibility = Visibility.Visible;
+            ComparisonGrid.Visibility = Visibility.Collapsed;
+            CategoriesMenuGrid.Visibility = Visibility.Collapsed;
+            OriginalList = (await GetAPIAsync<Smartphone>(ConfigurationManager.AppSettings.Get("smartphoneKey"))).Cast<Item>().ToList();
+            ItemsListBox.ItemsSource = OriginalList;
+            Type = typeof(Smartphone);
+            Slidet1Text.Text = "Price";
+            Slidet2Text.Text = "Storage";
+            Slidet3Text.Text = "RAM";
+            Custom1.Text = "Screen";
+            Custom2.Text = "Resolution";
+            Custom3.Text = "Battery";
+            ResetComparison();
+        }
+
+        private async void LaptopCategory_Click(object sender, RoutedEventArgs e)
+        {
+            ItemInfoStackPanel.Visibility = Visibility.Visible;
+            ListStackPanel.Visibility = Visibility.Visible;
+            ComparisonGrid.Visibility = Visibility.Collapsed;
+            CategoriesMenuGrid.Visibility = Visibility.Collapsed;
+            OriginalList = (await GetAPIAsync<Computer>(ConfigurationManager.AppSettings.Get("computerKey"))).Cast<Item>().ToList();
+            ItemsListBox.ItemsSource = OriginalList;
+            Type = typeof(Computer);
+            Slidet1Text.Text = "Price";
+            Slidet2Text.Text = "Storage";
+            Slidet3Text.Text = "RAM";
+            Custom1.Text = "Graphic Card";
+            Custom2.Text = "Resolution";
+            Custom3.Text = "Storage";
+            ResetComparison();
+        }
+
+        private void ThemeButton_Click(object sender, RoutedEventArgs e)
+        {
+            if(UserSettings.Default.Theme == "Light")
+            {
+                UserSettings.Default.PrimaryColor = "#80DEEA";
+                UserSettings.Default.SecondaryColor = "#2A2828";
+                UserSettings.Default.ThirdColor = "#2A2828";
+                UserSettings.Default.AdditionalColor = "#E5A1DB";
+                UserSettings.Default.BackgroundColor = "#312F2F";
+                UserSettings.Default.FontColor = "#FFFFFF";
+                UserSettings.Default.Theme = "Dark";
+                UserSettings.Default.Save();
+                brush = Brushes.White;
+                foreach(var text in CustomTexts) { text.Foreground = brush; }
+            }
+            else
+            {
+                UserSettings.Default.PrimaryColor = "#FFFFFF";
+                UserSettings.Default.SecondaryColor = "#80DEEA";
+                UserSettings.Default.ThirdColor = "#E5A1DB";
+                UserSettings.Default.AdditionalColor = "#FFFFFF";
+                UserSettings.Default.BackgroundColor = "#FFFFFF";
+                UserSettings.Default.FontColor = "#000000";
+                UserSettings.Default.Theme = "Light";
+                UserSettings.Default.Save();
+                brush = Brushes.Black;
+                foreach (var text in CustomTexts) { text.Foreground = brush; }
+            }
         }
     }
 }

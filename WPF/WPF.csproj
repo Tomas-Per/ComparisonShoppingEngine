@@ -7,6 +7,9 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="ImagesSource\button.png" />
+    <None Remove="ImagesSource\smartphone_cart.png" />
+    <None Remove="laptop_cart.png" />
     <None Remove="libra100.png" />
     <None Remove="libra100sharpedges.png" />
   </ItemGroup>
@@ -26,8 +29,26 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Resource Include="ImagesSource\button.png" />
     <Resource Include="ImagesSource\libra100.png" />
+    <Resource Include="ImagesSource\laptop_cart.png" />
+    <Resource Include="ImagesSource\smartphone_cart.png" />
     <Resource Include="libra100sharpedges.png" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Update="UserSettings.Designer.cs">
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>UserSettings.settings</DependentUpon>
+    </Compile>
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="UserSettings.settings">
+      <Generator>PublicSettingsSingleFileGenerator</Generator>
+      <LastGenOutput>UserSettings.Designer.cs</LastGenOutput>
+    </None>
   </ItemGroup>
 
 </Project>
