@@ -45,6 +45,10 @@
         margin:0px 0px 25px 0px;
     }
 
+.checkbox {
+    padding-left: 20px;
+}
+
 @media screen and (max-height: 450px) {
     .sidenav {
         padding-top: 15px;
