@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace DataContent.DAL.Helpers
 {
-    public static class ProcessorServiceHelper
+    public static class ApiHelper
     {
         private static HttpClient _client;
 
