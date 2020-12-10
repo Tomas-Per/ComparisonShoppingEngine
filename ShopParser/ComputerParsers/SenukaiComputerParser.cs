@@ -14,15 +14,28 @@ namespace WebParser.ComputerParsers
 {
     public class SenukaiComputerParser : IParser<Computer>
     {
-        private readonly string _url = "https://www.senukai.lt/c/kompiuterine-technika-biuro-prekes/nesiojami-kompiuteriai-ir-priedai/nesiojami-kompiuteriai/5ei?page=1";
+        private string _url;
         private Lazy<ChromeDriver> _driver;
         private HttpClient _client;
-        public SenukaiComputerParser()
+        public SenukaiComputerParser(ItemCategory itemCategory)
         {
             var options = new ChromeOptions();
             options.AddArguments("--headless");
             _driver = new Lazy<ChromeDriver>(() => new ChromeDriver(MainPath.GetShopParserPath(), options));
             _client = new HttpClient();
+
+            switch(itemCategory)
+            {
+                case ItemCategory.DesktopComputer:
+                    _url = "https://www.senukai.lt/c/kompiuterine-technika-biuro-prekes/stacionarus-kompiuteriai-monitoriai-ups/stacionarus-kompiuteriai/c07?page=1";
+                    break;
+                case ItemCategory.Laptop:
+                    _url = "https://www.senukai.lt/c/kompiuterine-technika-biuro-prekes/nesiojami-kompiuteriai-ir-priedai/nesiojami-kompiuteriai/5ei?page=1";
+                    break;
+                default:
+                    _url = "https://www.senukai.lt/c/kompiuterine-technika-biuro-prekes/nesiojami-kompiuteriai-ir-priedai/nesiojami-kompiuteriai/5ei?page=1";
+                    break;
+            }
         }
 
         //parses laptops from senukai.lt and returns results in a List<Computer>
@@ -56,7 +69,6 @@ namespace WebParser.ComputerParsers
                     {
                         continue;
                     }
-                    computer.ItemCategory = ItemCategory.Laptop;
                     data.Add(computer);
                 }
                 //break;
@@ -112,7 +124,14 @@ namespace WebParser.ComputerParsers
                 {
                     computer.ManufacturerName = table[i + 1].Text;
                 }
-
+                else if (table[i].Text.Equals("Stacionarūs kompiuteriai"))
+                {
+                    computer.ItemCategory = ItemCategory.DesktopComputer;
+                }
+                else if (table[i].Text.Equals("Nešiojami kompiuteriai"))
+                {
+                    computer.ItemCategory = ItemCategory.Laptop;
+                }
                 else if (table[i].Text.Contains("Ekrano raiška taškais"))
                 {
                     computer.Resolution = table[i + 1].Text;

@@ -71,7 +71,7 @@ namespace DataUpdater
 
                     List<Task<List<Computer>>> laptopTasks = new List<Task<List<Computer>>>();
 
-                    laptopTasks.Add(Task.Run(() => new SenukaiComputerParser().ParseShop()));
+                    laptopTasks.Add(Task.Run(() => new SenukaiComputerParser(itemCategory).ParseShop()));
                     laptopTasks.Add(Task.Run(() => new AvitelaComputerParser().ParseShop()));
                     laptopTasks.Add(Task.Run(() => new PiguComputerParser().ParseShop()));
                     
