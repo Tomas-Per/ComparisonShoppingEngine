@@ -14,7 +14,7 @@ namespace WebParser.ComputerParsers
 {
     public class AvitelaComputerParser : IParser<Computer>
     {
-        private readonly string _url = 
+        private readonly string _url;
         private Lazy<ChromeDriver> _driver;
         private HttpClient _client;
 
