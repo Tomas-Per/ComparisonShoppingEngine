@@ -99,18 +99,6 @@ namespace WebParser.ComputerParsers
             computer.ItemURL = url;
             computer.ShopName = "Senukai.lt";
 
-            var image = _driver.Value.FindElements(By.ClassName("product-gallery-slider__slide__image"));
-
-            try
-            {
-                computer.ImageLink = image[0].GetAttribute("src");
-            }
-
-            catch (ArgumentOutOfRangeException)
-            {
-                computer.ImageLink = "https://ksd-images.lt/display/aikido/store/1e3628060337b388dd4ffbce4f20f608.jpg?h=742&w=816";
-            }
-
             var table = _driver.Value.FindElements(By.TagName("td"));
 
             //FOR API CALLS
@@ -199,6 +187,25 @@ namespace WebParser.ComputerParsers
                     }
                 }   
             }
+
+            var image = _driver.Value.FindElements(By.ClassName("product-gallery-slider__slide__image"));
+            try
+            {
+                computer.ImageLink = image[0].GetAttribute("src");
+            }
+
+            catch (ArgumentOutOfRangeException)
+            {
+                if (computer.ItemCategory == ItemCategory.Laptop)
+                {
+                    computer.ImageLink = "https://ksd-images.lt/display/aikido/store/1e3628060337b388dd4ffbce4f20f608.jpg?h=742&w=816";
+                }
+                else
+                {
+                    computer.ImageLink = "https://ksd-images.lt/display/aikido/store/5b7e344dc88ac39e324764a6cdb9dabb.jpg?h=742&w=816";
+                }
+            }
+
             //ResetDriver();
             _driver.Value.Close();
             return computer;

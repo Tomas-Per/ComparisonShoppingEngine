@@ -128,9 +128,15 @@ namespace WebParser.ComputerParsers
             }
             catch (Exception)
             {
-                computer.ImageLink = "https://ksd-images.lt/display/aikido/store/1e3628060337b388dd4ffbce4f20f608.jpg?h=742&w=816";
+                if (computer.ItemCategory == ItemCategory.Laptop)
+                {
+                    computer.ImageLink = "https://ksd-images.lt/display/aikido/store/1e3628060337b388dd4ffbce4f20f608.jpg?h=742&w=816";
+                }
+                else
+                {
+                    computer.ImageLink = "https://avitela.lt/image/cache/catalog/p/236/252/10877/1562868040_img_1216636-600x600.jpg";
+                }
             }
-
             var table = _driver.Value.FindElements(By.TagName("td"));
 
             //FOR API CALLS
