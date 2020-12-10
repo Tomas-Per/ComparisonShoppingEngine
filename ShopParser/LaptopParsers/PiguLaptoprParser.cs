@@ -10,14 +10,14 @@ using System.Net.Http;
 using System.Threading.Tasks;
 using static ItemLibrary.Categories;
 
-namespace WebParser.ComputerParsers
+namespace WebParser.LaptopParsers
 {
-    public class PiguComputerParser : IParser<Computer>
+    public class PiguLaptoprParser : IParser<Computer>
     {
         private readonly string _url = "https://pigu.lt/lt/kompiuteriai/nesiojami-kompiuteriai?page=1";
         private Lazy<ChromeDriver> _driver;
         private HttpClient _client;
-        public PiguComputerParser ()
+        public PiguLaptoprParser ()
         {
             var options = new ChromeOptions();
             options.AddArguments("--headless");

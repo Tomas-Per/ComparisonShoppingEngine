@@ -1,18 +1,14 @@
-﻿using WebParser.ComputerParsers;
-using ItemLibrary;
-using DataContent.ReadingCSV.Services;
+﻿using ItemLibrary;
 using System.Collections.Generic;
-using PathLibrary;
 using WebParser;
-using DataContent;
 using static ItemLibrary.Categories;
 using System.Linq;
-using System;
 using System.Threading.Tasks;
 using System.Net.Http;
 using Newtonsoft.Json;
 using System.Text;
 using WebParser.SmartphoneParsers;
+using WebParser.LaptopParsers;
 
 namespace DataUpdater
 {
@@ -71,9 +67,9 @@ namespace DataUpdater
 
                     List<Task<List<Computer>>> laptopTasks = new List<Task<List<Computer>>>();
 
-                    laptopTasks.Add(Task.Run(() => new SenukaiComputerParser().ParseShop()));
-                    laptopTasks.Add(Task.Run(() => new AvitelaComputerParser().ParseShop()));
-                    laptopTasks.Add(Task.Run(() => new PiguComputerParser().ParseShop()));
+                    laptopTasks.Add(Task.Run(() => new SenukaiLaptopParser().ParseShop()));
+                    laptopTasks.Add(Task.Run(() => new AvitelaLaptopParser().ParseShop()));
+                    laptopTasks.Add(Task.Run(() => new PiguLaptoprParser().ParseShop()));
                     
                     var laptopData = await Task.WhenAll(laptopTasks);
 

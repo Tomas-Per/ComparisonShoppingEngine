@@ -10,14 +10,14 @@ using PathLibrary;
 using System.Threading.Tasks;
 using System.Net.Http;
 
-namespace WebParser.ComputerParsers
+namespace WebParser.LaptopParsers
 {
-    public class SenukaiComputerParser : IParser<Computer>
+    public class SenukaiLaptopParser : IParser<Computer>
     {
         private readonly string _url = "https://www.senukai.lt/c/kompiuterine-technika-biuro-prekes/nesiojami-kompiuteriai-ir-priedai/nesiojami-kompiuteriai/5ei?page=1";
         private Lazy<ChromeDriver> _driver;
         private HttpClient _client;
-        public SenukaiComputerParser()
+        public SenukaiLaptopParser()
         {
             var options = new ChromeOptions();
             options.AddArguments("--headless");
