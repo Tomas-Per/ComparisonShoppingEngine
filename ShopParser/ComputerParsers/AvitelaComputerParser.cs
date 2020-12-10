@@ -10,15 +10,15 @@ using PathLibrary;
 using System.Threading.Tasks;
 using System.Net.Http;
 
-namespace WebParser.LaptopParsers
+namespace WebParser.ComputerParsers
 {
-    public class AvitelaLaptopParser : IParser<Computer>
+    public class AvitelaComputerParser : IParser<Computer>
     {
         private readonly string _url = "https://avitela.lt/kompiuterine-technika/nesiojamieji-kompiuteriai/nesiojami-kompiuteriai?limit=50&page=1";
         private Lazy<ChromeDriver> _driver;
         private HttpClient _client;
 
-        public AvitelaLaptopParser()
+        public AvitelaComputerParser()
         {
             var options = new ChromeOptions();
             options.AddArguments("--headless");
