@@ -14,15 +14,28 @@ namespace WebParser.ComputerParsers
 {
     public class PiguComputerParser : IParser<Computer>
     {
-        private readonly string _url = "https://pigu.lt/lt/kompiuteriai/nesiojami-kompiuteriai?page=1";
+        private string _url;
         private Lazy<ChromeDriver> _driver;
         private HttpClient _client;
-        public PiguComputerParser ()
+        public PiguComputerParser (ItemCategory itemCategory)
         {
             var options = new ChromeOptions();
             options.AddArguments("--headless");
             _driver = new Lazy<ChromeDriver>(() => new ChromeDriver(MainPath.GetShopParserPath(), options));
             _client = new HttpClient();
+
+            switch(itemCategory)
+            {
+                case ItemCategory.DesktopComputer:
+                    _url = "https://pigu.lt/lt/stacionarus-kompiuteriai?page=1";
+                    break;
+                case ItemCategory.Laptop:
+                    _url = "https://pigu.lt/lt/kompiuteriai/nesiojami-kompiuteriai?page=1";
+                    break;
+                default:
+                    _url = "https://pigu.lt/lt/kompiuteriai/nesiojami-kompiuteriai?page=1";
+                    break;
+            }
         }
 
         public async Task<List<Computer>> ParseShop()
@@ -54,9 +67,6 @@ namespace WebParser.ComputerParsers
                     _driver.Value.SwitchTo().Window(_driver.Value.WindowHandles.First());
 
                     if (computer == null) continue;
-
-                    computer.ItemCategory = ItemCategory.Laptop;
-
                     data.Add(computer);
                 }
                 //break;
@@ -102,6 +112,14 @@ namespace WebParser.ComputerParsers
                     {
                         computer.Processor = await response.Content.ReadAsAsync<Processor>();
                     }
+                }
+                else if (table[i].Text.Equals("Stacionarūs kompiuteriai"))
+                {
+                    computer.ItemCategory = ItemCategory.DesktopComputer;
+                }
+                else if (table[i].Text.Equals("Nešiojami kompiuteriai"))
+                {
+                    computer.ItemCategory = ItemCategory.Laptop;
                 }
                 else if (table[i].Text.Contains("Prekės ženklas"))
                 {
