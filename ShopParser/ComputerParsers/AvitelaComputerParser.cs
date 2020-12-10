@@ -14,16 +14,29 @@ namespace WebParser.ComputerParsers
 {
     public class AvitelaComputerParser : IParser<Computer>
     {
-        private readonly string _url = "https://avitela.lt/kompiuterine-technika/nesiojamieji-kompiuteriai/nesiojami-kompiuteriai?limit=50&page=1";
+        private readonly string _url = 
         private Lazy<ChromeDriver> _driver;
         private HttpClient _client;
 
-        public AvitelaComputerParser()
+        public AvitelaComputerParser(ItemCategory itemCategory)
         {
             var options = new ChromeOptions();
             options.AddArguments("--headless");
             _driver = new Lazy<ChromeDriver>(() => new ChromeDriver(MainPath.GetShopParserPath(), options));
             _client = new HttpClient();
+
+            switch (itemCategory)
+            {
+                case ItemCategory.DesktopComputer:
+                    _url = "https://avitela.lt/kompiuterine-technika/stacionarus-kompiuteriai?limit=50&page=1";
+                    break;
+                case ItemCategory.Laptop:
+                    _url = "https://avitela.lt/kompiuterine-technika/nesiojamieji-kompiuteriai/nesiojami-kompiuteriai?limit=50&page=1";
+                    break;
+                default:
+                    _url = "https://avitela.lt/kompiuterine-technika/nesiojamieji-kompiuteriai/nesiojami-kompiuteriai?limit=50&page=1";
+                    break;
+            }
         }
 
         public async Task<List<Computer>> ParseShop()
@@ -91,6 +104,23 @@ namespace WebParser.ComputerParsers
             computer.ItemURL = url;
             computer.ShopName = "Avitela.lt";
 
+            IWebElement itemCategory = null;
+            try
+            {
+                itemCategory = _driver.Value.FindElement(By.XPath("/html/body/div[1]/div[2]/div[1]/div[5]/div[2]/div[2]/div/div/ul/li[3]/a"));
+            }
+            catch(NoSuchElementException)
+            {
+                Console.WriteLine("reeee");
+            }
+            if(itemCategory != null && itemCategory.Text.Equals("Stacionarūs kompiuteriai"))
+            {
+                computer.ItemCategory = ItemCategory.DesktopComputer;
+            }
+            else if (itemCategory != null && itemCategory.Text.Equals("Nešiojamieji kompiuteriai"))
+            {
+                computer.ItemCategory = ItemCategory.Laptop;
+            }
             try
             {
                 computer.ImageLink = _driver.Value.FindElement(By.CssSelector("div.product-image-right.product-photo")).
