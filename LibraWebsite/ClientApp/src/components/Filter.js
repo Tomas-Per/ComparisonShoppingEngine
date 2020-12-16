@@ -1,7 +1,9 @@
 ﻿import React, { Component } from 'react';
 import './FilterStyle.css';
 import Slider from './Slider'
+import CheckBox from './Checkbox'
 import { Grid } from '@material-ui/core';
+import Checkbox from '@material-ui/core/Checkbox';
 
 
 
@@ -18,25 +20,22 @@ export default class Filter extends Component {
                     <Slider />
                 </ul>
                 <p>Processor</p>
+                <div class="checkbox">
+                    <CheckBox id="ProcessorInteli3" name="Inteli3" label="Intel i3" />
+                    <CheckBox id="ProcessorInteli5" name="Inteli5" label="Intel i5" />
+                    <CheckBox id="ProcessorInteli7" name="Inteli7" label="Intel i7" />
+                    <CheckBox id="ProcessorAMD3" name="AMD3" label="AMD Ryzen 3" />
+                    <CheckBox id="ProcessorAMD5" name="AMD5" label="AMD Ryzen 5" />
+                    <CheckBox id="ProcessorAMD7" name="AMD7" label="AMD Ryzen 7" />
+                </div>
                 <p>Brand</p>
                 <div class="checkbox">
-                    <input type="checkbox" id="BrandAsus" name="Asus" />
-                    <label for="BrandAsus"> Asus</label>
-                    <br />
-                    <input type="checkbox" id="BrandApple" name="Apple" />
-                    <label for="BrandAplee"> Apple</label>
-                    <br />
-                    <input type="checkbox" id="BrandLenovo" name="Levono" />
-                    <label for="BrandLenovo"> Lenovo</label>
-                    <br />
-                    <input type="checkbox" id="BrandAcer" name="Acer" />
-                    <label for="BrandAcer"> Acer</label>
-                    <br />
-                    <input type="checkbox" id="BrandDell" name="Dell" />
-                    <label for="BrandDell"> Dell</label>
-                    <br />
-                    <input type="checkbox" id="BrandHuawei" name="Huawei" />
-                    <label for="BrandHuawei"> Huawei</label>
+                    <CheckBox id="BrandAsus" name="Asus" label="Asus" />
+                    <CheckBox id="BrandDell" name="Dell" label="Dell" />
+                    <CheckBox id="BrandApple" name="Apple" label="Apple" />
+                    <CheckBox id="BrandAcer" name="Acer" label="Acer" />
+                    <CheckBox id="BrandLenovo" name="Lenovo" label="Lenovo" />
+                    <CheckBox id="BrandHuawei" name="Huawei" label="Huawei" />
                 </div>
             </div>
         );

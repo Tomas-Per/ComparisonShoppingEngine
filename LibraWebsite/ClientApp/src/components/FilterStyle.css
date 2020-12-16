@@ -47,6 +47,7 @@
 
 .checkbox {
     padding-left: 20px;
+    align-items: center;
 }
 
 @media screen and (max-height: 450px) {

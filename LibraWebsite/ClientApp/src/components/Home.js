@@ -1,13 +1,14 @@
 import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
 import './HomeStyle.css';
+import GridList from './GridList';
 
 export class Home extends Component {
   static displayName = Home.name;
 
   render () {
     return (
-      <div class="home">
+      /*<div class="home">
         <h1>Hello World!</h1>
         <p>Welcome to your new single-page application, built with:</p>
         <ul>
@@ -22,8 +23,10 @@ export class Home extends Component {
           <li><strong>Efficient production builds</strong>. In production mode, development-time features are disabled, and your <code>dotnet publish</code> configuration produces minified, efficiently bundled JavaScript files.</li>
         </ul>
         <p>The <code>ClientApp</code> subdirectory is a standard React application based on the <code>create-react-app</code> template. If you open a command prompt in that directory, you can run <code>npm</code> commands such as <code>npm test</code> or <code>npm install</code>.</p>
-      </div>
+      </div>*/
+
+        <GridList className="grid"/>
       );
-      ReactDOM.render(<h1>aaaaaaaaaa</h1>, document.getElementById("root"))
+     
   }
 }
