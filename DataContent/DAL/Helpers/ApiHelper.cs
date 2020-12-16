@@ -10,11 +10,11 @@ namespace DataContent.DAL.Helpers
 {
     public static class ApiHelper
     {
-        private static HttpClient _client;
+        public static HttpClient Client;
 
         public static void InitializeClient()
         {
-            _client = new HttpClient();
+            Client = new HttpClient();
         }
 
     }

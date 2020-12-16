@@ -9,6 +9,7 @@ using System.Linq;
 using PathLibrary;
 using System.Threading.Tasks;
 using System.Net.Http;
+using DataContent.DAL.Access;
 
 namespace WebParser.ComputerParsers
 {
@@ -16,14 +17,12 @@ namespace WebParser.ComputerParsers
     {
         private readonly string _url = "https://avitela.lt/kompiuterine-technika/nesiojamieji-kompiuteriai/nesiojami-kompiuteriai?limit=50&page=1";
         private Lazy<ChromeDriver> _driver;
-        private HttpClient _client;
 
         public AvitelaComputerParser()
         {
             var options = new ChromeOptions();
             options.AddArguments("--headless");
             _driver = new Lazy<ChromeDriver>(() => new ChromeDriver(MainPath.GetShopParserPath(), options));
-            _client = new HttpClient();
         }
 
         public async Task<List<Computer>> ParseShop()
@@ -103,11 +102,6 @@ namespace WebParser.ComputerParsers
 
             var table = _driver.Value.FindElements(By.TagName("td"));
 
-            //FOR API CALLS
-            var apiUrl = "https://localhost:44315/Models/";
-            HttpResponseMessage response;
-            //---------------------------------------------
-
             for (int i = 0; i < table.Count; i++)
             {
                 if (table[i].Text.Equals("Vaizdo plokštė"))
@@ -151,11 +145,7 @@ namespace WebParser.ComputerParsers
                 }
                 else if (table[i].Text.Contains("Procesoriaus tipas"))
                 {
-                    response = await _client.GetAsync(apiUrl + table[i + 1].Text);
-                    if (response.IsSuccessStatusCode)
-                    {
-                        computer.Processor = await response.Content.ReadAsAsync<Processor>();
-                    }
+                    computer.Processor = await ProcessorAccess.GetByModel(table[i + 1].Text);
                 }
 
                 else if (computer.GraphicsCardName == null && table[i].Text.Contains("Vaizdo plokštės tipas"))
@@ -165,11 +155,7 @@ namespace WebParser.ComputerParsers
 
                 else if (table[i].Text.Contains("Procesoriaus modelis"))
                 {
-                    response = await _client.GetAsync(apiUrl + table[i + 1].Text);
-                    if (response.IsSuccessStatusCode)
-                    {
-                        computer.Processor = await response.Content.ReadAsAsync<Processor>();
-                    }
+                    computer.Processor = await ProcessorAccess.GetByModel(table[i + 1].Text);
                 }
 
             }

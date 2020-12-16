@@ -9,6 +9,7 @@ using static ItemLibrary.Categories;
 using PathLibrary;
 using System.Threading.Tasks;
 using System.Net.Http;
+using DataContent.DAL.Access;
 
 namespace WebParser.ComputerParsers
 {
@@ -16,13 +17,11 @@ namespace WebParser.ComputerParsers
     {
         private readonly string _url = "https://www.senukai.lt/c/kompiuterine-technika-biuro-prekes/nesiojami-kompiuteriai-ir-priedai/nesiojami-kompiuteriai/5ei?page=1";
         private Lazy<ChromeDriver> _driver;
-        private HttpClient _client;
         public SenukaiComputerParser()
         {
             var options = new ChromeOptions();
             options.AddArguments("--headless");
             _driver = new Lazy<ChromeDriver>(() => new ChromeDriver(MainPath.GetShopParserPath(), options));
-            _client = new HttpClient();
         }
 
         //parses laptops from senukai.lt and returns results in a List<Computer>
@@ -101,11 +100,6 @@ namespace WebParser.ComputerParsers
 
             var table = _driver.Value.FindElements(By.TagName("td"));
 
-            //FOR API CALLS
-            var apiUrl = "https://localhost:44315/Models/";
-            HttpResponseMessage response;
-            //---------------------------------------------
-
             for (int i = 0; i < table.Count; i++)
             {
                 if (table[i].Text.Contains("Prekės ženklas"))
@@ -122,19 +116,11 @@ namespace WebParser.ComputerParsers
                 {
                     if (table[i + 1].Text.Contains("("))
                     {
-                        response = await _client.GetAsync(apiUrl + table[i + 1].Text.Substring(0, table[i + 1].Text.IndexOf("(")));
-                        if (response.IsSuccessStatusCode)
-                        {
-                            computer.Processor = await response.Content.ReadAsAsync<Processor>();
-                        }
+                        computer.Processor = await ProcessorAccess.GetByModel(table[i + 1].Text.Substring(0, table[i + 1].Text.IndexOf("(")));
                     }
                     else
                     {
-                        response = await _client.GetAsync(apiUrl + table[i + 1].Text);
-                        if (response.IsSuccessStatusCode)
-                        {
-                            computer.Processor = await response.Content.ReadAsAsync<Processor>();
-                        }
+                        computer.Processor = await ProcessorAccess.GetByModel(table[i + 1].Text);
                     }
                 }
 

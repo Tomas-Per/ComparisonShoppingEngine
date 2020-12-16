@@ -13,6 +13,7 @@ using System.Net.Http;
 using Newtonsoft.Json;
 using System.Text;
 using WebParser.SmartphoneParsers;
+using DataContent.DAL.Helpers;
 
 namespace DataUpdater
 {
@@ -23,6 +24,7 @@ namespace DataUpdater
         public DataUpdater()
         {
             _httpClient = new HttpClient();
+            ApiHelper.InitializeClient();
         }
 
         //calls shop parser and returns parsed item list
