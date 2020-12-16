@@ -91,7 +91,7 @@ namespace WebParser.ComputerParsers
             {
                 if (table[i].Text.Contains("Procesorius"))
                 {
-                    computer.Processor = await ProcessorAccess.GetByModel(table[i + 1].Text);
+                    computer.Processor = await ProcessorAccess.GetByModelAsync(table[i + 1].Text);
                 }
                 else if (table[i].Text.Contains("Prekės ženklas"))
                 {

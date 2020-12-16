@@ -145,7 +145,7 @@ namespace WebParser.ComputerParsers
                 }
                 else if (table[i].Text.Contains("Procesoriaus tipas"))
                 {
-                    computer.Processor = await ProcessorAccess.GetByModel(table[i + 1].Text);
+                    computer.Processor = await ProcessorAccess.GetByModelAsync(table[i + 1].Text);
                 }
 
                 else if (computer.GraphicsCardName == null && table[i].Text.Contains("Vaizdo plokštės tipas"))
@@ -155,7 +155,7 @@ namespace WebParser.ComputerParsers
 
                 else if (table[i].Text.Contains("Procesoriaus modelis"))
                 {
-                    computer.Processor = await ProcessorAccess.GetByModel(table[i + 1].Text);
+                    computer.Processor = await ProcessorAccess.GetByModelAsync(table[i + 1].Text);
                 }
 
             }

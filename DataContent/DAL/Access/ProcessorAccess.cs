@@ -13,7 +13,7 @@ namespace DataContent.DAL.Access
     {
         private static string apiUrl = "https://localhost:44315/";
 
-        public async static Task<Processor> GetByModel(string model)
+        public async static Task<Processor> GetByModelAsync(string model)
         {
             using HttpResponseMessage response = await ApiHelper.Client.GetAsync(apiUrl + "Models/" + model);
             Processor processor;

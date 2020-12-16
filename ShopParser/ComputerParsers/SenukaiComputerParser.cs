@@ -116,11 +116,11 @@ namespace WebParser.ComputerParsers
                 {
                     if (table[i + 1].Text.Contains("("))
                     {
-                        computer.Processor = await ProcessorAccess.GetByModel(table[i + 1].Text.Substring(0, table[i + 1].Text.IndexOf("(")));
+                        computer.Processor = await ProcessorAccess.GetByModelAsync(table[i + 1].Text.Substring(0, table[i + 1].Text.IndexOf("(")));
                     }
                     else
                     {
-                        computer.Processor = await ProcessorAccess.GetByModel(table[i + 1].Text);
+                        computer.Processor = await ProcessorAccess.GetByModelAsync(table[i + 1].Text);
                     }
                 }
 
