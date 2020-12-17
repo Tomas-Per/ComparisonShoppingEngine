@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using static ItemLibrary.Categories;
+using static ModelLibrary.Categories;
 
-namespace ItemLibrary
+namespace ModelLibrary
 {
     public abstract class Item
     {
@@ -37,7 +37,7 @@ namespace ItemLibrary
 
         [MaxLength(256)]
         public string ImageLink { get; set; }
-        public ItemCategory ItemCategory { get; set; }
+        public Categories.ItemCategory ItemCategory { get; set; }
 
         //will remove this method in near future
         public abstract List<Item> FindSimilar(List<Item> list);

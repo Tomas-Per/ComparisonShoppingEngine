@@ -3,7 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace ItemLibrary.DataContexts
+namespace ModelLibrary.DataContexts
 {
     public class ComputerContext :DbContext
     {

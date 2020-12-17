@@ -1,7 +1,7 @@
 ﻿using DataContent.DAL.Interfaces;
 using DataManipulation.DataFillers;
-using ItemLibrary;
-using ItemLibrary.DataContexts;
+using ModelLibrary;
+using ModelLibrary.DataContexts;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;

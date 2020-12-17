@@ -1,8 +1,8 @@
 ﻿using DataContent.DAL.Interfaces;
 using ExceptionsLogging;
-using ItemLibrary;
-using ItemLibrary.DataContexts;
-using ItemLibrary.Exceptions;
+using ModelLibrary;
+using ModelLibrary.DataContexts;
+using ModelLibrary.Exceptions;
 using Microsoft.EntityFrameworkCore;
 using Parsing;
 using System;
