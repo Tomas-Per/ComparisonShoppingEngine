@@ -73,7 +73,13 @@ namespace DataContent.DAL.Repositories
                     await _context.SaveChangesAsync();
 
                     //add new computer with existing Processor to DB
-                    computer.Processor = _context.Processors.Find(computer.Processor.Id);
+                    try
+                    {
+                        computer.Processor = _context.Processors.Find(computer.Processor.Id);
+                    }
+                    catch(NullReferenceException)
+                    {
+                    }
                     _context.Add(computer);
                 }
             }
