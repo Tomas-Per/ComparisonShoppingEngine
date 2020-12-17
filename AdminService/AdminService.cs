@@ -70,7 +70,6 @@ namespace AdminService
                         {
                             var updater = new DataUpdater<Computer>();
                             var results = await updater.GetItemCategoryListFromWebAsync(ItemCategory.DesktopComputer);
-                            results.ForEach(item => Console.WriteLine(item.ItemCategory + "   " + item.ItemURL));
                             await updater.UpdateItemListFile(results);
                             Console.WriteLine("Shop Parsed");
                         }
