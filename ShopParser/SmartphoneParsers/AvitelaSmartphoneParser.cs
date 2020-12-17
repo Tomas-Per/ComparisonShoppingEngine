@@ -62,10 +62,8 @@ namespace WebParser.SmartphoneParsers
                     smartphone.ItemCategory = ItemCategory.Smartphone;
                     data.Add(smartphone);        
                 }
-                //break;
             }
-            _driver.Value.Close();
-            //ResetDriver();
+            ResetDriver();
             return data;
         }
 
@@ -73,6 +71,11 @@ namespace WebParser.SmartphoneParsers
         //parses smartphone window, updates smartphone fields
         public async Task<Smartphone> ParseWindow(string url)
         {
+            if (url == null)
+            {
+                return null;
+            }
+
             _driver.Value.Navigate().GoToUrl(url);
 
             Smartphone smartphone = new Smartphone();
@@ -114,18 +117,10 @@ namespace WebParser.SmartphoneParsers
                 else if (table[i].Text.Contains("Priekinė kamera"))
                 {
                     smartphone.FrontCameras = table[i + 1].Text;
-                    //var values = table[i + 1].Text.Split('+');
-                    //List<int> cameras = new List<int>();
-                    //values.ToList().ForEach(item => cameras.Add(item.ParseInt()));
-                    //smartphone.FrontCameraMP = cameras;
                 }
                 else if (table[i].Text.Equals("Kamera"))
                 {
                     smartphone.BackCameras = table[i + 1].Text;
-                    //var values = table[i + 1].Text.Split('+');
-                    //List<int> cameras = new List<int>();
-                    //values.ToList().ForEach(item => cameras.Add(item.ParseInt()));  
-                    //smartphone.BackCameraMP = cameras;    
                 }
                 else if (table[i].Text.Contains("Vidinė atmintis"))
                 {
@@ -148,8 +143,7 @@ namespace WebParser.SmartphoneParsers
                     smartphone.RAM = table[i + 1].Text.ParseInt();
                 }
             }
-            //ResetDriver();
-            _driver.Value.Close();
+            ResetDriver();
             return smartphone;
         }
 
