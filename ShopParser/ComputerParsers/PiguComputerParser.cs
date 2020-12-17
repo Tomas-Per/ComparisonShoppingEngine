@@ -69,16 +69,19 @@ namespace WebParser.ComputerParsers
                     if (computer == null) continue;
                     data.Add(computer);
                 }
-                //break;
             }
-            _driver.Value.Close();
-            //ResetDriver();
+            ResetDriver();
             return data;
         }
 
         //parses laptop window, updates computer fields
         public async Task<Computer> ParseWindow(string url)
         {
+            if (url == null)
+            {
+                return null;
+            }
+
             _driver.Value.Navigate().GoToUrl(url);
 
             Computer computer = new Computer();
@@ -170,8 +173,7 @@ namespace WebParser.ComputerParsers
                 }
 
             }
-            _driver.Value.Close();
-            //ResetDriver();
+            ResetDriver();
             return computer;
         }
 

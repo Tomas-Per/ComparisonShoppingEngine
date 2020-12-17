@@ -71,17 +71,11 @@ namespace WebParser.ComputerParsers
 
                     if (computer == null) continue;
 
-                    if (computer.Resolution != null)
-                    {
-                        computer.ItemCategory = ItemCategory.Laptop;
-                        data.Add(computer);
-                    }                    
+                    if (computer.GraphicsCardName == null) continue;
+                    data.Add(computer);
                 }
-                //break;
-                
             }
-            _driver.Value.Close();
-            //ResetDriver();
+            ResetDriver();
             return data;
         }
 
@@ -89,6 +83,11 @@ namespace WebParser.ComputerParsers
         //parses laptop window, updates computer fields
         public async Task<Computer> ParseWindow(string url)
         {
+            if (url == null)
+            {
+                return null;
+            }
+
             _driver.Value.Navigate().GoToUrl(url);
 
             Computer computer = new Computer();
@@ -104,40 +103,12 @@ namespace WebParser.ComputerParsers
             computer.ItemURL = url;
             computer.ShopName = "Avitela.lt";
 
-            IWebElement itemCategory = null;
-            try
-            {
-                itemCategory = _driver.Value.FindElement(By.XPath("/html/body/div[1]/div[2]/div[1]/div[5]/div[2]/div[2]/div/div/ul/li[3]/a"));
-            }
-            catch(NoSuchElementException)
-            {
-                Console.WriteLine("reeee");
-            }
-            if(itemCategory != null && itemCategory.Text.Equals("Stacionarūs kompiuteriai"))
-            {
-                computer.ItemCategory = ItemCategory.DesktopComputer;
-            }
-            else if (itemCategory != null && itemCategory.Text.Equals("Nešiojamieji kompiuteriai"))
-            {
-                computer.ItemCategory = ItemCategory.Laptop;
-            }
-            try
-            {
-                computer.ImageLink = _driver.Value.FindElement(By.CssSelector("div.product-image-right.product-photo")).
-                    FindElement(By.CssSelector("a")).GetAttribute("href");
-            }
-            catch (Exception)
-            {
-                if (computer.ItemCategory == ItemCategory.Laptop)
-                {
-                    computer.ImageLink = "https://ksd-images.lt/display/aikido/store/1e3628060337b388dd4ffbce4f20f608.jpg?h=742&w=816";
-                }
-                else
-                {
-                    computer.ImageLink = "https://avitela.lt/image/cache/catalog/p/236/252/10877/1562868040_img_1216636-600x600.jpg";
-                }
-            }
             var table = _driver.Value.FindElements(By.TagName("td"));
+
+            if(table.Count < 2)
+            {
+                return computer;
+            }
 
             //FOR API CALLS
             var apiUrl = "https://localhost:44315/Models/";
@@ -149,6 +120,15 @@ namespace WebParser.ComputerParsers
                 if (table[i].Text.Equals("Vaizdo plokštė"))
                 {
                     computer.GraphicsCardName = table[i + 1].Text;
+                }
+                else if (table[i].Text.Contains("Stacionarus"))
+                {
+                    computer.ItemCategory = ItemCategory.DesktopComputer;
+                }
+
+                else if (table[i].Text.Contains("Nešiojamasis kompiuteris"))
+                {
+                    computer.ItemCategory = ItemCategory.Laptop;
                 }
 
                 else if (table[i].Text.Contains("Operat. atminties tipas"))
@@ -163,7 +143,7 @@ namespace WebParser.ComputerParsers
 
                 else if (table[i].Text.Contains("Vidinė atmintis"))
                 {
-                    
+
                     if (table[i + 1].Text.Contains("TB"))
                     {
                         computer.StorageCapacity += table[i + 1].Text.ParseInt() * 1024;
@@ -209,6 +189,25 @@ namespace WebParser.ComputerParsers
                 }
 
             }
+
+            try
+            {
+                computer.ImageLink = _driver.Value.FindElement(By.CssSelector("div.product-image-right.product-photo")).
+                    FindElement(By.CssSelector("a")).GetAttribute("href");
+            }
+            catch (Exception)
+            {
+                if (computer.ItemCategory == ItemCategory.Laptop)
+                {
+                    computer.ImageLink = "https://ksd-images.lt/display/aikido/store/1e3628060337b388dd4ffbce4f20f608.jpg?h=742&w=816";
+                }
+                else
+                {
+                    computer.ImageLink = "https://avitela.lt/image/cache/catalog/p/236/252/10877/1562868040_img_1216636-600x600.jpg";
+                }
+            }
+
+
             //ResetDriver();
             _driver.Value.Close();
             return computer;

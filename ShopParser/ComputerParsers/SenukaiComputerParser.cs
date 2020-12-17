@@ -71,10 +71,8 @@ namespace WebParser.ComputerParsers
                     }
                     data.Add(computer);
                 }
-                //break;
             }
-            _driver.Value.Close();
-            //ResetDriver();
+            ResetDriver();
             return data;
         }
 
@@ -82,6 +80,11 @@ namespace WebParser.ComputerParsers
         //parses laptop window, updates computer fields 
         public async Task<Computer> ParseWindow(string url)
         {
+            if(url == null)
+            {
+                return null;
+            }
+
             _driver.Value.Navigate().GoToUrl(url);
 
             Computer computer = new Computer();
@@ -156,24 +159,17 @@ namespace WebParser.ComputerParsers
                     computer.RAM_type = table[i + 1].Text;
                 }
 
-                else if (table[i].Text.Contains("Vaizdo plokštės"))
+                else if (table[i].Text.Contains("Vaizdo plokštės modelis"))
                 {
-                    if (table[i].Text.Contains("modelis"))
-                    {
-                        computer.GraphicsCardName = table[i + 1].Text;
-                    }
-                    else if (table[i].Text.Contains("serija") && computer.GraphicsCardName == null)
-                    {
-                        computer.GraphicsCardName = table[i + 1].Text;
-                    }
+                    computer.GraphicsCardName = table[i + 1].Text;
+                }           
 
-                    else if (table[i].Text.Contains("atmintis"))
-                    {
-                        computer.GraphicsCardMemory = table[i + 1].Text;
-                    }
+                else if (table[i].Text.Contains("atmintis"))
+                {
+                    computer.GraphicsCardMemory = table[i + 1].Text;
                 }
 
-                else if (table[i].Text.Contains("Kietojo disko talpa(HDD)") ||
+                else if (table[i].Text.Contains("Kietojo disko talpa (HDD)") ||
                     table[i].Text.Contains("MMC disko talpa"))
                 {
 
@@ -185,7 +181,18 @@ namespace WebParser.ComputerParsers
                     {
                         computer.StorageCapacity += table[i + 1].Text.ParseInt();
                     }
-                }   
+                }
+                else if(table[i].Text.Contains("SSD disko talpa"))
+                {
+                    if (table[i + 1].Text.Contains("TB"))
+                    {
+                        computer.StorageCapacity += table[i + 1].Text.ParseInt() * 1024;
+                    }
+                    else
+                    {
+                        computer.StorageCapacity += table[i + 1].Text.ParseInt();
+                    }
+                }
             }
 
             var image = _driver.Value.FindElements(By.ClassName("product-gallery-slider__slide__image"));
@@ -206,8 +213,7 @@ namespace WebParser.ComputerParsers
                 }
             }
 
-            //ResetDriver();
-            _driver.Value.Close();
+            ResetDriver();
             return computer;
         }
 

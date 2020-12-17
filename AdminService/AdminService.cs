@@ -1,18 +1,10 @@
-﻿using DataContent.ReadingCSV.Services;
-using DataUpdater;
+﻿using DataUpdater;
 using ExceptionsLogging;
-using WebParser.ComputerParsers;
 using System;
-using System.Collections.Generic;
-using System.IO;
-using PathLibrary;
-using WebParser.ComponentsParser;
 using ItemLibrary;
 using static ItemLibrary.Categories;
 using System.Threading.Tasks;
-using WebParser.SmartphoneParsers;
-using Parsing;
-using System.Linq;
+
 
 namespace AdminService
 {
@@ -20,6 +12,8 @@ namespace AdminService
     public class AdminService
     {
         public static string _helpMessage = "1 - parse Laptops from shops" +
+                                            "\n2 - parse Smartphones from shops" +
+                                            "\n3 - parse Desktop Computers from shops" +
                                             "\n5 - Update Processor in database" +
                                             "\n0 - close program";
 
@@ -61,6 +55,22 @@ namespace AdminService
                         {
                             var updater = new DataUpdater<Smartphone>();
                             var results = await updater.GetItemCategoryListFromWebAsync(ItemCategory.Smartphone);
+                            await updater.UpdateItemListFile(results);
+                            Console.WriteLine("Shop Parsed");
+                        }
+                        catch (Exception ex)
+                        {
+                            Console.WriteLine("Something wrong happened. Check Logs");
+                            ExceptionLogger.Log(ex);
+                        }
+                        break;
+
+                    case "3":
+                        try
+                        {
+                            var updater = new DataUpdater<Computer>();
+                            var results = await updater.GetItemCategoryListFromWebAsync(ItemCategory.DesktopComputer);
+                            results.ForEach(item => Console.WriteLine(item.ItemCategory + "   " + item.ItemURL));
                             await updater.UpdateItemListFile(results);
                             Console.WriteLine("Shop Parsed");
                         }
