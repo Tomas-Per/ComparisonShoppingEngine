@@ -71,16 +71,16 @@ namespace DataUpdater
 
                     List<Task<List<Computer>>> laptopTasks = new List<Task<List<Computer>>>();
 
-                    laptopTasks.Add(Task.Run(() => new SenukaiComputerParser().ParseShop()));
-                    laptopTasks.Add(Task.Run(() => new AvitelaComputerParser().ParseShop()));
-                    laptopTasks.Add(Task.Run(() => new PiguComputerParser().ParseShop()));
+                    laptopTasks.Add(Task.Run(() => new SenukaiComputerParser(itemCategory).ParseShop()));
+                    laptopTasks.Add(Task.Run(() => new AvitelaComputerParser(itemCategory).ParseShop()));
+                    laptopTasks.Add(Task.Run(() => new PiguComputerParser(itemCategory).ParseShop()));
                     
                     var laptopData = await Task.WhenAll(laptopTasks);
 
-                    List<Computer> computerResults = new List<Computer>();
-                    laptopData.ToList().ForEach(elem => elem.ForEach(item => computerResults.Add(item)));
+                    List<Computer> laptopResults = new List<Computer>();
+                    laptopData.ToList().ForEach(elem => elem.ForEach(item => laptopResults.Add(item)));
 
-                    return computerResults.Cast<T>().ToList();
+                    return laptopResults.Cast<T>().ToList();
 
 
                 case ItemCategory.Smartphone:
@@ -102,7 +102,18 @@ namespace DataUpdater
 
                 case ItemCategory.DesktopComputer:
 
-                    return null;
+                    List<Task<List<Computer>>> desktopPCTasks = new List<Task<List<Computer>>>();
+
+                    desktopPCTasks.Add(Task.Run(() => new SenukaiComputerParser(itemCategory).ParseShop()));
+                    desktopPCTasks.Add(Task.Run(() => new AvitelaComputerParser(itemCategory).ParseShop()));
+                    desktopPCTasks.Add(Task.Run(() => new PiguComputerParser(itemCategory).ParseShop()));
+
+                    var desktopPCData = await Task.WhenAll(desktopPCTasks);
+
+                    List<Computer> desktopPCResults = new List<Computer>();
+                    desktopPCData.ToList().ForEach(elem => elem.ForEach(item => desktopPCResults.Add(item)));
+
+                    return desktopPCResults.Cast<T>().ToList();
 
                 default:
                     return null;

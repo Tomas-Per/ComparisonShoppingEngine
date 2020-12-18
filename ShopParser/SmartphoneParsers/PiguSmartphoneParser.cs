@@ -54,16 +54,19 @@ namespace WebParser.SmartphoneParsers
                     smartphone.ItemCategory = ItemCategory.Smartphone;
                     data.Add(smartphone);
                 }
-                //break;
             }
-            _driver.Value.Close();
-            //ResetDriver();
+            ResetDriver();
             return data;
         }
 
         //parses smartphone window
         public async Task<Smartphone> ParseWindow(string url)
         {
+            if (url == null)
+            {
+                return null;
+            }
+
             _driver.Value.Navigate().GoToUrl(url);
 
             Smartphone smartphone = new Smartphone();
@@ -96,19 +99,10 @@ namespace WebParser.SmartphoneParsers
                 else if (table[i].Text.Contains("Pagrindinė kamera"))
                 {
                     smartphone.BackCameras = table[i + 1].Text;
-                    //var values = table[i + 1].Text.Split('+');
-                    //List<int> cameras = new List<int>();
-                    //values.ToList().ForEach(item => cameras.Add(item.ParseInt()));
-                    //smartphone.BackCameraMP = cameras;
                 }
                 else if (table[i].Text.Contains("Priekinė kamera"))
                 {
                     smartphone.FrontCameras = table[i + 1].Text;
-
-                    //var values = table[i + 1].Text.Split('+');
-                    //List<int> cameras = new List<int>();
-                    //values.ToList().ForEach(item => cameras.Add(item.ParseInt()));
-                    //smartphone.BackCameraMP = cameras;
                 }
                 else if (table[i].Text.Contains("Procesoriaus tipas"))
                 {
@@ -136,8 +130,7 @@ namespace WebParser.SmartphoneParsers
                 }
 
             }
-            //ResetDriver();
-            _driver.Value.Close();
+            ResetDriver();
             return smartphone;
         }
 
