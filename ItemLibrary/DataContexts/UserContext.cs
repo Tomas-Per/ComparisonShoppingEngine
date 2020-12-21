@@ -13,6 +13,8 @@ namespace ModelLibrary.DataContexts
         public DbSet<User> Users { get; set; }
         public DbSet<Review> Reviews { get; set; }
         public DbSet<FavoriteItem> FavoriteItems { get; set; }
+        public DbSet<Computer> Computers { get; set; }
+        public DbSet<Smartphone> Smartphones { get; set; }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<Smartphone>()
