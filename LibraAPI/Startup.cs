@@ -34,6 +34,8 @@ namespace LibraAPI
                                    options.UseSqlServer(Configuration.GetConnectionString("LibraDB")));
             services.AddDbContext<SmartphoneContext>(options =>
                                    options.UseSqlServer(Configuration.GetConnectionString("LibraDB")));
+            services.AddDbContext<UserContext>(options =>
+                                    options.UseSqlServer(Configuration.GetConnectionString("LibraDB")));
             services.AddControllers();
             services.AddSwaggerGen(c =>
             {

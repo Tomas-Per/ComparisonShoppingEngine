@@ -44,7 +44,8 @@ namespace AdminService
                         try
                         {
                             var updater = new DataUpdater<Computer>();
-                            var results = await updater.GetItemCategoryListFromWebAsync(ItemCategory.Laptop);
+                            //var results = await updater.GetItemCategoryListFromWebAsync(ItemCategory.Laptop);
+                            var results = new List<Computer>() {new Computer() {Name = "Shrek2", GraphicsCardMemory = "8", GraphicsCardName = "a", ImageLink = "a", ItemCode = 145, ItemURL = "b", ManufacturerName = "a", Price = 200, Processor = new Processor(){Model = "bym"}, StorageCapacity = 512, RAM = 8}};
                             await updater.UpdateItemListFile(results);
                             Console.WriteLine("Shop Parsed");
                         }
