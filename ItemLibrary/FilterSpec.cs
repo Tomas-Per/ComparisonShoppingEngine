@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace ItemLibrary
+namespace ModelLibrary
 {
     public class FilterSpec
     {

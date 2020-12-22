@@ -1,11 +1,11 @@
 ﻿using WebParser.ComputerParsers;
-using ItemLibrary;
+using ModelLibrary;
 using DataContent.ReadingCSV.Services;
 using System.Collections.Generic;
 using PathLibrary;
 using WebParser;
 using DataContent;
-using static ItemLibrary.Categories;
+using static ModelLibrary.Categories;
 using System.Linq;
 using System;
 using System.Threading.Tasks;

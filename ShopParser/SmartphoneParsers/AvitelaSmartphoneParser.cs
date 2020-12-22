@@ -1,10 +1,10 @@
-﻿using ItemLibrary;
+﻿using ModelLibrary;
 using OpenQA.Selenium;
 using OpenQA.Selenium.Chrome;
 using System;
 using System.Collections.Generic;
 using Parsing;
-using static ItemLibrary.Categories;
+using static ModelLibrary.Categories;
 using System.Linq;
 using PathLibrary;
 using System.Threading.Tasks;

@@ -1,7 +1,7 @@
 ﻿using System;
 using Microsoft.EntityFrameworkCore.Migrations;
 
-namespace ItemLibrary.Migrations.Smartphone
+namespace ModelLibrary.Migrations.Smartphone
 {
     public partial class SmarphoneDBCreation : Migration
     {

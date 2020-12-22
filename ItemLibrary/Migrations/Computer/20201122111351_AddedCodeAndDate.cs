@@ -1,7 +1,7 @@
 ﻿using System;
 using Microsoft.EntityFrameworkCore.Migrations;
 
-namespace ItemLibrary.Migrations
+namespace ModelLibrary.Migrations
 {
     public partial class AddedCodeAndDate : Migration
     {

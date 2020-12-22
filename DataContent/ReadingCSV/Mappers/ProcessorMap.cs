@@ -2,7 +2,7 @@
 
 namespace DataContent.ReadingCSV.Mappers
 {
-    public sealed class ProcessorMap : ClassMap<ItemLibrary.Processor>
+    public sealed class ProcessorMap : ClassMap<ModelLibrary.Processor>
     {
         public ProcessorMap()
         {

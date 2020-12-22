@@ -1,4 +1,4 @@
-﻿namespace ItemLibrary
+﻿namespace ModelLibrary
 {
     public class Categories
     {
