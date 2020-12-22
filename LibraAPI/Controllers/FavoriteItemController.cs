@@ -18,7 +18,7 @@ namespace LibraAPI.Controllers
     {
         private readonly IFavoriteItemRepository _repository;
 
-        public FavoriteItemController(FavoriteItemRepository repository)
+        public FavoriteItemController(IFavoriteItemRepository repository)
         {
             _repository = repository;
         }

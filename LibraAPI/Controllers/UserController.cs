@@ -19,7 +19,7 @@ namespace LibraAPI.Controllers
     {
         private readonly IUserRepository _repository;
 
-        public UserController(UserRepository repository)
+        public UserController(IUserRepository repository)
         {
             _repository = repository;
         }
