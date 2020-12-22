@@ -15,6 +15,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Newtonsoft.Json;
 
 namespace LibraAPI
 {
@@ -36,7 +37,8 @@ namespace LibraAPI
                                    options.UseSqlServer(Configuration.GetConnectionString("LibraDB")));
             services.AddDbContext<UserContext>(options =>
                                     options.UseSqlServer(Configuration.GetConnectionString("LibraDB")));
-            services.AddControllers();
+            services.AddControllers()
+                     .AddNewtonsoftJson();
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "LibraAPI", Version = "v1" });

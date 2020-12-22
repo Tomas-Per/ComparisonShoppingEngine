@@ -53,19 +53,20 @@ namespace DataContent.DAL.Repositories
         {
             //check for email in db
             var registeredUser = await _context.Users.Where(x => x.Email == user.Email).FirstOrDefaultAsync();
-            if(registeredUser == null)
+            if(registeredUser != null)
             {
                 throw new EmailAlreadyRegisteredException("Email is already registered");
             }
             //check for username in db
             registeredUser = await _context.Users.Where(x => x.Username == user.Username).FirstOrDefaultAsync();
-            if(registeredUser == null)
+            if(registeredUser != null)
             {
                 throw new UsernameAlreadyRegisteredException("Username is already used");
             }
 
             //register new user with hashed password
             ScryptEncoder encoder = new ScryptEncoder();
+            registeredUser = new User();
             registeredUser.Email = user.Email;
             registeredUser.Username = user.Username;
             registeredUser.Password = encoder.Encode(user.Password);
