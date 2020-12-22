@@ -17,11 +17,13 @@ namespace WebParser.ComputerParsers
     {
         private readonly string _url = "https://www.senukai.lt/c/kompiuterine-technika-biuro-prekes/nesiojami-kompiuteriai-ir-priedai/nesiojami-kompiuteriai/5ei?page=1";
         private Lazy<ChromeDriver> _driver;
+        private ProcessorAccess _processorAccess;
         public SenukaiComputerParser()
         {
             var options = new ChromeOptions();
             options.AddArguments("--headless");
             _driver = new Lazy<ChromeDriver>(() => new ChromeDriver(MainPath.GetShopParserPath(), options));
+            _processorAccess = new ProcessorAccess();
         }
 
         //parses laptops from senukai.lt and returns results in a List<Computer>
@@ -116,11 +118,11 @@ namespace WebParser.ComputerParsers
                 {
                     if (table[i + 1].Text.Contains("("))
                     {
-                        computer.Processor = await ProcessorAccess.GetByModelAsync(table[i + 1].Text.Substring(0, table[i + 1].Text.IndexOf("(")));
+                        computer.Processor = await _processorAccess.GetByModelAsync(table[i + 1].Text.Substring(0, table[i + 1].Text.IndexOf("(")));
                     }
                     else
                     {
-                        computer.Processor = await ProcessorAccess.GetByModelAsync(table[i + 1].Text);
+                        computer.Processor = await _processorAccess.GetByModelAsync(table[i + 1].Text);
                     }
                 }
 

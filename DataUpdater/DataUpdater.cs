@@ -24,7 +24,6 @@ namespace DataUpdater
         public DataUpdater()
         {
             _httpClient = new HttpClient();
-            ApiHelper.InitializeClient();
         }
 
         //calls shop parser and returns parsed item list

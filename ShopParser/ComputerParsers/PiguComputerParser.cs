@@ -18,11 +18,13 @@ namespace WebParser.ComputerParsers
     {
         private readonly string _url = "https://pigu.lt/lt/kompiuteriai/nesiojami-kompiuteriai?page=1";
         private Lazy<ChromeDriver> _driver;
+        private ProcessorAccess _processorAccess;
         public PiguComputerParser ()
         {
             var options = new ChromeOptions();
             options.AddArguments("--headless");
             _driver = new Lazy<ChromeDriver>(() => new ChromeDriver(MainPath.GetShopParserPath(), options));
+            _processorAccess = new ProcessorAccess();
         }
 
         public async Task<List<Computer>> ParseShop()
@@ -92,7 +94,7 @@ namespace WebParser.ComputerParsers
             {
                 if (table[i].Text.Contains("Procesorius"))
                 {
-                    computer.Processor = await ProcessorAccess.GetByModelAsync(table[i + 1].Text);
+                    computer.Processor = await _processorAccess.GetByModelAsync(table[i + 1].Text);
                 }
                 else if (table[i].Text.Contains("Prekės ženklas"))
                 {

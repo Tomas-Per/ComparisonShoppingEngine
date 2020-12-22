@@ -17,12 +17,13 @@ namespace WebParser.ComputerParsers
     {
         private readonly string _url = "https://avitela.lt/kompiuterine-technika/nesiojamieji-kompiuteriai/nesiojami-kompiuteriai?limit=50&page=1";
         private Lazy<ChromeDriver> _driver;
-
+        private ProcessorAccess _processorAccess;
         public AvitelaComputerParser()
         {
             var options = new ChromeOptions();
             options.AddArguments("--headless");
             _driver = new Lazy<ChromeDriver>(() => new ChromeDriver(MainPath.GetShopParserPath(), options));
+            _processorAccess = new ProcessorAccess();
         }
 
         public async Task<List<Computer>> ParseShop()
@@ -145,7 +146,7 @@ namespace WebParser.ComputerParsers
                 }
                 else if (table[i].Text.Contains("Procesoriaus tipas"))
                 {
-                    computer.Processor = await ProcessorAccess.GetByModelAsync(table[i + 1].Text);
+                    computer.Processor = await _processorAccess.GetByModelAsync(table[i + 1].Text);
                 }
 
                 else if (computer.GraphicsCardName == null && table[i].Text.Contains("Vaizdo plokštės tipas"))
@@ -155,7 +156,7 @@ namespace WebParser.ComputerParsers
 
                 else if (table[i].Text.Contains("Procesoriaus modelis"))
                 {
-                    computer.Processor = await ProcessorAccess.GetByModelAsync(table[i + 1].Text);
+                    computer.Processor = await _processorAccess.GetByModelAsync(table[i + 1].Text);
                 }
 
             }
