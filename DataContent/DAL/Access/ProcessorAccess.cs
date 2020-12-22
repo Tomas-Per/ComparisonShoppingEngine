@@ -9,13 +9,20 @@ using DataContent.DAL.Helpers;
 
 namespace DataContent.DAL.Access
 {
-    public static class ProcessorAccess
+    public class ProcessorAccess
     {
-        private static string apiUrl = "https://localhost:44315/";
+        private string apiUrl = "https://localhost:44315/";
+        private ApiHelper _apiHelper;
 
-        public async static Task<Processor> GetByModelAsync(string model)
+        public ProcessorAccess()
         {
-            using HttpResponseMessage response = await ApiHelper.Client.GetAsync(apiUrl + "Models/" + model);
+            _apiHelper = new ApiHelper();
+            _apiHelper.InitializeClient();
+        }
+
+        public async Task<Processor> GetByModelAsync(string model)
+        {
+            using HttpResponseMessage response = await _apiHelper.Client.GetAsync(apiUrl + "Models/" + model);
             Processor processor;
             if (response.IsSuccessStatusCode)
             {

@@ -1,8 +1,6 @@
 
 ﻿using ModelLibrary;
-=======
 ﻿using DataContent.DAL.Access;
-
 using OpenQA.Selenium;
 using OpenQA.Selenium.Chrome;
 using Parsing;

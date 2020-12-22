@@ -8,11 +8,11 @@ using System.Threading.Tasks;
 
 namespace DataContent.DAL.Helpers
 {
-    public static class ApiHelper
+    public class ApiHelper
     {
-        public static HttpClient Client;
+        public HttpClient Client;
 
-        public static void InitializeClient()
+        public void InitializeClient()
         {
             Client = new HttpClient();
         }
