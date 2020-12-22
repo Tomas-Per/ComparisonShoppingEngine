@@ -15,7 +15,7 @@ namespace DataContent.DAL.Repositories
     {
         private readonly UserContext _context;
 
-        ReviewRepository(UserContext context)
+        public ReviewRepository(UserContext context)
         {
             _context = context;
         }

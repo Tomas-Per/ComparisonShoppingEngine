@@ -15,7 +15,7 @@ namespace DataContent.DAL.Repositories
     public class UserRepository : IUserRepository
     {
         readonly UserContext _context;
-        UserRepository(UserContext context)
+        public UserRepository(UserContext context)
         {
             _context = context;
         }

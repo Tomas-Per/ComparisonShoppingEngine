@@ -14,7 +14,7 @@ namespace DataContent.DAL.Repositories
     {
         private readonly UserContext _context;
 
-        FavoriteItemRepository(UserContext context)
+        public FavoriteItemRepository(UserContext context)
         {
             _context = context;
         }
