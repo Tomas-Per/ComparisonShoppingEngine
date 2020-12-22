@@ -35,11 +35,7 @@ namespace LibraAPI.Controllers
             {
                 user = await _repository.LoginAsync(email, password);
             }
-            catch(UserNotFoundException e)
-            {
-                return NotFound(e.Message);
-            }
-            catch(WrongUserPasswordException e)
+            catch(LoginException e)
             {
                 return NotFound(e.Message);
             }
@@ -84,11 +80,7 @@ namespace LibraAPI.Controllers
             {
                 await _repository.RegisterAsync(user);
             }
-            catch (EmailAlreadyRegisteredException e)
-            {
-                return NotFound(e.Message);
-            }
-            catch (UsernameAlreadyRegisteredException e)
+            catch (RegisterException e)
             {
                 return NotFound(e.Message);
             }

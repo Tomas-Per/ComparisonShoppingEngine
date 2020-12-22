@@ -6,8 +6,11 @@ using System.Threading.Tasks;
 
 namespace DataContent.DAL.UserExceptions
 {
-    public class UserNotFoundException : Exception
+    public class RegisterException : Exception
     {
-        public UserNotFoundException(string message) : base(message) { }
+        public RegisterException(string message) : base(message)
+        {
+
+        }
     }
 }

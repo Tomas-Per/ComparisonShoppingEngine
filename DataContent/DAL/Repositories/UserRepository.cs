@@ -38,13 +38,13 @@ namespace DataContent.DAL.Repositories
             var validUser = await _context.Users.Where(x => x.Email == email).FirstOrDefaultAsync();
             if(validUser == null)
             {
-                throw new UserNotFoundException("Email is not registered");
+                throw new LoginException("Email is not registered");
             }
             ScryptEncoder encoder = new ScryptEncoder();
             bool isValidUser = encoder.Compare(password, validUser.Password);
             if (!isValidUser)
             {
-                throw new WrongUserPasswordException("Password for this user is incorrect");
+                throw new LoginException("Password for this user is incorrect");
             }
             return validUser;
         }
@@ -55,13 +55,13 @@ namespace DataContent.DAL.Repositories
             var registeredUser = await _context.Users.Where(x => x.Email == user.Email).FirstOrDefaultAsync();
             if(registeredUser != null)
             {
-                throw new EmailAlreadyRegisteredException("Email is already registered");
+                throw new RegisterException("Email is already registered");
             }
             //check for username in db
             registeredUser = await _context.Users.Where(x => x.Username == user.Username).FirstOrDefaultAsync();
             if(registeredUser != null)
             {
-                throw new UsernameAlreadyRegisteredException("Username is already used");
+                throw new RegisterException("Username is already used");
             }
 
             //register new user with hashed password
