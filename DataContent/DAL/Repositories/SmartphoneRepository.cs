@@ -14,10 +14,12 @@ namespace DataContent.DAL.Repositories
     public class SmartphoneRepository : ISmartphoneRepository
     {
         private readonly SmartphoneContext _context;
+        private readonly UserContext _userContext;
 
-        public SmartphoneRepository(SmartphoneContext context)
+        public SmartphoneRepository(SmartphoneContext context, UserContext userContext)
         {
             _context = context;
+            _userContext = userContext;
         }
         public async Task<List<Smartphone>> AddSmartphonesAsync(List<Smartphone> smartphones)
         {
@@ -70,9 +72,11 @@ namespace DataContent.DAL.Repositories
 
                     //add new Smartphone
                     _context.Add(smartphone);
+                    _userContext.Add(smartphone);
                 }
             }
             await _context.SaveChangesAsync();
+            await _userContext.SaveChangesAsync();
             return smartphones;
         }
 
@@ -81,6 +85,10 @@ namespace DataContent.DAL.Repositories
             var smartphone = await _context.Smartphones.Where(x => x.Id == id).FirstOrDefaultAsync();
             _context.Smartphones.Remove(smartphone);
             await _context.SaveChangesAsync();
+            var item = await _context.Smartphones.Where(x => x.Id == id && x.ItemCategory==smartphone.ItemCategory).FirstOrDefaultAsync();
+            _userContext.Smartphones.Remove(item);
+            await _context.SaveChangesAsync();
+            await _userContext.SaveChangesAsync();
             return smartphone;
         }
 
