@@ -7,6 +7,7 @@ using DataContent.DAL.Interfaces;
 using Microsoft.EntityFrameworkCore;
 using ModelLibrary;
 using ModelLibrary.DataContexts;
+using Newtonsoft.Json;
 
 namespace DataContent.DAL.Repositories
 {

@@ -8,7 +8,7 @@ using System.Text.Json.Serialization;
 
 namespace ModelLibrary
 {
-    public abstract class Item
+    public class Item
     {
        
         public int Id { get; set; }
@@ -42,7 +42,10 @@ namespace ModelLibrary
         public Categories.ItemCategory ItemCategory { get; set; }
 
         //will remove this method in near future
-        public abstract List<Item> FindSimilar(List<Item> list);
+        public virtual List<Item> FindSimilar(List<Item> list)
+        {
+            return list;
+        }
 
     }
 }
