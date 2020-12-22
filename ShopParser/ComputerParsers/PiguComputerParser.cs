@@ -1,4 +1,8 @@
+
 ﻿using ModelLibrary;
+=======
+﻿using DataContent.DAL.Access;
+
 using OpenQA.Selenium;
 using OpenQA.Selenium.Chrome;
 using Parsing;
@@ -16,13 +20,11 @@ namespace WebParser.ComputerParsers
     {
         private readonly string _url = "https://pigu.lt/lt/kompiuteriai/nesiojami-kompiuteriai?page=1";
         private Lazy<ChromeDriver> _driver;
-        private HttpClient _client;
         public PiguComputerParser ()
         {
             var options = new ChromeOptions();
             options.AddArguments("--headless");
             _driver = new Lazy<ChromeDriver>(() => new ChromeDriver(MainPath.GetShopParserPath(), options));
-            _client = new HttpClient();
         }
 
         public async Task<List<Computer>> ParseShop()
@@ -88,20 +90,11 @@ namespace WebParser.ComputerParsers
 
             var table = _driver.Value.FindElements(By.TagName("td"));
 
-            //FOR API CALLS
-            var apiUrl = "https://localhost:44315/Models/";
-            HttpResponseMessage response;
-            //---------------------------------------------
-
             for (int i = 0; i < table.Count; i++)
             {
                 if (table[i].Text.Contains("Procesorius"))
                 {
-                    response = await _client.GetAsync(apiUrl + table[i + 1].Text);
-                    if (response.IsSuccessStatusCode)
-                    {
-                        computer.Processor = await response.Content.ReadAsAsync<Processor>();
-                    }
+                    computer.Processor = await ProcessorAccess.GetByModelAsync(table[i + 1].Text);
                 }
                 else if (table[i].Text.Contains("Prekės ženklas"))
                 {
