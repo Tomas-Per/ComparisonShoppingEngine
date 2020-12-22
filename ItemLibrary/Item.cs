@@ -39,7 +39,7 @@ namespace ModelLibrary
 
         [MaxLength(256)]
         public string ImageLink { get; set; }
-        public Categories.ItemCategory ItemCategory { get; set; }
+        public ItemCategory ItemCategory { get; set; }
 
         //will remove this method in near future
         public virtual List<Item> FindSimilar(List<Item> list)
