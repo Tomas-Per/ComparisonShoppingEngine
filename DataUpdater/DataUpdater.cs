@@ -14,16 +14,21 @@ using Newtonsoft.Json;
 using System.Text;
 using WebParser.SmartphoneParsers;
 using DataContent.DAL.Helpers;
+using DataContent.DAL.Access;
 
 namespace DataUpdater
 {
     public class DataUpdater<T> where T : Item
     {
         private HttpClient _httpClient;
+        private ComputerAccess _computerAccess;
+        private SmartphoneAccess _smartphoneAccess;
 
         public DataUpdater()
         {
             _httpClient = new HttpClient();
+            _computerAccess = new ComputerAccess();
+            _smartphoneAccess = new SmartphoneAccess();
         }
 
         //calls shop parser and returns parsed item list
@@ -40,26 +45,11 @@ namespace DataUpdater
             //switch
             if (typeof(Computer) == typeof(T))
             {
-                var url = "https://localhost:44315/api/Computers";
-                var json = JsonConvert.SerializeObject(data);
-                var postData = new StringContent(json, Encoding.UTF8, "application/json");
-                HttpResponseMessage response = await _httpClient.PostAsync(url, postData); ;
-                if (response.IsSuccessStatusCode)
-                {
-                    return;
-                }
-
+                await _computerAccess.PostComputers(data.Cast<Computer>().ToList());
             }
             else if (typeof(Smartphone) == typeof(T))
             {
-                var url = "https://localhost:44315/api/Smartphones";
-                var json = JsonConvert.SerializeObject(data);
-                var postData = new StringContent(json, Encoding.UTF8, "application/json");
-                HttpResponseMessage response = await _httpClient.PostAsync(url, postData); ;
-                if (response.IsSuccessStatusCode)
-                {
-                    return;
-                }
+                await _smartphoneAccess.PostSmartphones(data.Cast<Smartphone>().ToList());
             }
         }
 
