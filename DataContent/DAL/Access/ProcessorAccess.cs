@@ -11,7 +11,7 @@ namespace DataContent.DAL.Access
 {
     public class ProcessorAccess
     {
-        private string apiUrl = "https://localhost:44315/";
+        private string _apiUrl = "https://localhost:44315/";
         private ApiHelper _apiHelper;
 
         public ProcessorAccess()
@@ -22,7 +22,7 @@ namespace DataContent.DAL.Access
 
         public async Task<Processor> GetByModelAsync(string model)
         {
-            using HttpResponseMessage response = await _apiHelper.Client.GetAsync(apiUrl + "Models/" + model);
+            using HttpResponseMessage response = await _apiHelper.Client.GetAsync(_apiUrl + "Models/" + model);
             Processor processor;
             if (response.IsSuccessStatusCode)
             {
