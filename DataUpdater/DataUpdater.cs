@@ -20,13 +20,11 @@ namespace DataUpdater
 {
     public class DataUpdater<T> where T : Item
     {
-        private HttpClient _httpClient;
         private ComputerAccess _computerAccess;
         private SmartphoneAccess _smartphoneAccess;
 
         public DataUpdater()
         {
-            _httpClient = new HttpClient();
             _computerAccess = new ComputerAccess();
             _smartphoneAccess = new SmartphoneAccess();
         }
