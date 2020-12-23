@@ -41,7 +41,7 @@ namespace LibraAPI
                      
             services.AddSwaggerGen(c =>
             {
-                c.SwaggerDoc("v1", new OpenApiInfo { Title = "LibraAPI", Version = "v1" });
+                c.SwaggerDoc("v1.1", new OpenApiInfo { Title = "LibraAPI", Version = "v1.1" });
             });
             services.AddScoped<IComputerRepository, ComputerRepository>();
             services.AddScoped<IProcessorRepository, ProcessorRepository>();
@@ -58,7 +58,7 @@ namespace LibraAPI
             {
                 app.UseDeveloperExceptionPage();
                 app.UseSwagger();
-                app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "LibraAPI v1"));
+                app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1.1/swagger.json", "LibraAPI v1.1"));
             }
 
             app.UseHttpsRedirection();
