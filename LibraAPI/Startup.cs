@@ -61,7 +61,7 @@ namespace LibraAPI
                 app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1.1/swagger.json", "LibraAPI v1.1"));
             }
 
-            app.UseHttpsRedirection();
+            //app.UseHttpsRedirection();
 
             app.UseRouting();
 

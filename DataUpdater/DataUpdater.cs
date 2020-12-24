@@ -14,6 +14,7 @@ using Newtonsoft.Json;
 using System.Text;
 using WebParser.SmartphoneParsers;
 using DataContent.DAL.Helpers;
+
 using DataContent.DAL.Access;
 
 namespace DataUpdater
