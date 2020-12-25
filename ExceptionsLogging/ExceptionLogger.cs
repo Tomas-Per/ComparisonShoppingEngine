@@ -11,6 +11,7 @@ namespace ExceptionsLogging
     {
         private readonly static string _filePath = MainPath.GetMainPath() + @"\ExceptionsLogging\Log.txt";
         private readonly static string _parsingFilePath = MainPath.GetMainPath() + @"\ExceptionsLogging\NotParsedElementsLog.txt";
+        private static Object locker = new Object();
 
         //Logs Exception to a file
         public static void Log (Exception ex)
@@ -35,16 +36,20 @@ namespace ExceptionsLogging
 
         public static void LogProcessorParsingException(Processor processor, Exception ex)
         {
-            if (!File.Exists(_parsingFilePath))
+            lock (locker)
             {
-                File.Create(_parsingFilePath).Close();
-            }
 
-            using (StreamWriter streamWriter = new StreamWriter(_parsingFilePath, true))
-            {
-                streamWriter.WriteLine(ex.Message);
-                streamWriter.WriteLine("Processor ID is:   " + processor.Id);
-                streamWriter.WriteLine("Time:    " + DateTime.Now);
+                if (!File.Exists(_parsingFilePath))
+                {
+                    File.Create(_parsingFilePath).Close();
+                }
+
+                using (StreamWriter streamWriter = new StreamWriter(_parsingFilePath, true))
+                {
+                    streamWriter.WriteLine(ex.Message);
+                    streamWriter.WriteLine("Processor ID is:   " + processor.Id);
+                    streamWriter.WriteLine("Time:    " + DateTime.Now);
+                }
             }
         }
 
