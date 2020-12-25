@@ -7,18 +7,20 @@ using System.Threading.Tasks;
 using System.Net.Http;
 using ModelLibrary;
 using Newtonsoft.Json;
+using System.Configuration;
 
 namespace DataContent.DAL.Access
 {
     public class ComputerAccess
     {
-        private string _apiUrl = "https://localhost:44315/";
+        private string _apiUrl;
         private ApiHelper _apiHelper;
 
         public ComputerAccess()
         {
             _apiHelper = new ApiHelper();
             _apiHelper.InitializeClient();
+            _apiUrl = ConfigurationManager.AppSettings["api"];
         }
 
         public async Task PostComputers(List<Computer> computers)

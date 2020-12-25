@@ -7,18 +7,20 @@ using System.Linq;
 using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
+using System.Configuration;
 
 namespace DataContent.DAL.Access
 {
     public class SmartphoneAccess
     {
-        private string _apiUrl = "https://localhost:44315/";
+        private string _apiUrl;
         private ApiHelper _apiHelper;
 
         public SmartphoneAccess()
         {
             _apiHelper = new ApiHelper();
             _apiHelper.InitializeClient();
+            _apiUrl = ConfigurationManager.AppSettings["api"];
         }
 
         public async Task PostSmartphones(List<Smartphone> smartphones)

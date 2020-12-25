@@ -58,7 +58,7 @@ namespace LibraAPI
             {
                 app.UseDeveloperExceptionPage();
                 app.UseSwagger();
-                app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1.1/swagger.json", "LibraAPI v1.1"));
+                app.UseSwaggerUI(c => c.SwaggerEndpoint("../swagger/v1.1/swagger.json", "LibraAPI v1.1"));  // ".." prefix needed for non-windows hosting
             }
 
             //app.UseHttpsRedirection();
