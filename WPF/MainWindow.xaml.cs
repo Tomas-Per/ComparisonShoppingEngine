@@ -15,7 +15,7 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using System.Xml.Serialization;
 using DataContent.ReadingCSV.Services;
-using ItemLibrary;
+using ModelLibrary;
 using DataContent;
 using System.IO;
 using System.Diagnostics;
@@ -25,7 +25,7 @@ using DataManipulation.Filters;
 using System.Xml;
 using System.Linq.Expressions;
 using PathLibrary;
-using ItemLibrary.DataContexts;
+using ModelLibrary.DataContexts;
 using System.Net.Http;
 using System.Configuration;
 

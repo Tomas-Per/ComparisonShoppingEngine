@@ -1,14 +1,15 @@
-﻿using ItemLibrary;
+﻿using ModelLibrary;
 using OpenQA.Selenium;
 using OpenQA.Selenium.Chrome;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using Parsing;
-using static ItemLibrary.Categories;
+using static ModelLibrary.Categories;
 using PathLibrary;
 using System.Threading.Tasks;
 using System.Net.Http;
+using DataContent.DAL.Access;
 
 namespace WebParser.ComputerParsers
 {
@@ -16,13 +17,14 @@ namespace WebParser.ComputerParsers
     {
         private string _url;
         private Lazy<ChromeDriver> _driver;
-        private HttpClient _client;
+        private ProcessorAccess _processorAccess;
+        
         public SenukaiComputerParser(ItemCategory itemCategory)
         {
             var options = new ChromeOptions();
             options.AddArguments("--headless");
             _driver = new Lazy<ChromeDriver>(() => new ChromeDriver(MainPath.GetShopParserPath(), options));
-            _client = new HttpClient();
+            _processorAccess = new ProcessorAccess();
 
             switch(itemCategory)
             {
@@ -104,11 +106,6 @@ namespace WebParser.ComputerParsers
 
             var table = _driver.Value.FindElements(By.TagName("td"));
 
-            //FOR API CALLS
-            var apiUrl = "https://localhost:44315/Models/";
-            HttpResponseMessage response;
-            //---------------------------------------------
-
             for (int i = 0; i < table.Count; i++)
             {
                 if (table[i].Text.Contains("Prekės ženklas"))
@@ -132,19 +129,11 @@ namespace WebParser.ComputerParsers
                 {
                     if (table[i + 1].Text.Contains("("))
                     {
-                        response = await _client.GetAsync(apiUrl + table[i + 1].Text.Substring(0, table[i + 1].Text.IndexOf("(")));
-                        if (response.IsSuccessStatusCode)
-                        {
-                            computer.Processor = await response.Content.ReadAsAsync<Processor>();
-                        }
+                        computer.Processor = await _processorAccess.GetByModelAsync(table[i + 1].Text.Substring(0, table[i + 1].Text.IndexOf("(")));
                     }
                     else
                     {
-                        response = await _client.GetAsync(apiUrl + table[i + 1].Text);
-                        if (response.IsSuccessStatusCode)
-                        {
-                            computer.Processor = await response.Content.ReadAsAsync<Processor>();
-                        }
+                        computer.Processor = await _processorAccess.GetByModelAsync(table[i + 1].Text);
                     }
                 }
 

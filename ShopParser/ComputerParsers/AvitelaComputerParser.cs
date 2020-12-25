@@ -1,14 +1,15 @@
-﻿using ItemLibrary;
+﻿using ModelLibrary;
 using OpenQA.Selenium;
 using OpenQA.Selenium.Chrome;
 using System;
 using System.Collections.Generic;
 using Parsing;
-using static ItemLibrary.Categories;
+using static ModelLibrary.Categories;
 using System.Linq;
 using PathLibrary;
 using System.Threading.Tasks;
 using System.Net.Http;
+using DataContent.DAL.Access;
 
 namespace WebParser.ComputerParsers
 {
@@ -16,14 +17,14 @@ namespace WebParser.ComputerParsers
     {
         private readonly string _url;
         private Lazy<ChromeDriver> _driver;
-        private HttpClient _client;
+        private ProcessorAccess _processorAccess;
 
         public AvitelaComputerParser(ItemCategory itemCategory)
         {
             var options = new ChromeOptions();
             options.AddArguments("--headless");
             _driver = new Lazy<ChromeDriver>(() => new ChromeDriver(MainPath.GetShopParserPath(), options));
-            _client = new HttpClient();
+            _processorAccess = new ProcessorAccess();
 
             switch (itemCategory)
             {
@@ -110,11 +111,6 @@ namespace WebParser.ComputerParsers
                 return computer;
             }
 
-            //FOR API CALLS
-            var apiUrl = "https://localhost:44315/Models/";
-            HttpResponseMessage response;
-            //---------------------------------------------
-
             for (int i = 0; i < table.Count; i++)
             {
                 if (table[i].Text.Equals("Vaizdo plokštė"))
@@ -167,11 +163,7 @@ namespace WebParser.ComputerParsers
                 }
                 else if (table[i].Text.Contains("Procesoriaus tipas"))
                 {
-                    response = await _client.GetAsync(apiUrl + table[i + 1].Text);
-                    if (response.IsSuccessStatusCode)
-                    {
-                        computer.Processor = await response.Content.ReadAsAsync<Processor>();
-                    }
+                    computer.Processor = await _processorAccess.GetByModelAsync(table[i + 1].Text);
                 }
 
                 else if (computer.GraphicsCardName == null && table[i].Text.Contains("Vaizdo plokštės tipas"))
@@ -181,11 +173,7 @@ namespace WebParser.ComputerParsers
 
                 else if (table[i].Text.Contains("Procesoriaus modelis"))
                 {
-                    response = await _client.GetAsync(apiUrl + table[i + 1].Text);
-                    if (response.IsSuccessStatusCode)
-                    {
-                        computer.Processor = await response.Content.ReadAsAsync<Processor>();
-                    }
+                    computer.Processor = await _processorAccess.GetByModelAsync(table[i + 1].Text);
                 }
 
             }

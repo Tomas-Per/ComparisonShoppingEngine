@@ -3,7 +3,7 @@ using CsvHelper.TypeConversion;
 
 namespace DataContent.ReadingCSV.Mappers
 {
-    public sealed class LaptopMap: ClassMap<ItemLibrary.Computer>
+    public sealed class LaptopMap: ClassMap<ModelLibrary.Computer>
     {
         public LaptopMap()
         {
