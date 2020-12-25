@@ -111,8 +111,6 @@ namespace WebParser.ComputerParsers
                 return computer;
             }
 
-            var table = _driver.Value.FindElements(By.TagName("td"));
-
             for (int i = 0; i < table.Count; i++)
             {
                 if (table[i].Text.Equals("Vaizdo plokštė"))
