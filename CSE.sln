@@ -42,6 +42,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ComponentParser", "Componen
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LibraAPI", "LibraAPI\LibraAPI.csproj", "{C894E62C-5BEC-4E1C-BB5D-D1AEFDB5F3F7}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EmailSender", "EmailSender\EmailSender.csproj", "{050A3480-7CD6-4064-8A97-DA91B9963B72}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -100,6 +102,10 @@ Global
 		{C894E62C-5BEC-4E1C-BB5D-D1AEFDB5F3F7}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C894E62C-5BEC-4E1C-BB5D-D1AEFDB5F3F7}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C894E62C-5BEC-4E1C-BB5D-D1AEFDB5F3F7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{050A3480-7CD6-4064-8A97-DA91B9963B72}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{050A3480-7CD6-4064-8A97-DA91B9963B72}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{050A3480-7CD6-4064-8A97-DA91B9963B72}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{050A3480-7CD6-4064-8A97-DA91B9963B72}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
