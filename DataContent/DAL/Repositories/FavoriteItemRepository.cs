@@ -41,10 +41,7 @@ namespace DataContent.DAL.Repositories
                 .Where(x => x.Item.Id == favoriteItemId).ToListAsync();
 
             List<User> users = new List<User>();
-            foreach (var item in items)
-            {
-                users.Add(item.User);
-            }
+            items.ForEach(item => users.Add(item.User));
             return users;
         }
 
