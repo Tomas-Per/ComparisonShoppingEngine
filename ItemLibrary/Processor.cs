@@ -1,9 +1,9 @@
-﻿using ItemLibrary.Exceptions;
-using System;
+﻿using System;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
+using ModelLibrary.Exceptions;
 
-namespace ItemLibrary
+namespace ModelLibrary
 {
     public class Processor : Component
     {

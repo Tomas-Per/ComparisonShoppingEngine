@@ -1,4 +1,6 @@
-﻿using ItemLibrary;
+
+﻿using ModelLibrary;
+﻿using DataContent.DAL.Access;
 using OpenQA.Selenium;
 using OpenQA.Selenium.Chrome;
 using Parsing;
@@ -8,7 +10,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http;
 using System.Threading.Tasks;
-using static ItemLibrary.Categories;
+using static ModelLibrary.Categories;
 
 namespace WebParser.ComputerParsers
 {
@@ -16,13 +18,14 @@ namespace WebParser.ComputerParsers
     {
         private string _url;
         private Lazy<ChromeDriver> _driver;
-        private HttpClient _client;
+        private ProcessorAccess _processorAccess;
+
         public PiguComputerParser (ItemCategory itemCategory)
         {
             var options = new ChromeOptions();
             options.AddArguments("--headless");
             _driver = new Lazy<ChromeDriver>(() => new ChromeDriver(MainPath.GetShopParserPath(), options));
-            _client = new HttpClient();
+            _processorAccess = new ProcessorAccess();
 
             switch(itemCategory)
             {
@@ -101,20 +104,11 @@ namespace WebParser.ComputerParsers
 
             var table = _driver.Value.FindElements(By.TagName("td"));
 
-            //FOR API CALLS
-            var apiUrl = "https://localhost:44315/Models/";
-            HttpResponseMessage response;
-            //---------------------------------------------
-
             for (int i = 0; i < table.Count; i++)
             {
                 if (table[i].Text.Contains("Procesorius"))
                 {
-                    response = await _client.GetAsync(apiUrl + table[i + 1].Text);
-                    if (response.IsSuccessStatusCode)
-                    {
-                        computer.Processor = await response.Content.ReadAsAsync<Processor>();
-                    }
+                    computer.Processor = await _processorAccess.GetByModelAsync(table[i + 1].Text);
                 }
                 else if (table[i].Text.Equals("Stacionarūs kompiuteriai"))
                 {

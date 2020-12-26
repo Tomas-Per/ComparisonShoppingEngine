@@ -8,7 +8,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WPF", "WPF\WPF.csproj", "{6
 		{0C84F054-D535-4BE9-8AC8-CB22FA7D6E34} = {0C84F054-D535-4BE9-8AC8-CB22FA7D6E34}
 	EndProjectSection
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ItemLibrary", "ItemLibrary\ItemLibrary.csproj", "{45E997E0-0020-4114-9E34-F8A113064FB7}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ModelLibrary", "ItemLibrary\ModelLibrary.csproj", "{45E997E0-0020-4114-9E34-F8A113064FB7}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Data", "Data", "{25A92F1B-7513-4AC1-8298-32E5CFDE77A3}"
 	ProjectSection(SolutionItems) = preProject

@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
-using static ItemLibrary.Categories;
+using static ModelLibrary.Categories;
 
-namespace ItemLibrary
+namespace ModelLibrary
 {
     public class Computer : Item
     {

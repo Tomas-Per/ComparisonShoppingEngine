@@ -2,11 +2,13 @@
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using static ItemLibrary.Categories;
+using static ModelLibrary.Categories;
+using System.Text.Json;
+using System.Text.Json.Serialization;
 
-namespace ItemLibrary
+namespace ModelLibrary
 {
-    public abstract class Item
+    public class Item
     {
        
         public int Id { get; set; }
@@ -40,7 +42,10 @@ namespace ItemLibrary
         public ItemCategory ItemCategory { get; set; }
 
         //will remove this method in near future
-        public abstract List<Item> FindSimilar(List<Item> list);
+        public virtual List<Item> FindSimilar(List<Item> list)
+        {
+            return list;
+        }
 
     }
 }

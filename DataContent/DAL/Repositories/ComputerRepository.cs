@@ -1,7 +1,7 @@
 ﻿using DataContent.DAL.Interfaces;
 using DataManipulation.DataFillers;
-using ItemLibrary;
-using ItemLibrary.DataContexts;
+using ModelLibrary;
+using ModelLibrary.DataContexts;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -14,10 +14,12 @@ namespace DataContent.DAL.Repositories
     public class ComputerRepository : IComputerRepository
     {
         private readonly ComputerContext _context;
+        private readonly UserContext _userContext;
         
-        public ComputerRepository(ComputerContext context)
+        public ComputerRepository(ComputerContext context, UserContext userContext)
         {
             _context = context;
+            _userContext = userContext;
         }
 
         public async Task<List<Computer>> AddComputersAsync(List<Computer> list)
@@ -81,9 +83,11 @@ namespace DataContent.DAL.Repositories
                     {
                     }
                     _context.Add(computer);
+                    _userContext.Add(computer);
                 }
             }
             await _context.SaveChangesAsync();
+            await _userContext.SaveChangesAsync();
             return list;
         }
 
@@ -91,6 +95,8 @@ namespace DataContent.DAL.Repositories
         {
             var computer = await _context.Computers.Where(x => x.Id == id).FirstOrDefaultAsync();
             _context.Computers.Remove(computer);
+            var item = await _userContext.Computers.Where(x => x.Id == id && x.ItemCategory == computer.ItemCategory).FirstOrDefaultAsync();
+            _userContext.Computers.Remove(item);
             await _context.SaveChangesAsync();
             return computer;
         }
