@@ -10,7 +10,6 @@ namespace DataContent.DAL.Interfaces
     public interface IFavoriteItemRepository
     {
         Task<List<FavoriteItem>> GetUserFavoriteItemsAsync(int userId);
-        Task<List<User>> GetUsersByFavoriteItemIdAsync(int favoriteItemId);
         Task<FavoriteItem> AddFavoriteItemToUser(FavoriteItem favoriteItem);
         Task<FavoriteItem> DeleteFavoriteItem(int id);
         Task<FavoriteItem> GetFavoriteItemById(int id);

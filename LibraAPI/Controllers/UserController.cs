@@ -56,6 +56,19 @@ namespace LibraAPI.Controllers
             return user;
         }
 
+        [HttpGet("api/FavoriteItemUsers/{itemId}")]
+        public async Task<ActionResult<List<User>>> GetUsersByFavoriteItemId(int itemId)
+        {
+            var users = await _repository.GetUsersByFavoriteItemIdAsync(itemId);
+
+            if (users == null)
+            {
+                return NotFound();
+            }
+            return users;
+        }
+
+
         // PUT: api/User/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut]

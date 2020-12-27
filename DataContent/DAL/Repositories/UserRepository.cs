@@ -33,6 +33,18 @@ namespace DataContent.DAL.Repositories
             return user;
         }
 
+        public async Task<List<User>> GetUsersByFavoriteItemIdAsync(int itemId)
+        {
+            var items = await _context.FavoriteItems.Include(i => i.Item)
+                .Include(u => u.User)
+                .Where(x => x.Item.Id == itemId).ToListAsync();
+
+            List<User> users = new List<User>();
+            items.ForEach(item => users.Add(item.User));
+            return users;
+        }
+
+
         public async Task<User> LoginAsync(string email, string password)
         {
             var validUser = await _context.Users.Where(x => x.Email == email).FirstOrDefaultAsync();
