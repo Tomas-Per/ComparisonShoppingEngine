@@ -41,10 +41,7 @@ namespace DataContent.DAL.Repositories
                     {   
                         var userNotifier = new UserNotifier();
                         var usersToNotify = await userNotifier.GetUsersForNotification(sameComputer);
-                        if (usersToNotify != null)
-                        {
-                            userNotifier.NotifyUsersWhenPriceDropped(computer, sameComputer.Price, usersToNotify);
-                        }
+                        userNotifier.NotifyUsersWhenPriceDropped(computer, sameComputer.Price, usersToNotify);
                     }
 
                     sameComputer.Price = computer.Price;
