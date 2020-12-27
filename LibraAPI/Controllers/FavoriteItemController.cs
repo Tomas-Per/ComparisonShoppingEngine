@@ -24,7 +24,7 @@ namespace LibraAPI.Controllers
         }
 
         // GET: api/FavoriteItem
-        [HttpGet("/UserFavorites/{userId}")]
+        [HttpGet("api/UserFavorites/{userId}")]
         public async Task<ActionResult<IEnumerable<FavoriteItem>>> GetFavoriteItems(int userId)
         {
             return await _repository.GetUserFavoriteItemsAsync(userId);

@@ -12,6 +12,7 @@ namespace DataContent.DAL.Interfaces
         Task<User> RegisterAsync(User user);
         Task<User> LoginAsync(string email, string password);
         Task<User> GetUserByIdAsync(int id);
+        Task<List<User>> GetUsersByFavoriteItemIdAsync(int itemId);
         Task<User> UpdateUserAsync(User user);
         Task<User> DeleteUserAsync(int id);
 

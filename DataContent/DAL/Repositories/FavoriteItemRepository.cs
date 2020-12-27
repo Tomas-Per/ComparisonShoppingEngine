@@ -37,6 +37,7 @@ namespace DataContent.DAL.Repositories
         public async Task<FavoriteItem> GetFavoriteItemById(int id)
         {
             var item = await _context.FavoriteItems.Include(i => i.Item)
+                .Include(u => u.User)
                 .Where(x => x.Id == id).FirstOrDefaultAsync();
             return item;
         }
