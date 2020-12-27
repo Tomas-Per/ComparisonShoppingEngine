@@ -8,6 +8,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using EmailSender;
 
 namespace DataContent.DAL.Repositories
 {
@@ -32,6 +33,14 @@ namespace DataContent.DAL.Repositories
                 //change price and mofidy date if the smartphone is found in DB
                 if (sameSmartphone != null)
                 {
+                    //notify users that price became lower
+                    if (sameSmartphone.Price > smartphone.Price)
+                    {
+                        var userNotifier = new UserNotifier();
+                        var usersToNotify = await userNotifier.GetUsersForNotification(sameSmartphone);
+                        userNotifier.NotifyUsersWhenPriceDropped(smartphone, sameSmartphone.Price, usersToNotify);
+                    }
+
                     sameSmartphone.Price = smartphone.Price;
                     sameSmartphone.ModifyDate = smartphone.ModifyDate;
                 }
