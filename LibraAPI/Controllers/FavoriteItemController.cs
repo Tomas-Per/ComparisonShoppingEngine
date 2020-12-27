@@ -24,7 +24,7 @@ namespace LibraAPI.Controllers
         }
 
         // GET: api/FavoriteItem
-        [HttpGet("/UserFavorites/{userId}")]
+        [HttpGet("api/UserFavorites/{userId}")]
         public async Task<ActionResult<IEnumerable<FavoriteItem>>> GetFavoriteItems(int userId)
         {
             return await _repository.GetUserFavoriteItemsAsync(userId);
@@ -43,6 +43,20 @@ namespace LibraAPI.Controllers
 
             return favoriteItem;
         }
+
+
+        [HttpGet("api/FavoriteItemUsers/{favoriteItemId}")]
+        public async Task<ActionResult<List<User>>> GetUsersByFavoriteItemId(int favoriteItemId)
+        {
+            var users = await _repository.GetUsersByFavoriteItemIdAsync(favoriteItemId);
+
+            if (users == null)
+            {
+                return NotFound();
+            }
+            return users;
+        }
+
 
         // POST: api/FavoriteItem
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
