@@ -14,7 +14,6 @@ namespace EmailSender
 
         public UserNotifier()
         {
-            
             _emailSender = new EmailSender();
             _httpClient = new HttpClient();
         }

@@ -19,6 +19,7 @@
   <ItemGroup>
     <ProjectReference Include="..\ComponentParser\ComponentParser.csproj" />
     <ProjectReference Include="..\DataManipulation\DataManipulation.csproj" />
+    <ProjectReference Include="..\EmailSender\EmailSender.csproj" />
     <ProjectReference Include="..\ExceptionsLogging\ExceptionsLogging.csproj" />
     <ProjectReference Include="..\Extensions\Extensions.csproj" />
     <ProjectReference Include="..\ItemLibrary\ModelLibrary.csproj" />
