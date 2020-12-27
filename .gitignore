@@ -340,5 +340,3 @@ ASALocalRun/
 healthchecksdb
 
 App.config
-EmailSettings.settings
-EmailSettings.Designer.cs
