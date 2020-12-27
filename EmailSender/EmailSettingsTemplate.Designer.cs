@@ -13,11 +13,11 @@ namespace EmailSender {
     
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
     [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.VisualStudio.Editors.SettingsDesigner.SettingsSingleFileGenerator", "16.8.1.0")]
-    internal sealed partial class EmailSettings : global::System.Configuration.ApplicationSettingsBase {
+    internal sealed partial class EmailSettingsTemplate : global::System.Configuration.ApplicationSettingsBase {
         
-        private static EmailSettings defaultInstance = ((EmailSettings)(global::System.Configuration.ApplicationSettingsBase.Synchronized(new EmailSettings())));
+        private static EmailSettingsTemplate defaultInstance = ((EmailSettingsTemplate)(global::System.Configuration.ApplicationSettingsBase.Synchronized(new EmailSettingsTemplate())));
         
-        public static EmailSettings Default {
+        public static EmailSettingsTemplate Default {
             get {
                 return defaultInstance;
             }
@@ -25,7 +25,7 @@ namespace EmailSender {
         
         [global::System.Configuration.ApplicationScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("librahelpservice@gmail.com")]
+        [global::System.Configuration.DefaultSettingValueAttribute("null")]
         public string email {
             get {
                 return ((string)(this["email"]));
@@ -34,7 +34,7 @@ namespace EmailSender {
         
         [global::System.Configuration.ApplicationScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("Libra123")]
+        [global::System.Configuration.DefaultSettingValueAttribute("null")]
         public string password {
             get {
                 return ((string)(this["password"]));
@@ -43,7 +43,7 @@ namespace EmailSender {
         
         [global::System.Configuration.ApplicationScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("smtp.gmail.com")]
+        [global::System.Configuration.DefaultSettingValueAttribute("null")]
         public string host {
             get {
                 return ((string)(this["host"]));
@@ -52,7 +52,7 @@ namespace EmailSender {
         
         [global::System.Configuration.ApplicationScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("587")]
+        [global::System.Configuration.DefaultSettingValueAttribute("0")]
         public int port {
             get {
                 return ((int)(this["port"]));
@@ -61,7 +61,7 @@ namespace EmailSender {
         
         [global::System.Configuration.ApplicationScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("True")]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
         public bool ssl {
             get {
                 return ((bool)(this["ssl"]));

@@ -16,17 +16,17 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Compile Update="EmailSettings.Designer.cs">
+    <Compile Update="EmailSettingsTemplate.Designer.cs">
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
       <AutoGen>True</AutoGen>
-      <DependentUpon>EmailSettings.settings</DependentUpon>
+      <DependentUpon>EmailSettingsTemplate.settings</DependentUpon>
     </Compile>
   </ItemGroup>
 
   <ItemGroup>
-    <None Update="EmailSettings.settings">
+    <None Update="EmailSettingsTemplate.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
-      <LastGenOutput>EmailSettings.Designer.cs</LastGenOutput>
+      <LastGenOutput>EmailSettingsTemplate.Designer.cs</LastGenOutput>
     </None>
   </ItemGroup>
 
