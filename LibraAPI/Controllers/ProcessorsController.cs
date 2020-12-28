@@ -43,7 +43,7 @@ namespace LibraAPI.Controllers
             return processor;
         }
 
-        [HttpGet("/Models/{model}")]
+        [HttpGet("Models/{model}")]
         public async Task<ActionResult<Processor>> GetProcessorByModel(string model)
         {
             var processor = await _repository.GetProcessorByNameAsync(model);

@@ -24,7 +24,7 @@ namespace DataContent.DAL.Access
 
         public async Task<Processor> GetByModelAsync(string model)
         {
-            using HttpResponseMessage response = await _apiHelper.Client.GetAsync(_apiUrl + "Models/" + model);
+            using HttpResponseMessage response = await _apiHelper.Client.GetAsync(_apiUrl + "api/Processors/Models/" + model);
             Processor processor;
             if (response.IsSuccessStatusCode)
             {
