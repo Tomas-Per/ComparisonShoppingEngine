@@ -8,6 +8,7 @@ using Microsoft.EntityFrameworkCore;
 using ModelLibrary;
 using ModelLibrary.DataContexts;
 using DataContent.DAL.Interfaces;
+using static ModelLibrary.Categories;
 
 namespace LibraAPI.Controllers
 {
@@ -24,10 +25,17 @@ namespace LibraAPI.Controllers
         }
 
         // GET: api/Computers
-        [HttpGet]
-        public async Task<ActionResult<List<Computer>>> GetComputers()
+        [HttpGet("Desktops")]
+        public async Task<ActionResult<List<Computer>>> GetDesktops()
         {
-            var computers = await _repository.GetAllComputersAsync();
+            var computers = await _repository.GetAllComputersAsync(ItemCategory.DesktopComputer);
+            return computers;
+        }
+
+        [HttpGet("Laptops")]
+        public async Task<ActionResult<List<Computer>>> GetLaptops()
+        {
+            var computers = await _repository.GetAllComputersAsync(ItemCategory.Laptop);
             return computers;
         }
 
