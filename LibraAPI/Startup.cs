@@ -43,7 +43,7 @@ namespace LibraAPI
                      
             services.AddSwaggerGen(c =>
             {
-                c.SwaggerDoc("v1.1", new OpenApiInfo { Title = "LibraAPI", Version = "v1.1" });
+                c.SwaggerDoc("v1.2", new OpenApiInfo { Title = "LibraAPI", Version = "v1.2" });
 
                 var xmlFile = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
                 var xmlPath = Path.Combine(AppContext.BaseDirectory, xmlFile);
@@ -66,7 +66,7 @@ namespace LibraAPI
             }
 
             app.UseSwagger();
-            app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1.1/swagger.json", "LibraAPI v1.1"));
+            app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1.2/swagger.json", "LibraAPI v1.2"));
 
             //app.UseHttpsRedirection();
 
