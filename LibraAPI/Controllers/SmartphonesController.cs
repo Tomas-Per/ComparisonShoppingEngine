@@ -22,14 +22,18 @@ namespace LibraAPI.Controllers
             _repository = repository;
         }
 
-        // GET: api/Smartphones
+        /// <summary>
+        /// Gets all smartphones from the database
+        /// </summary>
         [HttpGet]
         public async Task<ActionResult<List<Smartphone>>> GetSmartphones()
         {
             return await _repository.GetAllSmartphonesAsync();
         }
 
-        // GET: api/Smartphones/5
+        /// <summary>
+        /// Gets a specific smartphone by its ID
+        /// </summary>
         [HttpGet("{id}")]
         public async Task<ActionResult<Smartphone>> GetSmartphone(int id)
         {
@@ -43,8 +47,9 @@ namespace LibraAPI.Controllers
             return smartphone;
         }
 
-        // PUT: api/Smartphones
-        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
+        /// <summary>
+        /// Updates a specific smartphone
+        /// </summary>
         [HttpPut]
         public async Task<IActionResult> PutSmartphone(Smartphone smartphone)
         {
@@ -58,8 +63,9 @@ namespace LibraAPI.Controllers
             return NoContent();
         }
 
-        // POST: api/Smartphones
-        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
+        /// <summary>
+        /// Adds a smartphone to the database
+        /// </summary>
         [HttpPost]
         public async Task<ActionResult<List<Smartphone>>> PostSmartphone(List<Smartphone> smartphones)
         {
@@ -68,7 +74,9 @@ namespace LibraAPI.Controllers
             return Ok(smartphones);
         }
 
-        // DELETE: api/Smartphones/5
+        /// <summary>
+        /// Deletes a smartphone from the database by ID
+        /// </summary>
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteSmartphone(int id)
         {

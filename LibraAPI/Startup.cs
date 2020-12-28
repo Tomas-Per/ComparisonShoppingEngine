@@ -16,6 +16,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
+using System.IO;
+using System.Reflection;
 
 namespace LibraAPI
 {
@@ -42,6 +44,10 @@ namespace LibraAPI
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1.1", new OpenApiInfo { Title = "LibraAPI", Version = "v1.1" });
+
+                var xmlFile = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
+                var xmlPath = Path.Combine(AppContext.BaseDirectory, xmlFile);
+                c.IncludeXmlComments(xmlPath);
             });
             services.AddScoped<IComputerRepository, ComputerRepository>();
             services.AddScoped<IProcessorRepository, ProcessorRepository>();

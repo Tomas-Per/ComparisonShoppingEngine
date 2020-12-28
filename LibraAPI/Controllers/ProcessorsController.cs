@@ -22,14 +22,18 @@ namespace LibraAPI.Controllers
             _repository = repository;
         }
 
-        // GET: api/Processors
+        /// <summary>
+        /// Gets all processors from the database
+        /// </summary>
         [HttpGet]
         public async Task<ActionResult<List<Processor>>> GetProcessors()
         {
             return await _repository.GetAllProcessorsAsync();
         }
 
-        // GET: api/Processors/5
+        /// <summary>
+        /// Gets a specific processor from the database by ID
+        /// </summary>
         [HttpGet("{id}")]
         public async Task<ActionResult<Processor>> GetProcessor(int id)
         {
@@ -43,6 +47,9 @@ namespace LibraAPI.Controllers
             return processor;
         }
 
+        /// <summary>
+        /// Gets a specific processor by its model
+        /// </summary>
         [HttpGet("Models/{model}")]
         public async Task<ActionResult<Processor>> GetProcessorByModel(string model)
         {
@@ -56,8 +63,9 @@ namespace LibraAPI.Controllers
             return processor;
         }
 
-        // PUT: api/Processors/5
-        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
+        /// <summary>
+        /// Updates a specific processor
+        /// </summary>
         [HttpPut]
         public async Task<IActionResult> PutProcessor(Processor processor)
         {
@@ -71,8 +79,9 @@ namespace LibraAPI.Controllers
             return NoContent();
         }
 
-        // POST: api/Processors
-        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
+        /// <summary>
+        /// Adds a processor to the database
+        /// </summary>
         [HttpPost]
         public async Task<ActionResult<List<Processor>>> PostProcessor(List<Processor> processors)
         {
@@ -81,7 +90,9 @@ namespace LibraAPI.Controllers
             return Ok(processors);
         }
 
-        // DELETE: api/Processors/5
+        /// <summary>
+        /// Deletes a processor from the database by ID
+        /// </summary>
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteProcessor(int id)
         {

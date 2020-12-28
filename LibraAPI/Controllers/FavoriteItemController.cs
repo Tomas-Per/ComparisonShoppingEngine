@@ -23,14 +23,18 @@ namespace LibraAPI.Controllers
             _repository = repository;
         }
 
-        // GET: api/FavoriteItem
+        /// <summary>
+        /// Gets a user's favorite item list by the user's ID
+        /// </summary>
         [HttpGet("/UserFavorites/{userId}")]
         public async Task<ActionResult<IEnumerable<FavoriteItem>>> GetFavoriteItems(int userId)
         {
             return await _repository.GetUserFavoriteItemsAsync(userId);
         }
 
-        // GET: api/FavoriteItem/5
+        /// <summary>
+        /// Gets a specific favorite item by its ID
+        /// </summary>
         [HttpGet("{id}")]
         public async Task<ActionResult<FavoriteItem>> GetFavoriteItem(int id)
         {
@@ -44,8 +48,9 @@ namespace LibraAPI.Controllers
             return favoriteItem;
         }
 
-        // POST: api/FavoriteItem
-        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
+        /// <summary>
+        /// Adds a favorite item to the user's favorite item list
+        /// </summary>
         [HttpPost]
         public async Task<ActionResult<FavoriteItem>> PostFavoriteItem(FavoriteItem favoriteItem)
         {
@@ -54,7 +59,9 @@ namespace LibraAPI.Controllers
             return Ok(favoriteItem);
         }
 
-        // DELETE: api/FavoriteItem/5
+        /// <summary>
+        /// Deletes a specific favorite item
+        /// </summary>
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteFavoriteItem(int id)
         {

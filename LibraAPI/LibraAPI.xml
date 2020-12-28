@@ -1,0 +1,168 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>LibraAPI</name>
+    </assembly>
+    <members>
+        <member name="M:LibraAPI.Controllers.ComputersController.GetDesktops">
+            <summary>
+            Gets all desktop computers from database
+            </summary>
+        </member>
+        <member name="M:LibraAPI.Controllers.ComputersController.GetLaptops">
+            <summary>
+            Gets all laptop computers from database
+            </summary>
+        </member>
+        <member name="M:LibraAPI.Controllers.ComputersController.GetComputer(System.Int32)">
+            <summary>
+            Gets a specific computer from database by ID
+            </summary>
+        </member>
+        <member name="M:LibraAPI.Controllers.ComputersController.PutComputer(ModelLibrary.Computer)">
+            <summary>
+            Updates a specific computer
+            </summary>
+        </member>
+        <member name="M:LibraAPI.Controllers.ComputersController.PostComputer(System.Collections.Generic.List{ModelLibrary.Computer})">
+            <summary>
+            Adds a computer to the database
+            </summary>
+        </member>
+        <member name="M:LibraAPI.Controllers.ComputersController.DeleteComputer(System.Int32)">
+            <summary>
+            Deletes a computer from the database by ID
+            </summary>
+        </member>
+        <member name="M:LibraAPI.Controllers.FavoriteItemController.GetFavoriteItems(System.Int32)">
+            <summary>
+            Gets a user's favorite item list by the user's ID
+            </summary>
+        </member>
+        <member name="M:LibraAPI.Controllers.FavoriteItemController.GetFavoriteItem(System.Int32)">
+            <summary>
+            Gets a specific favorite item by its ID
+            </summary>
+        </member>
+        <member name="M:LibraAPI.Controllers.FavoriteItemController.PostFavoriteItem(ModelLibrary.FavoriteItem)">
+            <summary>
+            Adds a favorite item to the user's favorite item list
+            </summary>
+        </member>
+        <member name="M:LibraAPI.Controllers.FavoriteItemController.DeleteFavoriteItem(System.Int32)">
+            <summary>
+            Deletes a specific favorite item
+            </summary>
+        </member>
+        <member name="M:LibraAPI.Controllers.ProcessorsController.GetProcessors">
+            <summary>
+            Gets all processors from the database
+            </summary>
+        </member>
+        <member name="M:LibraAPI.Controllers.ProcessorsController.GetProcessor(System.Int32)">
+            <summary>
+            Gets a specific processor from the database by ID
+            </summary>
+        </member>
+        <member name="M:LibraAPI.Controllers.ProcessorsController.GetProcessorByModel(System.String)">
+            <summary>
+            Gets a specific processor by its model
+            </summary>
+        </member>
+        <member name="M:LibraAPI.Controllers.ProcessorsController.PutProcessor(ModelLibrary.Processor)">
+            <summary>
+            Updates a specific processor
+            </summary>
+        </member>
+        <member name="M:LibraAPI.Controllers.ProcessorsController.PostProcessor(System.Collections.Generic.List{ModelLibrary.Processor})">
+            <summary>
+            Adds a processor to the database
+            </summary>
+        </member>
+        <member name="M:LibraAPI.Controllers.ProcessorsController.DeleteProcessor(System.Int32)">
+            <summary>
+            Deletes a processor from the database by ID
+            </summary>
+        </member>
+        <member name="M:LibraAPI.Controllers.ReviewController.GetReviews(System.Int32,System.Int32)">
+            <summary>
+            Gets an item's reviews by its ID and category
+            </summary>
+        </member>
+        <member name="M:LibraAPI.Controllers.ReviewController.GetReview(System.Int32)">
+            <summary>
+            Gets a specific review by its ID
+            </summary>
+        </member>
+        <member name="M:LibraAPI.Controllers.ReviewController.GetUserReviews(System.Int32)">
+            <summary>
+            Gets all reviews made by a user by the user's ID
+            </summary>
+        </member>
+        <member name="M:LibraAPI.Controllers.ReviewController.PutReview(System.Int32,ModelLibrary.Review)">
+            <summary>
+            Updates a review by its ID
+            </summary>
+        </member>
+        <member name="M:LibraAPI.Controllers.ReviewController.PostReview(ModelLibrary.Review)">
+            <summary>
+            Posts a review related to an item
+            </summary>
+        </member>
+        <member name="M:LibraAPI.Controllers.ReviewController.DeleteReview(System.Int32)">
+            <summary>
+            Deletes review by its ID
+            </summary>
+        </member>
+        <member name="M:LibraAPI.Controllers.SmartphonesController.GetSmartphones">
+            <summary>
+            Gets all smartphones from the database
+            </summary>
+        </member>
+        <member name="M:LibraAPI.Controllers.SmartphonesController.GetSmartphone(System.Int32)">
+            <summary>
+            Gets a specific smartphone by its ID
+            </summary>
+        </member>
+        <member name="M:LibraAPI.Controllers.SmartphonesController.PutSmartphone(ModelLibrary.Smartphone)">
+            <summary>
+            Updates a specific smartphone
+            </summary>
+        </member>
+        <member name="M:LibraAPI.Controllers.SmartphonesController.PostSmartphone(System.Collections.Generic.List{ModelLibrary.Smartphone})">
+            <summary>
+            Adds a smartphone to the database
+            </summary>
+        </member>
+        <member name="M:LibraAPI.Controllers.SmartphonesController.DeleteSmartphone(System.Int32)">
+            <summary>
+            Deletes a smartphone from the database by ID
+            </summary>
+        </member>
+        <member name="M:LibraAPI.Controllers.UserController.Login(System.String,System.String)">
+            <summary>
+            Checks a user's login credentials
+            </summary>
+        </member>
+        <member name="M:LibraAPI.Controllers.UserController.GetUser(System.Int32)">
+            <summary>
+            Gets a specific user by ID
+            </summary>
+        </member>
+        <member name="M:LibraAPI.Controllers.UserController.UpdateUser(ModelLibrary.User)">
+            <summary>
+            Updates a user's information
+            </summary>
+        </member>
+        <member name="M:LibraAPI.Controllers.UserController.Register(ModelLibrary.User)">
+            <summary>
+            Registers a user and adds user information to the database 
+            </summary>
+        </member>
+        <member name="M:LibraAPI.Controllers.UserController.DeleteUser(System.Int32)">
+            <summary>
+            Deletes a user by ID
+            </summary>
+        </member>
+    </members>
+</doc>

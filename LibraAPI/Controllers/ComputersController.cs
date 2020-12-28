@@ -24,7 +24,9 @@ namespace LibraAPI.Controllers
             _repository = repository;
         }
 
-        // GET: api/Computers
+        /// <summary>
+        /// Gets all desktop computers from database
+        /// </summary>
         [HttpGet("Desktops")]
         public async Task<ActionResult<List<Computer>>> GetDesktops()
         {
@@ -32,6 +34,9 @@ namespace LibraAPI.Controllers
             return computers;
         }
 
+        /// <summary>
+        /// Gets all laptop computers from database
+        /// </summary>
         [HttpGet("Laptops")]
         public async Task<ActionResult<List<Computer>>> GetLaptops()
         {
@@ -39,7 +44,9 @@ namespace LibraAPI.Controllers
             return computers;
         }
 
-        // GET: api/Computers/5
+        /// <summary>
+        /// Gets a specific computer from database by ID
+        /// </summary>
         [HttpGet("{id}")]
         public async Task<ActionResult<Computer>> GetComputer(int id)
         {
@@ -53,8 +60,9 @@ namespace LibraAPI.Controllers
             return computer;
         }
 
-        // PUT: api/Computers/5
-        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
+        /// <summary>
+        /// Updates a specific computer
+        /// </summary>
         [HttpPut]
         public async Task<IActionResult> PutComputer(Computer computer)
         {
@@ -68,8 +76,9 @@ namespace LibraAPI.Controllers
             return NoContent();
         }
 
-        // POST: api/Computers
-        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
+        /// <summary>
+        /// Adds a computer to the database
+        /// </summary>
         [HttpPost]
         public async Task<ActionResult<List<Computer>>> PostComputer(List<Computer> computers)
         {
@@ -78,7 +87,9 @@ namespace LibraAPI.Controllers
             return Ok(computers);
         }
 
-        // DELETE: api/Computers/5
+        /// <summary>
+        /// Deletes a computer from the database by ID
+        /// </summary>
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteComputer(int id)
         {
