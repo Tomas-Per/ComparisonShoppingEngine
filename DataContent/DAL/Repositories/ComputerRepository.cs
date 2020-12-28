@@ -8,6 +8,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using static ModelLibrary.Categories;
 
 namespace DataContent.DAL.Repositories
 {
@@ -101,9 +102,9 @@ namespace DataContent.DAL.Repositories
             return computer;
         }
 
-        public async Task<List<Computer>> GetAllComputersAsync()
+        public async Task<List<Computer>> GetAllComputersAsync(ItemCategory category)
         {
-            var computers = await _context.Computers.Include(x => x.Processor).ToListAsync();
+            var computers = await _context.Computers.Where(x => x.ItemCategory == category).Include(x => x.Processor).ToListAsync();
             return computers;
         }
 
