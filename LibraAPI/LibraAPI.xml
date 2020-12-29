@@ -4,12 +4,12 @@
         <name>LibraAPI</name>
     </assembly>
     <members>
-        <member name="M:LibraAPI.Controllers.ComputersController.GetDesktops">
+        <member name="M:LibraAPI.Controllers.ComputersController.GetDesktops(System.Int32)">
             <summary>
             Gets all desktop computers from database
             </summary>
         </member>
-        <member name="M:LibraAPI.Controllers.ComputersController.GetLaptops">
+        <member name="M:LibraAPI.Controllers.ComputersController.GetLaptops(System.Int32)">
             <summary>
             Gets all laptop computers from database
             </summary>

@@ -102,10 +102,20 @@ namespace DataContent.DAL.Repositories
             return computer;
         }
 
-        public async Task<List<Computer>> GetAllComputersAsync(ItemCategory category)
-        {
-            var computers = await _context.Computers.Where(x => x.ItemCategory == category).Include(x => x.Processor).ToListAsync();
-            return computers;
+        public async Task<List<Computer>> GetAllComputersAsync(ItemCategory category, int page)
+        {     
+            if(page > 0)
+            {
+                var skip = (page - 1) * 20;
+                var computers = await _context.Computers.Where(x => x.ItemCategory == category).Skip(skip).Take(20).Include(x => x.Processor).ToListAsync();
+                return computers;
+            }
+            else
+            {
+                var computers = await _context.Computers.Where(x => x.ItemCategory == category).Include(x => x.Processor).ToListAsync();
+                return computers;
+            }
+
         }
 
         public async Task<Computer> GetComputerByIdAsync(int id)

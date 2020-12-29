@@ -27,20 +27,20 @@ namespace LibraAPI.Controllers
         /// <summary>
         /// Gets all desktop computers from database
         /// </summary>
-        [HttpGet("Desktops")]
-        public async Task<ActionResult<List<Computer>>> GetDesktops()
+        [HttpGet("Desktops/{page}")]
+        public async Task<ActionResult<List<Computer>>> GetDesktops(int page)
         {
-            var computers = await _repository.GetAllComputersAsync(ItemCategory.DesktopComputer);
+            var computers = await _repository.GetAllComputersAsync(ItemCategory.DesktopComputer, page);
             return computers;
         }
 
         /// <summary>
         /// Gets all laptop computers from database
         /// </summary>
-        [HttpGet("Laptops")]
-        public async Task<ActionResult<List<Computer>>> GetLaptops()
+        [HttpGet("Laptops/{page}")]
+        public async Task<ActionResult<List<Computer>>> GetLaptops(int page)
         {
-            var computers = await _repository.GetAllComputersAsync(ItemCategory.Laptop);
+            var computers = await _repository.GetAllComputersAsync(ItemCategory.Laptop, page);
             return computers;
         }
 

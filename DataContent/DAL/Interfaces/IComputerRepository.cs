@@ -10,7 +10,7 @@ namespace DataContent.DAL.Interfaces
 {
     public interface IComputerRepository
     {
-        Task<List<Computer>> GetAllComputersAsync(ItemCategory category);
+        Task<List<Computer>> GetAllComputersAsync(ItemCategory category, int page);
         Task<Computer> GetComputerByIdAsync(int id);
         Task<Computer> UpdateComputerAsync(Computer computer);
         Task<List<Computer>> AddComputersAsync(List<Computer> computers);
