@@ -25,7 +25,7 @@ namespace LibraAPI.Controllers
         }
 
         /// <summary>
-        /// Gets all desktop computers from database
+        /// Gets all desktop computers from database (page 0 for all, 1 to n for chunks of 20)
         /// </summary>
         [HttpGet("Desktops/{page}")]
         public async Task<ActionResult<List<Computer>>> GetDesktops(int page)
@@ -35,7 +35,7 @@ namespace LibraAPI.Controllers
         }
 
         /// <summary>
-        /// Gets all laptop computers from database
+        /// Gets all laptop computers from database (page 0 for all, 1 to n for chunks of 20)
         /// </summary>
         [HttpGet("Laptops/{page}")]
         public async Task<ActionResult<List<Computer>>> GetLaptops(int page)

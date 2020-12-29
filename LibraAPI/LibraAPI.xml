@@ -6,12 +6,12 @@
     <members>
         <member name="M:LibraAPI.Controllers.ComputersController.GetDesktops(System.Int32)">
             <summary>
-            Gets all desktop computers from database
+            Gets all desktop computers from database (page 0 for all, 1 to n for chunks of 20)
             </summary>
         </member>
         <member name="M:LibraAPI.Controllers.ComputersController.GetLaptops(System.Int32)">
             <summary>
-            Gets all laptop computers from database
+            Gets all laptop computers from database (page 0 for all, 1 to n for chunks of 20)
             </summary>
         </member>
         <member name="M:LibraAPI.Controllers.ComputersController.GetComputer(System.Int32)">
