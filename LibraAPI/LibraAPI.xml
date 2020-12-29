@@ -114,9 +114,9 @@
             Deletes review by its ID
             </summary>
         </member>
-        <member name="M:LibraAPI.Controllers.SmartphonesController.GetSmartphones">
+        <member name="M:LibraAPI.Controllers.SmartphonesController.GetSmartphones(System.Int32)">
             <summary>
-            Gets all smartphones from the database
+            Gets all smartphones from the database (page 0 for all, 1 to n for chunks of 20)
             </summary>
         </member>
         <member name="M:LibraAPI.Controllers.SmartphonesController.GetSmartphone(System.Int32)">

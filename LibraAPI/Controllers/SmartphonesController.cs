@@ -23,12 +23,12 @@ namespace LibraAPI.Controllers
         }
 
         /// <summary>
-        /// Gets all smartphones from the database
+        /// Gets all smartphones from the database (page 0 for all, 1 to n for chunks of 20)
         /// </summary>
-        [HttpGet]
-        public async Task<ActionResult<List<Smartphone>>> GetSmartphones()
+        [HttpGet("Page/{page}")]
+        public async Task<ActionResult<List<Smartphone>>> GetSmartphones(int page)
         {
-            return await _repository.GetAllSmartphonesAsync();
+            return await _repository.GetAllSmartphonesAsync(page);
         }
 
         /// <summary>
