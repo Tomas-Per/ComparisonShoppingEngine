@@ -97,6 +97,7 @@ namespace DataContent.DAL.Repositories
                 updatedUser.Email = user.Email;
                 updatedUser.Username = user.Username;
                 updatedUser.Password = new ScryptEncoder().Encode(user.Password);
+                updatedUser.RecoveryPassword = null;
             }
             await _context.SaveChangesAsync();
             return updatedUser;
