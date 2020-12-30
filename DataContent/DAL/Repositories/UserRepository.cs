@@ -106,9 +106,13 @@ namespace DataContent.DAL.Repositories
         public async Task<User> ForgotPasswordAsync(string email)
         {
             var user = await _context.Users.Where(x => x.Email == email).FirstOrDefaultAsync();
-            user.RecoveryPassword = PasswordHelper.RandomString(16);
-            user.RecoveryDate = DateTime.Now;
-            await _context.SaveChangesAsync();
+            if(user.RecoveryDate.AddSeconds(30) < DateTime.Now)
+            {
+                user.RecoveryPassword = PasswordHelper.RandomString(16);
+                user.RecoveryDate = DateTime.Now;
+                await _context.SaveChangesAsync();
+            }
+            
             return user;
         }
     }
