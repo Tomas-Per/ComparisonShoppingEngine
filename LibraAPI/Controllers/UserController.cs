@@ -63,7 +63,7 @@ namespace LibraAPI.Controllers
         /// <summary>
         /// Gets all users with the same favorited item by the item's ID
         /// </summary>
-        [HttpGet("api/FavoriteItemUsers/{itemId}")]
+        [HttpGet("FavoriteItemUsers/{itemId}")]
         public async Task<ActionResult<List<User>>> GetUsersByFavoriteItemId(int itemId)
         {
             var users = await _repository.GetUsersByFavoriteItemIdAsync(itemId);
