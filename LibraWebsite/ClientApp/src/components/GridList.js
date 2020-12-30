@@ -1,12 +1,23 @@
-﻿import React from 'react';
-import { makeStyles } from '@material-ui/core/styles';
+﻿import React, { useState, useEffect } from 'react';
+import { makeStyles, height } from '@material-ui/core/styles';
 import GridList from '@material-ui/core/GridList';
 import GridListTile from '@material-ui/core/GridListTile';
 import GridListTileBar from '@material-ui/core/GridListTileBar';
 import ListSubheader from '@material-ui/core/ListSubheader';
 import IconButton from '@material-ui/core/IconButton';
-import InfoIcon from '@material-ui/icons/Info';
+import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
+import List from '@material-ui/core/List';
+import ListItem from '@material-ui/core/ListItem';
+import ListItemText from '@material-ui/core/ListItemText';
+import RateReviewIcon from '@material-ui/icons/RateReview';
+import VerticalAlignCenterIcon from '@material-ui/icons/VerticalAlignCenter';
+import FavoriteBorderIcon from '@material-ui/icons/FavoriteBorder';
+import SearchIcon from '@material-ui/icons/Search';
 import mockData from './mockData';
+import './Styles.css';
+import { data } from 'jquery';
+import { Divider } from '@material-ui/core';
+
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -16,18 +27,38 @@ const useStyles = makeStyles((theme) => ({
         overflow: 'hidden',
         backgroundColor: theme.palette.background.paper,
     },
+    demo: {
+        overflow: 'hidden',
+        backgroundColor: theme.palette.background.paper,
+    },
+    container: {
+        height: '50%',
+        minHeight: '1px',
+        width: '40%',
+        float: 'bottom',
+        overflow: 'hidden',
+    },
     gridList: {
         width: '80%',
-        height: '100%',
         float: 'left',
-        minHeight: '300px',
+        minHeight: '400px',
         minWidth: '464px',
         overflow: 'hidden',
         transform: 'translateZ(0)',
     },
+    photo: {
+        display: 'flex',
+        height: '90%',
+        width: 'auto',
+        alignItems: 'center',
+        justifyContent: 'center',
+        marginLeft: 'auto',
+        marginRight: 'auto',
+    },
     icon: {
         color: 'rgba(255, 255, 255, 0.54)',
     },
+
 }));
 
 /**
@@ -49,26 +80,84 @@ const useStyles = makeStyles((theme) => ({
  */
 export default function TitlebarGridList() {
     const classes = useStyles();
+    const [active, setActive] = useState(null);
+    const [items, setProducts] = useState([])
 
-    return (
-        <div className={classes.root}>
-            <GridList cellHeight={200} cellWidht={ 200} className={classes.gridList}>
-                {mockData.map((tile) => (
-                    <GridListTile key={tile.id}>
-                        <img src={tile.img}  />
-                        <GridListTileBar
-                            title={tile.title}
-                            price={tile.price.toLocaleString("en-US", { style: "currency", currency: "EUR" })}
-                            actionIcon={
-                                <IconButton className={classes.icon}>
-                                    <InfoIcon />
-                                </IconButton>
-                            }
+ 
+    useEffect(() => {
+        let mounted = true;
+        DataComputers()
+            .then(data => {
+                if (mounted) {
+                    setProducts(data)
+                }
+            })
+        return () => mounted = false;
+    }, [])
+
+    if (items != []) {
+        return (
+            <div className={classes.root}>
+                <GridList cellHeight={200} cellWidht={200} className={classes.gridList}>
+                    {items.map((tile) => (
+                        <GridListTile key={tile.id}>
+                            <img className={classes.photo} src={tile.imageLink} />
+                                <GridListTileBar className={(active == tile.id) ? "extract" : ''}
+                                    title={tile.name}
+                                    subtitle={tile.price.toLocaleString("en-US", { style: "currency", currency: "EUR" })}
+                                    actionIcon={
+                                        <IconButton className={classes.icon} onClick={() => {
+                                            console.log(tile);
+                                            setActive(tile.id)}}>
+                                            <ExpandMoreIcon />
+                                        </IconButton>
+                                    }
                             />
-                    </GridListTile>
-                ))}
-            </GridList>
-        </div>
-    );
+
+                            <List className={(active == tile.id) ? "extractInfoPanel" : "specs"}>
+                                <Divider />
+                                <ListItem className={"infoPanel"} dense={true}>
+                                    <ListItemText className={"infoRow"} primary={"Manufacturer: "} />
+                                    <ListItemText primary={(tile.manufacturerName != null) ? tile.manufacturerName : 'Not specified'} />
+                                </ListItem>
+                                <ListItem className={"infoPanel"} dense={true}>
+                                    <ListItemText className={"infoRow"} primary={"Processor: "} />
+                                    <ListItemText primary={(tile.processor != null) ? tile.processor.model : 'Not specified'} />
+                                </ListItem>
+                                <ListItem className={"infoPanel"} dense={true}>
+                                    <ListItemText className={"infoRow"} primary={"Graphic card: "} />
+                                    <ListItemText primary={(tile.graphicsCardName != null) ? tile.graphicsCardName : 'Not specified'} />
+                                </ListItem>
+                                <ListItem className={"infoPanel"} dense={true}>
+                                    <ListItemText className={"infoRow"} primary={"Storage: "} />
+                                    <ListItemText primary={(tile.storageCapacity != 0) ? (tile.storageCapacity + ' GB '): 'Not specified'} />
+                                </ListItem>
+                                <ListItem className={"infoPanel"} dense={true}>
+                                    <ListItemText className={"infoRow"} primary={"RAM: "}/>
+                                    <ListItemText primary={(tile.ram != 0) ? (tile.ram + ' GB ' + ((tile.raM_type != null) ? ('('+ tile.raM_type + ')'): '')) : 'Not specified'} />
+                                </ListItem>
+                                <ListItem className={"infoPanel"} dense={true}>
+                                    <IconButton className={classes.icon} style={{ marginLeft: "auto", marginRight: "auto" }}> <RateReviewIcon /> </IconButton>
+                                    <IconButton className={classes.icon} style={{ transform: "rotate(90deg)", marginLeft: "auto", marginRight: "auto" }}> <VerticalAlignCenterIcon /> </IconButton>
+                                    <IconButton className={classes.icon} style={{ marginLeft: "auto", marginRight: "auto" }}> <SearchIcon /> </IconButton>
+                                    <IconButton className={classes.icon} style={{ marginLeft: "auto", marginRight: "auto" }} > <FavoriteBorderIcon /> </IconButton>
+                                </ListItem>
+                            </List>
+                        </GridListTile>
+                    ))}
+                </GridList>
+            </div>
+        );
+    }
+    else {
+        return null;
+    }
 }
+function DataComputers() {
+    var proxyUrl = 'https://cors-anywhere.herokuapp.com/',
+        targetUrl = 'http://(address)/api/Computers'
+    return fetch(proxyUrl + targetUrl).then(response =>response.json());
+
+}
+
 //price={tile.price.toLocaleString("en-US", { style: "currency", currency: "EUR" })}
