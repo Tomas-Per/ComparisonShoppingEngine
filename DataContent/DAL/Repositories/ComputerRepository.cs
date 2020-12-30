@@ -8,6 +8,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using EmailSender;
 using static ModelLibrary.Categories;
 
 namespace DataContent.DAL.Repositories
@@ -36,6 +37,14 @@ namespace DataContent.DAL.Repositories
                 //change price and mofidy date if the computer is found in DB
                 if (sameComputer != null)
                 {
+                    //notify users that price became lower
+                    if(sameComputer.Price > computer.Price)
+                    {   
+                        var userNotifier = new UserNotifier();
+                        var usersToNotify = await userNotifier.GetUsersForNotification(sameComputer);
+                        userNotifier.NotifyUsersWhenPriceDropped(computer, sameComputer.Price, usersToNotify);
+                    }
+
                     sameComputer.Price = computer.Price;
                     sameComputer.ModifyDate = computer.ModifyDate;
                 }

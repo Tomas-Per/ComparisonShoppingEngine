@@ -1,0 +1,21 @@
+﻿<?xml version='1.0' encoding='utf-8'?>
+<SettingsFile xmlns="http://schemas.microsoft.com/VisualStudio/2004/01/settings" CurrentProfile="(Default)" GeneratedClassNamespace="EmailSender" GeneratedClassName="EmailSettings">
+  <Profiles />
+  <Settings>
+    <Setting Name="email" Type="System.String" Scope="Application">
+      <Value Profile="(Default)">librahelpservice@gmail.com</Value>
+    </Setting>
+    <Setting Name="password" Type="System.String" Scope="Application">
+      <Value Profile="(Default)">Libra123</Value>
+    </Setting>
+    <Setting Name="host" Type="System.String" Scope="Application">
+      <Value Profile="(Default)">smtp.gmail.com</Value>
+    </Setting>
+    <Setting Name="port" Type="System.Int32" Scope="Application">
+      <Value Profile="(Default)">587</Value>
+    </Setting>
+    <Setting Name="ssl" Type="System.Boolean" Scope="Application">
+      <Value Profile="(Default)">True</Value>
+    </Setting>
+  </Settings>
+</SettingsFile>
