@@ -101,10 +101,19 @@ namespace DataContent.DAL.Repositories
             return smartphone;
         }
 
-        public async Task<List<Smartphone>> GetAllSmartphonesAsync()
+        public async Task<List<Smartphone>> GetAllSmartphonesAsync(int page)
         {
-            var smartphones = await _context.Smartphones.ToListAsync();
-            return smartphones;
+            if (page > 0)
+            {
+                var skip = (page - 1) * 20;
+                var computers = await _context.Smartphones.Skip(skip).Take(20).ToListAsync();
+                return computers;
+            }
+            else
+            {
+                var computers = await _context.Smartphones.ToListAsync();
+                return computers;
+            }
         }
 
         public async Task<Smartphone> GetSmartphoneByIdAsync(int id)

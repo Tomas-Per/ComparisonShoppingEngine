@@ -26,7 +26,9 @@ namespace LibraAPI.Controllers
             _repository = repository;
         }
 
-        // GET: api/User
+        /// <summary>
+        /// Checks a user's login credentials
+        /// </summary>
         [HttpGet("/login/{email}/{password}")]
         public async Task<ActionResult<User>> Login(string email, string password)
         {
@@ -42,7 +44,9 @@ namespace LibraAPI.Controllers
             return user;
         }
 
-        // GET: api/User/5
+        /// <summary>
+        /// Gets a specific user by ID
+        /// </summary>
         [HttpGet("{id}")]
         public async Task<ActionResult<User>> GetUser(int id)
         {
@@ -55,6 +59,7 @@ namespace LibraAPI.Controllers
 
             return user;
         }
+
 
         [HttpGet("api/FavoriteItemUsers/{itemId}")]
         public async Task<ActionResult<List<User>>> GetUsersByFavoriteItemId(int itemId)
@@ -71,6 +76,10 @@ namespace LibraAPI.Controllers
 
         // PUT: api/User/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
+        /// <summary>
+        /// Updates a user's information
+        /// </summary>
+
         [HttpPut]
         public async Task<IActionResult> UpdateUser(User user)
         {
@@ -83,8 +92,9 @@ namespace LibraAPI.Controllers
             return NoContent();
         }
 
-        // POST: api/User
-        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
+        /// <summary>
+        /// Registers a user and adds user information to the database 
+        /// </summary>
         [HttpPost]
         public async Task<ActionResult<User>> Register(User user)
         {
@@ -101,7 +111,9 @@ namespace LibraAPI.Controllers
             return Ok(user);
         }
 
-        // DELETE: api/User/5
+        /// <summary>
+        /// Deletes a user by ID
+        /// </summary>
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteUser(int id)
         {
