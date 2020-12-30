@@ -60,7 +60,9 @@ namespace LibraAPI.Controllers
             return user;
         }
 
-
+        /// <summary>
+        /// Gets all users with the same favorited item by the item's ID
+        /// </summary>
         [HttpGet("api/FavoriteItemUsers/{itemId}")]
         public async Task<ActionResult<List<User>>> GetUsersByFavoriteItemId(int itemId)
         {
@@ -73,13 +75,9 @@ namespace LibraAPI.Controllers
             return users;
         }
 
-
-        // PUT: api/User/5
-        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         /// <summary>
         /// Updates a user's information
         /// </summary>
-
         [HttpPut]
         public async Task<IActionResult> UpdateUser(User user)
         {

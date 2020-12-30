@@ -149,6 +149,11 @@
             Gets a specific user by ID
             </summary>
         </member>
+        <member name="M:LibraAPI.Controllers.UserController.GetUsersByFavoriteItemId(System.Int32)">
+            <summary>
+            Gets all users with the same favorited item by the item's ID
+            </summary>
+        </member>
         <member name="M:LibraAPI.Controllers.UserController.UpdateUser(ModelLibrary.User)">
             <summary>
             Updates a user's information
