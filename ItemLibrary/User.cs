@@ -24,6 +24,12 @@ namespace ModelLibrary
         [Required]
         [MaxLength(128)]
         public string Password { get; set; }
-        public static void Main() { }
+
+        [MaxLength(128)]
+        public string RecoveryPassword { get; set; }
+
+        public DateTime RecoveryDate { get; set; }
+
+        
     }
 }
