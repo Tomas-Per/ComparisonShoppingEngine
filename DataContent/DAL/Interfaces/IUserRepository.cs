@@ -15,6 +15,7 @@ namespace DataContent.DAL.Interfaces
         Task<List<User>> GetUsersByFavoriteItemIdAsync(int itemId);
         Task<User> UpdateUserAsync(User user);
         Task<User> DeleteUserAsync(int id);
+        Task<User> ForgotPasswordAsync(string email);
 
     }
 }

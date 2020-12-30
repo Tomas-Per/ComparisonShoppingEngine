@@ -9,6 +9,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Scrypt;
+using DataContent.DAL.Helpers;
 
 namespace DataContent.DAL.Repositories
 {
@@ -99,6 +100,15 @@ namespace DataContent.DAL.Repositories
             }
             await _context.SaveChangesAsync();
             return updatedUser;
+        }
+
+        public async Task<User> ForgotPasswordAsync(string email)
+        {
+            var user = await _context.Users.Where(x => x.Email == email).FirstOrDefaultAsync();
+            user.RecoveryPassword = PasswordHelper.RandomString(16);
+            user.RecoveryDate = DateTime.Now;
+            await _context.SaveChangesAsync();
+            return user;
         }
     }
 }
