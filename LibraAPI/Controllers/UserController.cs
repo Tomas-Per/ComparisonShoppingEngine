@@ -91,6 +91,21 @@ namespace LibraAPI.Controllers
         }
 
         /// <summary>
+        /// Sets recovery password for user
+        /// </summary>
+        [HttpPut("ForgotPassword/{email}")]
+        public async Task<IActionResult> ForgotPassword(string email)
+        {
+            if (email == null)
+            {
+                return BadRequest();
+            }
+            await _repository.ForgotPasswordAsync(email);
+
+            return NoContent();
+        }
+
+        /// <summary>
         /// Registers a user and adds user information to the database 
         /// </summary>
         [HttpPost]

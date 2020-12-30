@@ -159,6 +159,11 @@
             Updates a user's information
             </summary>
         </member>
+        <member name="M:LibraAPI.Controllers.UserController.ForgotPassword(System.String)">
+            <summary>
+            Sets recovery password for user
+            </summary>
+        </member>
         <member name="M:LibraAPI.Controllers.UserController.Register(ModelLibrary.User)">
             <summary>
             Registers a user and adds user information to the database 
