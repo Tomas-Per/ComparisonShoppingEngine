@@ -106,12 +106,13 @@ namespace DataContent.DAL.Repositories
         public async Task<User> ForgotPasswordAsync(string email)
         {
             var user = await _context.Users.Where(x => x.Email == email).FirstOrDefaultAsync();
-            if(user.RecoveryDate.AddSeconds(30) < DateTime.Now)
+            if (user.RecoveryDate.AddSeconds(30) < DateTime.Now)
             {
                 user.RecoveryPassword = PasswordHelper.RandomString(16);
                 user.RecoveryDate = DateTime.Now;
                 await _context.SaveChangesAsync();
             }
+            else throw new RecoveryTimeException("30 seconds have not passed since last recovery code was sent");
             
             return user;
         }

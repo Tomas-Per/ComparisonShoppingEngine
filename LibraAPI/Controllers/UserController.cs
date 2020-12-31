@@ -100,8 +100,15 @@ namespace LibraAPI.Controllers
             {
                 return BadRequest();
             }
-            await _repository.ForgotPasswordAsync(email);
-
+            try
+            {
+                var user = await _repository.ForgotPasswordAsync(email);
+            }
+            catch(RecoveryTimeException e)
+            {
+                return BadRequest(e.Message);
+            }
+           
             return NoContent();
         }
 
