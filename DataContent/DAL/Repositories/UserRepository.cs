@@ -9,6 +9,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Scrypt;
+using DataContent.DAL.Helpers;
 
 namespace DataContent.DAL.Repositories
 {
@@ -96,9 +97,24 @@ namespace DataContent.DAL.Repositories
                 updatedUser.Email = user.Email;
                 updatedUser.Username = user.Username;
                 updatedUser.Password = new ScryptEncoder().Encode(user.Password);
+                updatedUser.RecoveryPassword = null;
             }
             await _context.SaveChangesAsync();
             return updatedUser;
+        }
+
+        public async Task<User> ForgotPasswordAsync(string email)
+        {
+            var user = await _context.Users.Where(x => x.Email == email).FirstOrDefaultAsync();
+            if (user.RecoveryDate.AddSeconds(30) < DateTime.Now)
+            {
+                user.RecoveryPassword = PasswordHelper.RandomString(16);
+                user.RecoveryDate = DateTime.Now;
+                await _context.SaveChangesAsync();
+            }
+            else throw new RecoveryTimeException("30 seconds have not passed since last recovery code was sent");
+            
+            return user;
         }
     }
 }

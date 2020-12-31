@@ -9,7 +9,7 @@ namespace DataContent.DAL.Interfaces
 {
     public interface ISmartphoneRepository
     {
-        Task<List<Smartphone>> GetAllSmartphonesAsync();
+        Task<List<Smartphone>> GetAllSmartphonesAsync(int page);
         Task<Smartphone> GetSmartphoneByIdAsync(int id);
         Task<Smartphone> UpdateSmartphoneAsync(Smartphone smartphone);
         Task<List<Smartphone>> AddSmartphonesAsync(List<Smartphone> smartphones);

@@ -22,7 +22,9 @@ namespace LibraAPI.Controllers
             _repository = repository;
         }
 
-        // GET: api/Review
+        /// <summary>
+        /// Gets an item's reviews by its ID and category
+        /// </summary>
         [HttpGet("/Items/{itemId}/{itemCategory}")]
         public async Task<ActionResult<IEnumerable<Review>>> GetReviews(int itemId, int itemCategory)
         {
@@ -30,7 +32,9 @@ namespace LibraAPI.Controllers
             return reviews;
         }
 
-        // GET: api/Review/5
+        /// <summary>
+        /// Gets a specific review by its ID
+        /// </summary>
         [HttpGet("{id}")]
         public async Task<ActionResult<Review>> GetReview(int id)
         {
@@ -44,6 +48,9 @@ namespace LibraAPI.Controllers
             return review;
         }
 
+        /// <summary>
+        /// Gets all reviews made by a user by the user's ID
+        /// </summary>
         [HttpGet("Reviews/User/{id}")]
         public async Task<ActionResult<List<Review>>> GetUserReviews(int id)
         {
@@ -51,8 +58,9 @@ namespace LibraAPI.Controllers
             return reviews;
         }
 
-        // PUT: api/Review/5
-        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
+        /// <summary>
+        /// Updates a review by its ID
+        /// </summary>
         [HttpPut("{id}")]
         public async Task<IActionResult> PutReview(int id, Review review)
         {
@@ -66,8 +74,9 @@ namespace LibraAPI.Controllers
             return NoContent();
         }
 
-        // POST: api/Review
-        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
+        /// <summary>
+        /// Posts a review related to an item
+        /// </summary>
         [HttpPost]
         public async Task<ActionResult<Review>> PostReview(Review review)
         {
@@ -76,7 +85,9 @@ namespace LibraAPI.Controllers
             return Ok(review);
         }
 
-        // DELETE: api/Review/5
+        /// <summary>
+        /// Deletes review by its ID
+        /// </summary>
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteReview(int id)
         {
