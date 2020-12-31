@@ -116,7 +116,7 @@ namespace DataContent.DAL.Repositories
             if(page > 0)
             {
                 var skip = (page - 1) * 20;
-                var computers = await _context.Computers.Where(x => x.ItemCategory == category).Skip(skip).Take(20).Include(x => x.Processor).ToListAsync();
+                var computers = await _context.Computers.Where(x => x.ItemCategory == category).OrderBy(x => x.Id).Skip(skip).Take(20).Include(x => x.Processor).ToListAsync();
                 return computers;
             }
             else

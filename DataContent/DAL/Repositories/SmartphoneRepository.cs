@@ -106,7 +106,7 @@ namespace DataContent.DAL.Repositories
             if (page > 0)
             {
                 var skip = (page - 1) * 20;
-                var computers = await _context.Smartphones.Skip(skip).Take(20).ToListAsync();
+                var computers = await _context.Smartphones.OrderBy(x => x.Id).Skip(skip).Take(20).ToListAsync();
                 return computers;
             }
             else
