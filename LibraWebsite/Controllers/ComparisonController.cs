@@ -14,9 +14,9 @@ namespace LibraWebsite.Controllers
     [ApiController]
     public class ComparisonController : ControllerBase
     {
-       
-        [HttpPost("/api/Comparison/{priceWeight}/{storageWeight}/{ramWeight}")]
-        public async Task<ActionResult<ComputerComparisonModel>> Comparison(List<Computer> computers, int priceWeight, int storageWeight, int ramWeight)
+        
+        [HttpPost("ComputerComparison/{priceWeight}/{storageWeight}/{ramWeight}")]
+        public async Task<ActionResult<ComputerComparisonModel>> ComputerComparison(List<Computer> computers, int priceWeight, int storageWeight, int ramWeight)
         {
             ComputerComparison computerComparison = new ComputerComparison(priceWeight, storageWeight, ramWeight);
             ComputerComparisonModel compare = new ComputerComparisonModel();
