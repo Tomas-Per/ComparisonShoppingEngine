@@ -27,7 +27,7 @@ namespace LibraAPI.Controllers
         /// <summary>
         /// Gets all desktop computers from database (page 0 for all, 1 to n for chunks of 20)
         /// </summary>
-        [HttpGet("/api/Desktops/{page}")]
+        [HttpGet("/api/Desktops/Page/{page}")]
         public async Task<ActionResult<List<Computer>>> GetDesktops(int page)
         {
             var computers = await _repository.GetAllComputersAsync(ItemCategory.DesktopComputer, page);
@@ -37,7 +37,7 @@ namespace LibraAPI.Controllers
         /// <summary>
         /// Gets all laptop computers from database (page 0 for all, 1 to n for chunks of 20)
         /// </summary>
-        [HttpGet("/api/Laptops/{page}")]
+        [HttpGet("/api/Laptops/Page/{page}")]
         public async Task<ActionResult<List<Computer>>> GetLaptops(int page)
         {
             var computers = await _repository.GetAllComputersAsync(ItemCategory.Laptop, page);
