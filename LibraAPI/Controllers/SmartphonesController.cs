@@ -88,5 +88,16 @@ namespace LibraAPI.Controllers
 
             return NoContent();
         }
+
+        /// <summary>
+        /// Finds similar smartphones to a given smartphone
+        /// </summary>
+        [HttpPost("FindSimilar")]
+        public async Task<ActionResult<List<Smartphone>>> FindSimilarSmartphones(Smartphone smartphone)
+        {
+            var smartphones = await _repository.FindSimilarAsync(smartphone);
+
+            return Ok(smartphones);
+        }
     }
 }

@@ -144,6 +144,11 @@
             Deletes a smartphone from the database by ID
             </summary>
         </member>
+        <member name="M:LibraAPI.Controllers.SmartphonesController.FindSimilarSmartphones(ModelLibrary.Smartphone)">
+            <summary>
+            Finds similar smartphones to a given smartphone
+            </summary>
+        </member>
         <member name="M:LibraAPI.Controllers.UserController.Login(System.String,System.String)">
             <summary>
             Checks a user's login credentials
