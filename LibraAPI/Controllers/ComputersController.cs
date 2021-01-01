@@ -102,5 +102,13 @@ namespace LibraAPI.Controllers
             return NoContent();
         }
 
+        [HttpPost("FindSimilar")]
+        public async Task<ActionResult<List<Computer>>> FindSimilarComputers(Computer computer)
+        {
+            var computers = await _repository.FindSimilar(computer);
+
+            return Ok(computers);
+        }
+
     }
 }
