@@ -13,6 +13,7 @@ import RateReviewIcon from '@material-ui/icons/RateReview';
 import VerticalAlignCenterIcon from '@material-ui/icons/VerticalAlignCenter';
 import FavoriteBorderIcon from '@material-ui/icons/FavoriteBorder';
 import SearchIcon from '@material-ui/icons/Search';
+import ShoppingCartIcon from '@material-ui/icons/ShoppingCart';
 import mockData from './mockData';
 import './Styles.css';
 import { data } from 'jquery';
@@ -183,6 +184,7 @@ function ComputerSpecs(tile, active, classes) {
                 <IconButton className={classes.icon} style={{ transform: "rotate(90deg)", marginLeft: "auto", marginRight: "auto" }}> <VerticalAlignCenterIcon /> </IconButton>
                 <IconButton className={classes.icon} style={{ marginLeft: "auto", marginRight: "auto" }}> <SearchIcon /> </IconButton>
                 <IconButton className={classes.icon} style={{ marginLeft: "auto", marginRight: "auto" }} > <FavoriteBorderIcon /> </IconButton>
+                <IconButton className={classes.icon} style={{ marginLeft: "auto", marginRight: "auto" }} href={tile.itemURL}> <ShoppingCartIcon /> </IconButton>
             </ListItem>
          </List>)
 }
@@ -215,6 +217,7 @@ function SmartphoneSpecs(tile, active, classes) {
                 <IconButton className={classes.icon} style={{ transform: "rotate(90deg)", marginLeft: "auto", marginRight: "auto" }}> <VerticalAlignCenterIcon /> </IconButton>
                 <IconButton className={classes.icon} style={{ marginLeft: "auto", marginRight: "auto" }}> <SearchIcon /> </IconButton>
                 <IconButton className={classes.icon} style={{ marginLeft: "auto", marginRight: "auto" }} > <FavoriteBorderIcon /> </IconButton>
+                <IconButton className={classes.icon} style={{ marginLeft: "auto", marginRight: "auto" }} href={ tile.itemURL}> <ShoppingCartIcon /> </IconButton>
             </ListItem>
         </List>)
 }
