@@ -158,7 +158,7 @@ namespace DataContent.DAL.Repositories
             return computerInDB;
         }
 
-        public async Task<List<Computer>> FindSimilar(Computer computer)
+        public async Task<List<Computer>> FindSimilarAsync(Computer computer)
         {
             var computers = await _context.Computers.Where(x => x.ItemCategory == computer.ItemCategory).Include(x => x.Processor).Cast<Item>().ToListAsync();
             return computer.FindSimilar(computers).Cast<Computer>().ToList();

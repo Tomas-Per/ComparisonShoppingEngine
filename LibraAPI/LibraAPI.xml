@@ -34,6 +34,11 @@
             Deletes a computer from the database by ID
             </summary>
         </member>
+        <member name="M:LibraAPI.Controllers.ComputersController.FindSimilarComputers(ModelLibrary.Computer)">
+            <summary>
+            Finds similar computers to a given computer
+            </summary>
+        </member>
         <member name="M:LibraAPI.Controllers.FavoriteItemController.GetFavoriteItems(System.Int32)">
             <summary>
             Gets a user's favorite item list by the user's ID
