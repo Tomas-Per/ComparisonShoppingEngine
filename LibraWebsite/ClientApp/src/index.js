@@ -11,8 +11,8 @@ const rootElement = document.getElementById('root');
 
 ReactDOM.render(
   <BrowserRouter basename={baseUrl}>
-    <App />
-    <Filter />
+        <App />
+        <Filter />
   </BrowserRouter>,
   rootElement);
 
