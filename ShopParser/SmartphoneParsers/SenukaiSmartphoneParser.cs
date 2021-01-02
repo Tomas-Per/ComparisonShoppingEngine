@@ -40,7 +40,6 @@ namespace WebParser.SmartphoneParsers
                 {
                     links.Add(element.GetAttribute("href"));
                 }
-
                 foreach (var link in links)
                 {
                     ((IJavaScriptExecutor)_driver.Value).ExecuteScript("window.open();");
@@ -50,7 +49,7 @@ namespace WebParser.SmartphoneParsers
 
                     _driver.Value.SwitchTo().Window(_driver.Value.WindowHandles.First());
 
-                    if (smartphone.Price == 0)
+                    if (smartphone == null)
                     {
                         continue;
                     }
@@ -59,6 +58,7 @@ namespace WebParser.SmartphoneParsers
                     data.Add(smartphone);
 
                 }
+                //break;
             }
             ResetDriver();
             return data;
@@ -77,15 +77,15 @@ namespace WebParser.SmartphoneParsers
             _driver.Value.Navigate().GoToUrl(url);
 
             Smartphone smartphone = new Smartphone();
-
-            smartphone.Name = _driver.Value.FindElement(By.TagName("h1")).Text;
+            
             try
             {
+                smartphone.Name = _driver.Value.FindElement(By.TagName("h1")).Text;
                 smartphone.Price = _driver.Value.FindElement(By.XPath("//span[@class = 'price']")).Text.ParseDouble();
             }
             catch (Exception)
             {
-                smartphone.Price = 0;
+                return null;
             }
 
             smartphone.ItemURL = url;
@@ -123,18 +123,18 @@ namespace WebParser.SmartphoneParsers
 
                 else if (table[i].Text.Contains("Procesoriaus modelis"))
                 {
-                    try
+                    if (table[i + 1].Text.Length > 64)
                     {
-                        smartphone.Processor = table[i + 1].Text.Substring(0, table[i + 1].Text.IndexOf("("));
+                        if (table[i + 1].Text.Contains("("))
+                        {
+                            smartphone.Processor = table[i + 1].Text.Substring(0, table[i + 1].Text.IndexOf("("));
+                        }
+                        else
+                        {
+                            smartphone.Processor = null;
+                        }
                     }
-                    catch(Exception)
-                    {
-                        smartphone.Processor = table[i + 1].Text;
-                    }
-                    if(smartphone.Processor.Length > 64)
-                    {
-                        smartphone.Processor = smartphone.Processor.Substring(0, 64);
-                    }
+                    else smartphone.Processor = table[i + 1].Text;
                 }
 
                 else if (table[i].Text.Contains("Atminties talpa"))

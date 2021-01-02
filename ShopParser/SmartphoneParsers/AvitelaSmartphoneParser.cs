@@ -13,10 +13,8 @@ namespace WebParser.SmartphoneParsers
 {
     public class AvitelaSmartphoneParser : IParser<Smartphone>
     {
-        private readonly string _url = "https://avitela.lt/telefonai-ir-laikrodziai/mobilieji-telefonai";
+        private readonly string _url = "https://avitela.lt/telefonai-ir-laikrodziai/mobilieji-telefonai?page=PAGE_NUMBER&bfilter=tipas[grafinas]";
         private Lazy<ChromeDriver> _driver;
-        private List<string> _subLinks = new List<string>() { "/apple-telefonai?limit=50", "/samsung-telefonai?limit=50",
-            "/huawei-telefonai?limit=50", "/xiaomi-telefonai?limit=50" };
 
         public AvitelaSmartphoneParser()
         {
@@ -32,9 +30,9 @@ namespace WebParser.SmartphoneParsers
             List<string> links = new List<string>();
             string nextPage = _url;
 
-            foreach (var sublink in _subLinks)
+            for (int i = 0; i < 3; i++)
             {
-                nextPage = _url + sublink;
+                nextPage = _url.Replace("PAGE_NUMBER", i.ToString());
                 _driver.Value.Navigate().GoToUrl(nextPage);
 
                 var names = _driver.Value.FindElements(By.CssSelector("div.right > div.name > a"));
@@ -60,8 +58,10 @@ namespace WebParser.SmartphoneParsers
                     if (smartphone == null) continue;
 
                     smartphone.ItemCategory = ItemCategory.Smartphone;
-                    data.Add(smartphone);        
+
+                    data.Add(smartphone);
                 }
+                //break;
             }
             ResetDriver();
             return data;
@@ -128,7 +128,18 @@ namespace WebParser.SmartphoneParsers
                 }
                 else if (table[i].Text.Contains("Procesoriaus modelis"))
                 {
-                    smartphone.Processor = table[i + 1].Text;
+                    if (table[i + 1].Text.Length > 64)
+                    {
+                        if (table[i + 1].Text.Contains("("))
+                        {
+                            smartphone.Processor = table[i + 1].Text.Substring(0, table[i + 1].Text.IndexOf("("));
+                        }
+                        else
+                        {
+                            smartphone.Processor = null;
+                        }
+                    }
+                    else smartphone.Processor = table[i + 1].Text;
                 }
                 else if (table[i].Text.Contains("Baterijos talpa"))
                 {
