@@ -7,7 +7,7 @@ using ItemLibrary;
 
 namespace Comparison.Comparisons
 {
-    class SmartphoneComparison : ItemComparison<Smartphone>
+    public class SmartphoneComparison : ItemComparison<Smartphone>
     {
         public int RamWeight { get; protected set; }
         public int StorageWeight { get; protected set; }

@@ -1,22 +1,26 @@
 import React, { Component } from 'react';
 import { Route } from 'react-router';
 import { Layout } from './components/Layout';
-import { Home } from './components/Home';
+import { Categories } from './components/Categories';
 import { FetchData } from './components/FetchData';
 import { Counter } from './components/Counter';
+import { ProductsMenu } from './components/ProductsMenu';
 import { Login } from './components/Login';
 
 import './custom.css'
 
 export default class App extends Component {
-  static displayName = App.name;
+    static displayName = App.name;
 
-  render () {
+render() {
     return (
       <Layout>
-        <Route exact path='/' component={Home} />
+        <Route exact path='/' component={Categories} />
         <Route path='/counter' component={Counter} />
-        <Route path='/fetch-data' component={FetchData} /> 
+        <Route path='/fetch-data' component={FetchData} />
+        <Route path='/categories' component={Categories} />
+        <Route path='/products/:category/:page' component={ProductsMenu}/>
+            <Route path='/fetch-data' component={FetchData} />
       </Layout>
        /* <Layout>
             <Route exact path='/' component={Login}/>
