@@ -11,7 +11,7 @@ export default class Filter extends Component {
     render() {
         return (
             <div id="mySidenav" class="sidenav">
-                <Grid>
+                <Grid className="myGrid">
                     <h5>Filters</h5>
                 </Grid>
                 

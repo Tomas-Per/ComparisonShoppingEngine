@@ -11,9 +11,9 @@ const rootElement = document.getElementById('root');
 
 ReactDOM.render(
     <BrowserRouter basename={baseUrl}>
-            <App />
-            <Filter />
-  </BrowserRouter>,
+        <App />
+        <Filter />
+    </BrowserRouter>,
   rootElement);
 
 registerServiceWorker();
