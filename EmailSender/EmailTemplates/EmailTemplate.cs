@@ -4,7 +4,7 @@ using System.IO;
 
 namespace EmailSender.EmailTemplates
 {
-    public static class PriceDroppedEmailTemplate
+    public static class EmailTemplate
     {
         public static string GetPriceDroppedEmailTemplate(Item item, double oldPrice, User user)
         {
@@ -16,6 +16,19 @@ namespace EmailSender.EmailTemplates
             template = template.Replace("ITEM_NEW_PRICE", item.Price.ToString());
             template = template.Replace("ITEM_LINK", item.ItemURL);
             template = template.Replace("USER_NAME", user.Username);
+
+            //need to update this since we dont have our web yet
+            //template = template.Replace("SHOP_LINK", "https://www.Libra.lt/")
+
+            return template;
+        }
+
+        public static string GetRecoveryPasswordEmailTemplate(string password, User user)
+        {
+            string template = File.ReadAllText(MainPath.GetMainPath() + @"\EmailSender\EmailTemplates\RecoveryPasswordEmailTemplate.txt");
+
+            template = template.Replace("USER_NAME", user.Username);
+            template = template.Replace("RECOVERY_PASSWORD", password);
 
             //need to update this since we dont have our web yet
             //template = template.Replace("SHOP_LINK", "https://www.Libra.lt/")

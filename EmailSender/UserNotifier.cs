@@ -19,7 +19,12 @@ namespace EmailSender
         }
         public void NotifyUsersWhenPriceDropped (Item item, double oldPrice, List<User> users)
         {
-            users.ForEach(user => _emailSender.SendEmail($"{item.Name} price dropped!", PriceDroppedEmailTemplate.GetPriceDroppedEmailTemplate(item, oldPrice, user), user.Email));
+            users.ForEach(user => _emailSender.SendEmail($"{item.Name} price dropped!", EmailTemplate.GetPriceDroppedEmailTemplate(item, oldPrice, user), user.Email));
+        }
+
+        public void SendUserRecoveryPassword(User user, string password)
+        {
+            _emailSender.SendEmail("Recovery Password", EmailTemplate.GetRecoveryPasswordEmailTemplate(password, user), user.Email);
         }
 
         public async Task<List<User>> GetUsersForNotification(Item item)
