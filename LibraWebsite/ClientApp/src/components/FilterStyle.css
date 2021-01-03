@@ -59,7 +59,7 @@
             font-size: 18px;
         }
 }
-grid {
+.myGrid {
     background-color: black;
     opacity: 0.3;
 }
