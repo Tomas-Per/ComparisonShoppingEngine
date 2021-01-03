@@ -8,6 +8,23 @@ import logo from './img/libra500.png';
 export class Login extends Component {
     static displayName = Login.name;
 
+    handleLogin() {
+    var proxyUrl = 'https://cors-anywhere.herokuapp.com/',
+            targetUrl = '' + 'Login/' + document.getElementById('email').value + '/' + document.getElementById('password').value 
+    fetch(proxyUrl + targetUrl)
+        .then((response) => {
+            console.log(document.getElementById('email').value);
+            console.log(document.getElementById('password').value);
+            console.log(targetUrl);
+            console.log('Accessing...');
+            if (!response.ok) throw new Error(response.status);
+            else { console.log(response); return response.json(); }
+        })
+        .catch((error) => {
+            console.log(error);
+        });
+}
+
     render() {
         return (
             <body>
@@ -19,7 +36,7 @@ export class Login extends Component {
                     </div>
 
                     <div class="login-content">
-                        <form action="index.html">
+                        <form>
                                 <img src={userSVG} />
 				            <h2 className="title">Welcome</h2>
            		            <div className="input-div one">
@@ -28,7 +45,7 @@ export class Login extends Component {
            		   </div>
            		   <div className="div">
                                     <h5>Username</h5>
-                                    <input name="email" type="text" className="input"/>
+                                    <input name="email" type="text" className="input" id="email"/>
            		   </div>
            		</div>
            		<div className="input-div pass">
@@ -37,29 +54,17 @@ export class Login extends Component {
            		   </div>
            		   <div className="div">
                                     <h5>Password</h5>
-                                    <input name="password" type="password" className="input" />
+                                    <input name="password" type="password" className="input" id="password"/>
             	   </div>
             	</div>
                             <a href="#">Forgot Password?</a>
-                            <input type="submit" className="btn" value="Login" onClick={ handleLogin(document.getElementById('email'), document.getElementById('password')) } />
+                            <input type="submit" className="btn" value="Login" onClick={ this.handleLogin } />
             </form>
         </div>
                 </div>
-                <script type="text/javascript" src="index.html"></script>
+               
             </body>
             );
     }
 }
 
-function handleLogin(email, password) {
-    var proxyUrl = 'https://cors-anywhere.herokuapp.com/',
-        targetUrl = '(adress)' + 'User/' + email + '/' + password
-    fetch(proxyUrl + targetUrl)
-        .then((response) => {
-            if (!response.ok) throw new Error(response.status);
-            else return response.json();
-        })
-        .catch((error) => {
-            console.log(error);
-        });
-}
