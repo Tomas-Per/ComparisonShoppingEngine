@@ -12,7 +12,7 @@ export class Login extends Component {
         return (
             <body>
                  
-	            <div className="container">
+	            <div className="myContainer">
 
                     <div className="img">
                             <img src={logo}/>
