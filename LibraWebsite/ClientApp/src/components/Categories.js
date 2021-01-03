@@ -23,7 +23,7 @@ export class Categories extends Component {
         </ul>
         <p>The <code>ClientApp</code> subdirectory is a standard React application based on the <code>create-react-app</code> template. If you open a command prompt in that directory, you can run <code>npm</code> commands such as <code>npm test</code> or <code>npm install</code>.</p>
       </div>*/
-        <div className={"grid"}>
+        <div className={"gridCategories"}>
             <div className={"categoryCart"}>
                 <img src="https://i.ibb.co/kGz0B3W/Decktop-cart.png" alt="Decktop-cart" border="0" />      
                 <a href="products/Desktops/1">

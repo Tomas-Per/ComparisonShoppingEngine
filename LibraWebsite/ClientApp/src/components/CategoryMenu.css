@@ -14,13 +14,13 @@
     top: 80%;
     transform: translate(-135%, 0%);
 }
-.grid {
+.gridCategories {
     display: grid;
     grid-template-columns: 1fr 1fr 1fr;
     grid-column-gap: 50px;
 }
 @media only screen and (max-width: 1000px) {
-    .grid {
+    .gridCategories {
         grid-template-columns: 1fr;
     }
 }
