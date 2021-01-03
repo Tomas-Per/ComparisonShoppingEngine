@@ -6,6 +6,7 @@ import { Categories } from './components/Categories';
 import { FetchData } from './components/FetchData';
 import { Counter } from './components/Counter';
 import { ProductsMenu } from './components/ProductsMenu';
+import { Login } from './components/Login'
 import './custom.css'
 
 
@@ -20,6 +21,7 @@ render() {
             <Route path='/fetch-data' component={FetchData} />
             <Route path='/categories' component={Categories} />
             <Route path='/products/:category/:page' component={ProductsMenu} />
+            <Route path='/Login' component={Login} />
       </Layout>
     );
   }

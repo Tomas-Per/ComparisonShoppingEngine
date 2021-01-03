@@ -17,6 +17,7 @@ import Button from '@material-ui/core/Button';
 import NavigateNextIcon from '@material-ui/icons/NavigateNext';
 import NavigateBeforeIcon from '@material-ui/icons/NavigateBefore';
 import { useHistory } from 'react-router';
+import { useCookies, Cookies } from 'react-cookie';
 import './Styles.css';
 import { Divider } from '@material-ui/core';
 
@@ -88,10 +89,9 @@ export default function TitlebarGridList({ category, page }) {
     const history = useHistory();
     const [active, setActive] = useState(null);
     const [items, setItems] = useState([])   
-    const [oldActive, setOldActive] = useState(null);
     const [pageItems, setPageItems] = useState([]);
     const [searchInput, setSearchInput] = useState("");
-
+    const [cookies, setCookie] = useCookies(['Item1']);
  
     useEffect(() => {
         let mounted = true;
@@ -142,10 +142,8 @@ export default function TitlebarGridList({ category, page }) {
                                     actionIcon={
                                         <IconButton className={classes.icon} onClick={() => {
                                             if (active === tile.id) {
-                                                setOldActive(active);
                                                 setActive(null);
                                             } else {
-                                                setOldActive(active);
                                                 setActive(tile.id);
                                             }
                                         }}>
@@ -207,6 +205,100 @@ export default function TitlebarGridList({ category, page }) {
     else {
         return null;
     }
+
+
+    function SpecsFactory(category, item, active, classes) {
+        switch (category) {
+            case "Desktops":
+                return ComputerSpecs(item, active, classes);
+            case "Laptops":
+                return ComputerSpecs(item, active, classes);
+            case "Smartphones":
+                return SmartphoneSpecs(item, active, classes);
+        }
+    }
+    function ComputerSpecs(tile, active, classes) {
+        return (
+            <List className={(active == tile.id) ? "extractInfoPanel" : 'specs'}>
+                <Divider />
+                <ListItem className={"infoPanel"} dense={true}>
+                    <ListItemText className={"infoRow"} primary={"Manufacturer: "} />
+                    <ListItemText primary={(tile.manufacturerName != null) ? tile.manufacturerName : 'Not specified'} />
+                </ListItem>
+                <ListItem className={"infoPanel"} dense={true}>
+                    <ListItemText className={"infoRow"} primary={"Processor: "} />
+                    <ListItemText primary={(tile.processor != null) ? tile.processor.model : 'Not specified'} />
+                </ListItem>
+                <ListItem className={"infoPanel"} dense={true}>
+                    <ListItemText className={"infoRow"} primary={"Graphic card: "} />
+                    <ListItemText primary={(tile.graphicsCardName != null) ? tile.graphicsCardName : 'Not specified'} />
+                </ListItem>
+                <ListItem className={"infoPanel"} dense={true}>
+                    <ListItemText className={"infoRow"} primary={"Storage: "} />
+                    <ListItemText primary={(tile.storageCapacity != 0) ? (tile.storageCapacity + ' GB ') : 'Not specified'} />
+                </ListItem>
+                <ListItem className={"infoPanel"} dense={true}>
+                    <ListItemText className={"infoRow"} primary={"RAM: "} />
+                    <ListItemText primary={(tile.ram != 0) ? (tile.ram + ' GB ' + ((tile.raM_type != null) ? ('(' + tile.raM_type + ')') : '')) : 'Not specified'} />
+                </ListItem>
+                <ListItem className={"infoPanel"} dense={true}>
+                    <IconButton className={classes.icon} style={{ marginLeft: "auto", marginRight: "auto" }}> <RateReviewIcon /> </IconButton>
+                    <IconButton className={classes.icon} style={{ transform: "rotate(90deg)", marginLeft: "auto", marginRight: "auto" }} onClick={() => {
+                        if (cookies.Item1 == null) {
+                            setCookie('Item1', JSON.stringify(tile), { path: '/' });
+                        }
+                        else if (cookies.Item2 == null) {
+                            setCookie('Item2', JSON.stringify(tile), { path: '/' });
+                        }
+                    }
+                    }> <VerticalAlignCenterIcon /> </IconButton>
+                    <IconButton className={classes.icon} style={{ marginLeft: "auto", marginRight: "auto" }}> <SearchIcon /> </IconButton>
+                    <IconButton className={classes.icon} style={{ marginLeft: "auto", marginRight: "auto" }} > <FavoriteBorderIcon /> </IconButton>
+                    <IconButton className={classes.icon} style={{ marginLeft: "auto", marginRight: "auto" }} onClick={() => { window.open(tile.itemURL, '_blank'); }}> <ShoppingCartIcon /> </IconButton>
+                </ListItem>
+            </List>)
+    }
+    function SmartphoneSpecs(tile, active, classes) {
+        return (
+            <List className={(active == tile.id) ? "extractInfoPanel" : 'specs'}>
+                <Divider />
+                <ListItem className={"infoPanel"} dense={true}>
+                    <ListItemText className={"infoRow"} primary={"Manufacturer: "} />
+                    <ListItemText primary={(tile.manufacturerName != null) ? tile.manufacturerName : 'Not specified'} />
+                </ListItem>
+                <ListItem className={"infoPanel"} dense={true}>
+                    <ListItemText className={"infoRow"} primary={"Processor: "} />
+                    <ListItemText primary={(tile.processor != null) ? tile.processor : 'Not specified'} />
+                </ListItem>
+                <ListItem className={"infoPanel"} dense={true}>
+                    <ListItemText className={"infoRow"} primary={"Screen diagonal: "} />
+                    <ListItemText primary={(tile.screenDiagonal != null) ? tile.screenDiagonal : 'Not specified'} />
+                </ListItem>
+                <ListItem className={"infoPanel"} dense={true}>
+                    <ListItemText className={"infoRow"} primary={"Ram: "} />
+                    <ListItemText primary={(tile.ram != 0) ? (tile.ram + ' GB ') : 'Not specified'} />
+                </ListItem>
+                <ListItem className={"infoPanel"} dense={true}>
+                    <ListItemText className={"infoRow"} primary={"Cameras: "} />
+                    <ListItemText primary={(tile.backCameras != null) ? (tile.backCameras + ((tile.frontCameras != null) ? (' | ' + tile.frontCameras) : '')) : 'Not specified'} />
+                </ListItem>
+                <ListItem className={"infoPanel"} dense={true}>
+                    <IconButton className={classes.icon} style={{ marginLeft: "auto", marginRight: "auto" }}> <RateReviewIcon /> </IconButton>
+                    <IconButton className={classes.icon} style={{ transform: "rotate(90deg)", marginLeft: "auto", marginRight: "auto" }} onClick={() => {
+                        if (cookies.Item1 == null) {
+                            setCookie('Item1', JSON.stringify(tile), { path: '/' });
+                        }
+                        else if (cookies.Item2 == null) {
+                            setCookie('Item2', JSON.stringify(tile), { path: '/' });
+                        }
+                    }
+                    }> <VerticalAlignCenterIcon /> </IconButton>
+                    <IconButton className={classes.icon} style={{ marginLeft: "auto", marginRight: "auto" }}> <SearchIcon /> </IconButton>
+                    <IconButton className={classes.icon} style={{ marginLeft: "auto", marginRight: "auto" }} > <FavoriteBorderIcon /> </IconButton>
+                    <IconButton className={classes.icon} style={{ marginLeft: "auto", marginRight: "auto" }} onClick={() => { window.open(tile.itemURL, '_blank'); }}> <ShoppingCartIcon /> </IconButton>
+                </ListItem>
+            </List>)
+    }
 }
 
 function FetchAPI(category, page) {
@@ -226,80 +318,5 @@ function FetchAPI(category, page) {
     const data = await response.json().then(data => { console.log(data) });
 }*/
 
-function SpecsFactory(category, item, active, classes) {
-    switch (category) {
-        case "Desktops":
-            return ComputerSpecs(item, active, classes);
-        case "Laptops":
-            return ComputerSpecs(item, active, classes);
-        case "Smartphones":
-            return SmartphoneSpecs(item, active, classes);
-    }
-}
-function ComputerSpecs(tile, active, classes) {
-    return (
-        <List className={(active == tile.id) ? "extractInfoPanel" : 'specs'}>
-            <Divider />
-            <ListItem className={"infoPanel"} dense={true}>
-                <ListItemText className={"infoRow"} primary={"Manufacturer: "} />
-                <ListItemText primary={(tile.manufacturerName != null) ? tile.manufacturerName : 'Not specified'} />
-            </ListItem>
-            <ListItem className={"infoPanel"} dense={true}>
-                <ListItemText className={"infoRow"} primary={"Processor: "} />
-                <ListItemText primary={(tile.processor != null) ? tile.processor.model : 'Not specified'} />
-            </ListItem>
-            <ListItem className={"infoPanel"} dense={true}>
-                <ListItemText className={"infoRow"} primary={"Graphic card: "} />
-                <ListItemText primary={(tile.graphicsCardName != null) ? tile.graphicsCardName : 'Not specified'} />
-            </ListItem>
-            <ListItem className={"infoPanel"} dense={true}>
-                <ListItemText className={"infoRow"} primary={"Storage: "} />
-                <ListItemText primary={(tile.storageCapacity != 0) ? (tile.storageCapacity + ' GB ') : 'Not specified'} />
-            </ListItem>
-            <ListItem className={"infoPanel"} dense={true}>
-                <ListItemText className={"infoRow"} primary={"RAM: "} />
-                <ListItemText primary={(tile.ram != 0) ? (tile.ram + ' GB ' + ((tile.raM_type != null) ? ('(' + tile.raM_type + ')') : '')) : 'Not specified'} />
-            </ListItem>
-            <ListItem className={"infoPanel"} dense={true}>
-                <IconButton className={classes.icon} style={{ marginLeft: "auto", marginRight: "auto" }}> <RateReviewIcon /> </IconButton>
-                <IconButton className={classes.icon} style={{ transform: "rotate(90deg)", marginLeft: "auto", marginRight: "auto" }}> <VerticalAlignCenterIcon /> </IconButton>
-                <IconButton className={classes.icon} style={{ marginLeft: "auto", marginRight: "auto" }}> <SearchIcon /> </IconButton>
-                <IconButton className={classes.icon} style={{ marginLeft: "auto", marginRight: "auto" }} > <FavoriteBorderIcon /> </IconButton>
-                <IconButton className={classes.icon} style={{ marginLeft: "auto", marginRight: "auto" }} onClick={() => {window.open(tile.itemURL, '_blank');}}> <ShoppingCartIcon /> </IconButton>
-            </ListItem>
-         </List>)
-}
-function SmartphoneSpecs(tile, active, classes) {
-    return (
-        <List className={(active == tile.id) ? "extractInfoPanel" : 'specs'}>
-            <Divider />
-            <ListItem className={"infoPanel"} dense={true}>
-                <ListItemText className={"infoRow"} primary={"Manufacturer: "} />
-                <ListItemText primary={(tile.manufacturerName != null) ? tile.manufacturerName : 'Not specified'} />
-            </ListItem>
-            <ListItem className={"infoPanel"} dense={true}>
-                <ListItemText className={"infoRow"} primary={"Processor: "} />
-                <ListItemText primary={(tile.processor != null) ? tile.processor : 'Not specified'} />
-            </ListItem>
-            <ListItem className={"infoPanel"} dense={true}>
-                <ListItemText className={"infoRow"} primary={"Screen diagonal: "} />
-                <ListItemText primary={(tile.screenDiagonal != null) ? tile.screenDiagonal : 'Not specified'} />
-            </ListItem>
-            <ListItem className={"infoPanel"} dense={true}>
-                <ListItemText className={"infoRow"} primary={"Ram: "} />
-                <ListItemText primary={(tile.ram != 0) ? (tile.ram + ' GB ') : 'Not specified'} />
-            </ListItem>
-            <ListItem className={"infoPanel"} dense={true}>
-                <ListItemText className={"infoRow"} primary={"Cameras: "} />
-                <ListItemText primary={(tile.backCameras != null) ? (tile.backCameras + ((tile.frontCameras != null) ? (' | ' + tile.frontCameras) : '')) : 'Not specified'} />
-            </ListItem>
-            <ListItem className={"infoPanel"} dense={true}>
-                <IconButton className={classes.icon} style={{ marginLeft: "auto", marginRight: "auto" }}> <RateReviewIcon /> </IconButton>
-                <IconButton className={classes.icon} style={{ transform: "rotate(90deg)", marginLeft: "auto", marginRight: "auto" }}> <VerticalAlignCenterIcon /> </IconButton>
-                <IconButton className={classes.icon} style={{ marginLeft: "auto", marginRight: "auto" }}> <SearchIcon /> </IconButton>
-                <IconButton className={classes.icon} style={{ marginLeft: "auto", marginRight: "auto" }} > <FavoriteBorderIcon /> </IconButton>
-                <IconButton className={classes.icon} style={{ marginLeft: "auto", marginRight: "auto" }} onClick={() => { window.open(tile.itemURL, '_blank'); }}> <ShoppingCartIcon /> </IconButton>
-            </ListItem>
-        </List>)
-}
+
 //price={tile.price.toLocaleString("en-US", { style: "currency", currency: "EUR" })}

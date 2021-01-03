@@ -28,7 +28,7 @@ export class Login extends Component {
            		   </div>
            		   <div className="div">
                                     <h5>Username</h5>
-                                    <input type="text" className="input"/>
+                                    <input name="email" type="text" className="input"/>
            		   </div>
            		</div>
            		<div className="input-div pass">
@@ -37,11 +37,11 @@ export class Login extends Component {
            		   </div>
            		   <div className="div">
                                     <h5>Password</h5>
-                                    <input type="password" className="input" />
+                                    <input name="password" type="password" className="input" />
             	   </div>
             	</div>
                             <a href="#">Forgot Password?</a>
-                            <input type="submit" className="btn" value="Login" />
+                            <input type="submit" className="btn" value="Login" onClick={ handleLogin(document.getElementById('email'), document.getElementById('password')) } />
             </form>
         </div>
                 </div>
@@ -49,4 +49,17 @@ export class Login extends Component {
             </body>
             );
     }
+}
+
+function handleLogin(email, password) {
+    var proxyUrl = 'https://cors-anywhere.herokuapp.com/',
+        targetUrl = '(adress)' + 'User/' + email + '/' + password
+    fetch(proxyUrl + targetUrl)
+        .then((response) => {
+            if (!response.ok) throw new Error(response.status);
+            else return response.json();
+        })
+        .catch((error) => {
+            console.log(error);
+        });
 }
