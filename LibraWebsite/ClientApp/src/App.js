@@ -20,7 +20,6 @@ render() {
         <Route path='/fetch-data' component={FetchData} />
         <Route path='/categories' component={Categories} />
         <Route path='/products/:category/:page' component={ProductsMenu}/>
-            <Route path='/fetch-data' component={FetchData} />
       </Layout>
        /* <Layout>
             <Route exact path='/' component={Login}/>

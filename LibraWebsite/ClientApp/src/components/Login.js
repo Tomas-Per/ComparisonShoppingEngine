@@ -3,9 +3,7 @@ import React, { Component, useState } from 'react';
 import ReactDOM from 'react-dom';
 import './LoginStyle.css';
 import userSVG from './img/undraw_male_avatar_323b.svg';
-import blob from './img/blob.svg';
 import logo from './img/libra500.png';
-import loginscript from './loginscript.js';
 
 export class Login extends Component {
     static displayName = Login.name;
@@ -21,7 +19,7 @@ export class Login extends Component {
                     </div>
 
                     <div class="login-content">
-                        <form action={loginscript}>
+                        <form action="index.html">
                                 <img src={userSVG} />
 				            <h2 className="title">Welcome</h2>
            		            <div className="input-div one">
@@ -30,7 +28,7 @@ export class Login extends Component {
            		   </div>
            		   <div className="div">
                                     <h5>Username</h5>
-                                    <input type="text" className="input" onChange={ updateField} />
+                                    <input type="text" className="input"/>
            		   </div>
            		</div>
            		<div className="input-div pass">
@@ -39,15 +37,15 @@ export class Login extends Component {
            		   </div>
            		   <div className="div">
                                     <h5>Password</h5>
-                                    <input type="password" className="input" onChange={upadateField} />
+                                    <input type="password" className="input" />
             	   </div>
             	</div>
                             <a href="#">Forgot Password?</a>
-                            <input type="submit" className="btn" value="Login" onClick={handleSubmit} />
+                            <input type="submit" className="btn" value="Login" />
             </form>
         </div>
                 </div>
-                <script type="text/javascript" src={loginscript}></script>
+                <script type="text/javascript" src="index.html"></script>
             </body>
             );
     }
