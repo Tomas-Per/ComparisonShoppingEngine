@@ -25,7 +25,7 @@ export class Register extends Component {
                 email: new String(document.getElementById('email').value),
                 password: new String(document.getElementById('password').value),
                 recoveryPassword: null,
-                recoveryDate: new Date(2006, 0, 2, 15, 4, 5)
+                recoveryDate: new Date(2021, 0, 2, 15, 4, 5)
             })
 
         };
@@ -53,8 +53,7 @@ export class Register extends Component {
                                 <i className="fas fa-user"></i>
                             </div>
                                 <div className="div">
-                                    <h5>Username</h5>
-                                    <input name="username" type="text" className="input" id="username" />
+                                    <input name="username" type="text" className="input" id="username" placeholder="Username"/>
                                 </div>
                             </div>
 
@@ -63,8 +62,7 @@ export class Register extends Component {
                                     <i className="fas fa-user"></i>
                                 </div>
                                 <div className="div">
-                                    <h5>Email</h5>
-                                    <input name="email" type="text" className="input" id="email" />
+                                    <input name="email" type="text" className="input" id="email" placeholder="Email"/>
                                 </div>
                             </div>
                             <div className="input-div pass">
@@ -72,8 +70,7 @@ export class Register extends Component {
                                     <i className="fas fa-lock"></i>
                                 </div>
                                 <div className="div">
-                                    <h5>Password</h5>
-                                    <input name="password" type="password" className="input" id="password" />
+                                    <input name="password" type="password" className="input" id="password" placeholder="Password"/>
                                 </div>
                             </div>
                             <a href="Login">Already have an account?</a>

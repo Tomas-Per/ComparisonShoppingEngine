@@ -17,7 +17,7 @@ export class Login extends Component {
     handleLogin() {
     const cookies = new Cookies();
     var proxyUrl = 'https://cors-anywhere.herokuapp.com/',
-        targetUrl = '' + 'Login/' + document.getElementById('email').value + '/' + document.getElementById('password').value
+        targetUrl = 'adress' + 'Login/' + document.getElementById('email').value + '/' + document.getElementById('password').value
     fetch(proxyUrl + targetUrl)
         .then((response) => {
             console.log(document.getElementById('email').value);
@@ -39,9 +39,8 @@ export class Login extends Component {
             <body>
                 
 	            <div className="myContainer">
-
                     <div className="img">
-                            <img src={logo}/>
+                        <img src={logo} />
                     </div>
 
                     <div class="login-content">
@@ -49,28 +48,28 @@ export class Login extends Component {
                                 <img src={userSVG} />
 				            <h2 className="title">Welcome</h2>
            		            <div className="input-div one">
-           		   <div className="i">
-           		   		<i className="fas fa-user"></i>
-           		   </div>
-           		   <div className="div">
-                                    <h5>Username</h5>
-                                    <input name="email" type="text" className="input" id="email"/>
-           		   </div>
-           		</div>
-           		<div className="input-div pass">
-           		   <div className="i"> 
-           		    	<i className="fas fa-lock"></i>
-           		   </div>
-           		   <div className="div">
-                                    <h5>Password</h5>
-                                    <input name="password" type="password" className="input" id="password"/>
-            	   </div>
-            	</div>
+           		                <div className="i">
+           		   		            <i className="fas fa-user"></i>
+           		                </div>
+           		                <div className="div">
+                                    <input name="email" type="text" className="input" id="email" placeholder="Email"/>
+           		                </div>
+           		            </div>
+           		            <div className="input-div pass">
+           		               <div className="i"> 
+           		    	            <i className="fas fa-lock"></i>
+           		               </div>
+           		               <div className="div">
+                                                <input name="password" type="password" className="input" id="password" placeholder="Password"/>
+            	               </div>
+            	            </div>
                             <a href="Register">Register</a>
                             <a href="#">Forgot Password?</a>
-                            <input type="submit" className="btn" value="Login" onClick={ this.handleLogin } />
-            </div>
-        </div>
+                            <input type="submit" className="btn" value="Login" onClick={this.handleLogin} /> 
+                        </div>
+                    </div>
+                   
+
                 </div>
                 
             </body>
