@@ -15,6 +15,7 @@ namespace DataContent.DAL.Interfaces
         Task<Computer> UpdateComputerAsync(Computer computer);
         Task<List<Computer>> AddComputersAsync(List<Computer> computers);
         Task<Computer> DeleteComputerAsync(int id);
+        Task<List<Computer>> FindSimilarAsync(Computer computer);
 
     }
 }

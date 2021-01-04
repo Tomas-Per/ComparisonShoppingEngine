@@ -147,5 +147,11 @@ namespace DataContent.DAL.Repositories
             await _context.SaveChangesAsync();
             return smartphoneInDb;
         }
+
+        public async Task<List<Smartphone>> FindSimilarAsync(Smartphone smartphone)
+        {
+            var smartphones = await _context.Smartphones.Cast<Item>().ToListAsync();
+            return smartphone.FindSimilar(smartphones).Cast<Smartphone>().ToList();
+        }
     }
 }

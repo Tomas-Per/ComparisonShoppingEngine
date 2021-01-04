@@ -14,5 +14,6 @@ namespace DataContent.DAL.Interfaces
         Task<Smartphone> UpdateSmartphoneAsync(Smartphone smartphone);
         Task<List<Smartphone>> AddSmartphonesAsync(List<Smartphone> smartphones);
         Task<Smartphone> DeleteSmartphoneAsync(int id);
+        Task<List<Smartphone>> FindSimilarAsync(Smartphone smartphone);
     }
 }
