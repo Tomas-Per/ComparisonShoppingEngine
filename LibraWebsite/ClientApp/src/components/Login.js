@@ -66,6 +66,7 @@ export class Login extends Component {
                                     <input name="password" type="password" className="input" id="password"/>
             	   </div>
             	</div>
+                            <a href="Register">Register</a>
                             <a href="#">Forgot Password?</a>
                             <input type="submit" className="btn" value="Login" onClick={ this.handleLogin } />
             </div>
