@@ -37,7 +37,7 @@ namespace DataContent.DAL.Repositories
 
         public async Task<List<Review>> GetItemReviewsAsync(int itemId, int itemCategory)
         {
-            var reviews = await _context.Reviews.Include(i => i.Item)
+            var reviews = await _context.Reviews.Include(i => i.Item).Include(i => i.User)
                                                             .Where(x => x.Item.Id == itemId
                                                             && (int) x.Item.ItemCategory == itemCategory).ToListAsync();
             return reviews;
@@ -45,13 +45,13 @@ namespace DataContent.DAL.Repositories
 
         public async Task<Review> GetReviewByIdAsync(int id)
         {
-            var review = await _context.Reviews.Where(x => x.Id == id).FirstOrDefaultAsync();
+            var review = await _context.Reviews.Include(i => i.Item).Include(i => i.User).Where(x => x.Id == id).FirstOrDefaultAsync();
             return review;
         }
 
         public async Task<List<Review>> GetReviewsByUserIdAsync(int userId)
         {
-            var reviews = await _context.Reviews.Include(i => i.Item)
+            var reviews = await _context.Reviews.Include(i => i.Item).Include(i => i.User)
                                                         .Where(x => x.User.Id == userId).ToListAsync();
             return reviews;
         }
