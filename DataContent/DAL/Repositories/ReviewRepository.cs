@@ -22,6 +22,8 @@ namespace DataContent.DAL.Repositories
         
         public async Task<Review> AddReviewAsync(Review review)
         {
+            review.User = _context.Users.Find(review.User.Id);
+            review.Item = _context.Items.Find(review.Item.Id, review.Item.ItemCategory);
             _context.Add(review);
             await _context.SaveChangesAsync();
             return review;
