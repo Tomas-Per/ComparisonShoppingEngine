@@ -4,13 +4,20 @@ import ReactDOM from 'react-dom';
 import './LoginStyle.css';
 import userSVG from './img/undraw_male_avatar_323b.svg';
 import logo from './img/libra500.png';
+import { useCookies, Cookies } from 'react-cookie';
 
 export class Login extends Component {
     static displayName = Login.name;
+    constructor() {
+        super();
+        this.state = { isError: false }
+        this.handleLogin = this.handleLogin.bind(this)
+    };
 
     handleLogin() {
+    const cookies = new Cookies();
     var proxyUrl = 'https://cors-anywhere.herokuapp.com/',
-            targetUrl = '' + 'Login/' + document.getElementById('email').value + '/' + document.getElementById('password').value 
+        targetUrl = '' + 'Login/' + document.getElementById('email').value + '/' + document.getElementById('password').value
     fetch(proxyUrl + targetUrl)
         .then((response) => {
             console.log(document.getElementById('email').value);
@@ -18,17 +25,19 @@ export class Login extends Component {
             console.log(targetUrl);
             console.log('Accessing...');
             if (!response.ok) throw new Error(response.status);
-            else { console.log(response); return response.json(); }
+            else { console.log('Success'); return response.json().then(data => { cookies.set('user', JSON.stringify(data), { path: '/' }); }); }
         })
         .catch((error) => {
             console.log(error);
+            this.setState({isError:true});
         });
 }
+
 
     render() {
         return (
             <body>
-                 
+                
 	            <div className="myContainer">
 
                     <div className="img">
@@ -36,7 +45,7 @@ export class Login extends Component {
                     </div>
 
                     <div class="login-content">
-                        <form>
+                        <div className="form">
                                 <img src={userSVG} />
 				            <h2 className="title">Welcome</h2>
            		            <div className="input-div one">
@@ -59,12 +68,14 @@ export class Login extends Component {
             	</div>
                             <a href="#">Forgot Password?</a>
                             <input type="submit" className="btn" value="Login" onClick={ this.handleLogin } />
-            </form>
+            </div>
         </div>
                 </div>
-               
+                
             </body>
             );
     }
 }
+
+
 

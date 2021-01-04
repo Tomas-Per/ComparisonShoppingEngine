@@ -51,7 +51,7 @@ body {
     width: 300px;
 }
 
-form {
+.form {
     width: 360px;
 }
 
@@ -198,7 +198,7 @@ a {
 }
 
 @media screen and (max-width: 1000px) {
-    form {
+    .form {
         width: 290px;
     }
 
