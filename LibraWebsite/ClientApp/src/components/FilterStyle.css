@@ -1,6 +1,6 @@
 ﻿.sidenav {
     height: 100%;
-    width: 250px;
+    width: 17%;
     position: fixed;
     z-index: 1;
     top: 0;
@@ -38,18 +38,17 @@
     text-align: center;
     font-family: monospace;
     }
-    .sidenav * h5 {
-        color: white;
-        text-align: center;
-        font-family: monospace;
-        margin:0px 0px 25px 0px;
-    }
+    
 
 .checkbox {
     padding-left: 20px;
     align-items: center;
 }
 
+.slider {
+    width:180px;
+    left:0;
+}
 @media screen and (max-height: 450px) {
     .sidenav {
         padding-top: 15px;
@@ -59,7 +58,17 @@
             font-size: 18px;
         }
 }
-grid {
+@media only screen and (max-width: 1000px) {
+    .sidenav {
+        width:30%;
+    }
+    .slider {
+        width: 100px;
+        left: 0;
+    }
+}
+
+.myGrid {
     background-color: black;
     opacity: 0.3;
 }

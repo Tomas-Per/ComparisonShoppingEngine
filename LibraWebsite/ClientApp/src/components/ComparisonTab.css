@@ -1,0 +1,49 @@
+﻿.gridComparison {
+    display: grid;
+    grid-template-columns: 3fr 2fr 3fr;
+    grid-column-gap: 50px;
+}
+
+@media only screen and (max-width: 1000px) {
+    .gridComparison {
+        grid-template-columns: 1fr;
+    }
+}
+.column1 {
+    height: 100%;
+    width: 100%;
+    border: 0.5rem solid rgb(229, 161, 219);
+    border-radius: 50px;
+    font: bold 1rem sans-serif;
+    margin: 2rem;
+    padding: 1rem;
+}
+.column2 {
+    height: 100%;
+    width: 100%;
+    border: 0.5rem solid rgb(128, 222, 234);
+    border-radius: 50px;
+    font: bold 1rem sans-serif;
+    margin: 2rem;
+    padding: 1rem;
+
+}
+.myInfoPanel
+{
+    background-color: rgba(30, 30, 30, 0.5);
+    color: white;
+    height: 24px;
+    width: auto;
+}
+
+.infoRow {
+    flex: auto;
+    width: 40%;
+}
+
+.itemNav {
+    background-color: rgba(30, 30, 30, 0.7);
+    color: white;
+    height: 32px;
+    width: 100%;
+}

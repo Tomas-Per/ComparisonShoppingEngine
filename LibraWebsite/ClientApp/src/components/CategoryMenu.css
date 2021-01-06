@@ -15,12 +15,25 @@
     transform: translate(-135%, 0%);
 }
 .grid {
+    width:83%;
+    right:0;
     display: grid;
     grid-template-columns: 1fr 1fr 1fr;
     grid-column-gap: 50px;
 }
 @media only screen and (max-width: 1000px) {
     .grid {
+        width:70%;
+        right:0;
+        grid-column-gap:0px;
+        grid-template-columns: 1fr;
+    }
+}
+@media only screen and (max-width: 425px) {
+    .grid {
+        width: 70%;
+        right: 0;
+        grid-column-gap: 0px;
         grid-template-columns: 1fr;
     }
 }
