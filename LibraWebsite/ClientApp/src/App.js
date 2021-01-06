@@ -5,6 +5,7 @@ import { Categories } from './components/Categories';
 import { FetchData } from './components/FetchData';
 import { Counter } from './components/Counter';
 import { ProductsMenu } from './components/ProductsMenu';
+import { Rating } from './components/Rating';
 
 
 import './custom.css'
@@ -19,7 +20,9 @@ render() {
         <Route path='/counter' component={Counter} />
         <Route path='/fetch-data' component={FetchData} />
         <Route path='/categories' component={Categories} />
-        <Route path='/products/:category/:page' component={ProductsMenu}/>
+        <Route path='/products/:category/:page' component={ProductsMenu} />
+        <Route path='/ratings/:category/:id' component={Rating} />
+        
       </Layout>
     );
   }
