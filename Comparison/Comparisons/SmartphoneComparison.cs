@@ -52,7 +52,7 @@ namespace Comparison.Comparisons
             priceRanking(PriceComparison(mainItem.Price, comparingItem.Price));
             ramRanking(RamComparison(mainItem.RAM, comparingItem.RAM));
             storageRanking(StorageComparison(mainItem.Storage, comparingItem.Storage));
-            cameraRanking(CameraComparison(mainItem.BackCameraMP, comparingItem.BackCameraMP));
+            //cameraRanking(CameraComparison(mainItem.BackCameraMP, comparingItem.BackCameraMP));
             itemRanking(ItemRanking);
         }
 
