@@ -25,7 +25,7 @@ render() {
             <Route path='/products/:category/:page' component={ProductsMenu} />
             <Route path='/Login' component={Login} />
             <Route path='/Register' component={Register} />
-            <Route path='/comparison' component={ComparisonTab}
+            <Route path='/comparison' component={ComparisonTab}/>
 
         <Route path='/ratings/:category/:id' component={Rating} />
         

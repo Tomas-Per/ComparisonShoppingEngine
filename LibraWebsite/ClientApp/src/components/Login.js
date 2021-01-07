@@ -5,6 +5,8 @@ import ReactDOM from 'react-dom';
 import userSVG from './img/undraw_male_avatar_323b.svg';
 import logo from './img/libra500.png';
 import { useCookies, Cookies } from 'react-cookie';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 export class Login extends Component {
     static displayName = Login.name;
@@ -17,14 +19,23 @@ export class Login extends Component {
     handleLogin() {
     const cookies = new Cookies();
     var proxyUrl = 'https://cors-anywhere.herokuapp.com/',
-        targetUrl = 'adress' + 'Login/' + document.getElementById('email').value + '/' + document.getElementById('password').value
-    fetch(proxyUrl + targetUrl)
+        targetUrl = '' + 'Login/' + document.getElementById('email').value + '/' + document.getElementById('password').value
+    fetch(targetUrl)
         .then((response) => {
             console.log(document.getElementById('email').value);
             console.log(document.getElementById('password').value);
             console.log(targetUrl);
             console.log('Accessing...');
-            if (!response.ok) throw new Error(response.status);
+            if (!response.ok) {
+                toast("Invalid login credentials", {
+                    className: "pink-toast",
+                    draggable: true,
+                    position: toast.POSITION.BOTTOM_RIGHT,
+                    progressClassName: "pink-toast"
+                });
+                throw new Error(response.status);
+            }
+                
             else { console.log('Success'); return response.json().then(data => { cookies.set('user', JSON.stringify(data), { path: '/' }); }); }
         })
         .catch((error) => {
@@ -37,7 +48,7 @@ export class Login extends Component {
     render() {
         return (
             <body>
-                
+                <ToastContainer />
 	            <div className="myContainer">
                     <div className="img">
                         <img src={logo} />
