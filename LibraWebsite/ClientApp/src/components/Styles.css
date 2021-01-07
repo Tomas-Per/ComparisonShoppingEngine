@@ -1,4 +1,18 @@
-﻿        .extract {
+﻿.blue-toast {
+    background-color: rgba(255, 0, 102, 0.8);
+    color: white;
+}
+
+.pink-toast {
+    background-color: rgba(102, 102, 255, 0.8);
+    color: white;
+}
+
+.red-toast {
+    background-color: rgba(204, 0, 0, 0.7);
+    color: white;
+}        
+.extract {
             position: relative;
             animation: extract 0.5s ease forwards;
             transition: transform 0.3s;

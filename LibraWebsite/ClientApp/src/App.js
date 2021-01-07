@@ -10,9 +10,7 @@ import { Rating } from './components/Rating';
 import { Login } from './components/Login'
 import { Register } from './components/Register'
 import './custom.css'
-
-
-import './custom.css'
+import { ComparisonTab } from './components/ComparisonTab';
 
 export default class App extends Component {
     static displayName = App.name;
@@ -27,6 +25,7 @@ render() {
             <Route path='/products/:category/:page' component={ProductsMenu} />
             <Route path='/Login' component={Login} />
             <Route path='/Register' component={Register} />
+            <Route path='/comparison' component={ComparisonTab}
 
         <Route path='/ratings/:category/:id' component={Rating} />
         

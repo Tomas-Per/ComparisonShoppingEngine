@@ -11,18 +11,7 @@
         grid-template-columns: 1fr;
     }
 }
-.success-toast {
-    background-color: rgba(255, 0, 102, 0.8);
-    color: white;
-}
-.info-toast {
-    background-color: rgba(102, 102, 255, 0.8);
-    color: white;
-}
-.error-toast {
-    background-color: rgba(204, 0, 0, 0.7);
-    color: white;
-}
+
 .centerItem {
     display: flex;
     justify-content: center;

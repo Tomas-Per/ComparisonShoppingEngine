@@ -18,11 +18,11 @@ import NavigateNextIcon from '@material-ui/icons/NavigateNext';
 import NavigateBeforeIcon from '@material-ui/icons/NavigateBefore';
 import { useHistory } from 'react-router';
 import { useCookies, Cookies } from 'react-cookie';
-import './Styles.css';
-import './Notifications.css'; 
 import { Divider } from '@material-ui/core';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import loadingAnimation from './img/libra.gif';
+import './Styles.css';
 
 
 const useStyles = makeStyles((theme) => ({
@@ -140,23 +140,21 @@ export default function TitlebarGridList({ category, page }) {
             setPageItems(items.slice((parseInt(page) - 1) * 20, (parseInt(page)) * 20));
         }
     };
-  
 
-    if (pageItems != []) {
-
-        return (
+        return (<div> {pageItems.length != 0 ?
             <div style={{ width: '100%' }}>
+
                 <ToastContainer />
                 <center>
                     <input type="text" placeHolder="Search..." onChange={handleChange} value={searchInput} />
                 </center>
                 <br />
                 <br />
-            <div className={classes.root}>
-                <GridList cellHeight={200} cellWidht={200} className={classes.gridList}>
-                    {pageItems.map((tile) => (
-                        <GridListTile key={tile.id}>
-                            <img className={classes.photo} src={tile.imageLink} />
+                <div className={classes.root}>
+                    <GridList cellHeight={200} cellWidht={200} className={classes.gridList}>
+                        {pageItems.map((tile) => (
+                            <GridListTile key={tile.id}>
+                                <img className={classes.photo} src={tile.imageLink} />
                                 <GridListTileBar className={(active == tile.id) ? "extract" : ''}
                                     title={tile.name}
                                     subtitle={tile.price.toLocaleString("en-US", { style: "currency", currency: "EUR" })}
@@ -171,14 +169,14 @@ export default function TitlebarGridList({ category, page }) {
                                             <ExpandMoreIcon />
                                         </IconButton>
                                     }
-                            />
-                            {SpecsFactory(category, tile, active, classes)}
-                           
-                        </GridListTile>
-                    ))}
-                </GridList>
+                                />
+                                {SpecsFactory(category, tile, active, classes)}
+
+                            </GridListTile>
+                        ))}
+                    </GridList>
                 </div>
-                <br/><br/><br/>
+                <br /><br /><br />
                 <center>
                     <Button className={classes.margin} variant="outlined" color="secondary" onClick={() => { history.push("/products/" + category + "/1"); setPageItems(items.slice(0, 20)); }}>
                         1
@@ -190,7 +188,7 @@ export default function TitlebarGridList({ category, page }) {
                             {parseInt(page) - 3}
                         </Button> : null}
                     {(parseInt(page) - 2 > 0) ?
-                        <Button className={classes.margin}  variant="outlined" color="secondary" onClick={() => { history.push("/products/" + category + "/" + (parseInt(page) - 1)); setPageItems(items.slice((parseInt(page) - 2) * 20, (parseInt(page) - 1) * 20)); }}>
+                        <Button className={classes.margin} variant="outlined" color="secondary" onClick={() => { history.push("/products/" + category + "/" + (parseInt(page) - 1)); setPageItems(items.slice((parseInt(page) - 2) * 20, (parseInt(page) - 1) * 20)); }}>
                             {parseInt(page) - 2}
                         </Button> : null}
                     {(parseInt(page) - 1 !== 0) ?
@@ -217,15 +215,21 @@ export default function TitlebarGridList({ category, page }) {
                     <Button className={classes.margin} variant="outlined" color="secondary" onClick={() => { history.push("/products/" + category + "/1"); setPageItems(items.slice(Math.round(items.length / 20))); }}>
                         {Math.round(items.length / 20)}
                     </Button>
-                    
+
                 </center>
                 <br /><br /><br />
+            </div> : <img style={{
+                transform: 'scale(0.4)',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                marginLeft: 'auto',
+                marginRight: 'auto',
+                marginTop: 'auto',
+                marginBottom: 'auto'
+            }} src={loadingAnimation} />}
             </div>
         );
-    }
-    else {
-        return null;
-    }
 
 
     function SpecsFactory(category, item, active, classes) {
@@ -270,18 +274,18 @@ export default function TitlebarGridList({ category, page }) {
                             setCookie('Item1', JSON.stringify(tile), { path: '/' });
                             if (item2 == null) {
                                 toast("Item added to comparison. (Add one more to compare)", {
-                                    className: "info-toast",
+                                    className: "pink-toast",
                                     draggable: true,
                                     position: toast.POSITION.BOTTOM_RIGHT,
-                                    progressClassName: "info-toast"
+                                    progressClassName: "pink-toast"
                                 });
                             }
                             else {
                                 toast("Item added to comparison. You can compare items now!", {
-                                    className: "success-toast",
+                                    className: "blue-toast",
                                     draggable: true,
                                     position: toast.POSITION.BOTTOM_RIGHT,
-                                    progressClassName: "info-toast"
+                                    progressClassName: "pink-toast"
                                 });
                             }
                         }
@@ -290,27 +294,27 @@ export default function TitlebarGridList({ category, page }) {
                             setCookie('Item2', JSON.stringify(tile), { path: '/' });
                             if (item1 == null) {
                                 toast("Item added to comparison. (Add one more to compare)", {
-                                    className: "info-toast",
+                                    className: "pink-toast",
                                     draggable: true,
                                     position: toast.POSITION.BOTTOM_RIGHT,
-                                    progressClassName: "info-toast"
+                                    progressClassName: "pink-toast"
                                 });
                             }
                             else {
                                 toast("Item added to comparison. You can compare items now!", {
-                                    className: "success-toast",
+                                    className: "blue-toast",
                                     draggable: true,
                                     position: toast.POSITION.BOTTOM_RIGHT,
-                                    progressClassName: "info-toast"
+                                    progressClassName: "pink-toast"
                                 });
                             }
                         }
                         else {
                             toast("You cannot add more items! Remove one before adding a new one.", {
-                                className: "error-toast",
+                                className: "red-toast",
                                 draggable: true,
                                 position: toast.POSITION.BOTTOM_RIGHT,
-                                progressClassName: "info-toast"
+                                progressClassName: "pink-toast"
                             });
                         }
                     
@@ -355,18 +359,18 @@ export default function TitlebarGridList({ category, page }) {
                             setCookie('Item1', JSON.stringify(tile), { path: '/' });
                             if (item2 == null) {
                                 toast("Item added to comparison. (Add one more to compare)", {
-                                    className: "info-toast",
+                                    className: "pink-toast",
                                     draggable: true,
                                     position: toast.POSITION.BOTTOM_RIGHT,
-                                    progressClassName: "info-toast"
+                                    progressClassName: "pink-toast"
                                 });
                             }
                             else {
                                 toast("Item added to comparison. You can compare items now!", {
-                                    className: "success-toast",
+                                    className: "blue-toast",
                                     draggable: true,
                                     position: toast.POSITION.BOTTOM_RIGHT,
-                                    progressClassName: "info-toast"
+                                    progressClassName: "pink-toast"
                                 });
                             }
                         }
@@ -375,27 +379,27 @@ export default function TitlebarGridList({ category, page }) {
                             setCookie('Item2', JSON.stringify(tile), { path: '/' });
                             if (item1 == null) {
                                 toast("Item added to comparison. (Add one more to compare)", {
-                                    className: "info-toast",
+                                    className: "pink-toast",
                                     draggable: true,
                                     position: toast.POSITION.BOTTOM_RIGHT,
-                                    progressClassName: "info-toast"
+                                    progressClassName: "pink-toast"
                                 });
                             }
                             else {
                                 toast("Item added to comparison. You can compare items now!", {
-                                    className: "success-toast",
+                                    className: "blue-toast",
                                     draggable: true,
                                     position: toast.POSITION.BOTTOM_RIGHT,
-                                    progressClassName: "info-toast"
+                                    progressClassName: "pink-toast"
                                 });
                             }
                         }
                         else {
                             toast("You cannot add more items! Remove one before adding a new one.", {
-                                className: "error-toast",
+                                className: "red-toast",
                                 draggable: true,
                                 position: toast.POSITION.BOTTOM_RIGHT,
-                                progressClassName: "info-toast"
+                                progressClassName: "pink-toast"
                             });
                         }
                     }
