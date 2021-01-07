@@ -123,20 +123,16 @@ namespace WebParser.SmartphoneParsers
 
                 else if (table[i].Text.Contains("Procesoriaus modelis"))
                 {
-                    if (table[i + 1].Text.Length > 64)
-                    {
-                        if (table[i + 1].Text.Contains("("))
-                        {
-                            smartphone.Processor = table[i + 1].Text.Substring(0, table[i + 1].Text.IndexOf("("));
-                        }
-                        else
-                        {
-                            smartphone.Processor = null;
-                        }
-                    }
-                    else smartphone.Processor = table[i + 1].Text;
-                }
 
+                    if (table[i + 1].Text.Contains("("))
+                    {
+                         smartphone.Processor = table[i + 1].Text.Substring(0, table[i + 1].Text.IndexOf("("));
+                    }
+                    else
+                    {
+                         smartphone.Processor = table[i + 1].Text;
+                    }
+                }
                 else if (table[i].Text.Contains("Atminties talpa"))
                 {
                     smartphone.Storage = table[i + 1].Text.ParseInt();

@@ -26,6 +26,13 @@ namespace DataContent.DAL.Repositories
         {
             foreach(var smartphone in smartphones)
             {
+                //check if smartphone fields are valid
+                if(smartphone.Processor.Length > 64)
+                {
+                    smartphone.Processor = smartphone.Processor.Substring(0, 63);
+                }
+
+
                 //check for smartphone in DB
                 var sameSmartphone = _context.Smartphones.Where(s => s.Name == smartphone.Name
                                                           && s.ShopName == smartphone.ShopName)
