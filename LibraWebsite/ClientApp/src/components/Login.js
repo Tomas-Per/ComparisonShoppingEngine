@@ -1,7 +1,7 @@
 ﻿import { extend } from 'jquery';
 import React, { Component, useState } from 'react';
 import ReactDOM from 'react-dom';
-import './LoginStyle.css';
+
 import userSVG from './img/undraw_male_avatar_323b.svg';
 import logo from './img/libra500.png';
 

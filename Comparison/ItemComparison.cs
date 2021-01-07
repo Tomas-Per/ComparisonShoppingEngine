@@ -33,7 +33,7 @@ namespace Comparison
         {
             var priceRanking = SpecComparison(mainPrice, comparingPrice, PriceWeight);
             ItemRanking = (ItemRanking.Item1 + priceRanking.Item2, ItemRanking.Item2 + priceRanking.Item1);
-            return priceRanking;
+            return (priceRanking.Item2, priceRanking.Item1);
         }
         
         //Updates weights if new were given

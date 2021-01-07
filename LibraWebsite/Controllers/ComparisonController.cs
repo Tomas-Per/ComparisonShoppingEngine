@@ -15,8 +15,8 @@ namespace LibraWebsite.Controllers
     public class ComparisonController : ControllerBase
     {
         
-        [HttpPost("ComputerComparison/{priceWeight}/{storageWeight}/{ramWeight}")]
-        public async Task<ActionResult<ComputerComparisonModel>> ComputerComparison(List<Computer> computers, int priceWeight, int storageWeight, int ramWeight)
+        [HttpPost("ComputerComparison/{priceWeight}/{ramWeight}/{storageWeight}")]
+        public async Task<ActionResult<ComputerComparisonModel>> ComputerComparison(List<Computer> computers, int priceWeight, int ramWeight, int storageWeight)
         {
             ComputerComparison computerComparison = new ComputerComparison(priceWeight, storageWeight, ramWeight);
             ComputerComparisonModel compare = new ComputerComparisonModel();
@@ -32,8 +32,8 @@ namespace LibraWebsite.Controllers
             return compare;
         }
 
-        [HttpPost("SmartphoneComparison/{priceWeight}/{storageWeight}/{ramWeight}/{cameraWeight}")]
-        public async Task<ActionResult<SmartphoneComparisonModel>> SmartphoneComparison(List<Smartphone> smartphones, int priceWeight, int storageWeight, int ramWeight, int cameraWeight)
+        [HttpPost("SmartphoneComparison/{priceWeight}/{ramWeight}/{storageWeight}/{cameraWeight}")]
+        public async Task<ActionResult<SmartphoneComparisonModel>> SmartphoneComparison(List<Smartphone> smartphones, int priceWeight, int ramWeight, int storageWeight, int cameraWeight)
         {
             SmartphoneComparison smartphoneComparison = new SmartphoneComparison(priceWeight, ramWeight, storageWeight, cameraWeight);
             SmartphoneComparisonModel compare = new SmartphoneComparisonModel();

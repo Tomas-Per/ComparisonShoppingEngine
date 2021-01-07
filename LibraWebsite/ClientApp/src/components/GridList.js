@@ -19,7 +19,10 @@ import NavigateBeforeIcon from '@material-ui/icons/NavigateBefore';
 import { useHistory } from 'react-router';
 import { useCookies, Cookies } from 'react-cookie';
 import './Styles.css';
+import './Notifications.css'; 
 import { Divider } from '@material-ui/core';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 
 const useStyles = makeStyles((theme) => ({
@@ -38,7 +41,7 @@ const useStyles = makeStyles((theme) => ({
         backgroundColor: theme.palette.background.paper,
     },
     container: {
-        height: '50%',
+        height: '100%',
         minHeight: '1px',
         width: '40%',
         float: 'bottom',
@@ -91,7 +94,9 @@ export default function TitlebarGridList({ category, page }) {
     const [items, setItems] = useState([])   
     const [pageItems, setPageItems] = useState([]);
     const [searchInput, setSearchInput] = useState("");
-    const [cookies, setCookie] = useCookies(['Item1']);
+    const [cookies, setCookie, removeCookie] = useCookies(['']);
+    const [item1, setItem1] = useState(null);
+    const [item2, setItem2] = useState(null);
  
     useEffect(() => {
         let mounted = true;
@@ -99,7 +104,22 @@ export default function TitlebarGridList({ category, page }) {
             .then(data => {
                 if (mounted) {
                     setItems(data);
-                    setPageItems(data.slice((page-1)*20, (page)*20));
+                    setPageItems(data.slice((page - 1) * 20, (page) * 20));
+                    if (cookies.category == null) { setCookie('category', category, { path: '/' }); setCookie('comparisonWeight', [5, 5, 5, 5], { path: '/' }); }
+                    else {
+                        if (cookies.category != category) {
+                            removeCookie('Item1', { path: '/' });
+                            removeCookie('Item2', { path: '/' });
+                            setCookie('category', category, { path: '/' });
+                            setCookie('comparisonWeight', [5, 5, 5, 5], { path: '/' });
+
+                            console.log("aaaa");
+                        }
+                        else {
+                            if (cookies.Item1 != null) { setItem1(cookies.Item1);}
+                            if (cookies.Item2 != null) { setItem2(cookies.Item2);}
+                        }
+                    }
                 }
             })
         console.log(items);
@@ -126,6 +146,7 @@ export default function TitlebarGridList({ category, page }) {
 
         return (
             <div style={{ width: '100%' }}>
+                <ToastContainer />
                 <center>
                     <input type="text" placeHolder="Search..." onChange={handleChange} value={searchInput} />
                 </center>
@@ -244,12 +265,55 @@ export default function TitlebarGridList({ category, page }) {
                 <ListItem className={"infoPanel"} dense={true}>
                     <IconButton className={classes.icon} style={{ marginLeft: "auto", marginRight: "auto" }}> <RateReviewIcon /> </IconButton>
                     <IconButton className={classes.icon} style={{ transform: "rotate(90deg)", marginLeft: "auto", marginRight: "auto" }} onClick={() => {
-                        if (cookies.Item1 == null) {
+                        if (item1 == null) {
+                            setItem1(tile);
                             setCookie('Item1', JSON.stringify(tile), { path: '/' });
+                            if (item2 == null) {
+                                toast("Item added to comparison. (Add one more to compare)", {
+                                    className: "info-toast",
+                                    draggable: true,
+                                    position: toast.POSITION.BOTTOM_RIGHT,
+                                    progressClassName: "info-toast"
+                                });
+                            }
+                            else {
+                                toast("Item added to comparison. You can compare items now!", {
+                                    className: "success-toast",
+                                    draggable: true,
+                                    position: toast.POSITION.BOTTOM_RIGHT,
+                                    progressClassName: "info-toast"
+                                });
+                            }
                         }
-                        else if (cookies.Item2 == null) {
+                        else if (item2 == null) {
+                            setItem2(tile);
                             setCookie('Item2', JSON.stringify(tile), { path: '/' });
+                            if (item1 == null) {
+                                toast("Item added to comparison. (Add one more to compare)", {
+                                    className: "info-toast",
+                                    draggable: true,
+                                    position: toast.POSITION.BOTTOM_RIGHT,
+                                    progressClassName: "info-toast"
+                                });
+                            }
+                            else {
+                                toast("Item added to comparison. You can compare items now!", {
+                                    className: "success-toast",
+                                    draggable: true,
+                                    position: toast.POSITION.BOTTOM_RIGHT,
+                                    progressClassName: "info-toast"
+                                });
+                            }
                         }
+                        else {
+                            toast("You cannot add more items! Remove one before adding a new one.", {
+                                className: "error-toast",
+                                draggable: true,
+                                position: toast.POSITION.BOTTOM_RIGHT,
+                                progressClassName: "info-toast"
+                            });
+                        }
+                    
                     }
                     }> <VerticalAlignCenterIcon /> </IconButton>
                     <IconButton className={classes.icon} style={{ marginLeft: "auto", marginRight: "auto" }}> <SearchIcon /> </IconButton>
@@ -285,11 +349,54 @@ export default function TitlebarGridList({ category, page }) {
                 <ListItem className={"infoPanel"} dense={true}>
                     <IconButton className={classes.icon} style={{ marginLeft: "auto", marginRight: "auto" }}> <RateReviewIcon /> </IconButton>
                     <IconButton className={classes.icon} style={{ transform: "rotate(90deg)", marginLeft: "auto", marginRight: "auto" }} onClick={() => {
-                        if (cookies.Item1 == null) {
+                        
+                        if (item1 == null) {
+                            setItem1(tile);
                             setCookie('Item1', JSON.stringify(tile), { path: '/' });
+                            if (item2 == null) {
+                                toast("Item added to comparison. (Add one more to compare)", {
+                                    className: "info-toast",
+                                    draggable: true,
+                                    position: toast.POSITION.BOTTOM_RIGHT,
+                                    progressClassName: "info-toast"
+                                });
+                            }
+                            else {
+                                toast("Item added to comparison. You can compare items now!", {
+                                    className: "success-toast",
+                                    draggable: true,
+                                    position: toast.POSITION.BOTTOM_RIGHT,
+                                    progressClassName: "info-toast"
+                                });
+                            }
                         }
-                        else if (cookies.Item2 == null) {
+                        else if (item2 == null) {
+                            setItem2(tile);
                             setCookie('Item2', JSON.stringify(tile), { path: '/' });
+                            if (item1 == null) {
+                                toast("Item added to comparison. (Add one more to compare)", {
+                                    className: "info-toast",
+                                    draggable: true,
+                                    position: toast.POSITION.BOTTOM_RIGHT,
+                                    progressClassName: "info-toast"
+                                });
+                            }
+                            else {
+                                toast("Item added to comparison. You can compare items now!", {
+                                    className: "success-toast",
+                                    draggable: true,
+                                    position: toast.POSITION.BOTTOM_RIGHT,
+                                    progressClassName: "info-toast"
+                                });
+                            }
+                        }
+                        else {
+                            toast("You cannot add more items! Remove one before adding a new one.", {
+                                className: "error-toast",
+                                draggable: true,
+                                position: toast.POSITION.BOTTOM_RIGHT,
+                                progressClassName: "info-toast"
+                            });
                         }
                     }
                     }> <VerticalAlignCenterIcon /> </IconButton>

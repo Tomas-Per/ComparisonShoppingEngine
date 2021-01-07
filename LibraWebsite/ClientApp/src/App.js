@@ -7,7 +7,8 @@ import { FetchData } from './components/FetchData';
 import { Counter } from './components/Counter';
 import { ProductsMenu } from './components/ProductsMenu';
 import { Login } from './components/Login'
-import './custom.css'
+import { ComparisonTab } from './components/ComparisonTab';
+import './custom.css';
 
 
 export default class App extends Component {
@@ -22,6 +23,7 @@ render() {
             <Route path='/categories' component={Categories} />
             <Route path='/products/:category/:page' component={ProductsMenu} />
             <Route path='/Login' component={Login} />
+            <Route path='/comparison' component={ComparisonTab} />
       </Layout>
     );
   }
