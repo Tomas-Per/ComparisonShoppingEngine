@@ -17,12 +17,11 @@ import Button from '@material-ui/core/Button';
 import NavigateNextIcon from '@material-ui/icons/NavigateNext';
 import NavigateBeforeIcon from '@material-ui/icons/NavigateBefore';
 import { useHistory } from 'react-router';
-import { useCookies, Cookies } from 'react-cookie';
+import { useCookies } from 'react-cookie';
 import { Divider } from '@material-ui/core';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import loadingAnimation from './img/libra.gif';
-import { Link } from 'react-router-dom';
 import './Styles.css';
 
 
@@ -88,39 +87,24 @@ const useStyles = makeStyles((theme) => ({
  *   },
  * ];
  */
-export default function TitlebarGridList({ category, page }) {
+export default function TitlebarGridList({ category }) {
     const classes = useStyles();
     const history = useHistory();
     const [active, setActive] = useState(null);
     const [items, setItems] = useState([])   
     const [pageItems, setPageItems] = useState([]);
-    const [searchInput, setSearchInput] = useState("");
     const [cookies, setCookie, removeCookie] = useCookies(['']);
     const [item1, setItem1] = useState(null);
     const [item2, setItem2] = useState(null);
  
     useEffect(() => {
         let mounted = true;
-        FetchAPI(category, page)
+        FetchAPI(category, cookies.selectedItem)
             .then(data => {
                 if (mounted) {
                     setItems(data);
-                    setPageItems(data.slice((page - 1) * 20, (page) * 20));
-                    if (cookies.category == null) { setCookie('category', category, { path: '/' }); setCookie('comparisonWeight', [5, 5, 5, 5], { path: '/' }); }
-                    else {
-                        if (cookies.category != category) {
-                            removeCookie('Item1', { path: '/' });
-                            removeCookie('Item2', { path: '/' });
-                            setCookie('category', category, { path: '/' });
-                            setCookie('comparisonWeight', [5, 5, 5, 5], { path: '/' });
-
-                            console.log("aaaa");
-                        }
-                        else {
-                            if (cookies.Item1 != null) { setItem1(cookies.Item1);}
-                            if (cookies.Item2 != null) { setItem2(cookies.Item2);}
-                        }
-                    }
+                    if (data.length >= 10) { setPageItems(data.slice(0, 10)); }
+                    else if (data.length == 0) { setPageItems("None");}
                 }
             })
         console.log(items);
@@ -128,29 +112,10 @@ export default function TitlebarGridList({ category, page }) {
         return () => mounted = false;
     }, [])
 
-    const handleChange = (e) => {
-        e.preventDefault();
-        setSearchInput(e.target.value);
-        if (searchInput.length > 0) {
-            var searchResult = items.filter((i) => {
-                return i.name.toLowerCase().match(searchInput.toLocaleLowerCase());
-            })
-            setPageItems(searchResult);
-        }
-        else {
-            setPageItems(items.slice((parseInt(page) - 1) * 20, (parseInt(page)) * 20));
-        }
-    };
-
-        return (<div> {pageItems.length != 0 ?
+        return (<div> {pageItems.length != 0 ? ( pageItems != "None" ?
             <div style={{ width: '100%' }}>
 
                 <ToastContainer />
-                <center>
-                    <input type="text" placeHolder="Search..." onChange={handleChange} value={searchInput} />
-                </center>
-                <br />
-                <br />
                 <div className={classes.root}>
                     <GridList cellHeight={200} cellWidht={200} className={classes.gridList}>
                         {pageItems.map((tile) => (
@@ -177,48 +142,7 @@ export default function TitlebarGridList({ category, page }) {
                         ))}
                     </GridList>
                 </div>
-                <br /><br /><br />
-                <center>
-                    <Button className={classes.margin} variant="outlined" color="secondary" onClick={() => { history.push("/products/" + category + "/1"); setPageItems(items.slice(0, 20)); }}>
-                        1
-                    </Button>
-                    <Button color="secondary">...</Button>
-
-                    {(parseInt(page) - 3 > 0) ?
-                        <Button className={classes.margin} variant="outlined" color="secondary" onClick={() => { history.push("/products/" + category + "/" + (parseInt(page) - 1)); setPageItems(items.slice((parseInt(page) - 2) * 20, (parseInt(page) - 1) * 20)); }}>
-                            {parseInt(page) - 3}
-                        </Button> : null}
-                    {(parseInt(page) - 2 > 0) ?
-                        <Button className={classes.margin} variant="outlined" color="secondary" onClick={() => { history.push("/products/" + category + "/" + (parseInt(page) - 1)); setPageItems(items.slice((parseInt(page) - 2) * 20, (parseInt(page) - 1) * 20)); }}>
-                            {parseInt(page) - 2}
-                        </Button> : null}
-                    {(parseInt(page) - 1 !== 0) ?
-                        <Button className={classes.margin} variant="outlined" size="large" color="secondary" startIcon={<NavigateBeforeIcon />} onClick={() => { history.push("/products/" + category + "/" + (parseInt(page) - 1)); setPageItems(items.slice((parseInt(page) - 2) * 20, (parseInt(page) - 1) * 20)); }}>
-                            Previous Page
-                        </Button> : null}
-
-                    <Button color="secondary" size="large">{page}</Button>
-
-                    {(parseInt(page) + 1 <= items.length / 20 + 1) ?
-                        <Button className={classes.margin} variant="outlined" size="large" color="secondary" endIcon={<NavigateNextIcon />} onClick={() => { history.push("/products/" + category + "/" + (parseInt(page) + 1)); setPageItems(items.slice((parseInt(page)) * 20, (parseInt(page) + 1) * 20)); }}>
-                            Next Page
-                         </Button> : null}
-                    {(parseInt(page) + 2 <= items.length / 20 + 1) ?
-                        <Button className={classes.margin} variant="outlined" color="secondary" onClick={() => { history.push("/products/" + category + "/" + (parseInt(page) + 1)); setPageItems(items.slice((parseInt(page)) * 20, (parseInt(page) + 1) * 20)); }}>
-                            {parseInt(page) + 2}
-                        </Button> : null}
-                    {(parseInt(page) + 3 <= items.length / 20 + 1) ?
-                        <Button className={classes.margin} variant="outlined" color="secondary" onClick={() => { history.push("/products/" + category + "/" + (parseInt(page) + 1)); setPageItems(items.slice((parseInt(page)) * 20, (parseInt(page) + 1) * 20)); }}>
-                            {parseInt(page) + 3}
-                        </Button> : null}
-
-                    <Button color="secondary">...</Button>
-                    <Button className={classes.margin} variant="outlined" color="secondary" onClick={() => { history.push("/products/" + category + "/1"); setPageItems(items.slice(Math.round(items.length / 20))); }}>
-                        {Math.round(items.length / 20)}
-                    </Button>
-
-                </center>
-                <br /><br /><br />
+                
             </div> : <img style={{
                 transform: 'scale(0.4)',
                 display: 'flex',
@@ -228,7 +152,7 @@ export default function TitlebarGridList({ category, page }) {
                 marginRight: 'auto',
                 marginTop: 'auto',
                 marginBottom: 'auto'
-            }} src={loadingAnimation} />}
+            }} src={loadingAnimation} /> ) : <center> No similar products found... </center>}
             </div>
         );
 
@@ -268,7 +192,6 @@ export default function TitlebarGridList({ category, page }) {
                     <ListItemText primary={(tile.ram != 0) ? (tile.ram + ' GB ' + ((tile.raM_type != null) ? ('(' + tile.raM_type + ')') : '')) : 'Not specified'} />
                 </ListItem>
                 <ListItem className={"infoPanel"} dense={true}>
-                    <IconButton className={classes.icon} style={{ marginLeft: "auto", marginRight: "auto" }}> <RateReviewIcon /> </IconButton>
                     <IconButton className={classes.icon} style={{ transform: "rotate(90deg)", marginLeft: "auto", marginRight: "auto" }} onClick={() => {
                         if (item1 == null) {
                             setItem1(tile);
@@ -321,10 +244,6 @@ export default function TitlebarGridList({ category, page }) {
                     
                     }
                     }> <VerticalAlignCenterIcon /> </IconButton>
-                    <IconButton className={classes.icon} style={{ marginLeft: "auto", marginRight: "auto" }} onClick={() => {
-                        setCookie('selectedItem', JSON.stringify(tile), { path: '/' });
-                        window.location.href = "/FindSimilar/" + category;
-                    }}> <SearchIcon /> </IconButton>
                     <IconButton className={classes.icon} style={{ marginLeft: "auto", marginRight: "auto" }} > <FavoriteBorderIcon /> </IconButton>
                     <IconButton className={classes.icon} style={{ marginLeft: "auto", marginRight: "auto" }} onClick={() => { window.open(tile.itemURL, '_blank'); }}> <ShoppingCartIcon /> </IconButton>
                 </ListItem>
@@ -355,7 +274,6 @@ export default function TitlebarGridList({ category, page }) {
                     <ListItemText primary={(tile.backCameras != null) ? (tile.backCameras + ((tile.frontCameras != null) ? (' | ' + tile.frontCameras) : '')) : 'Not specified'} />
                 </ListItem>
                 <ListItem className={"infoPanel"} dense={true}>
-                    <IconButton className={classes.icon} style={{ marginLeft: "auto", marginRight: "auto" }}> <RateReviewIcon /> </IconButton>
                     <IconButton className={classes.icon} style={{ transform: "rotate(90deg)", marginLeft: "auto", marginRight: "auto" }} onClick={() => {
                         
                         if (item1 == null) {
@@ -408,10 +326,6 @@ export default function TitlebarGridList({ category, page }) {
                         }
                     }
                     }> <VerticalAlignCenterIcon /> </IconButton>
-                    <IconButton className={classes.icon} style={{ marginLeft: "auto", marginRight: "auto" }} onClick={() => {
-                        setCookie('selectedItem', JSON.stringify(tile), { path: '/' });
-                        window.location.href = "/FindSimilar/" + category;
-                    }}> <SearchIcon /> </IconButton>
                     <IconButton className={classes.icon} style={{ marginLeft: "auto", marginRight: "auto" }} > <FavoriteBorderIcon /> </IconButton>
                     <IconButton className={classes.icon} style={{ marginLeft: "auto", marginRight: "auto" }} onClick={() => { window.open(tile.itemURL, '_blank'); }}> <ShoppingCartIcon /> </IconButton>
                 </ListItem>
@@ -419,22 +333,16 @@ export default function TitlebarGridList({ category, page }) {
     }
 }
 
-function FetchAPI(category, page) {
-    var proxyUrl = 'https://cors-anywhere.herokuapp.com/',
-        targetUrl = '/api/' + category + '/Page/0'
-    return fetch(proxyUrl + targetUrl).then(response =>response.json());
-}
-/*async function postAPI(item1, item2) {
-    // Simple POST request with a JSON body using fetch
+function FetchAPI(category, item) {
     const requestOptions = {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify([item1, item2])
+        body: JSON.stringify(item)
 
     };
-    const response = await fetch('api/Comparison/ComputerComparison/5/5/5', requestOptions);
-    const data = await response.json().then(data => { console.log(data) });
-}*/
-
-
-//price={tile.price.toLocaleString("en-US", { style: "currency", currency: "EUR" })}
+    var proxyUrl = 'https://cors-anywhere.herokuapp.com/',
+        targetUrl = 'none'
+    if (item.itemCategory == 0 || item.itemCategory == 2) { targetUrl = '/api/Computers/FindSimilar' }
+    else if (item.itemCategory == 1) { targetUrl = '/api/Smartphones/FindSimilar'}
+    return fetch(proxyUrl + targetUrl, requestOptions).then(response =>response.json());
+}

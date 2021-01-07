@@ -58,6 +58,7 @@ export default function TitlebarGridList({ item, colorColumn }) {
     useEffect(() => {
         if (item === 1) { setTile(cookies.Item1); }
         else if (item === 2) { setTile(cookies.Item2); }
+        else if (item === 3) { setTile(cookies.selectedItem);}
     }, [])
 
     console.log(tile);
@@ -78,14 +79,15 @@ export default function TitlebarGridList({ item, colorColumn }) {
             </div>
             <br />
             <center>
-                <Button variant="outlined" style={{ color: colorColumn, borderColor: colorColumn }} onClick={() => {
-                    if (item === 1) { removeCookie('Item1'); }
-                    else if (item === 2) { removeCookie('Item2'); }
-                    setTile(null);
-                }
-                }>
-                    Remove
-                    </Button>
+                {item !== 3 ?
+                    <Button variant="outlined" style={{ color: colorColumn, borderColor: colorColumn }} onClick={() => {
+                        if (item === 1) { removeCookie('Item1'); }
+                        else if (item === 2) { removeCookie('Item2'); }
+                        setTile(null);
+                    }
+                    }>
+                        Remove
+                    </Button> : null}
             </center>
         </div>
         : <div>
