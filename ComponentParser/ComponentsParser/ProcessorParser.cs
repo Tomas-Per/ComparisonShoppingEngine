@@ -5,10 +5,7 @@ using OpenQA.Selenium.Support.UI;
 using Parsing;
 using PathLibrary;
 using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace WebParser.ComponentsParser
 {
@@ -25,7 +22,7 @@ namespace WebParser.ComponentsParser
 
         }
 
-        [Obsolete]
+
         public Processor ParseProcessor (string model)
         {
             _driver.Value.Navigate().GoToUrl(_url);
@@ -33,15 +30,9 @@ namespace WebParser.ComponentsParser
             try
             {
                 _driver.Value.FindElement(By.Name("SearchRecords")).SendKeys(model);
-                //DefaultWait<IWebDriver> fluentWait = new DefaultWait<IWebDriver>(_driver.Value);
-                //fluentWait.Timeout = TimeSpan.FromSeconds(30);
-                //fluentWait.PollingInterval = TimeSpan.FromMilliseconds(250);
-                //fluentWait.IgnoreExceptionTypes(typeof(NoSuchElementException));
-                //fluentWait.Until(x => x.FindElement(By.Id("searchButton")));
-
 
                 WebDriverWait wait = new WebDriverWait(_driver.Value, TimeSpan.FromSeconds(10));
-                IWebElement element = wait.Until(ExpectedConditions.ElementIsVisible(By.Id("searchButton")));
+                var element = wait.Until(e => e.FindElement(By.Id("searchButton")));
                 element.Click();
 
 
@@ -85,7 +76,7 @@ namespace WebParser.ComponentsParser
                 .GetAttribute("innerHTML").ParseInt();
 
             _driver.Value.Close();
-            //ResetDriver();
+            ResetDriver();
             return processor;
         }
 
