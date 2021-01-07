@@ -35,8 +35,6 @@ namespace WebParser.ComponentsParser
                 var element = wait.Until(e => e.FindElement(By.Id("searchButton")));
                 element.Click();
 
-
-                //_driver.Value.FindElement(By.Id("searchButton")).Click();
             }
             catch (Exception)
             {
