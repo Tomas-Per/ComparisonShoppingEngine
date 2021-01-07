@@ -6,10 +6,13 @@ import { Categories } from './components/Categories';
 import { FetchData } from './components/FetchData';
 import { Counter } from './components/Counter';
 import { ProductsMenu } from './components/ProductsMenu';
+import { Rating } from './components/Rating';
 import { Login } from './components/Login'
-import { ComparisonTab } from './components/ComparisonTab';
-import './custom.css';
+import { Register } from './components/Register'
+import './custom.css'
 
+
+import './custom.css'
 
 export default class App extends Component {
     static displayName = App.name;
@@ -23,7 +26,10 @@ render() {
             <Route path='/categories' component={Categories} />
             <Route path='/products/:category/:page' component={ProductsMenu} />
             <Route path='/Login' component={Login} />
-            <Route path='/comparison' component={ComparisonTab} />
+            <Route path='/Register' component={Register} />
+
+        <Route path='/ratings/:category/:id' component={Rating} />
+        
       </Layout>
     );
   }

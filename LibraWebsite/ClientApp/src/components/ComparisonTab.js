@@ -25,7 +25,7 @@ export class ComparisonTab extends Component {
 
 
                   <div className={"column2"}>
-                      <ComparisonItem item={2} colorColumn={"rgb(128, 222, 234)"}/>
+                      <ComparisonItem item={2} colorColumninfo={"rgb(128, 222, 234)"}/>
                 </div>
             </div>
         </div>
