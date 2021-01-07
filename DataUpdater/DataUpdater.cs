@@ -31,6 +31,8 @@ namespace DataUpdater
         {
             _computerAccess = new ComputerAccess();
             _smartphoneAccess = new SmartphoneAccess();
+            client.BaseAddress = new Uri(ConfigurationManager.AppSettings["api"]);
+            client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
         }
 
         //calls shop parser and returns parsed item list
@@ -115,9 +117,6 @@ namespace DataUpdater
 
         public async Task<bool> UpdateProcessor(Processor processor)
         {
-            client.BaseAddress = new Uri(ConfigurationManager.AppSettings["api"]);
-            client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
-
             var response = await client.PutAsJsonAsync("/api/Processors", processor);
 
             return response.IsSuccessStatusCode;
