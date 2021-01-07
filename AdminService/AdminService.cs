@@ -1,5 +1,4 @@
-﻿using DataUpdater;
-using ExceptionsLogging;
+﻿using ExceptionsLogging;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -8,7 +7,9 @@ using WebParser.ComponentsParser;
 using ModelLibrary;
 using static ModelLibrary.Categories;
 using System.Threading.Tasks;
-
+using System.Net.Http;
+using System.Configuration;
+using System.Net.Http.Headers;
 
 namespace AdminService
 {
@@ -29,6 +30,7 @@ namespace AdminService
             {
                 command = Console.ReadLine();
 
+                var updater = new DataUpdater.DataUpdater();
                 switch (command)
                 {
                     case "!help":
@@ -41,8 +43,7 @@ namespace AdminService
                     case "1":
                         try
                         {
-                            var updater = new DataUpdater<Computer>();
-                            var results = await updater.GetItemCategoryListFromWebAsync(ItemCategory.Laptop);
+                            var results = await updater.GetItemCategoryListFromWebAsync<Computer>(ItemCategory.Laptop);
                             await updater.UpdateItemListFile(results);
                             Console.WriteLine("Shop Parsed");
                         }
@@ -57,8 +58,7 @@ namespace AdminService
                     case "2":
                         try
                         {
-                            var updater = new DataUpdater<Smartphone>();
-                            var results = await updater.GetItemCategoryListFromWebAsync(ItemCategory.Smartphone);
+                            var results = await updater.GetItemCategoryListFromWebAsync<Smartphone>(ItemCategory.Smartphone);
                             await updater.UpdateItemListFile(results);
                             Console.WriteLine("Shop Parsed");
                         }
@@ -72,8 +72,7 @@ namespace AdminService
                     case "3":
                         try
                         {
-                            var updater = new DataUpdater<Computer>();
-                            var results = await updater.GetItemCategoryListFromWebAsync(ItemCategory.DesktopComputer);
+                            var results = await updater.GetItemCategoryListFromWebAsync<Computer>(ItemCategory.DesktopComputer);
                             await updater.UpdateItemListFile(results);
                             Console.WriteLine("Shop Parsed");
                         }
@@ -85,17 +84,24 @@ namespace AdminService
                         break;
 
                     case "5":
-                        //Console.WriteLine("Type processor ID");
-                        //var service = new ProcessorDataService();
-                        //var processor = service.GetDataByID(Int32.Parse(Console.ReadLine()));
-                        //Console.WriteLine("Write Name, Model, Cache, Cores");
-                        //var specs = Console.ReadLine().Split(',');
-                        //processor.Name = specs[0];
-                        //processor.Model = specs[1];
-                        //processor.Cache = Int32.Parse(specs[2]);
-                        //processor.MinCores = Int32.Parse(specs[3]);
-                        //service.UpdateData(processor);
-                        //Console.WriteLine("Updated");
+                        Processor processor = new Processor();
+
+                        Console.WriteLine("Type processor ID");
+                        processor.Id = Int32.Parse(Console.ReadLine());
+
+                        Console.WriteLine("Write Name, Model, Cache, Cores");
+                        var specs = Console.ReadLine().Split(',');
+                        processor.Name = specs[0];
+                        processor.Model = specs[1];
+                        processor.Cache = Int32.Parse(specs[2]);
+                        processor.MinCores = Int32.Parse(specs[3]);
+          
+                        if(await updater.UpdateProcessor(processor))
+                        {
+                            Console.WriteLine("Updated");
+                        }
+                        else Console.WriteLine("something wrong happened");   
+                        
                         break;
 
                     default:
