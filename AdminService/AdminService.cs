@@ -49,6 +49,7 @@ namespace AdminService
                         }
                         catch (Exception ex)
                         {
+                            logger.Log(ex);
                             Console.WriteLine("Something wrong happened. Check Logs");
                             
                         }
