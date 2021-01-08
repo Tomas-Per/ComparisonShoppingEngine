@@ -343,7 +343,7 @@ function FetchAPI(category, item) {
     };
     var proxyUrl = 'https://cors-anywhere.herokuapp.com/',
         targetUrl = 'none'
-    if (item.itemCategory == 0 || item.itemCategory == 2) { targetUrl = '/api/Computers/FindSimilar' }
-    else if (item.itemCategory == 1) { targetUrl = '/api/Smartphones/FindSimilar'}
+    if (item.itemCategory == 0 || item.itemCategory == 2) { targetUrl = process.env.REACT_APP_API + 'api/Computers/FindSimilar' }
+    else if (item.itemCategory == 1) { targetUrl = process.env.REACT_APP_API + 'api/Smartphones/FindSimilar'}
     return fetch(targetUrl, requestOptions).then(response =>response.json());
 }

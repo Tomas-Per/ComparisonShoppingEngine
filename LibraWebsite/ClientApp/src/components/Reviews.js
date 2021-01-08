@@ -31,6 +31,6 @@ export default function TitlebarGridList({ category, id }) {
 
 function FetchAPI(category, id) {
     var proxyUrl = 'https://cors-anywhere.herokuapp.com/',
-        targetUrl = '' + id + '/' + category 
-    return fetch(proxyUrl + targetUrl).then(response => response.json());
+        targetUrl = process.env.REACT_APP_API + 'Items/' + id + '/' + category
+    return fetch(targetUrl).then(response => response.json());
 }
