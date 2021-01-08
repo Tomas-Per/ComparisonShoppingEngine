@@ -6,12 +6,12 @@ export default function TitlebarGridList({ category, id }) {
 
     useEffect(() => {
         let mounted = true;
-        FetchAPI(category, id)
-            .then(data => {
-                if (mounted) {
-                    setItems(data);
-                }
-            })
+        //FetchAPI(category, id)
+        //    .then(data => {
+        //        if (mounted) {
+        //            setItems(data);
+        //        }
+        //    })
         console.log(items);
         return () => mounted = false;
     }, [])
@@ -29,8 +29,8 @@ export default function TitlebarGridList({ category, id }) {
     );
 }
 
-function FetchAPI(category, id) {
-    var proxyUrl = 'https://cors-anywhere.herokuapp.com/',
-        targetUrl = process.env.REACT_APP_API + 'Items/' + id + '/' + category
-    return fetch(targetUrl).then(response => response.json());
+//function FetchAPI(category, id) {
+//    var proxyUrl = 'https://cors-anywhere.herokuapp.com/',
+//        targetUrl = process.env.REACT_APP_API + 'Items/' + id + '/' + category
+//    return fetch(targetUrl).then(response => response.json());
 }

@@ -1,6 +1,5 @@
 ﻿import React, { Component } from 'react';
 import './RatingStyle.css';
-import Reviews from './Reviews';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faStar } from '@fortawesome/free-solid-svg-icons';
 
@@ -17,7 +16,7 @@ export class Rating extends Component {
         return (
             <div>
                 <div>
-                    <Reviews category={category} id={id} />
+                  
                 </div>
             <div className="starContainer">
                 <div class="star-widget">
