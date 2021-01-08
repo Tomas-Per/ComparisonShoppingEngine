@@ -13,7 +13,8 @@ export class NavMenu extends Component {
         this.logout = this.logout.bind(this)
         this.toggleNavbar = this.toggleNavbar.bind(this);
         this.state = {
-          collapsed: true
+            collapsed: true,
+            name: cookies.get('user') || 'null'
         };
   }
 
@@ -52,7 +53,8 @@ export class NavMenu extends Component {
                       </NavLink>
                             </NavItem>
 
-                            {(document.cookie.indexOf('user') > -1) ?
+                            {
+                                (document.cookie.indexOf('user') > -1) ?
                                 <NavItem>
                                     <NavLink tag={Link} className="text-dark" to="/" onClick={ this.logout }>
                                         <text>Logout</text>
@@ -63,9 +65,21 @@ export class NavMenu extends Component {
                                     <NavLink tag={Link} className="text-dark" to="/Login">
                                         <text>Login</text>
                                     </NavLink>
-                                </NavItem>}
-                               
-                
+                                    </NavItem>
+                            }
+
+                            {
+                                (document.cookie.indexOf('user') > -1) ?
+                                <NavItem>
+                                    <NavLink tag={Link} className="text-dark" to="/">
+                                        <text className="text-dark">(Logged in as {this.state.name.username})</text>
+                                    </NavLink>
+                                </NavItem>
+                                :
+                                null
+                            }
+
+                            
               </ul>
             </Collapse>
           </Container>
