@@ -29,7 +29,7 @@ export class Register extends Component {
             })
 
         };
-        const response = await fetch('https://cors-anywhere.herokuapp.com/' + 'adress' + 'api/User', requestOptions);
+        const response = await fetch(process.env.REACT_APP_API + 'api/User', requestOptions);
         const data = await response.json().then(data => { console.log(data) });
     }
 
