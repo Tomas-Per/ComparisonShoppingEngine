@@ -54,6 +54,7 @@ namespace WebParser.SmartphoneParsers
                     smartphone.ItemCategory = ItemCategory.Smartphone;
                     data.Add(smartphone);
                 }
+                //break;
             }
             ResetDriver();
             return data;
@@ -106,7 +107,15 @@ namespace WebParser.SmartphoneParsers
                 }
                 else if (table[i].Text.Contains("Procesoriaus tipas"))
                 {
-                    smartphone.Processor = table[i + 1].Text;
+
+                    if (table[i + 1].Text.Contains("("))
+                    {
+                        smartphone.Processor = table[i + 1].Text.Substring(0, table[i + 1].Text.IndexOf("("));
+                    }
+                     else
+                     {
+                        smartphone.Processor = table[i + 1].Text;
+                     }
                 }
                 else if (table[i].Text.Contains("Vidinė atmintis"))
                 {
