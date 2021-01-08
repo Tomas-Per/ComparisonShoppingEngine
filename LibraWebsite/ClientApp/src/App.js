@@ -11,6 +11,7 @@ import { Login } from './components/Login'
 import { Register } from './components/Register'
 import './custom.css'
 import { ComparisonTab } from './components/ComparisonTab';
+import { SimilarList } from './components/SimilarList';
 
 export default class App extends Component {
     static displayName = App.name;
@@ -26,7 +27,7 @@ render() {
             <Route path='/Login' component={Login} />
             <Route path='/Register' component={Register} />
             <Route path='/comparison' component={ComparisonTab} />
-
+            <Route path='/FindSimilar/:category' component={SimilarList} />
         <Route path='/ratings/:category/:id' component={Rating} />
         
       </Layout>
