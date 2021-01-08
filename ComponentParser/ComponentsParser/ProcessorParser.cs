@@ -26,7 +26,7 @@ namespace WebParser.ComponentsParser
         public Processor ParseProcessor (string model)
         {
             _driver.Value.Navigate().GoToUrl(_url);
-   
+ 
             try
             {
                 _driver.Value.FindElement(By.Name("SearchRecords")).SendKeys(model);
@@ -74,16 +74,7 @@ namespace WebParser.ComponentsParser
                 .GetAttribute("innerHTML").ParseInt();
 
             _driver.Value.Close();
-            ResetDriver();
             return processor;
-        }
-
-        private void ResetDriver()
-        {
-            _driver.Value.Close();
-            var options = new ChromeOptions();
-            options.AddArguments("--headless");
-            _driver = new Lazy<ChromeDriver>(() => new ChromeDriver(MainPath.GetShopParserPath(), options));
         }
     }
 }
