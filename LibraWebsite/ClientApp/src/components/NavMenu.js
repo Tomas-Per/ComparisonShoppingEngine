@@ -2,17 +2,19 @@ import React, { Component } from 'react';
 import { Collapse, Container, Navbar, NavbarBrand, NavbarToggler, NavItem, NavLink } from 'reactstrap';
 import { Link } from 'react-router-dom';
 import './NavMenu.css';
+import { useCookies, Cookies } from 'react-cookie';
 
 export class NavMenu extends Component {
   static displayName = NavMenu.name;
 
   constructor (props) {
-    super(props);
-
-    this.toggleNavbar = this.toggleNavbar.bind(this);
-    this.state = {
-      collapsed: true
-    };
+        super(props);
+        const cookies = new Cookies();
+        this.logout = this.logout.bind(this)
+        this.toggleNavbar = this.toggleNavbar.bind(this);
+        this.state = {
+          collapsed: true
+        };
   }
 
   toggleNavbar () {
@@ -20,6 +22,13 @@ export class NavMenu extends Component {
       collapsed: !this.state.collapsed
     });
   }
+
+    logout () {
+
+        document.cookie = "user= ; expires = Thu, 01 Jan 1970 00:00:00 GMT"
+        window.location.href = '/';
+        return false;
+    }
 
   render () {
     return (
@@ -41,12 +50,22 @@ export class NavMenu extends Component {
                       <NavLink tag={Link} className="text-dark" to="/comparison">
                              <text>Comparison</text>
                       </NavLink>
-                  </NavItem>
-                <NavItem>
-                  <NavLink tag={Link} className="text-dark" to="/Login">
-                        <text>Login</text>
-                  </NavLink>
-                </NavItem>
+                            </NavItem>
+
+                            {(document.cookie.indexOf('user') > -1) ?
+                                <NavItem>
+                                    <NavLink tag={Link} className="text-dark" to="/" onClick={ this.logout }>
+                                        <text>Logout</text>
+                                    </NavLink>
+                                </NavItem>
+                                :
+                                <NavItem>
+                                    <NavLink tag={Link} className="text-dark" to="/Login">
+                                        <text>Login</text>
+                                    </NavLink>
+                                </NavItem>}
+                               
+                
               </ul>
             </Collapse>
           </Container>

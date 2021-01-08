@@ -17,32 +17,31 @@ export class Login extends Component {
     };
 
     handleLogin() {
-    const cookies = new Cookies();
-    var proxyUrl = 'https://cors-anywhere.herokuapp.com/',
-        targetUrl = '' + 'Login/' + document.getElementById('email').value + '/' + document.getElementById('password').value
-    fetch(targetUrl)
-        .then((response) => {
-            console.log(document.getElementById('email').value);
-            console.log(document.getElementById('password').value);
-            console.log(targetUrl);
-            console.log('Accessing...');
-            if (!response.ok) {
-                toast("Invalid login credentials", {
-                    className: "pink-toast",
-                    draggable: true,
-                    position: toast.POSITION.BOTTOM_RIGHT,
-                    progressClassName: "pink-toast"
-                });
-                throw new Error(response.status);
-            }
-                
-            else { console.log('Success'); return response.json().then(data => { cookies.set('user', JSON.stringify(data), { path: '/' }); }); }
-        })
-        .catch((error) => {
-            console.log(error);
-            this.setState({isError:true});
-        });
-}
+        const cookies = new Cookies();
+        var proxyUrl = 'https://cors-anywhere.herokuapp.com/',
+            targetUrl = process.env.REACT_APP_API + 'Login/' + document.getElementById('email').value + '/' + document.getElementById('password').value
+        fetch(targetUrl)
+            .then((response) => {
+                console.log(document.getElementById('email').value);
+                console.log(document.getElementById('password').value);
+                console.log(targetUrl);
+                console.log('Accessing...');
+                if (!response.ok) {
+                    toast("Invalid login credentials", {
+                        className: "pink-toast",
+                        draggable: true,
+                        position: toast.POSITION.BOTTOM_RIGHT,
+                        progressClassName: "pink-toast"
+                    });
+                    throw new Error(response.status);
+                }
+                else { console.log('Success'); response.json().then(data => { cookies.set('user', JSON.stringify(data), { path: '/' }); }); window.location.href = "/"; }
+            })
+            .catch((error) => {
+                console.log(error);
+                this.setState({isError:true});
+            });
+    }
 
 
     render() {
@@ -79,8 +78,6 @@ export class Login extends Component {
                             <input type="submit" className="btn" value="Login" onClick={this.handleLogin} /> 
                         </div>
                     </div>
-                   
-
                 </div>
                 
             </body>
