@@ -1,11 +1,11 @@
-﻿using ItemLibrary;
+﻿using ModelLibrary;
 using OpenQA.Selenium;
 using OpenQA.Selenium.Chrome;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using Parsing;
-using static ItemLibrary.Categories;
+using static ModelLibrary.Categories;
 using PathLibrary;
 using System.Threading.Tasks;
 
@@ -40,25 +40,25 @@ namespace WebParser.SmartphoneParsers
                 {
                     links.Add(element.GetAttribute("href"));
                 }
-
                 foreach (var link in links)
                 {
                     ((IJavaScriptExecutor)_driver.Value).ExecuteScript("window.open();");
                     _driver.Value.SwitchTo().Window(_driver.Value.WindowHandles.Last());
 
-                    _driver.Value.Navigate().GoToUrl(link);
-                    Smartphone smartphone = ParseWindow(link);
+                    Smartphone smartphone = await ParseWindow(link);
 
                     _driver.Value.SwitchTo().Window(_driver.Value.WindowHandles.First());
 
-                    if (smartphone.Price == 0)
+                    if (smartphone == null)
                     {
                         continue;
                     }
 
                     smartphone.ItemCategory = ItemCategory.Smartphone;
                     data.Add(smartphone);
+
                 }
+                //break;
             }
             ResetDriver();
             return data;
@@ -67,25 +67,29 @@ namespace WebParser.SmartphoneParsers
 
      
         //Parses Smartphone from an url
-        public  Smartphone ParseWindow(string url)
+        public async Task<Smartphone> ParseWindow(string url)
         {
+            if (url == null)
+            {
+                return null;
+            }
+
             _driver.Value.Navigate().GoToUrl(url);
 
             Smartphone smartphone = new Smartphone();
-
-            smartphone.Name = _driver.Value.FindElement(By.TagName("h1")).Text;
+            
             try
             {
+                smartphone.Name = _driver.Value.FindElement(By.TagName("h1")).Text;
                 smartphone.Price = _driver.Value.FindElement(By.XPath("//span[@class = 'price']")).Text.ParseDouble();
             }
             catch (Exception)
             {
-                smartphone.Price = 0;
+                return null;
             }
 
             smartphone.ItemURL = url;
             smartphone.ShopName = "Senukai.lt";
-
             var image = _driver.Value.FindElements(By.ClassName("product-gallery-slider__slide__image"));
 
             try
@@ -119,9 +123,16 @@ namespace WebParser.SmartphoneParsers
 
                 else if (table[i].Text.Contains("Procesoriaus modelis"))
                 {
-                    smartphone.Processor = table[i + 1].Text.Substring(0, table[i + 1].Text.IndexOf("("));
-                }
 
+                    if (table[i + 1].Text.Contains("("))
+                    {
+                         smartphone.Processor = table[i + 1].Text.Substring(0, table[i + 1].Text.IndexOf("("));
+                    }
+                    else
+                    {
+                         smartphone.Processor = table[i + 1].Text;
+                    }
+                }
                 else if (table[i].Text.Contains("Atminties talpa"))
                 {
                     smartphone.Storage = table[i + 1].Text.ParseInt();
@@ -134,18 +145,11 @@ namespace WebParser.SmartphoneParsers
 
                 else if (table[i].Text.Contains("Galinė kamera"))
                 {
-                    var values = table[i + 1].Text.Split(',');
-                    List<int> cameras = new List<int>();
-                    values.ToList().ForEach(item => cameras.Add(item.ParseInt()));
-                    smartphone.BackCameraMP = cameras;
-
+                    smartphone.BackCameras = table[i + 1].Text;
                 }
                 else if (table[i].Text.Contains("Priekinė kamera"))
                 {
-                    var values = table[i + 1].Text.Split(',');
-                    List<int> cameras = new List<int>();
-                    values.ToList().ForEach(item => cameras.Add(item.ParseInt()));
-                    smartphone.FrontCameraMP = cameras;
+                    smartphone.FrontCameras = table[i + 1].Text;
                 }
                 else if (table[i].Text.Contains("Operatyvioji atmintis (RAM)"))
                 {

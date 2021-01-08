@@ -1,4 +1,4 @@
-﻿using ItemLibrary;
+﻿using ModelLibrary;
 using PathLibrary;
 using System;
 using System.Diagnostics;
@@ -7,44 +7,51 @@ using System.Text;
 
 namespace ExceptionsLogging
 {
-    public static class ExceptionLogger 
+    public  class ExceptionLogger 
     {
         private readonly static string _filePath = MainPath.GetMainPath() + @"\ExceptionsLogging\Log.txt";
         private readonly static string _parsingFilePath = MainPath.GetMainPath() + @"\ExceptionsLogging\NotParsedElementsLog.txt";
+        private static Object locker = new Object();
 
         //Logs Exception to a file
-        public static void Log (Exception ex)
+        public void Log (Exception ex)
         {
+            lock(locker) { 
             if (!File.Exists(_filePath))
             {
                 File.Create(_filePath).Close();
             }
 
-            using (StreamWriter streamWriter = new StreamWriter(_filePath, true))
-            {
-                streamWriter.WriteLine("Error:   " + ex.Message);
-                if (ex.InnerException != null)
+                using (StreamWriter streamWriter = new StreamWriter(_filePath, true))
                 {
-                    streamWriter.WriteLine("Error inner:   " + ex.InnerException.Message);
+                    streamWriter.WriteLine("Error:   " + ex.Message);
+                    if (ex.InnerException != null)
+                    {
+                        streamWriter.WriteLine("Error inner:   " + ex.InnerException.Message);
+                    }
+                    streamWriter.WriteLine("Occured At:    " + GetFullStackTrace(ex));
+                    streamWriter.WriteLine("Time:    " + DateTime.Now);
                 }
-                streamWriter.WriteLine("Occured At:    " + GetFullStackTrace(ex));
-                streamWriter.WriteLine("Time:    " + DateTime.Now);
             }
         }
 
 
-        public static void LogProcessorParsingException(Processor processor, Exception ex)
+        public void LogProcessorParsingException(Processor processor, Exception ex)
         {
-            if (!File.Exists(_parsingFilePath))
+            lock (locker)
             {
-                File.Create(_parsingFilePath).Close();
-            }
 
-            using (StreamWriter streamWriter = new StreamWriter(_parsingFilePath, true))
-            {
-                streamWriter.WriteLine(ex.Message);
-                streamWriter.WriteLine("Processor ID is:   " + processor.Id);
-                streamWriter.WriteLine("Time:    " + DateTime.Now);
+                if (!File.Exists(_parsingFilePath))
+                {
+                    File.Create(_parsingFilePath).Close();
+                }
+
+                using (StreamWriter streamWriter = new StreamWriter(_parsingFilePath, true))
+                {
+                    streamWriter.WriteLine(ex.Message);
+                    streamWriter.WriteLine("Processor ID is:   " + processor.Id);
+                    streamWriter.WriteLine("Time:    " + DateTime.Now);
+                }
             }
         }
 

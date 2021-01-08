@@ -1,4 +1,4 @@
-﻿using ItemLibrary;
+﻿using ModelLibrary;
 using System;
 using System.Collections.Generic;
 
@@ -35,7 +35,16 @@ namespace Comparison
             ItemRanking = (ItemRanking.Item1 + priceRanking.Item2, ItemRanking.Item2 + priceRanking.Item1);
             return (priceRanking.Item2, priceRanking.Item1);
         }
-        
+        public virtual void UpdateRatings(T mainItem, T comparingItem, Action<(double, double)> priceRanking,
+                                  Action<(double, double)> storageRanking, Action<(double, double)> ramRanking,
+                                    Action<(double, double)> itemRanking)
+        {
+            ItemRanking = (0, 0);
+            priceRanking(PriceComparison(mainItem.Price, comparingItem.Price));
+            //cameraRanking(CameraComparison(mainItem.BackCameraMP, comparingItem.BackCameraMP));
+            itemRanking(ItemRanking);
+        }
+
         //Updates weights if new were given
         public void UpdateWeights(int priceWeight)
         {

@@ -1,4 +1,4 @@
-﻿using ItemLibrary;
+﻿using ModelLibrary;
 using System;
 using System.Collections.Generic;
 
@@ -28,7 +28,7 @@ namespace Comparison.Comparisons
             ItemRanking = (ItemRanking.Item1 + ramRanking.Item1, ItemRanking.Item2 + ramRanking.Item2);
             return ramRanking;
         }
-        public void UpdateRatings(Computer mainItem, Computer comparingItem, Action<(double, double)> priceRanking,
+        public override void UpdateRatings(Computer mainItem, Computer comparingItem, Action<(double, double)> priceRanking,
                                   Action<(double, double)> storageRanking, Action<(double, double)> ramRanking,
                                                                              Action<(double, double)> itemRanking)
         //Compares two given computers by preferences

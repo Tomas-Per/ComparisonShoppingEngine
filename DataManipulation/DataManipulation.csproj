@@ -6,7 +6,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Extensions\Extensions.csproj" />
-    <ProjectReference Include="..\ItemLibrary\ItemLibrary.csproj" />
+    <ProjectReference Include="..\ItemLibrary\ModelLibrary.csproj" />
   </ItemGroup>
 
 </Project>

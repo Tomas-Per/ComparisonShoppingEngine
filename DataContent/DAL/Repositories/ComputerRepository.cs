@@ -1,23 +1,27 @@
 ﻿using DataContent.DAL.Interfaces;
 using DataManipulation.DataFillers;
-using ItemLibrary;
-using ItemLibrary.DataContexts;
+using ModelLibrary;
+using ModelLibrary.DataContexts;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using EmailSender;
+using static ModelLibrary.Categories;
 
 namespace DataContent.DAL.Repositories
 {
     public class ComputerRepository : IComputerRepository
     {
         private readonly ComputerContext _context;
+        private readonly UserContext _userContext;
         
-        public ComputerRepository(ComputerContext context)
+        public ComputerRepository(ComputerContext context, UserContext userContext)
         {
             _context = context;
+            _userContext = userContext;
         }
 
         public async Task<List<Computer>> AddComputersAsync(List<Computer> list)
@@ -33,6 +37,14 @@ namespace DataContent.DAL.Repositories
                 //change price and mofidy date if the computer is found in DB
                 if (sameComputer != null)
                 {
+                    //notify users that price became lower
+                    if(sameComputer.Price > computer.Price)
+                    {   
+                        var userNotifier = new UserNotifier();
+                        var usersToNotify = await userNotifier.GetUsersForNotification(sameComputer);
+                        userNotifier.NotifyUsersWhenPriceDropped(computer, sameComputer.Price, usersToNotify);
+                    }
+
                     sameComputer.Price = computer.Price;
                     sameComputer.ModifyDate = computer.ModifyDate;
                 }
@@ -73,11 +85,19 @@ namespace DataContent.DAL.Repositories
                     await _context.SaveChangesAsync();
 
                     //add new computer with existing Processor to DB
-                    computer.Processor = _context.Processors.Find(computer.Processor.Id);
+                    try
+                    {
+                        computer.Processor = _context.Processors.Find(computer.Processor.Id);
+                    }
+                    catch(NullReferenceException)
+                    {
+                    }
                     _context.Add(computer);
+                    _userContext.Add(computer);
                 }
             }
             await _context.SaveChangesAsync();
+            await _userContext.SaveChangesAsync();
             return list;
         }
 
@@ -85,14 +105,26 @@ namespace DataContent.DAL.Repositories
         {
             var computer = await _context.Computers.Where(x => x.Id == id).FirstOrDefaultAsync();
             _context.Computers.Remove(computer);
+            var item = await _userContext.Computers.Where(x => x.Id == id && x.ItemCategory == computer.ItemCategory).FirstOrDefaultAsync();
+            _userContext.Computers.Remove(item);
             await _context.SaveChangesAsync();
             return computer;
         }
 
-        public async Task<List<Computer>> GetAllComputersAsync()
-        {
-            var computers = await _context.Computers.Include(x => x.Processor).ToListAsync();
-            return computers;
+        public async Task<List<Computer>> GetAllComputersAsync(ItemCategory category, int page)
+        {     
+            if(page > 0)
+            {
+                var skip = (page - 1) * 20;
+                var computers = await _context.Computers.Where(x => x.ItemCategory == category).OrderBy(x => x.Id).Skip(skip).Take(20).Include(x => x.Processor).ToListAsync();
+                return computers;
+            }
+            else
+            {
+                var computers = await _context.Computers.Where(x => x.ItemCategory == category).Include(x => x.Processor).ToListAsync();
+                return computers;
+            }
+
         }
 
         public async Task<Computer> GetComputerByIdAsync(int id)
@@ -124,6 +156,12 @@ namespace DataContent.DAL.Repositories
             }
             await _context.SaveChangesAsync();
             return computerInDB;
+        }
+
+        public async Task<List<Computer>> FindSimilarAsync(Computer computer)
+        {
+            var computers = await _context.Computers.Where(x => x.ItemCategory == computer.ItemCategory).Include(x => x.Processor).Cast<Item>().ToListAsync();
+            return computer.FindSimilar(computers).Cast<Computer>().ToList();
         }
     }
 }

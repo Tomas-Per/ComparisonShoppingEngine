@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
-using static ItemLibrary.Categories;
+using static ModelLibrary.Categories;
 
-namespace ItemLibrary
+namespace ModelLibrary
 {
     public class Computer : Item
     {
@@ -47,7 +47,7 @@ namespace ItemLibrary
         public override List<Item> FindSimilar(List<Item> list)
 
         {
-            IEnumerable<Computer> computers = list.Cast<Computer>().Where(comp => (comp != this && comp.RAM_type == this.RAM_type && comp.RAM == this.RAM) && 
+            IEnumerable<Computer> computers = list.Cast<Computer>().Where(comp => (comp != this && comp.Processor != null && comp.RAM_type == this.RAM_type && comp.RAM == this.RAM) && 
                                                                 (comp.Processor.Name == this.Processor.Name  
                                                                     || (comp.Price >= this.Price - 100 && comp.Price <= this.Price + 100) 
                                                                     || comp.StorageCapacity == this.StorageCapacity));

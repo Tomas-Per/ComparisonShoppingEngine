@@ -1,28 +1,38 @@
 ﻿using DataContent.DAL.Interfaces;
 using DataManipulation.DataFillers;
-using ItemLibrary;
-using ItemLibrary.DataContexts;
+using ModelLibrary;
+using ModelLibrary.DataContexts;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using EmailSender;
 
 namespace DataContent.DAL.Repositories
 {
     public class SmartphoneRepository : ISmartphoneRepository
     {
         private readonly SmartphoneContext _context;
+        private readonly UserContext _userContext;
 
-        public SmartphoneRepository(SmartphoneContext context)
+        public SmartphoneRepository(SmartphoneContext context, UserContext userContext)
         {
             _context = context;
+            _userContext = userContext;
         }
         public async Task<List<Smartphone>> AddSmartphonesAsync(List<Smartphone> smartphones)
         {
             foreach(var smartphone in smartphones)
             {
+                //check if smartphone fields are valid
+                if(smartphone.Processor.Length > 64)
+                {
+                    smartphone.Processor = smartphone.Processor.Substring(0, 63);
+                }
+
+
                 //check for smartphone in DB
                 var sameSmartphone = _context.Smartphones.Where(s => s.Name == smartphone.Name
                                                           && s.ShopName == smartphone.ShopName)
@@ -30,6 +40,14 @@ namespace DataContent.DAL.Repositories
                 //change price and mofidy date if the smartphone is found in DB
                 if (sameSmartphone != null)
                 {
+                    //notify users that price became lower
+                    if (sameSmartphone.Price > smartphone.Price)
+                    {
+                        var userNotifier = new UserNotifier();
+                        var usersToNotify = await userNotifier.GetUsersForNotification(sameSmartphone);
+                        userNotifier.NotifyUsersWhenPriceDropped(smartphone, sameSmartphone.Price, usersToNotify);
+                    }
+
                     sameSmartphone.Price = smartphone.Price;
                     sameSmartphone.ModifyDate = smartphone.ModifyDate;
                 }
@@ -70,9 +88,11 @@ namespace DataContent.DAL.Repositories
 
                     //add new Smartphone
                     _context.Add(smartphone);
+                    _userContext.Add(smartphone);
                 }
             }
             await _context.SaveChangesAsync();
+            await _userContext.SaveChangesAsync();
             return smartphones;
         }
 
@@ -81,13 +101,26 @@ namespace DataContent.DAL.Repositories
             var smartphone = await _context.Smartphones.Where(x => x.Id == id).FirstOrDefaultAsync();
             _context.Smartphones.Remove(smartphone);
             await _context.SaveChangesAsync();
+            var item = await _context.Smartphones.Where(x => x.Id == id && x.ItemCategory==smartphone.ItemCategory).FirstOrDefaultAsync();
+            _userContext.Smartphones.Remove(item);
+            await _context.SaveChangesAsync();
+            await _userContext.SaveChangesAsync();
             return smartphone;
         }
 
-        public async Task<List<Smartphone>> GetAllSmartphonesAsync()
+        public async Task<List<Smartphone>> GetAllSmartphonesAsync(int page)
         {
-            var smartphones = await _context.Smartphones.ToListAsync();
-            return smartphones;
+            if (page > 0)
+            {
+                var skip = (page - 1) * 20;
+                var computers = await _context.Smartphones.OrderBy(x => x.Id).Skip(skip).Take(20).ToListAsync();
+                return computers;
+            }
+            else
+            {
+                var computers = await _context.Smartphones.ToListAsync();
+                return computers;
+            }
         }
 
         public async Task<Smartphone> GetSmartphoneByIdAsync(int id)
@@ -120,6 +153,12 @@ namespace DataContent.DAL.Repositories
             }
             await _context.SaveChangesAsync();
             return smartphoneInDb;
+        }
+
+        public async Task<List<Smartphone>> FindSimilarAsync(Smartphone smartphone)
+        {
+            var smartphones = await _context.Smartphones.Cast<Item>().ToListAsync();
+            return smartphone.FindSimilar(smartphones).Cast<Smartphone>().ToList();
         }
     }
 }

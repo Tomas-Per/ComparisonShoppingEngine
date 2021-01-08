@@ -1,4 +1,6 @@
-﻿using ItemLibrary;
+
+﻿using ModelLibrary;
+﻿using DataContent.DAL.Access;
 using OpenQA.Selenium;
 using OpenQA.Selenium.Chrome;
 using Parsing;
@@ -8,21 +10,35 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http;
 using System.Threading.Tasks;
-using static ItemLibrary.Categories;
+using static ModelLibrary.Categories;
 
 namespace WebParser.ComputerParsers
 {
     public class PiguComputerParser : IParser<Computer>
     {
-        private readonly string _url = "https://pigu.lt/lt/kompiuteriai/nesiojami-kompiuteriai?page=1";
+        private string _url;
         private Lazy<ChromeDriver> _driver;
-        private HttpClient _client;
-        public PiguComputerParser ()
+        private ProcessorAccess _processorAccess;
+
+        public PiguComputerParser (ItemCategory itemCategory)
         {
             var options = new ChromeOptions();
             options.AddArguments("--headless");
             _driver = new Lazy<ChromeDriver>(() => new ChromeDriver(MainPath.GetShopParserPath(), options));
-            _client = new HttpClient();
+            _processorAccess = new ProcessorAccess();
+
+            switch(itemCategory)
+            {
+                case ItemCategory.DesktopComputer:
+                    _url = "https://pigu.lt/lt/stacionarus-kompiuteriai?page=1";
+                    break;
+                case ItemCategory.Laptop:
+                    _url = "https://pigu.lt/lt/kompiuteriai/nesiojami-kompiuteriai?page=1";
+                    break;
+                default:
+                    _url = "https://pigu.lt/lt/kompiuteriai/nesiojami-kompiuteriai?page=1";
+                    break;
+            }
         }
 
         public async Task<List<Computer>> ParseShop()
@@ -49,26 +65,26 @@ namespace WebParser.ComputerParsers
                     ((IJavaScriptExecutor)_driver.Value).ExecuteScript("window.open();");
                     _driver.Value.SwitchTo().Window(_driver.Value.WindowHandles.Last());
 
-                    var computer = ParseWindow(link);
+                    var computer = await ParseWindow(link);
 
                     _driver.Value.SwitchTo().Window(_driver.Value.WindowHandles.First());
 
                     if (computer == null) continue;
-
-                    computer.ItemCategory = ItemCategory.Laptop;
-
                     data.Add(computer);
                 }
-                break;
             }
-            _driver.Value.Close();
-            //ResetDriver();
+            ResetDriver();
             return data;
         }
 
         //parses laptop window, updates computer fields
-        public Computer ParseWindow(string url)
+        public async Task<Computer> ParseWindow(string url)
         {
+            if (url == null)
+            {
+                return null;
+            }
+
             _driver.Value.Navigate().GoToUrl(url);
 
             Computer computer = new Computer();
@@ -92,7 +108,15 @@ namespace WebParser.ComputerParsers
             {
                 if (table[i].Text.Contains("Procesorius"))
                 {
-                    //computer.Processor = _client.GetAsync();
+                    computer.Processor = await _processorAccess.GetByModelAsync(table[i + 1].Text);
+                }
+                else if (table[i].Text.Equals("Stacionarūs kompiuteriai"))
+                {
+                    computer.ItemCategory = ItemCategory.DesktopComputer;
+                }
+                else if (table[i].Text.Equals("Nešiojami kompiuteriai"))
+                {
+                    computer.ItemCategory = ItemCategory.Laptop;
                 }
                 else if (table[i].Text.Contains("Prekės ženklas"))
                 {
@@ -120,23 +144,30 @@ namespace WebParser.ComputerParsers
                     computer.RAM_type = table[i + 1].Text;
                 }
 
-                else if (table[i].Text.Contains("Vaizdo plokštė"))
+                else if (table[i].Text.Contains("Vaizdo plokštė:"))
                 {
                     computer.GraphicsCardName = table[i + 1].Text;
+                }
+                else if (table[i].Text.Contains("Vaizdo plokštės atmintinė"))
+                {
+                    computer.GraphicsCardMemory = table[i + 1].Text;
                 }
 
                 else if (table[i].Text.Contains("Kietasis diskas SSD") || table[i].Text.Contains("Kietasis diskas HDD") 
                     || table[i].Text.Contains("Diskas SSD M.2 PCIe"))
                 {
-                    computer.StorageCapacity += table[i + 1].Text.ParseInt();
                     if (table[i + 1].Text.Contains("TB"))
                     {
-                        computer.StorageCapacity *= 1024;
+                        computer.StorageCapacity += table[i + 1].Text.ParseInt() * 1024;
+                    }
+                    else
+                    {
+                        computer.StorageCapacity += table[i + 1].Text.ParseInt();
                     }
                 }
 
             }
-            //ResetDriver();
+            ResetDriver();
             return computer;
         }
 

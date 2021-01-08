@@ -6,8 +6,8 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using ItemLibrary;
-using ItemLibrary.DataContexts;
+using ModelLibrary;
+using ModelLibrary.DataContexts;
 
 namespace LibraAPI.Controllers
 {
@@ -22,14 +22,18 @@ namespace LibraAPI.Controllers
             _repository = repository;
         }
 
-        // GET: api/Smartphones
-        [HttpGet]
-        public async Task<ActionResult<List<Smartphone>>> GetSmartphones()
+        /// <summary>
+        /// Gets all smartphones from the database (page 0 for all, 1 to n for chunks of 20)
+        /// </summary>
+        [HttpGet("Page/{page}")]
+        public async Task<ActionResult<List<Smartphone>>> GetSmartphones(int page)
         {
-            return await _repository.GetAllSmartphonesAsync();
+            return await _repository.GetAllSmartphonesAsync(page);
         }
 
-        // GET: api/Smartphones/5
+        /// <summary>
+        /// Gets a specific smartphone by its ID
+        /// </summary>
         [HttpGet("{id}")]
         public async Task<ActionResult<Smartphone>> GetSmartphone(int id)
         {
@@ -43,8 +47,9 @@ namespace LibraAPI.Controllers
             return smartphone;
         }
 
-        // PUT: api/Smartphones
-        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
+        /// <summary>
+        /// Updates a specific smartphone
+        /// </summary>
         [HttpPut]
         public async Task<IActionResult> PutSmartphone(Smartphone smartphone)
         {
@@ -58,8 +63,9 @@ namespace LibraAPI.Controllers
             return NoContent();
         }
 
-        // POST: api/Smartphones
-        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
+        /// <summary>
+        /// Adds a smartphone to the database
+        /// </summary>
         [HttpPost]
         public async Task<ActionResult<List<Smartphone>>> PostSmartphone(List<Smartphone> smartphones)
         {
@@ -68,7 +74,9 @@ namespace LibraAPI.Controllers
             return Ok(smartphones);
         }
 
-        // DELETE: api/Smartphones/5
+        /// <summary>
+        /// Deletes a smartphone from the database by ID
+        /// </summary>
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteSmartphone(int id)
         {
@@ -79,6 +87,17 @@ namespace LibraAPI.Controllers
             }
 
             return NoContent();
+        }
+
+        /// <summary>
+        /// Finds similar smartphones to a given smartphone
+        /// </summary>
+        [HttpPost("FindSimilar")]
+        public async Task<ActionResult<List<Smartphone>>> FindSimilarSmartphones(Smartphone smartphone)
+        {
+            var smartphones = await _repository.FindSimilarAsync(smartphone);
+
+            return Ok(smartphones);
         }
     }
 }

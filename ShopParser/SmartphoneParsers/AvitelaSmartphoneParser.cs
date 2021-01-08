@@ -1,10 +1,10 @@
-﻿using ItemLibrary;
+﻿using ModelLibrary;
 using OpenQA.Selenium;
 using OpenQA.Selenium.Chrome;
 using System;
 using System.Collections.Generic;
 using Parsing;
-using static ItemLibrary.Categories;
+using static ModelLibrary.Categories;
 using System.Linq;
 using PathLibrary;
 using System.Threading.Tasks;
@@ -13,10 +13,8 @@ namespace WebParser.SmartphoneParsers
 {
     public class AvitelaSmartphoneParser : IParser<Smartphone>
     {
-        private readonly string _url = "https://avitela.lt/telefonai-ir-laikrodziai/mobilieji-telefonai";
+        private readonly string _url = "https://avitela.lt/telefonai-ir-laikrodziai/mobilieji-telefonai?page=PAGE_NUMBER&bfilter=tipas[grafinas]";
         private Lazy<ChromeDriver> _driver;
-        private List<string> _subLinks = new List<string>() { "/apple-telefonai?limit=100", "/samsung-telefonai?limit=100",
-            "/huawei-telefonai?limit=100", "/xiaomi-telefonai?limit=100" };
 
         public AvitelaSmartphoneParser()
         {
@@ -32,9 +30,9 @@ namespace WebParser.SmartphoneParsers
             List<string> links = new List<string>();
             string nextPage = _url;
 
-            foreach (var sublink in _subLinks)
+            for (int i = 0; i < 3; i++)
             {
-                nextPage = _url + sublink;
+                nextPage = _url.Replace("PAGE_NUMBER", i.ToString());
                 _driver.Value.Navigate().GoToUrl(nextPage);
 
                 var names = _driver.Value.FindElements(By.CssSelector("div.right > div.name > a"));
@@ -53,17 +51,17 @@ namespace WebParser.SmartphoneParsers
 
                     _driver.Value.Navigate().GoToUrl(link);
 
-                    var smartphone = ParseWindow(link);
+                    Smartphone smartphone = await ParseWindow(link);
 
                     _driver.Value.SwitchTo().Window(_driver.Value.WindowHandles.First());
 
-                    if (smartphone.Resolution != null)
-                    {
-                        smartphone.ItemCategory = ItemCategory.Smartphone;
-                        data.Add(smartphone);
-                    }
-                }
+                    if (smartphone == null) continue;
 
+                    smartphone.ItemCategory = ItemCategory.Smartphone;
+
+                    data.Add(smartphone);
+                }
+                //break;
             }
             ResetDriver();
             return data;
@@ -71,13 +69,26 @@ namespace WebParser.SmartphoneParsers
 
 
         //parses smartphone window, updates smartphone fields
-        public Smartphone ParseWindow(string url)
+        public async Task<Smartphone> ParseWindow(string url)
         {
+            if (url == null)
+            {
+                return null;
+            }
+
             _driver.Value.Navigate().GoToUrl(url);
 
             Smartphone smartphone = new Smartphone();
-            smartphone.Name = _driver.Value.FindElement(By.Id("pname")).Text;
-            smartphone.Price = _driver.Value.FindElement(By.Id("price-old")).Text.ParseDouble();
+
+            try
+            {
+                smartphone.Name = _driver.Value.FindElement(By.Id("pname")).Text;
+                smartphone.Price = _driver.Value.FindElement(By.Id("price-old")).Text.ParseDouble();
+            }
+            catch(Exception)
+            {
+                return null;
+            }
             smartphone.ItemURL = url;
             smartphone.ShopName = "Avitela.lt";
 
@@ -105,17 +116,11 @@ namespace WebParser.SmartphoneParsers
                 }
                 else if (table[i].Text.Contains("Priekinė kamera"))
                 {
-                    var values = table[i + 1].Text.Split('+');
-                    List<int> cameras = new List<int>();
-                    values.ToList().ForEach(item => cameras.Add(item.ParseInt()));
-                    smartphone.FrontCameraMP = cameras;
+                    smartphone.FrontCameras = table[i + 1].Text;
                 }
                 else if (table[i].Text.Equals("Kamera"))
                 {
-                    var values = table[i + 1].Text.Split('+');
-                    List<int> cameras = new List<int>();
-                    values.ToList().ForEach(item => cameras.Add(item.ParseInt()));  
-                    smartphone.BackCameraMP = cameras;    
+                    smartphone.BackCameras = table[i + 1].Text;
                 }
                 else if (table[i].Text.Contains("Vidinė atmintis"))
                 {
@@ -123,7 +128,15 @@ namespace WebParser.SmartphoneParsers
                 }
                 else if (table[i].Text.Contains("Procesoriaus modelis"))
                 {
-                    smartphone.Processor = table[i + 1].Text;
+
+                    if (table[i + 1].Text.Contains("("))
+                    {
+                        smartphone.Processor = table[i + 1].Text.Substring(0, table[i + 1].Text.IndexOf("("));
+                    }
+                    else
+                    {
+                        smartphone.Processor = table[i + 1].Text;
+                    }                
                 }
                 else if (table[i].Text.Contains("Baterijos talpa"))
                 {

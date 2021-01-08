@@ -1,26 +1,43 @@
-﻿using ItemLibrary;
+﻿using ModelLibrary;
 using OpenQA.Selenium;
 using OpenQA.Selenium.Chrome;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using Parsing;
-using static ItemLibrary.Categories;
+using static ModelLibrary.Categories;
 using PathLibrary;
 using System.Threading.Tasks;
+using System.Net.Http;
+using DataContent.DAL.Access;
 
 namespace WebParser.ComputerParsers
 {
     public class SenukaiComputerParser : IParser<Computer>
     {
-        private readonly string _url = "https://www.senukai.lt/c/kompiuterine-technika-biuro-prekes/nesiojami-kompiuteriai-ir-priedai/nesiojami-kompiuteriai/5ei?page=1";
-        private Lazy<ChromeDriver> _driver;   
-
-        public SenukaiComputerParser()
+        private string _url;
+        private Lazy<ChromeDriver> _driver;
+        private ProcessorAccess _processorAccess;
+        
+        public SenukaiComputerParser(ItemCategory itemCategory)
         {
             var options = new ChromeOptions();
             options.AddArguments("--headless");
             _driver = new Lazy<ChromeDriver>(() => new ChromeDriver(MainPath.GetShopParserPath(), options));
+            _processorAccess = new ProcessorAccess();
+
+            switch(itemCategory)
+            {
+                case ItemCategory.DesktopComputer:
+                    _url = "https://www.senukai.lt/c/kompiuterine-technika-biuro-prekes/stacionarus-kompiuteriai-monitoriai-ups/stacionarus-kompiuteriai/c07?page=1";
+                    break;
+                case ItemCategory.Laptop:
+                    _url = "https://www.senukai.lt/c/kompiuterine-technika-biuro-prekes/nesiojami-kompiuteriai-ir-priedai/nesiojami-kompiuteriai/5ei?page=1";
+                    break;
+                default:
+                    _url = "https://www.senukai.lt/c/kompiuterine-technika-biuro-prekes/nesiojami-kompiuteriai-ir-priedai/nesiojami-kompiuteriai/5ei?page=1";
+                    break;
+            }
         }
 
         //parses laptops from senukai.lt and returns results in a List<Computer>
@@ -46,7 +63,7 @@ namespace WebParser.ComputerParsers
                     ((IJavaScriptExecutor)_driver.Value).ExecuteScript("window.open();");
                     _driver.Value.SwitchTo().Window(_driver.Value.WindowHandles.Last());
 
-                    var computer =  ParseWindow(link);
+                    var computer = await ParseWindow(link);
 
                     _driver.Value.SwitchTo().Window(_driver.Value.WindowHandles.First());
 
@@ -54,19 +71,22 @@ namespace WebParser.ComputerParsers
                     {
                         continue;
                     }
-                    computer.ItemCategory = ItemCategory.Laptop;
                     data.Add(computer);
                 }
             }
-            _driver.Value.Close();
-            //ResetDriver();
+            ResetDriver();
             return data;
         }
 
 
         //parses laptop window, updates computer fields 
-        public Computer ParseWindow(string url)
+        public async Task<Computer> ParseWindow(string url)
         {
+            if(url == null)
+            {
+                return null;
+            }
+
             _driver.Value.Navigate().GoToUrl(url);
 
             Computer computer = new Computer();
@@ -84,18 +104,6 @@ namespace WebParser.ComputerParsers
             computer.ItemURL = url;
             computer.ShopName = "Senukai.lt";
 
-            var image = _driver.Value.FindElements(By.ClassName("product-gallery-slider__slide__image"));
-
-            try
-            {
-                computer.ImageLink = image[0].GetAttribute("src");
-            }
-
-            catch (ArgumentOutOfRangeException)
-            {
-                computer.ImageLink = "https://ksd-images.lt/display/aikido/store/1e3628060337b388dd4ffbce4f20f608.jpg?h=742&w=816";
-            }
-
             var table = _driver.Value.FindElements(By.TagName("td"));
 
             for (int i = 0; i < table.Count; i++)
@@ -104,7 +112,14 @@ namespace WebParser.ComputerParsers
                 {
                     computer.ManufacturerName = table[i + 1].Text;
                 }
-
+                else if (table[i].Text.Equals("Stacionarūs kompiuteriai"))
+                {
+                    computer.ItemCategory = ItemCategory.DesktopComputer;
+                }
+                else if (table[i].Text.Equals("Nešiojami kompiuteriai"))
+                {
+                    computer.ItemCategory = ItemCategory.Laptop;
+                }
                 else if (table[i].Text.Contains("Ekrano raiška taškais"))
                 {
                     computer.Resolution = table[i + 1].Text;
@@ -114,11 +129,11 @@ namespace WebParser.ComputerParsers
                 {
                     if (table[i + 1].Text.Contains("("))
                     {
-                        //computer.Processor = new ProcessorDataService().GetProcessor(table[i + 1].Text.Substring(0, table[i + 1].Text.IndexOf("(")));
+                        computer.Processor = await _processorAccess.GetByModelAsync(table[i + 1].Text.Substring(0, table[i + 1].Text.IndexOf("(")));
                     }
                     else
                     {
-                        //computer.Processor = new ProcessorDataService().GetProcessor(table[i + 1].Text );
+                        computer.Processor = await _processorAccess.GetByModelAsync(table[i + 1].Text);
                     }
                 }
 
@@ -133,34 +148,61 @@ namespace WebParser.ComputerParsers
                     computer.RAM_type = table[i + 1].Text;
                 }
 
-                else if (table[i].Text.Contains("Vaizdo plokštės"))
+                else if (table[i].Text.Contains("Vaizdo plokštės modelis"))
                 {
-                    if (table[i].Text.Contains("modelis"))
-                    {
-                        computer.GraphicsCardName = table[i + 1].Text;
-                    }
-                    else if (table[i].Text.Contains("serija") && computer.GraphicsCardName == null)
-                    {
-                        computer.GraphicsCardName = table[i + 1].Text;
-                    }
+                    computer.GraphicsCardName = table[i + 1].Text;
+                }           
 
-                    else if (table[i].Text.Contains("atmintis"))
-                    {
-                        computer.GraphicsCardMemory = table[i + 1].Text;
-                    }
-                }
-                else if (table[i].Text.Contains("MMC disko talpa"))
+                else if (table[i].Text.Contains("atmintis"))
                 {
-                    computer.StorageCapacity += table[i + 1].Text.ParseInt();
+                    computer.GraphicsCardMemory = table[i + 1].Text;
                 }
 
-                else if (table[i].Text.Contains("Kietojo disko talpa(HDD)"))
+                else if (table[i].Text.Contains("Kietojo disko talpa (HDD)") ||
+                    table[i].Text.Contains("MMC disko talpa"))
                 {
 
+                    if (table[i + 1].Text.Contains("TB"))
+                    {
+                        computer.StorageCapacity += table[i + 1].Text.ParseInt() * 1024;
+                    }
+                    else
+                    {
                         computer.StorageCapacity += table[i + 1].Text.ParseInt();
-                }   
+                    }
+                }
+                else if(table[i].Text.Contains("SSD disko talpa"))
+                {
+                    if (table[i + 1].Text.Contains("TB"))
+                    {
+                        computer.StorageCapacity += table[i + 1].Text.ParseInt() * 1024;
+                    }
+                    else
+                    {
+                        computer.StorageCapacity += table[i + 1].Text.ParseInt();
+                    }
+                }
             }
-            //ResetDriver();
+
+            var image = _driver.Value.FindElements(By.ClassName("product-gallery-slider__slide__image"));
+            try
+            {
+                computer.ImageLink = image[0].GetAttribute("src");
+            }
+
+            catch (ArgumentOutOfRangeException)
+            {
+                if (computer.ItemCategory == ItemCategory.Laptop)
+                {
+                    computer.ImageLink = "https://ksd-images.lt/display/aikido/store/1e3628060337b388dd4ffbce4f20f608.jpg?h=742&w=816";
+                }
+                else
+                {
+                    computer.ImageLink = "https://ksd-images.lt/display/aikido/store/5b7e344dc88ac39e324764a6cdb9dabb.jpg?h=742&w=816";
+                }
+            }
+
+            ResetDriver();
             return computer;
         }
 

@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ItemLibrary.DataContexts
+namespace ModelLibrary.DataContexts
 {
     public class SmartphoneContext :DbContext
     {

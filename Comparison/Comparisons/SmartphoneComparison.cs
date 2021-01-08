@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using ItemLibrary;
+using ModelLibrary;
 
 namespace Comparison.Comparisons
 {
@@ -44,9 +44,9 @@ namespace Comparison.Comparisons
         }
 
         //Compares two smartphones by preference weights
-        public void UpdateRatings(Smartphone mainItem, Smartphone comparingItem, Action<(double, double)> priceRanking,
+        public override void UpdateRatings(Smartphone mainItem, Smartphone comparingItem, Action<(double, double)> priceRanking,
                                   Action<(double, double)> storageRanking, Action<(double, double)> ramRanking,
-                                  Action<(double, double)> cameraRanking,  Action<(double, double)> itemRanking)
+                                    Action<(double, double)> itemRanking)
         {
             ItemRanking = (0, 0);
             priceRanking(PriceComparison(mainItem.Price, comparingItem.Price));

@@ -8,7 +8,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WPF", "WPF\WPF.csproj", "{6
 		{0C84F054-D535-4BE9-8AC8-CB22FA7D6E34} = {0C84F054-D535-4BE9-8AC8-CB22FA7D6E34}
 	EndProjectSection
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ItemLibrary", "ItemLibrary\ItemLibrary.csproj", "{45E997E0-0020-4114-9E34-F8A113064FB7}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ModelLibrary", "ItemLibrary\ModelLibrary.csproj", "{45E997E0-0020-4114-9E34-F8A113064FB7}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Data", "Data", "{25A92F1B-7513-4AC1-8298-32E5CFDE77A3}"
 	ProjectSection(SolutionItems) = preProject
@@ -42,7 +42,11 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ComponentParser", "Componen
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LibraAPI", "LibraAPI\LibraAPI.csproj", "{C894E62C-5BEC-4E1C-BB5D-D1AEFDB5F3F7}"
 EndProject
+
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LibraWebsite", "LibraWebsite\LibraWebsite.csproj", "{670870A4-4F42-421A-A84E-1E73ACEFA7A3}"
+
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EmailSender", "EmailSender\EmailSender.csproj", "{050A3480-7CD6-4064-8A97-DA91B9963B72}"
+
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -102,10 +106,17 @@ Global
 		{C894E62C-5BEC-4E1C-BB5D-D1AEFDB5F3F7}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C894E62C-5BEC-4E1C-BB5D-D1AEFDB5F3F7}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C894E62C-5BEC-4E1C-BB5D-D1AEFDB5F3F7}.Release|Any CPU.Build.0 = Release|Any CPU
+
 		{670870A4-4F42-421A-A84E-1E73ACEFA7A3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{670870A4-4F42-421A-A84E-1E73ACEFA7A3}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{670870A4-4F42-421A-A84E-1E73ACEFA7A3}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{670870A4-4F42-421A-A84E-1E73ACEFA7A3}.Release|Any CPU.Build.0 = Release|Any CPU
+
+		{050A3480-7CD6-4064-8A97-DA91B9963B72}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{050A3480-7CD6-4064-8A97-DA91B9963B72}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{050A3480-7CD6-4064-8A97-DA91B9963B72}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{050A3480-7CD6-4064-8A97-DA91B9963B72}.Release|Any CPU.Build.0 = Release|Any CPU
+
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

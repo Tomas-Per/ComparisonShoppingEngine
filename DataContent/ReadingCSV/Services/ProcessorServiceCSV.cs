@@ -1,7 +1,7 @@
 ﻿using CsvHelper;
 using DataContent.ReadingCSV.Mappers;
 using ExceptionsLogging;
-using ItemLibrary;
+using ModelLibrary;
 using System;
 using System.Collections.Generic;
 using System.Globalization;
@@ -13,6 +13,7 @@ namespace DataContent.ReadingCSV.Services
     public class ProcessorServiceCSV
     {   private string Path { get; set; }
         private FileMode Filemode { get; set; }
+        private ExceptionLogger logger = new ExceptionLogger();
         public ProcessorServiceCSV(string path)
         {
             Path = path;
@@ -36,12 +37,12 @@ namespace DataContent.ReadingCSV.Services
             }
             catch (FileNotFoundException e)
             {
-                ExceptionLogger.Log(e);
+                logger.Log(e);
                 throw;
             }
             catch (Exception e)
             {
-                ExceptionLogger.Log(e);
+                logger.Log(e);
                 throw new Exception("Something's wrong happened:" + e.Message);
             }
         }
@@ -65,17 +66,17 @@ namespace DataContent.ReadingCSV.Services
             }
             catch (FileNotFoundException e)
             {
-                ExceptionLogger.Log(e);
+                logger.Log(e);
                 throw;
             }
             catch (FileLoadException e)
             {
-                ExceptionLogger.Log(e);
+                logger.Log(e);
                 throw;
             }
             catch (Exception e)
             {
-                ExceptionLogger.Log(e);
+                logger.Log(e);
                 throw new Exception("Something's wrong happened:" + e.Message);
             }
         }
