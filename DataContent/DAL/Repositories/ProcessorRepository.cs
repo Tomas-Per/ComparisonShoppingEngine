@@ -17,6 +17,7 @@ namespace DataContent.DAL.Repositories
     public class ProcessorRepository : IProcessorRepository
     {
         private readonly ComputerContext _context;
+        private ExceptionLogger logger = new ExceptionLogger();
 
         public ProcessorRepository(ComputerContext context)
         {
@@ -80,14 +81,14 @@ namespace DataContent.DAL.Repositories
                     }
                     catch (ProcessorInvalidNameException e)
                     {
-                        ExceptionLogger.LogProcessorParsingException(processor, e);
+                        logger.LogProcessorParsingException(processor, e);
                     }
 
                     _context.Add(processor);
                     await _context.SaveChangesAsync();
                     processor = _context.Processors.Where(x => x.Model == model).FirstOrDefault();
 
-                    ExceptionLogger.LogProcessorParsingException(processor, ex);
+                    logger.LogProcessorParsingException(processor, ex);
                 }
                 return processor;
             }

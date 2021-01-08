@@ -13,6 +13,7 @@ namespace DataContent.ReadingCSV.Services
 {
     class SmartphoneServiceCSV
     {
+        private ExceptionLogger logger = new ExceptionLogger();
         public string Path { get; set; }
         private FileMode Filemode { get; set; }
         public SmartphoneServiceCSV(string path)
@@ -37,12 +38,12 @@ namespace DataContent.ReadingCSV.Services
             }
             catch (FileNotFoundException e)
             {
-                ExceptionLogger.Log(e);
+                logger.Log(e);
                 throw;
             }
             catch (Exception e)
             {
-                ExceptionLogger.Log(e);
+                logger.Log(e);
                 throw new Exception("Something's wrong happened:" + e.Message);
             }
         }
@@ -66,17 +67,17 @@ namespace DataContent.ReadingCSV.Services
             }
             catch (FileNotFoundException e)
             {
-                ExceptionLogger.Log(e);
+                logger.Log(e);
                 throw;
             }
             catch (FileLoadException e)
             {
-                ExceptionLogger.Log(e);
+                logger.Log(e);
                 throw;
             }
             catch (Exception e)
             {
-                ExceptionLogger.Log(e);
+                logger.Log(e);
                 throw new Exception("Something's wrong happened:" + e.Message);
             }
         }

@@ -20,13 +20,14 @@ namespace AdminService
                                             "\n3 - parse Desktop Computers from shops" +
                                             "\n5 - Update Processor in database" +
                                             "\n0 - close program";
-
         public static async Task Main(string[] args)
         {
             string command;
 
             do
             {
+                ExceptionLogger logger = new ExceptionLogger();
+
                 command = Console.ReadLine();
 
                 switch (command)
@@ -48,8 +49,9 @@ namespace AdminService
                         }
                         catch (Exception ex)
                         {
+                            logger.Log(ex);
                             Console.WriteLine("Something wrong happened. Check Logs");
-                            ExceptionLogger.Log(ex);
+                            
                         }
                         break;
 
@@ -65,7 +67,7 @@ namespace AdminService
                         catch (Exception ex)
                         {
                             Console.WriteLine("Something wrong happened. Check Logs");
-                            ExceptionLogger.Log(ex);
+                            logger.Log(ex);
                         }
                         break;
 
@@ -80,7 +82,7 @@ namespace AdminService
                         catch (Exception ex)
                         {
                             Console.WriteLine("Something wrong happened. Check Logs");
-                            ExceptionLogger.Log(ex);
+                            logger.Log(ex);
                         }
                         break;
 
