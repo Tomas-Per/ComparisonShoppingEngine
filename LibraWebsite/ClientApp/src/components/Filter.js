@@ -1,9 +1,12 @@
 ﻿import React, { Component } from 'react';
 import './FilterStyle.css';
+import { Collapse, Container, Navbar, NavbarBrand, NavbarToggler, NavItem, NavLink } from 'reactstrap';
+import { Link } from 'react-router-dom';
 import Slider from './Slider'
 import CheckBox from './Checkbox'
 import { Grid } from '@material-ui/core';
 import Checkbox from '@material-ui/core/Checkbox';
+import logo from './img/libra500.png';
 
 
 
@@ -11,10 +14,18 @@ export default class Filter extends Component {
     render() {
         return (
             <navbar id="mySidenav" className="sidenav">
+                    
+            </navbar>
+        );
+
+    }
+}
+/*  return (
+            <navbar id="mySidenav" className="sidenav">
                 <Grid className="myGrid">
                     <h5>Filters</h5>
                 </Grid>
-                
+
                 <p>Price up to:</p>
                 <ul id="slider" className="slider">
                     <Slider />
@@ -38,7 +49,4 @@ export default class Filter extends Component {
                     <CheckBox id="BrandHuawei" name="Huawei" label="Huawei" />
                 </div>
             </navbar>
-        );
-
-    }
-}
+        );*/

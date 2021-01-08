@@ -48,7 +48,6 @@ const useStyles = makeStyles((theme) => ({
     },
 
 }));
-
 export default function TitlebarGridList({ item, colorColumn }) {
     const classes = useStyles();
     const [cookies, setCookie, removeCookie] = useCookies(['']);
@@ -137,23 +136,23 @@ function SpecsFactory(item, classes) {
 function DesktopComputerSpecs(tile) {
     return (
         <List>
-            <ListItem className={"infoPanel"}>
+            <ListItem className={"myInfoPanel"}>
                 <ListItemText className={"infoRow"} primary={"Manufacturer: "} />
                 <ListItemText primary={(tile.manufacturerName != null) ? tile.manufacturerName : 'Not specified'} />
             </ListItem>
-            <ListItem className={"infoPanel"}>
+            <ListItem className={"myInfoPanel"}>
                 <ListItemText className={"infoRow"} primary={"Processor: "} />
                 <ListItemText primary={(tile.processor != null) ? tile.processor.model : 'Not specified'} />
             </ListItem>
-            <ListItem className={"infoPanel"}>
+            <ListItem className={"myInfoPanel"}>
                 <ListItemText className={"infoRow"} primary={"Graphic card: "} />
                 <ListItemText primary={(tile.graphicsCardName != null) ? tile.graphicsCardName : 'Not specified'} />
             </ListItem>
-            <ListItem className={"infoPanel"}>
+            <ListItem className={"myInfoPanel"}>
                 <ListItemText className={"infoRow"} primary={"Storage: "} />
                 <ListItemText primary={(tile.storageCapacity != 0) ? (tile.storageCapacity + ' GB ') : 'Not specified'} />
             </ListItem>
-            <ListItem className={"infoPanel"}>
+            <ListItem className={"myInfoPanel"}>
                 <ListItemText className={"infoRow"} primary={"RAM: "} />
                 <ListItemText primary={(tile.ram != 0) ? (tile.ram + ' GB ' + ((tile.raM_type != null) ? ('(' + tile.raM_type + ')') : '')) : 'Not specified'} />
             </ListItem>
@@ -162,27 +161,27 @@ function DesktopComputerSpecs(tile) {
 function LaptopComputerSpecs(tile) {
     return (
         <List>
-            <ListItem className={"infoPanel"}>
+            <ListItem className={"myInfoPanel"}>
                 <ListItemText className={"infoRow"} primary={"Manufacturer: "} />
                 <ListItemText primary={(tile.manufacturerName != null) ? tile.manufacturerName : 'Not specified'} />
             </ListItem>
-            <ListItem className={"infoPanel"}>
+            <ListItem className={"myInfoPanel"}>
                 <ListItemText className={"infoRow"} primary={"Processor: "} />
                 <ListItemText primary={(tile.processor != null) ? tile.processor.model : 'Not specified'} />
             </ListItem>
-            <ListItem className={"infoPanel"}>
+            <ListItem className={"myInfoPanel"}>
                 <ListItemText className={"infoRow"} primary={"Graphic card: "} />
                 <ListItemText primary={(tile.graphicsCardName != null) ? tile.graphicsCardName : 'Not specified'} />
             </ListItem>
-            <ListItem className={"infoPanel"}>
+            <ListItem className={"myInfoPanel"}>
                 <ListItemText className={"infoRow"} primary={"Storage: "} />
                 <ListItemText primary={(tile.storageCapacity != 0) ? (tile.storageCapacity + ' GB ') : 'Not specified'} />
             </ListItem>
-            <ListItem className={"infoPanel"}>
+            <ListItem className={"myInfoPanel"}>
                 <ListItemText className={"infoRow"} primary={"RAM: "} />
                 <ListItemText primary={(tile.ram != 0) ? (tile.ram + ' GB ' + ((tile.raM_type != null) ? ('(' + tile.raM_type + ')') : '')) : 'Not specified'} />
             </ListItem>
-            <ListItem className={"infoPanel"}>
+            <ListItem className={"myInfoPanel"}>
                 <ListItemText className={"infoRow"} primary={"Resolution: "} />
                 <ListItemText primary={(tile.resolution != null) ? (tile.resolution) : 'Not specified'} />
             </ListItem>
@@ -191,31 +190,31 @@ function LaptopComputerSpecs(tile) {
 function SmartphoneSpecs(tile) {
     return (
         <List>
-            <ListItem className={"infoPanel"} dense={true}>
+            <ListItem className={"myInfoPanel"} dense={true}>
                 <ListItemText className={"infoRow"} primary={"Manufacturer: "} />
                 <ListItemText primary={(tile.manufacturerName != null) ? tile.manufacturerName : 'Not specified'} />
             </ListItem>
-            <ListItem className={"infoPanel"} dense={true}>
+            <ListItem className={"myInfoPanel"} dense={true}>
                 <ListItemText className={"infoRow"} primary={"Processor: "} />
                 <ListItemText primary={(tile.processor != null) ? tile.processor : 'Not specified'} />
             </ListItem>
-            <ListItem className={"infoPanel"} dense={true}>
+            <ListItem className={"myInfoPanel"} dense={true}>
                 <ListItemText className={"infoRow"} primary={"Screen diagonal: "} />
                 <ListItemText primary={(tile.screenDiagonal != null) ? tile.screenDiagonal : 'Not specified'} />
             </ListItem>
-            <ListItem className={"infoPanel"} dense={true}>
+            <ListItem className={"myInfoPanel"} dense={true}>
                 <ListItemText className={"infoRow"} primary={"Ram: "} />
                 <ListItemText primary={(tile.ram != 0) ? (tile.ram + ' GB ') : 'Not specified'} />
             </ListItem>
-            <ListItem className={"infoPanel"} dense={true}>
+            <ListItem className={"myInfoPanel"} dense={true}>
                 <ListItemText className={"infoRow"} primary={"Cameras: "} />
                 <ListItemText primary={(tile.backCameras != null) ? (tile.backCameras + ((tile.frontCameras != null) ? (' | ' + tile.frontCameras) : '')) : 'Not specified'} />
             </ListItem>
-            <ListItem className={"infoPanel"} dense={true}>
+            <ListItem className={"myInfoPanel"} dense={true}>
                 <ListItemText className={"infoRow"} primary={"resolution: "} />
                 <ListItemText primary={(tile.resolution != null) ? (tile.resolution) : 'Not specified'} />
             </ListItem>
-            <ListItem className={"infoPanel"} dense={true}>
+            <ListItem className={"myInfoPanel"} dense={true}>
                 <ListItemText className={"infoRow"} primary={"Battery storage: "} />
                 <ListItemText primary={(tile.batteryStorage != null) ? ((tile.batteryStorage) + ' mAh') : 'Not specified'} />
             </ListItem>

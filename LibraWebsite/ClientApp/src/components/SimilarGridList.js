@@ -112,47 +112,48 @@ export default function TitlebarGridList({ category }) {
         return () => mounted = false;
     }, [])
 
-        return (<div> {pageItems.length != 0 ? ( pageItems != "None" ?
-            <div style={{ width: '100%' }}>
+    console.log(pageItems);
+    return (<div> {pageItems.length != 0 ? (pageItems != "None" ?
+        <div style={{ width: '100%' }}>
 
-                <ToastContainer />
-                <div className={classes.root}>
-                    <GridList cellHeight={200} cellWidht={200} className={classes.gridList}>
-                        {pageItems.map((tile) => (
-                            <GridListTile key={tile.id}>
-                                <img className={classes.photo} src={tile.imageLink} />
-                                <GridListTileBar className={(active == tile.id) ? "extract" : ''}
-                                    title={tile.name}
-                                    subtitle={tile.price.toLocaleString("en-US", { style: "currency", currency: "EUR" })}
-                                    actionIcon={
-                                        <IconButton className={classes.icon} onClick={() => {
-                                            if (active === tile.id) {
-                                                setActive(null);
-                                            } else {
-                                                setActive(tile.id);
-                                            }
-                                        }}>
-                                            <ExpandMoreIcon />
-                                        </IconButton>
-                                    }
-                                />
-                                {SpecsFactory(category, tile, active, classes)}
+            <ToastContainer />
+            <div className={classes.root}>
+                <GridList cellHeight={200} cellWidht={200} className={classes.gridList}>
+                    {pageItems.map((tile) => (
+                        <GridListTile key={tile.id}>
+                            <img className={classes.photo} src={tile.imageLink} />
+                            <GridListTileBar className={(active == tile.id) ? "extract" : ''}
+                                title={tile.name}
+                                subtitle={tile.price.toLocaleString("en-US", { style: "currency", currency: "EUR" })}
+                                actionIcon={
+                                    <IconButton className={classes.icon} onClick={() => {
+                                        if (active === tile.id) {
+                                            setActive(null);
+                                        } else {
+                                            setActive(tile.id);
+                                        }
+                                    }}>
+                                        <ExpandMoreIcon />
+                                    </IconButton>
+                                }
+                            />
+                            {SpecsFactory(category, tile, active, classes)}
 
-                            </GridListTile>
-                        ))}
-                    </GridList>
-                </div>
-                
-            </div> : <img style={{
-                transform: 'scale(0.4)',
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'center',
-                marginLeft: 'auto',
-                marginRight: 'auto',
-                marginTop: 'auto',
-                marginBottom: 'auto'
-            }} src={loadingAnimation} /> ) : <center> No similar products found... </center>}
+                        </GridListTile>
+                    ))}
+                </GridList>
+            </div>
+
+        </div> : <center> No similar products found... </center>) : <img style={{
+            transform: 'scale(0.4)',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            marginLeft: 'auto',
+            marginRight: 'auto',
+            marginTop: 'auto',
+            marginBottom: 'auto'
+        }} src={loadingAnimation} />}
             </div>
         );
 
@@ -344,5 +345,5 @@ function FetchAPI(category, item) {
         targetUrl = 'none'
     if (item.itemCategory == 0 || item.itemCategory == 2) { targetUrl = '/api/Computers/FindSimilar' }
     else if (item.itemCategory == 1) { targetUrl = '/api/Smartphones/FindSimilar'}
-    return fetch(proxyUrl + targetUrl, requestOptions).then(response =>response.json());
+    return fetch(targetUrl, requestOptions).then(response =>response.json());
 }

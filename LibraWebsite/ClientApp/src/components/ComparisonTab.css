@@ -1,7 +1,6 @@
 ﻿.gridComparison {
     display: grid;
     margin-right: auto;
-    right: 0;
     grid-template-columns: 3fr 3fr 3fr;
     grid-column-gap: 50px;
 }

@@ -22,7 +22,10 @@ import { Divider } from '@material-ui/core';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import loadingAnimation from './img/libra.gif';
-import { Link } from 'react-router-dom';
+import ArrowDownwardIcon from '@material-ui/icons/ArrowDownward';
+import ArrowUpwardIcon from '@material-ui/icons/ArrowUpward';
+import AttachMoneyIcon from '@material-ui/icons/AttachMoney';
+import SortByAlphaIcon from '@material-ui/icons/SortByAlpha';
 import './Styles.css';
 
 
@@ -135,22 +138,57 @@ export default function TitlebarGridList({ category, page }) {
             var searchResult = items.filter((i) => {
                 return i.name.toLowerCase().match(searchInput.toLocaleLowerCase());
             })
-            setPageItems(searchResult);
+            if (searchResult.length > 0) {
+                setPageItems(searchResult);
+            }
+            else {
+                setPageItems("None");
+            }
         }
         else {
             setPageItems(items.slice((parseInt(page) - 1) * 20, (parseInt(page)) * 20));
         }
     };
 
-        return (<div> {pageItems.length != 0 ?
-            <div style={{ width: '100%' }}>
+    return (<div> {pageItems.length != 0 ?
+        <div style={{ width: '100%' }}>
 
-                <ToastContainer />
-                <center>
-                    <input type="text" placeHolder="Search..." onChange={handleChange} value={searchInput} />
-                </center>
-                <br />
-                <br />
+            <ToastContainer />
+            <center>
+                <Button size="small" className={classes.margin} color="secondary" onClick={() => {
+                    items.sort((a, b) => (a.price > b.price) ? 1 : -1);
+                    setPageItems(items.slice((parseInt(page) - 1) * 20, (parseInt(page)) * 20));}}>
+                    <ArrowDownwardIcon />
+                </Button> 
+                <Button size="small" color="secondary"><AttachMoneyIcon/></Button>
+                <Button size="small" className={classes.margin} color="secondary" onClick={() => {
+                    items.sort((a, b) => (a.price < b.price) ? 1 : -1);
+                    setPageItems(items.slice((parseInt(page) - 1) * 20, (parseInt(page)) * 20));
+                }}>
+                    <ArrowUpwardIcon/>
+                </Button> 
+
+
+                
+                <input type="text" placeHolder="Search..." onChange={handleChange} value={searchInput} />
+
+                <Button size="small" className={classes.margin} color="secondary" onClick={() => {
+                    items.sort((a, b) => (a.name > b.name) ? 1 : -1);
+                    setPageItems(items.slice((parseInt(page) - 1) * 20, (parseInt(page)) * 20));
+                }}>
+                    <ArrowDownwardIcon />
+                </Button>
+                <Button size="small" color="secondary"><SortByAlphaIcon /></Button>
+                <Button size="small" className={classes.margin} color="secondary" onClick={() => {
+                    items.sort((a, b) => (a.name < b.name) ? 1 : -1);
+                    setPageItems(items.slice((parseInt(page) - 1) * 20, (parseInt(page)) * 20));
+                }}>
+                    <ArrowUpwardIcon />
+                </Button> 
+            </center>
+            <br />
+            <br />
+            {pageItems != "None" ?
                 <div className={classes.root}>
                     <GridList cellHeight={200} cellWidht={200} className={classes.gridList}>
                         {pageItems.map((tile) => (
@@ -176,7 +214,7 @@ export default function TitlebarGridList({ category, page }) {
                             </GridListTile>
                         ))}
                     </GridList>
-                </div>
+                </div> : null}
                 <br /><br /><br />
                 <center>
                     <Button className={classes.margin} variant="outlined" color="secondary" onClick={() => { history.push("/products/" + category + "/1"); setPageItems(items.slice(0, 20)); }}>
@@ -215,9 +253,9 @@ export default function TitlebarGridList({ category, page }) {
                     <Button color="secondary">...</Button>
                     <Button className={classes.margin} variant="outlined" color="secondary" onClick={() => { history.push("/products/" + category + "/1"); setPageItems(items.slice(Math.round(items.length / 20))); }}>
                         {Math.round(items.length / 20)}
-                    </Button>
+                    </Button> 
 
-                </center>
+                </center> 
                 <br /><br /><br />
             </div> : <img style={{
                 transform: 'scale(0.4)',
@@ -355,7 +393,9 @@ export default function TitlebarGridList({ category, page }) {
                     <ListItemText primary={(tile.backCameras != null) ? (tile.backCameras + ((tile.frontCameras != null) ? (' | ' + tile.frontCameras) : '')) : 'Not specified'} />
                 </ListItem>
                 <ListItem className={"infoPanel"} dense={true}>
-                    <IconButton className={classes.icon} style={{ marginLeft: "auto", marginRight: "auto" }}> <RateReviewIcon /> </IconButton>
+                    <IconButton className={classes.icon} style={{ marginLeft: "auto", marginRight: "auto" }} onClick={() => {
+                        window.location.href = "/ratings/" + category +"/" + tile.id;
+                    }}> <RateReviewIcon /> </IconButton>
                     <IconButton className={classes.icon} style={{ transform: "rotate(90deg)", marginLeft: "auto", marginRight: "auto" }} onClick={() => {
                         
                         if (item1 == null) {
@@ -421,8 +461,8 @@ export default function TitlebarGridList({ category, page }) {
 
 function FetchAPI(category, page) {
     var proxyUrl = 'https://cors-anywhere.herokuapp.com/',
-        targetUrl = '/api/' + category + '/Page/0'
-    return fetch(proxyUrl + targetUrl).then(response =>response.json());
+        targetUrl = '' + category + '/Page/0'
+    return fetch(targetUrl).then(response =>response.json());
 }
 /*async function postAPI(item1, item2) {
     // Simple POST request with a JSON body using fetch

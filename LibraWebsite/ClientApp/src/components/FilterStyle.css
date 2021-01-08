@@ -1,6 +1,6 @@
 ﻿.sidenav {
     height: 100%;
-    width: 17%;
+    width: 10%;
     position: fixed;
     z-index: 1;
     top: 0;
@@ -58,9 +58,9 @@
             font-size: 18px;
         }
 }
-@media only screen and (max-width: 1000px) {
+@media only screen and (max-width: 768px) {
     .sidenav {
-        width:30%;
+        width:0%;
     }
     .slider {
         width: 100px;

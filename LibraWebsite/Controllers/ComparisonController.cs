@@ -25,7 +25,7 @@ namespace LibraWebsite.Controllers
             computerComparison.UpdateRatings(comp1, comp2,
                     (ranking) => { compare.PriceRanking1 = ranking.Item1.Truncate2(); compare.PriceRanking2 = ranking.Item2.Truncate2(); },
                     (ranking) => { compare.StorageRanking1 = ranking.Item1.Truncate2(); compare.StorageRanking2 = ranking.Item2.Truncate2(); },
-                    (ranking) => { /*compare.RamRanking1 = ranking.Item1.Truncate2(); compare.RamRanking2 = ranking.Item2.Truncate2();*/ },
+                    (ranking) => { compare.RamRanking1 = ranking.Item1.Truncate2(); compare.RamRanking2 = ranking.Item2.Truncate2(); },
                     (itemRanking) => { compare.ItemRanking1 = itemRanking.Item1.Truncate2(); compare.ItemRanking2 = itemRanking.Item2.Truncate2(); }
                 );
 

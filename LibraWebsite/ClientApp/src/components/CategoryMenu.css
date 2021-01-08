@@ -15,7 +15,7 @@
     transform: translate(-135%, 0%);
 }
 .gridCategories {
-    width: 83%;
+    width: 90%;
     right: 0;
     display: grid;
     grid-template-columns: 1fr 1fr 1fr;
