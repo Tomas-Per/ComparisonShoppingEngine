@@ -80,8 +80,8 @@ export default function TitlebarGridList({ item, colorColumn }) {
             <center>
                 {item !== 3 ?
                     <Button variant="outlined" style={{ color: colorColumn, borderColor: colorColumn }} onClick={() => {
-                        if (item === 1) { removeCookie('Item1'); }
-                        else if (item === 2) { removeCookie('Item2'); }
+                        if (item === 1) { removeCookie('Item1', { path: "/" }); }
+                        else if (item === 2) { removeCookie('Item2', { path: "/" }); }
                         setTile(null);
                     }
                     }>
