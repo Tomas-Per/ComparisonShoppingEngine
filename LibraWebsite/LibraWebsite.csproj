@@ -23,7 +23,7 @@
   <ItemGroup>
     <ProjectReference Include="..\Comparison\Comparison.csproj" />
     <ProjectReference Include="..\Extensions\Extensions.csproj" />
-    <ProjectReference Include="..\ItemLibrary\ItemLibrary.csproj" />
+    <ProjectReference Include="..\ItemLibrary\ModelLibrary.csproj" />
   </ItemGroup>
 
   <Target Name="DebugEnsureNodeEnv" BeforeTargets="Build" Condition=" '$(Configuration)' == 'Debug' And !Exists('$(SpaRoot)node_modules') ">
